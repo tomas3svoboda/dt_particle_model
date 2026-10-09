@@ -1,0 +1,319 @@
+\pdfminorversion=7
+\documentclass[11pt]{article}
+\PassOptionsToPackage{round,authoryear,longnamesfirst,sort}{natbib}
+\usepackage[natbibapa]{apacite}
+\input{preamble.tex}
+\input{macros.tex}
+\input{core2_particle_results.tex}
+\usepackage{xr}
+\externaldocument[S-]{supplementary_submission}
+\usepackage{multicol}
+\usepackage{float}
+
+\newcommand{\Xhwa}{X_{\mathrm{h,w}}^{a}}         % historical wet-core hexane label
+\newcommand{\Lwh}{L_{\mathrm{wh}}^{\mathrm{eff}}}% binary pore mobility
+\newcommand{\Lwr}{L_{\mathrm{w,ret}}^{\mathrm{eff}}}% retained-matrix mobility
+\newcommand{\Kws}{K_{\mathrm{w,s}}}              % retained-water surface coefficient
+\newcommand{\Cdm}{\rho_{\mathrm{dm,p}}}          % dry composite meal density in the particle
+\newcommand{\wo}{w_{\mathrm{o}}}                 % residual-oil mass fraction of dry meal
+\newcommand{\woref}{w_{\mathrm{o,ref}}}
+\newcommand{\Bh}{B_{\mathrm{h}}}                 % hexane binding potential
+\newcommand{\qnet}{q_{\mathrm{net}}}
+\newcommand{\Tg}{T_{\mathrm{g}}}
+\newcommand{\Tb}{T_{\mathrm{b}}}
+\newcommand{\dd}{\mathrm{d}}
+
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\bottomfraction}{0.80}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.80}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\abovecaptionskip}{4pt}
+\captionsetup{font=small}
+
+\begin{document}
+
+\title{A particle model of hexane removal and water uptake in soybean meal
+desolventizing}
+
+\author{Tom\'a\v{s} Svoboda$^{1,3,*}$, Marcela Slukov\'a$^{1}$, Svatopluk Henke$^{1}$, Tom\'a\v{s} Moucha$^{2}$\\[6pt]
+\parbox{0.88\textwidth}{\raggedright\normalsize
+$^{1}$University of Chemistry and Technology Prague, Department of Carbohydrates and Cereals, Technick\'a 5, 166~28 Prague 6, Czech Republic\\[2pt]
+$^{2}$University of Chemistry and Technology Prague, Department of Chemical Engineering, Technick\'a 5, 166~28 Prague 6, Czech Republic\\[2pt]
+$^{3}$Siemens, s.r.o., Digital Industries, Siemensova 1, 155~00 Prague, Czech Republic\\[2pt]
+$^{*}$Corresponding author: \texttt{tomas3.svoboda@vscht.cz}}}
+
+\date{}
+
+\maketitle
+
+\noindent\textbf{Running title:} Hexane desolventization of meal
+
+\begin{abstract}
+In a desolventizer-toaster (DT), steam desolventization of oilseed meal
+couples hexane removal, water uptake and heat transfer. We formulate a
+conservative particle model containing free liquid hexane, binary pore
+gas, retained water and hexane, and a separate external water film.
+Component and energy jump conditions determine how the liquid-hexane
+interface recedes; after the core disappears, the same inventories
+continue to evolve in a stationary radial particle. Published
+thermodynamic and retention properties, together with declared transport
+coefficients, parameterize the model. Converged discrete calculations
+conserve water, hexane and energy through all three regimes. The
+formulation is exercised in two prescribed baths, in which the
+surrounding gas history is specified rather than solved. In the first, a
+water-bearing soybean particle in Faner's pure-hexane vapour at
+\SI{120}{\celsius} falls from 0.20 to 0.10 kg hexane/kg dry meal in
+\SI{\FanerFallingInterval}{\second}, compared with 25.4 s measured. The
+source reports preheating, but not the exact initial temperature,
+moisture or mass-weighted particle sizes. In the second, a particle
+followed through a 1766.5-s prescribed DT history leaves with 18.2\%
+wet-basis moisture, 111 ppm wet-basis hexane and a mean temperature of
+\SI{105.0}{\celsius}. The particle response is benchmarked against available literature
+experiments and published industrial outlet ranges, without fitting the
+falling-rate trajectories or DT outlet values. This common formulation
+provides the particle-level basis for a DT digital twin that can shorten
+process design and support model-based control.
+\end{abstract}
+
+\noindent\textbf{Keywords:} desolventization; soybean meal; n-hexane;
+moving-front model; sorption; food process modeling
+
+\paragraph*{Practical Applications.}
+A prescribed-bath experiment lets a process engineer examine solvent
+loss, moisture uptake and temperature without first solving a complete
+desolventizer-toaster (DT). The same particle equations describe a
+pure-hexane drying experiment and a steam-rich DT scenario. In the
+pure-hexane case, the calculated particle dries faster than the measured
+charge; better size, exposure and temperature information is needed to
+explain the difference. In the DT case, the particle reaches 18.2\%
+wet-basis moisture with liquid-water imbibition included; the uptake rate
+rests on one same-material measurement. The model returns signed water,
+hexane and energy fluxes that can later be coupled to conservative tray
+balances.
+
+\input{sec_intro_reshape.tex}
+\input{sec_formulation.tex}
+\input{sec_discretization_reshape.tex}
+\input{sec_verification_reshape.tex}
+\input{sec_validation_reshape.tex}
+\input{sec_discussion_reshape.tex}
+
+\section*{Author contributions (CRediT)}
+Tom\'a\v{s} Svoboda: Conceptualization; methodology; software; formal
+analysis; validation; writing -- original draft; writing -- review and
+editing. Marcela Slukov\'a: Funding acquisition; resources; supervision;
+writing -- review and editing. Svatopluk Henke: Conceptualization;
+methodology; writing -- original draft. Tom\'a\v{s} Moucha: Investigation;
+writing -- review and editing. All authors have read and approved the
+submitted manuscript.
+
+\section*{Acknowledgments}
+This research received no specific grant from any funding agency in the
+public, commercial, or not-for-profit sectors.
+
+\section*{Supplementary material}
+The submitted Supplementary Material, Secs.~\ref*{S-sup:derivations}
+to~\ref*{S-sup:deposit}, gives the regional and interface derivation,
+property and benchmark provenance, measured-curve scoring conventions,
+numerical acceptance and observed convergence results, including the
+unfavorable cases. An extended technical report retains
+the longer derivations, former full manuscript passages and research
+history; no main-text claim relies on that report alone.
+
+\section*{Data availability}
+The governing balances, parameters, comparison conventions and numerical
+acceptance criteria are stated in the text, the tables and the submitted
+Supplementary Material. The particle-model source, the scripts that
+produced the two particle histories and the sensitivity cases, the run
+records behind every figure and printed number, and the LaTeX sources are
+released at \url{https://github.com/tomas3svoboda/dt_particle_model}
+(tag \texttt{v1.0.0-submission}, with a SHA-256 manifest of every file);
+a preservation archive with a persistent identifier is being prepared.
+Digitized readings of published figures are shared subject to the
+publishers' redistribution terms, with reading half-widths and provenance.
+The steady equipment-model calculation that supplies the prescribed bath
+of Section~\ref{sec:validation:dtmarch} is not part of the release, but
+its output is. Numerical material that does not yet exist is listed in
+Section~\ref{sec:discussion:limits} and Sec.~\ref*{S-sup:missingfull};
+it is not described as available.
+
+\section*{Declaration of generative-AI assistance}
+The authors used AI assistants for language editing, code review and
+manuscript organization. All physical assumptions, equations, numerical
+results, claim boundaries and conclusions were formulated, checked and are
+owned by the authors.
+
+\section*{Conflict of interest}
+Tom\'a\v{s} Svoboda is affiliated with the University of Chemistry and
+Technology Prague and with Siemens, s.r.o., of which he is an employee;
+Siemens, s.r.o. had no role in the design of the study, the analysis or
+the decision to publish. The other authors declare no competing interests.
+
+\clearpage
+{\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{16pt}
+\newcommand{\nomblock}[1]{\par\smallskip{\small\itshape #1}\par\nopagebreak\smallskip\nopagebreak}
+\newcommand{\nomitem}[2]{\par\hangindent=1.5em\hangafter=1 #1\enspace #2\par}
+\section*{Nomenclature}\label{sec:nomenclature}
+\begin{multicols}{2}
+Symbols of the equations of this paper, with their SI units; a symbol whose
+unit depends on the context gives both. Loadings are per kilogram of dry,
+water- and solvent-free composite meal. Symbols used only in the
+Supplementary Material are listed there.
+
+\nomblock{Latin symbols}
+\nomitem{$A_{1}$}{capacity parameter of the modified Luikov water isotherm \eqref{eq:luikov}; \si{\kilogram\per\kilogram}}
+\nomitem{$A_{2}$}{shape parameter of the modified Luikov water isotherm \eqref{eq:luikov}; dimensionless}
+\nomitem{$a^{*}$}{pressure-feasible n-hexane activity \eqref{eq:aceiling}; dimensionless}
+\nomitem{$\ah$}{n-hexane activity; dimensionless}
+\nomitem{$\aw$}{water activity; dimensionless}
+\nomitem{$\bar{h}_{k}$}{partial enthalpy of component $k$ on the common caloric datum, per mole; $\bar{h}_{\mathrm{h,d}}$ that of n-hexane on the dry side; \si{\joule\per\mole}}
+\nomitem{$B$}{Darcy permeability of the particle pore space \eqref{eq:darcy}; \si{\square\metre}}
+\nomitem{$\Bh$}{binding potential of n-hexane, per kilogram of dry meal \eqref{eq:wetenergy}; \si{\joule\per\kilogram}}
+\nomitem{$C$}{GAB energy constant in \eqref{eq:gab}; dimensionless}
+\nomitem{$c$}{molar density of the pore gas, in $\Lwh = c\,\yw\yh D_{b}$; \si{\mole\per\cubic\metre}}
+\nomitem{$c_{\mathrm{h,g}}$}{n-hexane mass concentration in the pore gas; \si{\kilogram\per\cubic\metre}}
+\nomitem{$c_{p}$}{specific heat capacity at constant pressure; \si{\joule\per\kilogram\per\kelvin}}
+\nomitem{$C_{\mathrm{h,d}}^{\Gamma}$, $C_{\mathrm{h,w}}^{\mathrm{b}}$}{n-hexane concentration at the dry-side equilibrium interface trace, and in the wet-side donor state \eqref{eq:frontvelocity}; \si{\mole\per\cubic\metre}}
+\nomitem{$C_{k}$}{total local concentration of component $k$ over all of its phases; \si{\mole\per\cubic\metre}}
+\nomitem{$c_{\mathrm{w}}$}{constant shift of the caloric zero of water \eqref{eq:gauge}; \si{\joule\per\mole}}
+\nomitem{$\Deff$}{effective diffusivity of n-hexane in the separate Fickian comparison, Eq.~(\ref*{S-eq:ficklimit}); \si{\square\metre\per\second}}
+\nomitem{$D_{b}$}{binary pore coefficient of the mobility $\Lwh$; \si{\square\metre\per\second}}
+\nomitem{$d_{p}$}{mean equivalent particle diameter in the dispersion estimate; \si{\metre}}
+\nomitem{$e_{\mathrm{w}}$}{specific energy of the liquid-hexane core, per kilogram of dry meal \eqref{eq:wetenergy}; \si{\joule\per\kilogram}}
+\nomitem{$f_{\mathrm{exp}}$}{fraction of particle surface exposed to the external gas film in the prescribed DT bath experiment; dimensionless}
+\nomitem{$h$, $a$, $h a$}{external film coefficient per unit particle area; specific external area per dry mass; and their product, the film supply per kilogram of dry meal; \si{\watt\per\square\metre\per\kelvin}; \si{\square\metre\per\kilogram}; \si{\watt\per\kilogram\per\kelvin}}
+\nomitem{$h_{\mathrm{dm}}$}{specific enthalpy of the dry composite meal; \si{\joule\per\kilogram}}
+\nomitem{$\Delta P$}{pore-gas overpressure across the dry shell \eqref{eq:darcy}; \si{\pascal}}
+\nomitem{$h_{\mathrm{w,l}}$}{specific enthalpy of liquid water; \si{\joule\per\kilogram}}
+\nomitem{$j_{\mathrm{dm}}$, $j_{L_{\mathrm{o}}}$}{fluxes of the immobile dry meal and residual oil, zero in \eqref{eq:localenergy}; \si{\kilogram\per\square\metre\per\second}}
+\nomitem{$\JE$}{total radial energy flux; \si{\watt\per\square\metre}}
+\nomitem{$J_{i}$}{binary exchange flux of component $i$ in the pore gas, $J_{\mathrm{w}} = -J_{\mathrm{h}}$ \eqref{eq:binaryflux}; \si{\mole\per\square\metre\per\second}}
+\nomitem{$j_{k}$}{radial flux of component $k$; \si{\mole\per\square\metre\per\second}}
+\nomitem{$\mathcal L_\ell$, $K_\ell$}{additional retained-water shell mobility and finite liquid-contact conductance; \si{\mole\per\metre\per\second}; \si{\mole\per\metre\squared\per\second}}
+\nomitem{$K$}{GAB constant \eqref{eq:gab}; dimensionless}
+\nomitem{$k$}{component index, $k \in \{\mathrm{w},\mathrm{h}\}$}
+\nomitem{$k_{\mathrm C}$}{regime-C particle-mean hexane relaxation rate, $15\Deff/\Rp^2$; \si{\per\second}}
+\nomitem{$k_{\mathrm{dry}}$}{thermal conductivity of the dry shell; \si{\watt\per\metre\per\kelvin}}
+\nomitem{$k_m$}{packed-bed external gas-film mass-transfer coefficient in the prescribed DT bath experiment; \si{\metre\per\second}}
+\nomitem{$L$}{half-thickness of a plane flake; \si{\metre}}
+\nomitem{$\Lwh$}{binary pore mobility \eqref{eq:binaryflux}; $L_{\mathrm{wh}}^{-}$, $L_{\mathrm{wh}}^{+}$ its lower and upper bound; \si{\mole\per\metre\per\second}}
+\nomitem{$\Lwr$}{retained-matrix water mobility \eqref{eq:retflux}; $L_{\mathrm{w,ret}}^{-}$, $L_{\mathrm{w,ret}}^{+}$ its lower and upper bound; \si{\mole\per\metre\per\second}}
+\nomitem{$M_{\mathrm w}$}{molar mass of water; \si{\kilogram\per\mole}}
+\nomitem{$N_{i}^{\mathrm{g}}$}{pore-gas molar flux of component $i$ \eqref{eq:retflux}; \si{\mole\per\square\metre\per\second}}
+\nomitem{$\Nt$}{total (Stefan) molar flux of the pore gas; \si{\mole\per\square\metre\per\second}}
+\nomitem{$N_{\mathrm{w,ret}}$}{retained-matrix water flux \eqref{eq:retflux}; \si{\mole\per\square\metre\per\second}}
+\nomitem{$N_{\mathrm w}^{\mathrm{film}}$}{outward-positive water molar flux across the external gas film in the prescribed DT bath experiment, negative for condensation; distinct from $N_{\mathrm{w,ret}}$; \si{\mole\per\square\metre\per\second}}
+\nomitem{$P$}{total pressure; \si{\pascal}}
+\nomitem{$P_{\mathrm{sat}}^{\mathrm{h}}$, $P_{\mathrm{sat}}^{\mathrm{w}}$}{vapour pressure of n-hexane and of water; \si{\pascal}}
+\nomitem{$q$}{radial conductive heat flux; \si{\watt\per\square\metre}}
+\nomitem{$Q_{\Gamma}$}{swept-volume rate of the front \eqref{eq:sweptvolume}; \si{\cubic\metre\per\second}}
+\nomitem{$R$, $R_{\mathrm{g}}$}{molar gas constant; \si{\joule\per\mole\per\kelvin}}
+\nomitem{$r$}{radial coordinate; \si{\metre}}
+\nomitem{$r_1(t)$, $r_2(t)$}{moving inner and outer radii of a spherical control volume in \eqref{eq:movingcomp}--\eqref{eq:movingenergy}; \si{\metre}}
+\nomitem{$r_{\mathrm{pore}}$}{pore radius in the capillary-bundle permeability; \si{\metre}}
+\nomitem{$R_{E}$, $R_{\mathrm{w}}$}{discrete energy and water residuals of the interface rows \eqref{eq:gauge}; \si{\watt}; \si{\mole\per\second}}
+\nomitem{$\Rp$}{particle radius; \si{\metre}}
+\nomitem{$\front$}{radius of the evaporation front; \si{\metre}}
+\nomitem{$\dot{\front}$}{front velocity, negative while the front recedes; \si{\metre\per\second}}
+\nomitem{$T$}{temperature; \si{\kelvin}}
+\nomitem{$t$}{time; \si{\second}}
+\nomitem{$\Delta t$}{time step; \si{\second}}
+\nomitem{$T_{\mathrm{hex}}^{\mathrm{bp}}$}{boiling temperature of n-hexane in the flashing-zone interpolation of \citet{coletto2022modeling}; \si{\kelvin}}
+\nomitem{$T_{L}$}{flashing-zone solid temperature in that interpolation; \si{\kelvin}}
+\nomitem{$T_{V}$}{vapour temperature in that interpolation; \si{\kelvin}}
+\nomitem{$\Tg$}{gas temperature; \si{\kelvin}}
+\nomitem{$\Tint$}{interface temperature; \si{\kelvin}}
+\nomitem{$T^{*}$}{boiling point of sorbed water \eqref{eq:sorbedbp}; \si{\kelvin}}
+\nomitem{$u$}{total local internal energy density; \si{\joule\per\cubic\metre}}
+\nomitem{$u_{\mathrm{d}}^{\Gamma}$, $u_{\mathrm{w}}^{\mathrm{b}}$}{$u$ at the dry-side equilibrium interface trace and in the wet-side donor state; \si{\joule\per\cubic\metre}}
+\nomitem{$u_{\mathrm{h,l}}$}{specific internal energy of liquid n-hexane; \si{\joule\per\kilogram}}
+\nomitem{$V_{\Rp}$}{particle volume; \si{\cubic\metre}}
+\nomitem{$\Wret$}{retained-water loading in \eqref{eq:capcomplementarity}; \si{\kilogram\per\kilogram}}
+\nomitem{$\Wcap$}{retained-water capacity, the upper end of the measured water evidence; \si{\kilogram\per\kilogram}}
+\nomitem{$W_{\mathrm{eq}}$}{equilibrium retained n-hexane loading in Eq.~(\ref*{S-eq:ficklimit}); \si{\kilogram\per\kilogram}}
+\nomitem{$W_{\mathrm{native}}$}{retained n-hexane on reference soybean meal \eqref{eq:gab}; \si{\kilogram\per\kilogram}}
+\nomitem{$\wo$}{residual-oil mass fraction of the dry meal; dimensionless}
+\nomitem{$\woref$}{residual-oil mass fraction of the reference meal, the anchor of the total-meal isotherm; dimensionless}
+\nomitem{$w_{\mathrm{h}}$}{weight on the n-hexane boiling point in the flashing-zone interpolation of \citet{coletto2022modeling}; dimensionless}
+\nomitem{$\Wret_{\mathrm{w}}$}{retained-water loading of the Luikov isotherm \eqref{eq:luikov}; \si{\kilogram\per\kilogram}}
+\nomitem{$x$}{reduced activity $K\ah$ of the GAB isotherm \eqref{eq:gab}; dimensionless}
+\nomitem{$\Xc$}{critical loading, at which mobile liquid stops reaching the outer surface; \si{\kilogram\per\kilogram}}
+\nomitem{$\Xe$}{equilibrium n-hexane loading at the actual gas activity in the regime-C rate; Faner et al.'s source symbol in Eq.~\eqref{eq:faneroracle}; \si{\kilogram\per\kilogram}}
+\nomitem{$\Xe^{*}$}{pressure-feasible saturated equilibrium loading at the regime-B/C boundary; \si{\kilogram\per\kilogram}}
+\nomitem{$\Xf$}{external free-hexane loading; \si{\kilogram\per\kilogram}}
+\nomitem{$\Xh$}{total n-hexane loading; \si{\kilogram\per\kilogram}}
+\nomitem{$\Xhwa$}{apparent mobile-liquid n-hexane loading of the liquid-hexane core, set at activation and carried with the solid; distinct from the total loading $\Xh$ and from retained hexane; \si{\kilogram\per\kilogram}}
+\nomitem{$X_{m}$}{GAB monolayer loading \eqref{eq:gab}; \si{\kilogram\per\kilogram}}
+\nomitem{$\Xw$}{total water loading; \si{\kilogram\per\kilogram}}
+\nomitem{$Y_{\mathrm w,b}$, $Y_{\mathrm w,I}$}{bulk and particle-surface gas mass fractions of water in the prescribed DT film closure; dimensionless}
+\nomitem{$y_{i}$}{mole fraction of component $i$ in the pore gas; dimensionless}
+\nomitem{$y_{\mathrm w,I}$, $y_{\mathrm w,b}$}{particle-surface and bulk-gas water mole fractions in the prescribed DT film closure; dimensionless}
+\nomitem{$\frontz$}{wet-volume fraction $(\front/\Rp)^{3}$; $\frontz_{\mathrm{new}}$, $\frontz_{\mathrm{old}}$ at the new and old time level; dimensionless}
+
+\nomblock{Greek symbols}
+\nomitem{$\alpha$}{region label, $\mathrm{w}$ (liquid-hexane core) or $\mathrm{d}$ (dry shell)}
+\nomitem{$\beta_{\mathrm{A}}$}{Ackermann blowing argument of the film law; dimensionless}
+\nomitem{$\varepsilon_{\mathrm{g}}$}{gas-filled porosity of the dry shell; dimensionless}
+\nomitem{$\theta_{a}$}{temperature of a material shell at activation; \si{\kelvin}}
+\nomitem{$\lambda$}{multiplier of the capacity condition \eqref{eq:capcomplementarity}, a contribution to $\mu_{\mathrm{w,ret}}/(RT)$ carrying no mass, volume, enthalpy or internal energy; dimensionless}
+\nomitem{$\mu_{g}$}{pore-gas viscosity \eqref{eq:darcy}; \si{\pascal\second}}
+\nomitem{$\mu_{\mathrm{w}}$, $\mu_{\mathrm{h}}$, $\mu_{\mathrm{w,ret}}$}{chemical potential of water and of n-hexane in the pore gas, and of retained water; \si{\joule\per\mole}}
+\nomitem{$\rho$}{gas mass density in the dispersion estimate, $(\rho c_{p})_{\mathrm{g}}$; \si{\kilogram\per\cubic\metre}}
+\nomitem{$\rho_f$}{gas mass density used by the external film pair in the prescribed DT bath experiment; \si{\kilogram\per\cubic\metre}}
+\nomitem{$\Cdm$}{density of the dry composite meal in the particle; \si{\kilogram\per\cubic\metre}}
+\nomitem{$\tau$}{pore tortuosity in the capillary-bundle permeability; dimensionless}
+\nomitem{$\phi_{i}$}{fugacity coefficient of component $i$, omitted by the ideal-gas closure; dimensionless}
+
+\nomblock{Subscripts and superscripts}
+\nomitem{$a$}{at activation}
+\nomitem{$\mathrm{b}$}{donor state, the wet-core material the front sweeps (superscript); on $y_{\mathrm{w,b}}$, the bulk gas}
+\nomitem{$\mathrm{c}$}{critical}
+\nomitem{$\mathrm{cap}$}{capacity}
+\nomitem{$\mathrm{d}$}{dry shell}
+\nomitem{$\mathrm{dm}$}{dry composite meal}
+\nomitem{$\mathrm{e}$, $\mathrm{eq}$}{equilibrium; $\mathrm{eq}$ on $d$: equivalent}
+\nomitem{$\mathrm{eff}$}{effective}
+\nomitem{$\mathrm{f}$}{external free hexane}
+\nomitem{$\mathrm{g}$}{gas, pore gas}
+\nomitem{$\mathrm{h}$}{n-hexane}
+\nomitem{$i$, $k$}{component index}
+\nomitem{$\mathrm{l}$}{liquid}
+\nomitem{$m$}{monolayer}
+\nomitem{$\mathrm{native}$}{reference soybean meal, at its own oil content}
+\nomitem{$\mathrm{new}$, $\mathrm{old}$}{new and old time level}
+\nomitem{$\mathrm{o}$}{residual oil}
+\nomitem{$\mathrm{p}$}{particle}
+\nomitem{$\mathrm{ref}$}{reference}
+\nomitem{$\mathrm{ret}$}{retained (sorbed) phase}
+\nomitem{$\mathrm{s}$}{surface; on $\mathrm{D}_{s}$, the solid}
+\nomitem{$\mathrm{sat}$}{saturation}
+\nomitem{$\mathrm{vap}$}{vaporization}
+\nomitem{$\mathrm{w}$}{water; as a region label (on $\jump{\cdot}$, $C_{\mathrm{h,w}}$, $u_{\mathrm{w}}$), the liquid-hexane core}
+\nomitem{$\Gamma$}{interface; as a superscript, the equilibrium interface trace}
+\nomitem{$\alpha$}{region, $\mathrm{w}$ or $\mathrm{d}$}
+\nomitem{$^{*}$}{pressure-feasible (on $a$); boiling point of sorbed water (on $T$)}
+\nomitem{$^{-}$, $^{+}$}{lower and upper bound of an interval}
+
+\nomblock{Operators and notation}
+\nomitem{$\jump{\cdot}_{\mathrm{w}}^{\mathrm{d}}$}{jump across the front, dry-side value minus wet-side value}
+\nomitem{$\Delta$}{a difference or a change, as in a time step or an enthalpy of vaporization}
+\nomitem{$\mathrm{D}_{s}/\mathrm{D}t$}{time derivative following the solid; \si{\per\second}}
+\nomitem{$\nabla$}{radial gradient; \si{\per\metre}}
+\nomitem{$\partial$}{partial derivative}
+\nomitem{$\dot{x}$}{time derivative of $x$}
+\nomitem{$\perp$}{complementarity: both sides non-negative and their product zero}
+\end{multicols}
+}
+
+\bibliographystyle{apacite}
+\bibliography{refs}
+
+\end{document}

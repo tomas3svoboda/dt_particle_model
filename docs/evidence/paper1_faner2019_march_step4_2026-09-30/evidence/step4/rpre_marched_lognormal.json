@@ -1,0 +1,24 @@
+{
+ "certification": "TEMPORARILY_UNCERTIFIED_EMERGENCY_2026-09-30",
+ "derived": true,
+ "fitted": false,
+ "tag": "lognormal",
+ "traces": {
+  "soybean": {
+   "r_pre_over_r_c": 0.9729910846403282,
+   "r_pre_over_window_rate": 0.9776997433998956,
+   "onset_step2_rule": {
+    "time_s": 41.34192574637976,
+    "loading": 0.1992360137709006
+   }
+  },
+  "sunflower": {
+   "r_pre_over_r_c": 0.9738097704463864,
+   "r_pre_over_window_rate": 0.9770444011346524,
+   "onset_step2_rule": {
+    "time_s": 60.44109936245498,
+    "loading": 0.20043299049304686
+   }
+  }
+ }
+}

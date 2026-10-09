@@ -1,0 +1,789 @@
+{
+  "acceptance_band": {
+    "area_basis": "bed_footprint_over_W_harina_read_as_total_charge",
+    "film_case": "lit_whitaker",
+    "journal_run_residual_item05": {
+      "soybean": -0.09389039973491409,
+      "sunflower": -0.17667866054543158
+    },
+    "magnitude_cap": 0.11787220053182434,
+    "signed_hi": -0.018421985111255923,
+    "signed_lo": -0.11787220053182434,
+    "source": "item_05_faner_comparison/rerun_2026-09-22_rig/rerun_film_band.csv",
+    "thesis_run_residual": {
+      "faner2008_soybean_136C": -0.11787220053182434,
+      "faner2008_sunflower_136C": -0.018421985111255923
+    }
+  },
+  "campaign": "F32",
+  "claim_flags": {
+    "fitted": false,
+    "physically_qualifying": false,
+    "plant_predictive": false,
+    "production_wired": false,
+    "qsc10_complete": false
+  },
+  "commit": [
+    "bad3513ef877910642e19df8e36e603f940c8710"
+  ],
+  "common_conditions": {
+    "printed_admissible_magnitude_cap": {
+      "common_velocity_layer": [
+        [
+          0.2,
+          3.0
+        ],
+        [
+          0.3,
+          4.0
+        ]
+      ],
+      "common_velocity_loading_layer": [
+        [
+          0.2,
+          0.45,
+          3.0
+        ],
+        [
+          0.2,
+          0.5,
+          3.0
+        ],
+        [
+          0.3,
+          0.45,
+          4.0
+        ],
+        [
+          0.3,
+          0.5,
+          4.0
+        ]
+      ],
+      "soybean_n": 8,
+      "soybean_velocity_layer": [
+        [
+          0.15,
+          3.0
+        ],
+        [
+          0.2,
+          3.0
+        ],
+        [
+          0.25,
+          4.0
+        ],
+        [
+          0.3,
+          4.0
+        ]
+      ],
+      "sunflower_n": 5,
+      "sunflower_velocity_layer": [
+        [
+          0.2,
+          3.0
+        ],
+        [
+          0.25,
+          3.0
+        ],
+        [
+          0.3,
+          4.0
+        ]
+      ]
+    },
+    "printed_admissible_signed_band": {
+      "common_velocity_layer": [],
+      "common_velocity_loading_layer": [],
+      "soybean_n": 4,
+      "soybean_velocity_layer": [
+        [
+          0.15,
+          3.0
+        ],
+        [
+          0.25,
+          4.0
+        ]
+      ],
+      "sunflower_n": 3,
+      "sunflower_velocity_layer": [
+        [
+          0.2,
+          3.0
+        ],
+        [
+          0.3,
+          4.0
+        ]
+      ]
+    },
+    "whole_sweep_magnitude_cap": {
+      "common_velocity_layer": [
+        [
+          0.1,
+          2.0
+        ],
+        [
+          0.2,
+          3.0
+        ],
+        [
+          0.3,
+          4.0
+        ]
+      ],
+      "common_velocity_loading_layer": [
+        [
+          0.1,
+          0.45,
+          2.0
+        ],
+        [
+          0.1,
+          0.5,
+          2.0
+        ],
+        [
+          0.1,
+          0.55,
+          2.0
+        ],
+        [
+          0.2,
+          0.45,
+          3.0
+        ],
+        [
+          0.2,
+          0.5,
+          3.0
+        ],
+        [
+          0.2,
+          0.55,
+          3.0
+        ],
+        [
+          0.3,
+          0.45,
+          4.0
+        ],
+        [
+          0.3,
+          0.5,
+          4.0
+        ],
+        [
+          0.3,
+          0.55,
+          4.0
+        ]
+      ],
+      "soybean_n": 20,
+      "soybean_velocity_layer": [
+        [
+          0.05,
+          2.0
+        ],
+        [
+          0.1,
+          2.0
+        ],
+        [
+          0.1,
+          3.0
+        ],
+        [
+          0.15,
+          3.0
+        ],
+        [
+          0.2,
+          3.0
+        ],
+        [
+          0.2,
+          4.0
+        ],
+        [
+          0.25,
+          4.0
+        ],
+        [
+          0.25,
+          5.0
+        ],
+        [
+          0.3,
+          4.0
+        ],
+        [
+          0.3,
+          5.0
+        ]
+      ],
+      "sunflower_n": 14,
+      "sunflower_velocity_layer": [
+        [
+          0.1,
+          2.0
+        ],
+        [
+          0.2,
+          3.0
+        ],
+        [
+          0.25,
+          3.0
+        ],
+        [
+          0.3,
+          4.0
+        ]
+      ]
+    },
+    "whole_sweep_signed_band": {
+      "common_velocity_layer": [],
+      "common_velocity_loading_layer": [],
+      "soybean_n": 9,
+      "soybean_velocity_layer": [
+        [
+          0.05,
+          2.0
+        ],
+        [
+          0.1,
+          3.0
+        ],
+        [
+          0.15,
+          3.0
+        ],
+        [
+          0.25,
+          4.0
+        ],
+        [
+          0.25,
+          5.0
+        ]
+      ],
+      "sunflower_n": 8,
+      "sunflower_velocity_layer": [
+        [
+          0.1,
+          2.0
+        ],
+        [
+          0.2,
+          3.0
+        ],
+        [
+          0.3,
+          4.0
+        ]
+      ]
+    }
+  },
+  "common_conditions_printed_admissible_detail": [
+    {
+      "gas_velocity_m_s": 0.2,
+      "initial_loading_kg_kg": 0.45,
+      "layer_diameters": 3.0,
+      "soybean_residual": 0.0965628240475671,
+      "sunflower_residual": -0.004006753078785558
+    },
+    {
+      "gas_velocity_m_s": 0.2,
+      "initial_loading_kg_kg": 0.5,
+      "layer_diameters": 3.0,
+      "soybean_residual": 0.11608355220274459,
+      "sunflower_residual": -0.031958657556428495
+    },
+    {
+      "gas_velocity_m_s": 0.3,
+      "initial_loading_kg_kg": 0.45,
+      "layer_diameters": 4.0,
+      "soybean_residual": 0.043704107505457626,
+      "sunflower_residual": -0.051855956485837074
+    },
+    {
+      "gas_velocity_m_s": 0.3,
+      "initial_loading_kg_kg": 0.5,
+      "layer_diameters": 4.0,
+      "soybean_residual": 0.062283858441982545,
+      "sunflower_residual": -0.07846500410466137
+    }
+  ],
+  "distinct_scored_conditions_n": 240,
+  "footprint_within_10_percent_of_printed_holder_area": [
+    {
+      "implied_footprint_area_m2": 0.011417458731490073,
+      "layer_diameters": 2.0,
+      "material": "soybean",
+      "ratio_to_printed_holder_area": 1.0379507937718249,
+      "sample_mass_kg": 0.015
+    },
+    {
+      "implied_footprint_area_m2": 0.011417458731490073,
+      "layer_diameters": 4.0,
+      "material": "soybean",
+      "ratio_to_printed_holder_area": 1.0379507937718249,
+      "sample_mass_kg": 0.03
+    },
+    {
+      "implied_footprint_area_m2": 0.011417458731490072,
+      "layer_diameters": 6.0,
+      "material": "soybean",
+      "ratio_to_printed_holder_area": 1.0379507937718249,
+      "sample_mass_kg": 0.045
+    },
+    {
+      "implied_footprint_area_m2": 0.01061197086735666,
+      "layer_diameters": 2.0,
+      "material": "sunflower",
+      "ratio_to_printed_holder_area": 0.964724624305151,
+      "sample_mass_kg": 0.015
+    },
+    {
+      "implied_footprint_area_m2": 0.01061197086735666,
+      "layer_diameters": 4.0,
+      "material": "sunflower",
+      "ratio_to_printed_holder_area": 0.964724624305151,
+      "sample_mass_kg": 0.03
+    },
+    {
+      "implied_footprint_area_m2": 0.010611970867356662,
+      "layer_diameters": 6.0,
+      "material": "sunflower",
+      "ratio_to_printed_holder_area": 0.9647246243051512,
+      "sample_mass_kg": 0.045
+    }
+  ],
+  "gas_velocity_grid_m_s": [
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3
+  ],
+  "grid_points_n": 960,
+  "initial_loading_grid_kg_kg": [
+    0.4,
+    0.45,
+    0.5,
+    0.55
+  ],
+  "item": "item_22_faner_journal_sensitivity",
+  "item05_march_placement_on_the_velocity_axis": {
+    "soybean": {
+      "bracketing_h_w_m2_k": [
+        69.61521813787391,
+        88.17387953600984
+      ],
+      "bracketing_velocities_m_s": [
+        0.1,
+        0.15
+      ],
+      "inside_thesis_printed_velocity_range": true,
+      "item05_h_w_m2_k": 78.648794255595,
+      "linearly_interpolated_velocity_m_s": 0.12433789787939245,
+      "thesis_printed_approach_velocity_m_s": [
+        0.117,
+        0.129
+      ]
+    },
+    "sunflower": {
+      "bracketing_h_w_m2_k": [
+        73.13786685757108,
+        92.6514719777881
+      ],
+      "bracketing_velocities_m_s": [
+        0.1,
+        0.15
+      ],
+      "inside_thesis_printed_velocity_range": true,
+      "item05_h_w_m2_k": 80.01326022231953,
+      "linearly_interpolated_velocity_m_s": 0.11761692245587468,
+      "thesis_printed_approach_velocity_m_s": [
+        0.117,
+        0.129
+      ]
+    }
+  },
+  "jobs_n": 48,
+  "layer_grid_diameters": [
+    2.0,
+    3.0,
+    4.0,
+    5.0,
+    6.0
+  ],
+  "per_axis_residual_span": {
+    "soybean": {
+      "gas_velocity_m_s": {
+        "max": 1.6665597763227644,
+        "median": 0.6884400592406132,
+        "min": 0.45093265288154394
+      },
+      "initial_loading_kg_kg": {
+        "max": 0.4841439858722756,
+        "median": 0.17038216819414354,
+        "min": 0.05679405606471444
+      },
+      "layer_diameters": {
+        "max": 1.7143681339221275,
+        "median": 1.1160835522027446,
+        "min": 0.4897401709108555
+      },
+      "sample_mass_kg": {
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "note": "exactly zero: the residuals are bit-identical across the four masses"
+      }
+    },
+    "sunflower": {
+      "gas_velocity_m_s": {
+        "max": 1.2577799708059503,
+        "median": 0.6147204829245477,
+        "min": 0.3983125008509968
+      },
+      "initial_loading_kg_kg": {
+        "max": 0.096928138249601,
+        "median": 0.034085669996640866,
+        "min": 0.011361889998880326
+      },
+      "layer_diameters": {
+        "max": 1.2933320866935187,
+        "median": 0.9680413424435712,
+        "min": 0.432088326158458
+      },
+      "sample_mass_kg": {
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "note": "exactly zero: the residuals are bit-identical across the four masses"
+      }
+    }
+  },
+  "per_trace": {
+    "soybean": {
+      "abs_residual_max": 1.571552200883191,
+      "abs_residual_min": 0.013170970814923952,
+      "best": {
+        "area_per_kg_dry_m2": 0.3805819577163358,
+        "gas_velocity_m_s": 0.2,
+        "h_w_m2_k": 104.34263932526876,
+        "in_signed_band": false,
+        "initial_loading_kg_kg": 0.4,
+        "layer_diameters": 4.0,
+        "printed_admissible": false,
+        "window_n_points": 2,
+        "window_residual": 0.013170970814923952,
+        "within_magnitude_cap": true
+      },
+      "best_printed_admissible": {
+        "area_per_kg_dry_m2": 0.3805819577163358,
+        "gas_velocity_m_s": 0.3,
+        "h_w_m2_k": 132.41720871011336,
+        "in_signed_band": false,
+        "initial_loading_kg_kg": 0.45,
+        "layer_diameters": 4.0,
+        "printed_admissible": true,
+        "window_n_points": 3,
+        "window_residual": 0.043704107505457626,
+        "within_magnitude_cap": true
+      },
+      "in_band_conditions": [
+        {
+          "area_per_kg_dry_m2": 0.3805819577163358,
+          "gas_velocity_m_s": 0.25,
+          "h_w_m2_k": 118.94638038837367,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.5,
+          "layer_diameters": 4.0,
+          "printed_admissible": true,
+          "window_n_points": 4,
+          "window_residual": -0.04578248448595322,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.3805819577163358,
+          "gas_velocity_m_s": 0.25,
+          "h_w_m2_k": 118.94638038837367,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.55,
+          "layer_diameters": 4.0,
+          "printed_admissible": false,
+          "window_n_points": 4,
+          "window_residual": -0.04578248448595322,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.5074426102884476,
+          "gas_velocity_m_s": 0.15,
+          "h_w_m2_k": 88.17387953600984,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.5,
+          "layer_diameters": 3.0,
+          "printed_admissible": true,
+          "window_n_points": 4,
+          "window_residual": -0.05686287676437178,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.5074426102884476,
+          "gas_velocity_m_s": 0.15,
+          "h_w_m2_k": 88.17387953600984,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.55,
+          "layer_diameters": 3.0,
+          "printed_admissible": false,
+          "window_n_points": 4,
+          "window_residual": -0.05686287676437178,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.3805819577163358,
+          "gas_velocity_m_s": 0.25,
+          "h_w_m2_k": 118.94638038837367,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.45,
+          "layer_diameters": 4.0,
+          "printed_admissible": true,
+          "window_n_points": 3,
+          "window_residual": -0.062472113756535684,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.5074426102884476,
+          "gas_velocity_m_s": 0.15,
+          "h_w_m2_k": 88.17387953600984,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.45,
+          "layer_diameters": 3.0,
+          "printed_admissible": true,
+          "window_n_points": 3,
+          "window_residual": -0.07335870573649735,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.30446556617306864,
+          "gas_velocity_m_s": 0.25,
+          "h_w_m2_k": 118.94638038837367,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.4,
+          "layer_diameters": 5.0,
+          "printed_admissible": false,
+          "window_n_points": 2,
+          "window_residual": -0.07602092128543649,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.7611639154326716,
+          "gas_velocity_m_s": 0.05,
+          "h_w_m2_k": 46.600870370405886,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.4,
+          "layer_diameters": 2.0,
+          "printed_admissible": false,
+          "window_n_points": 2,
+          "window_residual": -0.09500757543957333,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.5074426102884476,
+          "gas_velocity_m_s": 0.1,
+          "h_w_m2_k": 69.61521813787391,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.4,
+          "layer_diameters": 3.0,
+          "printed_admissible": false,
+          "window_n_points": 2,
+          "window_residual": -0.09871146828898789,
+          "within_magnitude_cap": true
+        }
+      ],
+      "in_signed_band_n": 9,
+      "item05_residual": -0.09389039973491409,
+      "points_n": 120,
+      "printed_admissible_in_signed_band_n": 4,
+      "printed_admissible_n": 36,
+      "printed_admissible_within_magnitude_cap_n": 8,
+      "residual_max": 1.571552200883191,
+      "residual_min": -0.7551299145445723,
+      "within_magnitude_cap_n": 20
+    },
+    "sunflower": {
+      "abs_residual_max": 0.9399981300402783,
+      "abs_residual_min": 0.0035326230131994887,
+      "best": {
+        "area_per_kg_dry_m2": 0.7074647244904441,
+        "gas_velocity_m_s": 0.1,
+        "h_w_m2_k": 73.13786685757108,
+        "in_signed_band": false,
+        "initial_loading_kg_kg": 0.45,
+        "layer_diameters": 2.0,
+        "printed_admissible": false,
+        "window_n_points": 5,
+        "window_residual": -0.0035326230131994887,
+        "within_magnitude_cap": true
+      },
+      "best_printed_admissible": {
+        "area_per_kg_dry_m2": 0.47164314966029613,
+        "gas_velocity_m_s": 0.2,
+        "h_w_m2_k": 109.65460059210038,
+        "in_signed_band": false,
+        "initial_loading_kg_kg": 0.45,
+        "layer_diameters": 3.0,
+        "printed_admissible": true,
+        "window_n_points": 5,
+        "window_residual": -0.004006753078785558,
+        "within_magnitude_cap": true
+      },
+      "in_band_conditions": [
+        {
+          "area_per_kg_dry_m2": 0.35373236224522203,
+          "gas_velocity_m_s": 0.3,
+          "h_w_m2_k": 139.18214367645373,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.4,
+          "layer_diameters": 4.0,
+          "printed_admissible": false,
+          "window_n_points": 4,
+          "window_residual": -0.03000093497986083,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.7074647244904441,
+          "gas_velocity_m_s": 0.1,
+          "h_w_m2_k": 73.13786685757108,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.5,
+          "layer_diameters": 2.0,
+          "printed_admissible": false,
+          "window_n_points": 6,
+          "window_residual": -0.031497833643614255,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.7074647244904441,
+          "gas_velocity_m_s": 0.1,
+          "h_w_m2_k": 73.13786685757108,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.55,
+          "layer_diameters": 2.0,
+          "printed_admissible": false,
+          "window_n_points": 6,
+          "window_residual": -0.031497833643614255,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.47164314966029613,
+          "gas_velocity_m_s": 0.2,
+          "h_w_m2_k": 109.65460059210038,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.5,
+          "layer_diameters": 3.0,
+          "printed_admissible": true,
+          "window_n_points": 6,
+          "window_residual": -0.031958657556428495,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.47164314966029613,
+          "gas_velocity_m_s": 0.2,
+          "h_w_m2_k": 109.65460059210038,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.55,
+          "layer_diameters": 3.0,
+          "printed_admissible": false,
+          "window_n_points": 6,
+          "window_residual": -0.031958657556428495,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.35373236224522203,
+          "gas_velocity_m_s": 0.3,
+          "h_w_m2_k": 139.18214367645373,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.45,
+          "layer_diameters": 4.0,
+          "printed_admissible": true,
+          "window_n_points": 5,
+          "window_residual": -0.051855956485837074,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.35373236224522203,
+          "gas_velocity_m_s": 0.3,
+          "h_w_m2_k": 139.18214367645373,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.5,
+          "layer_diameters": 4.0,
+          "printed_admissible": true,
+          "window_n_points": 6,
+          "window_residual": -0.07846500410466137,
+          "within_magnitude_cap": true
+        },
+        {
+          "area_per_kg_dry_m2": 0.35373236224522203,
+          "gas_velocity_m_s": 0.3,
+          "h_w_m2_k": 139.18214367645373,
+          "in_signed_band": true,
+          "initial_loading_kg_kg": 0.55,
+          "layer_diameters": 4.0,
+          "printed_admissible": false,
+          "window_n_points": 6,
+          "window_residual": -0.07846500410466137,
+          "within_magnitude_cap": true
+        }
+      ],
+      "in_signed_band_n": 8,
+      "item05_residual": -0.17667866054543158,
+      "points_n": 120,
+      "printed_admissible_in_signed_band_n": 3,
+      "printed_admissible_n": 36,
+      "printed_admissible_within_magnitude_cap_n": 5,
+      "residual_max": 0.9399981300402783,
+      "residual_min": -0.7839558369207709,
+      "within_magnitude_cap_n": 14
+    }
+  },
+  "printed_admissible_box": {
+    "gas_velocity_m_s": "the source prints none",
+    "initial_loading_kg_kg": [
+      0.45,
+      0.5
+    ],
+    "layer_diameters": [
+      3.0,
+      4.0,
+      5.0
+    ],
+    "sample_mass_kg": 0.03
+  },
+  "printed_holder_area_m2": 0.011,
+  "reynolds_voidage_span": [
+    93.042031792297,
+    593.2135096439154
+  ],
+  "sample_mass_axis_exactly_degenerate": true,
+  "sample_mass_grid_kg": [
+    0.015,
+    0.03,
+    0.045,
+    0.06
+  ],
+  "score": {
+    "definition": "(predicted_constant_rate_1_s - measured_constant_rate_1_s) / measured_constant_rate_1_s, as computed by the runner",
+    "name": "window_residual"
+  },
+  "whitaker_reynolds_bound_exceeded_n": 0
+}

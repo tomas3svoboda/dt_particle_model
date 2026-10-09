@@ -1,0 +1,716 @@
+{
+ "certification": "TEMPORARILY_UNCERTIFIED_EMERGENCY_2026-09-30",
+ "derived": true,
+ "fitted": false,
+ "rule": "Step 4, task 2: the seven mass-quantile size classes per distribution and their march arguments.\n\ncertification: TEMPORARILY_UNCERTIFIED_EMERGENCY_2026-09-30.  derived: true.  fitted: false.\n\nFor each trace and each primary distribution of task 1 (the log-normal on the number basis truncated to the\nstated 0.5 to 4 mm range at the trace's own 1-to-3-mm share; the uniform 1 to 3 mm on the number basis), the\nmass-weighted distribution is cut into seven equal-mass classes; each class's radius is its mass-weighted\nmean radius (the declared-sphere mapping R = R_d d / d_mean).  The film multiplier is task 1's ensemble\nmultiplier (window rule, closed form, remainder held; evidence/step4/derive_ensemble.json).  Per class:\nthe Coletto pair at its radius, the class's constant rate r_i = M k(R_i), the film's forcing timescale\nX_c / r_i (step 1's rule, tau = X_c / rate), the reduced film's relaxation-to-forcing ratio at the class\n(D_bulk / (M k_m)^2 / tau), the seed Stefan flux scaled from the declared sphere's by the class's film flux,\nthe Reynolds number (the reduced film's validity range [10, 300]), and the clock offset at which the\nclass's constant-rate period brings it from the first sample's loading to the ladder's X0 (the fallback\nstart, used only if the march refuses at the first sample's loading).\n\nusage (PYTHONPATH export/src): python step4/classes.py\n",
+ "traces": {
+  "soybean": {
+   "lognormal": {
+    "case": "lognormal|p=0.951|trunc=0.5-4|basis=number|R=declared|closed_form|tail=hold",
+    "multiplier": 0.14578543636088787,
+    "multiplier_over_step1": 1.2183564810770053,
+    "classes": [
+     {
+      "class": 1,
+      "mass_weight": 0.14281381179332409,
+      "d_range_mm": [
+       0.5,
+       1.5954904796180658
+      ],
+      "radius_m": 0.0005241445071284951,
+      "reynolds": 18.133307577151527,
+      "coletto_h_w_m2_k": 129.33178116685352,
+      "multiplier": 0.14578543636088787,
+      "film_h_w_m2_k": 18.8546901527406,
+      "rate_1_s": 0.012432659473828066,
+      "forcing_timescale_s": 16.086662746697044,
+      "film_relaxation_s": 0.08905488504766096,
+      "relaxation_to_forcing_ratio": 0.005535945301392356,
+      "seed_stefan_flux": [
+       0.027221967455292168,
+       0.027087205240166962
+      ],
+      "fallback_clock_offset_s": 23.553263288775938,
+      "closed_form_class_end_s": 37.95629048251546
+     },
+     {
+      "class": 2,
+      "mass_weight": 0.14282691918187446,
+      "d_range_mm": [
+       1.5956563747012782,
+       1.8345802325259322
+      ],
+      "radius_m": 0.0006473616640318409,
+      "reynolds": 22.39612932673204,
+      "coletto_h_w_m2_k": 118.33174490632365,
+      "multiplier": 0.14578543636088787,
+      "film_h_w_m2_k": 17.25104506651366,
+      "rate_1_s": 0.009210095001859438,
+      "forcing_timescale_s": 21.71530260650099,
+      "film_relaxation_s": 0.10638140642579284,
+      "relaxation_to_forcing_ratio": 0.004898914298064861,
+      "seed_stefan_flux": [
+       0.024906661608658377,
+       0.02478336130366502
+      ],
+      "fallback_clock_offset_s": 31.794427951899213,
+      "closed_form_class_end_s": 51.23699965782589
+     },
+     {
+      "class": 3,
+      "mass_weight": 0.1428470664854135,
+      "d_range_mm": [
+       1.834770987559712,
+       2.0419534814731177
+      ],
+      "radius_m": 0.0007296102220328949,
+      "reynolds": 25.24160109973809,
+      "coletto_h_w_m2_k": 112.52081600784153,
+      "multiplier": 0.14578543636088787,
+      "film_h_w_m2_k": 16.403896261386354,
+      "rate_1_s": 0.007770550404115883,
+      "forcing_timescale_s": 25.738202520900522,
+      "film_relaxation_s": 0.11765286812883902,
+      "relaxation_to_forcing_ratio": 0.004571137709919714,
+      "seed_stefan_flux": [
+       0.0236835676720225,
+       0.023566322287507536
+      ],
+      "fallback_clock_offset_s": 37.68455086677795,
+      "closed_form_class_end_s": 60.72898442417445
+     },
+     {
+      "class": 4,
+      "mass_weight": 0.14283168502283594,
+      "d_range_mm": [
+       2.0421657986552337,
+       2.2553479087418458
+      ],
+      "radius_m": 0.0008078927451503978,
+      "reynolds": 27.949863898068163,
+      "coletto_h_w_m2_k": 107.79490521337705,
+      "multiplier": 0.14578543636088787,
+      "film_h_w_m2_k": 15.71492729401272,
+      "rate_1_s": 0.006722864305721342,
+      "forcing_timescale_s": 29.74922457229942,
+      "film_relaxation_s": 0.1281952090658403,
+      "relaxation_to_forcing_ratio": 0.004309194975966114,
+      "seed_stefan_flux": [
+       0.022688850142558076,
+       0.022576529102248385
+      ],
+      "fallback_clock_offset_s": 43.55728282624429,
+      "closed_form_class_end_s": 70.19294351326087
+     },
+     {
+      "class": 5,
+      "mass_weight": 0.14287914027930265,
+      "d_range_mm": [
+       2.2555824141392606,
+       2.5066316370812607
+      ],
+      "radius_m": 0.0008940796659961109,
+      "reynolds": 30.93158730367049,
+      "coletto_h_w_m2_k": 103.2915414087086,
+      "multiplier": 0.14578543636088787,
+      "film_h_w_m2_k": 15.058402436657301,
+      "rate_1_s": 0.005821010187016564,
+      "forcing_timescale_s": 34.358297541909266,
+      "film_relaxation_s": 0.13961714343060716,
+      "relaxation_to_forcing_ratio": 0.004063564070958585,
+      "seed_stefan_flux": [
+       0.02174097467201253,
+       0.021633346084527317
+      ],
+      "fallback_clock_offset_s": 50.30565014641395,
+      "closed_form_class_end_s": 81.06799667029566
+     },
+     {
+      "class": 6,
+      "mass_weight": 0.1428613745921899,
+      "d_range_mm": [
+       2.506892270328107,
+       2.8667180135739456
+      ],
+      "radius_m": 0.0010052903517544294,
+      "reynolds": 34.7790330811136,
+      "coletto_h_w_m2_k": 98.31718117969734,
+      "multiplier": 0.14578543636088787,
+      "film_h_w_m2_k": 14.33321316005465,
+      "rate_1_s": 0.004927739291741287,
+      "forcing_timescale_s": 40.586562754079296,
+      "film_relaxation_s": 0.15410240898303176,
+      "relaxation_to_forcing_ratio": 0.0037968824784883554,
+      "seed_stefan_flux": [
+       0.020693963094167277,
+       0.020591517732314962
+      ],
+      "fallback_clock_offset_s": 59.42475537566262,
+      "closed_form_class_end_s": 95.76351477232153
+     },
+     {
+      "class": 7,
+      "mass_weight": 0.1429400026450596,
+      "d_range_mm": [
+       2.8670160876956547,
+       4.0
+      ],
+      "radius_m": 0.0012189837263433044,
+      "reynolds": 42.17197078420695,
+      "coletto_h_w_m2_k": 90.65442903763046,
+      "multiplier": 0.14578543636088787,
+      "film_h_w_m2_k": 13.2160954952981,
+      "rate_1_s": 0.003747148788215857,
+      "forcing_timescale_s": 53.37391475592479,
+      "film_relaxation_s": 0.18125508988113154,
+      "relaxation_to_forcing_ratio": 0.003395948952030191,
+      "seed_stefan_flux": [
+       0.019081094334862072,
+       0.018986633471818202
+      ],
+      "fallback_clock_offset_s": 78.1473377538854,
+      "closed_form_class_end_s": 125.93512057563699
+     }
+    ],
+    "seven_class_closed_form": {
+     "crossing_s": 41.226116567516286,
+     "t010_s": 62.72772907958291,
+     "crossing_to_0p10_s": 21.50161251206662,
+     "ratio_to_measured": 0.8481750556940618,
+     "window_rule_rate_1_s": 0.007232545349471887,
+     "continuous_crossing_to_0p10_s": 21.284635224090124
+    }
+   },
+   "uniform": {
+    "case": "uniform_1_3|p=None|trunc=1-3|basis=number|R=declared|closed_form|tail=hold",
+    "multiplier": 0.1730108397113987,
+    "multiplier_over_step1": 1.4458843291942785,
+    "classes": [
+     {
+      "class": 1,
+      "mass_weight": 0.1428374089526126,
+      "d_range_mm": [
+       1.0,
+       1.8775
+      ],
+      "radius_m": 0.0005882913402251423,
+      "reynolds": 20.352531930019826,
+      "coletto_h_w_m2_k": 123.19574901399366,
+      "multiplier": 0.1730108397113987,
+      "film_h_w_m2_k": 21.31419998578576,
+      "rate_1_s": 0.012521958452730313,
+      "forcing_timescale_s": 15.971942468503528,
+      "film_relaxation_s": 0.06968807600986214,
+      "relaxation_to_forcing_ratio": 0.004363155962231029,
+      "seed_stefan_flux": [
+       0.030772951114463817,
+       0.03062060977231301
+      ],
+      "fallback_clock_offset_s": 23.38529576441118,
+      "closed_form_class_end_s": 37.685609342995576
+     },
+     {
+      "class": 2,
+      "mass_weight": 0.14286998602469242,
+      "d_range_mm": [
+       1.8776000000000002,
+       2.21
+      ],
+      "radius_m": 0.0007740847463807673,
+      "reynolds": 26.780242101178132,
+      "coletto_h_w_m2_k": 109.75243984396619,
+      "multiplier": 0.1730108397113987,
+      "film_h_w_m2_k": 18.98836177777936,
+      "rate_1_s": 0.008478024467969879,
+      "forcing_timescale_s": 23.59040136715852,
+      "film_relaxation_s": 0.08780546596784651,
+      "relaxation_to_forcing_ratio": 0.0037220844444844957,
+      "seed_stefan_flux": [
+       0.027414959469322816,
+       0.027279241848187554
+      ],
+      "fallback_clock_offset_s": 34.5398510081072,
+      "closed_form_class_end_s": 55.66127300548061
+     },
+     {
+      "class": 3,
+      "mass_weight": 0.14279307341329467,
+      "d_range_mm": [
+       2.2100999999999997,
+       2.4371
+      ],
+      "radius_m": 0.0008763876690778363,
+      "reynolds": 30.31951483623081,
+      "coletto_h_w_m2_k": 104.16432918564992,
+      "multiplier": 0.1730108397113987,
+      "film_h_w_m2_k": 18.021558060383846,
+      "rate_1_s": 0.0071070890110012715,
+      "forcing_timescale_s": 28.14091672278399,
+      "film_relaxation_s": 0.09747918205783376,
+      "relaxation_to_forcing_ratio": 0.0034639661180231127,
+      "seed_stefan_flux": [
+       0.026019110525776493,
+       0.025890303047926118
+      ],
+      "fallback_clock_offset_s": 41.202481285022216,
+      "closed_form_class_end_s": 66.39816016492149
+     },
+     {
+      "class": 4,
+      "mass_weight": 0.14284575986212134,
+      "d_range_mm": [
+       2.4372,
+       2.6142000000000003
+      ],
+      "radius_m": 0.000951515131806728,
+      "reynolds": 32.91862514002344,
+      "coletto_h_w_m2_k": 100.61926411390488,
+      "multiplier": 0.1730108397113987,
+      "film_h_w_m2_k": 17.408223375489687,
+      "rate_1_s": 0.006323163755918536,
+      "forcing_timescale_s": 31.629735955011174,
+      "film_relaxation_s": 0.10446905004187391,
+      "relaxation_to_forcing_ratio": 0.0033028745542000846,
+      "seed_stefan_flux": [
+       0.025133592031643944,
+       0.025009168308715014
+      ],
+      "fallback_clock_offset_s": 46.31063076496727,
+      "closed_form_class_end_s": 74.62998787863364
+     },
+     {
+      "class": 5,
+      "mass_weight": 0.14292184288171855,
+      "d_range_mm": [
+       2.6143,
+       2.7613000000000003
+      ],
+      "radius_m": 0.0010120985437043143,
+      "reynolds": 35.01456934447711,
+      "coletto_h_w_m2_k": 98.03820415701922,
+      "multiplier": 0.1730108397113987,
+      "film_h_w_m2_k": 16.961672025003434,
+      "rate_1_s": 0.0057921731894145494,
+      "forcing_timescale_s": 34.52935426128293,
+      "film_relaxation_s": 0.11004218988280785,
+      "relaxation_to_forcing_ratio": 0.0031869171097183226,
+      "seed_stefan_flux": [
+       0.024488871475030257,
+       0.024367639438025154
+      ],
+      "fallback_clock_offset_s": 50.55610258718197,
+      "closed_form_class_end_s": 81.47160297644925
+     },
+     {
+      "class": 6,
+      "mass_weight": 0.14285057535288984,
+      "d_range_mm": [
+       2.7614,
+       2.888
+      ],
+      "radius_m": 0.0010633875962854397,
+      "reynolds": 36.78896581939093,
+      "coletto_h_w_m2_k": 96.0189575448822,
+      "multiplier": 0.1730108397113987,
+      "film_h_w_m2_k": 16.61232047305321,
+      "rate_1_s": 0.005399261824136505,
+      "forcing_timescale_s": 37.042100663822815,
+      "film_relaxation_s": 0.11471915670557012,
+      "relaxation_to_forcing_ratio": 0.0030969938164875904,
+      "seed_stefan_flux": [
+       0.02398448574921855,
+       0.023865750671252125
+      ],
+      "fallback_clock_offset_s": 54.23513648805107,
+      "closed_form_class_end_s": 87.40039839321659
+     },
+     {
+      "class": 7,
+      "mass_weight": 0.14288135351267064,
+      "d_range_mm": [
+       2.8881,
+       3.0
+      ],
+      "radius_m": 0.0011081521176866717,
+      "reynolds": 38.33763956121748,
+      "coletto_h_w_m2_k": 94.36649113936471,
+      "multiplier": 0.1730108397113987,
+      "film_h_w_m2_k": 16.326425872639753,
+      "rate_1_s": 0.0050919885423714095,
+      "forcing_timescale_s": 39.27738610088412,
+      "film_relaxation_s": 0.11877206449684648,
+      "relaxation_to_forcing_ratio": 0.0030239299578587015,
+      "seed_stefan_flux": [
+       0.023571717708744146,
+       0.02345502603691868
+      ],
+      "fallback_clock_offset_s": 57.50792632977766,
+      "closed_form_class_end_s": 92.67452794366396
+     }
+    ],
+    "seven_class_closed_form": {
+     "crossing_s": 41.23154458249733,
+     "t010_s": 60.67249885463678,
+     "crossing_to_0p10_s": 19.44095427213945,
+     "ratio_to_measured": 0.7668881793523085,
+     "window_rule_rate_1_s": 0.007244605491590697,
+     "continuous_crossing_to_0p10_s": 19.0645079464596
+    }
+   }
+  },
+  "sunflower": {
+   "lognormal": {
+    "case": "lognormal|p=0.971|trunc=0.5-4|basis=number|R=declared|closed_form|tail=hold",
+    "multiplier": 0.17107531827949146,
+    "multiplier_over_step1": 1.1784618332536378,
+    "classes": [
+     {
+      "class": 1,
+      "mass_weight": 0.14283600793840417,
+      "d_range_mm": [
+       0.5,
+       1.6205684961914768
+      ],
+      "radius_m": 0.0005712098969078604,
+      "reynolds": 19.761582179862433,
+      "coletto_h_w_m2_k": 124.7335108508462,
+      "multiplier": 0.17107531827949146,
+      "film_h_w_m2_k": 21.338825068926916,
+      "rate_1_s": 0.008290769152387488,
+      "forcing_timescale_s": 24.12321418241468,
+      "film_relaxation_s": 0.06952732821968245,
+      "relaxation_to_forcing_ratio": 0.002882175140258317,
+      "seed_stefan_flux": [
+       0.0197635795975984,
+       0.0196335560476142
+      ],
+      "fallback_clock_offset_s": 36.43880277136527,
+      "closed_form_class_end_s": 58.03727321490463
+     },
+     {
+      "class": 2,
+      "mass_weight": 0.14282873193907047,
+      "d_range_mm": [
+       1.620736998823715,
+       1.838399104056952
+      ],
+      "radius_m": 0.0006914668120670905,
+      "reynolds": 23.92199138229474,
+      "coletto_h_w_m2_k": 115.09339787564312,
+      "multiplier": 0.17107531827949146,
+      "film_h_w_m2_k": 19.689639673443793,
+      "rate_1_s": 0.006319554612605953,
+      "forcing_timescale_s": 31.647799925812706,
+      "film_relaxation_s": 0.08166218766087467,
+      "relaxation_to_forcing_ratio": 0.002580343273538867,
+      "seed_stefan_flux": [
+       0.018236138104004183,
+       0.018116163511214683
+      ],
+      "fallback_clock_offset_s": 47.8049040614572,
+      "closed_form_class_end_s": 76.14043456464371
+     },
+     {
+      "class": 3,
+      "mass_weight": 0.14284483239512544,
+      "d_range_mm": [
+       1.8385902561673793,
+       2.025460569862994
+      ],
+      "radius_m": 0.0007704405139372896,
+      "reynolds": 26.654166206302797,
+      "coletto_h_w_m2_k": 109.97069755953103,
+      "multiplier": 0.17107531827949146,
+      "film_h_w_m2_k": 18.813272086414468,
+      "rate_1_s": 0.005419325882721528,
+      "forcing_timescale_s": 36.9049590905137,
+      "film_relaxation_s": 0.0894474314667767,
+      "relaxation_to_forcing_ratio": 0.0024237239024543144,
+      "seed_stefan_flux": [
+       0.017424464522770765,
+       0.017309829887752537
+      ],
+      "fallback_clock_offset_s": 55.74599286047227,
+      "closed_form_class_end_s": 88.78846647568196
+     },
+     {
+      "class": 4,
+      "mass_weight": 0.14276099073616355,
+      "d_range_mm": [
+       2.0256711721536833,
+       2.2165255613440813
+      ],
+      "radius_m": 0.0008449562026154759,
+      "reynolds": 29.23211157012508,
+      "coletto_h_w_m2_k": 105.77838904061919,
+      "multiplier": 0.17107531827949146,
+      "film_h_w_m2_k": 18.0960715722158,
+      "rate_1_s": 0.004753025563602036,
+      "forcing_timescale_s": 42.078460829575654,
+      "film_relaxation_s": 0.0966780621237863,
+      "relaxation_to_forcing_ratio": 0.00229756650356931,
+      "seed_stefan_flux": [
+       0.0167602082010652,
+       0.016649943673426613
+      ],
+      "fallback_clock_offset_s": 63.56071473300028,
+      "closed_form_class_end_s": 101.2352296489992
+     },
+     {
+      "class": 5,
+      "mass_weight": 0.14296526447176608,
+      "d_range_mm": [
+       2.216756030091554,
+       2.4407930888199587
+      ],
+      "radius_m": 0.0009265502042488416,
+      "reynolds": 32.05493830577893,
+      "coletto_h_w_m2_k": 101.75185035188863,
+      "multiplier": 0.17107531827949146,
+      "film_h_w_m2_k": 17.407230184476532,
+      "rate_1_s": 0.0041694690969317424,
+      "forcing_timescale_s": 47.96773770242772,
+      "film_relaxation_s": 0.10448097160326733,
+      "relaxation_to_forcing_ratio": 0.00217815091158613,
+      "seed_stefan_flux": [
+       0.01612221751728901,
+       0.01601615029678053
+      ],
+      "fallback_clock_offset_s": 72.45663535174839,
+      "closed_form_class_end_s": 115.40405343522158
+     },
+     {
+      "class": 6,
+      "mass_weight": 0.1428699228201624,
+      "d_range_mm": [
+       2.4410468763403146,
+       2.762836139166867
+      ],
+      "radius_m": 0.0010317007751947742,
+      "reynolds": 35.69272830251403,
+      "coletto_h_w_m2_k": 97.24964272279517,
+      "multiplier": 0.17107531827949146,
+      "film_h_w_m2_k": 16.637013581369015,
+      "rate_1_s": 0.0035788348474963417,
+      "forcing_timescale_s": 55.88410991915839,
+      "film_relaxation_s": 0.11437887083521002,
+      "relaxation_to_forcing_ratio": 0.002046715443811663,
+      "seed_stefan_flux": [
+       0.01540885878766179,
+       0.01530748471669033
+      ],
+      "fallback_clock_offset_s": 84.41454127957653,
+      "closed_form_class_end_s": 134.44980139148703
+     },
+     {
+      "class": 7,
+      "mass_weight": 0.14289424969930786,
+      "d_range_mm": [
+       2.763123411912812,
+       4.0
+      ],
+      "radius_m": 0.0012427238481855529,
+      "reynolds": 42.993284230078864,
+      "coletto_h_w_m2_k": 89.92126870990533,
+      "multiplier": 0.17107531827949146,
+      "film_h_w_m2_k": 15.38330966464273,
+      "rate_1_s": 0.002747231091861668,
+      "forcing_timescale_s": 72.80057385506274,
+      "film_relaxation_s": 0.13378178374782396,
+      "relaxation_to_forcing_ratio": 0.0018376473791836797,
+      "seed_stefan_flux": [
+       0.014247704081626851,
+       0.014153969186352991
+      ],
+      "fallback_clock_offset_s": 109.96734234033592,
+      "closed_form_class_end_s": 175.1485835626399
+     }
+    ],
+    "seven_class_closed_form": {
+     "crossing_s": 60.41409631206427,
+     "t010_s": 89.71853983753829,
+     "crossing_to_0p10_s": 29.30444352547402,
+     "ratio_to_measured": 0.6895148618491114,
+     "window_rule_rate_1_s": 0.005039464312289963,
+     "continuous_crossing_to_0p10_s": 28.96840913402938
+    }
+   },
+   "uniform": {
+    "case": "uniform_1_3|p=None|trunc=1-3|basis=number|R=declared|closed_form|tail=hold",
+    "multiplier": 0.20481979478266493,
+    "multiplier_over_step1": 1.4109125341615627,
+    "classes": [
+     {
+      "class": 1,
+      "mass_weight": 0.1428374089526126,
+      "d_range_mm": [
+       1.0,
+       1.8775
+      ],
+      "radius_m": 0.000623231295514757,
+      "reynolds": 21.56131490376409,
+      "coletto_h_w_m2_k": 120.23940278402729,
+      "multiplier": 0.20481979478266493,
+      "film_h_w_m2_k": 24.62740980301466,
+      "rate_1_s": 0.008769796726704068,
+      "forcing_timescale_s": 22.80554569651531,
+      "film_relaxation_s": 0.052198626163419054,
+      "relaxation_to_forcing_ratio": 0.0022888567043320087,
+      "seed_stefan_flux": [
+       0.022809398940774567,
+       0.022659337105637896
+      ],
+      "fallback_clock_offset_s": 34.44842695690468,
+      "closed_form_class_end_s": 54.867136543044396
+     },
+     {
+      "class": 2,
+      "mass_weight": 0.14286998602469242,
+      "d_range_mm": [
+       1.8776000000000002,
+       2.21
+      ],
+      "radius_m": 0.0008200593929199564,
+      "reynolds": 28.370781341993954,
+      "coletto_h_w_m2_k": 107.11869465097688,
+      "multiplier": 0.20481979478266493,
+      "film_h_w_m2_k": 21.940029055800032,
+      "rate_1_s": 0.0059376136335852195,
+      "forcing_timescale_s": 33.683565880529855,
+      "film_relaxation_s": 0.06576913807337444,
+      "relaxation_to_forcing_ratio": 0.001952558654468084,
+      "seed_stefan_flux": [
+       0.02032040232849292,
+       0.020186715471068626
+      ],
+      "fallback_clock_offset_s": 50.879986575406555,
+      "closed_form_class_end_s": 81.03821908133757
+     },
+     {
+      "class": 3,
+      "mass_weight": 0.14279307341329467,
+      "d_range_mm": [
+       2.2100999999999997,
+       2.4371
+      ],
+      "radius_m": 0.0009284383179319068,
+      "reynolds": 32.12025950191856,
+      "coletto_h_w_m2_k": 101.66468269338343,
+      "multiplier": 0.20481979478266493,
+      "film_h_w_m2_k": 20.82293944590354,
+      "rate_1_s": 0.004977474264936833,
+      "forcing_timescale_s": 40.18102140856335,
+      "film_relaxation_s": 0.07301506476133227,
+      "relaxation_to_forcing_ratio": 0.0018171530290111376,
+      "seed_stefan_flux": [
+       0.019285776975338478,
+       0.01915889686365862
+      ],
+      "fallback_clock_offset_s": 60.69457839187859,
+      "closed_form_class_end_s": 96.67024053712959
+     },
+     {
+      "class": 4,
+      "mass_weight": 0.14284575986212134,
+      "d_range_mm": [
+       2.4372,
+       2.6142000000000003
+      ],
+      "radius_m": 0.0010080277708504977,
+      "reynolds": 34.87373685414085,
+      "coletto_h_w_m2_k": 98.20468906155185,
+      "multiplier": 0.20481979478266493,
+      "film_h_w_m2_k": 20.114264260282468,
+      "rate_1_s": 0.004428449512781853,
+      "forcing_timescale_s": 45.16253361876186,
+      "film_relaxation_s": 0.07825070228673803,
+      "relaxation_to_forcing_ratio": 0.001732646422082714,
+      "seed_stefan_flux": [
+       0.01862941663709942,
+       0.01850685468553956
+      ],
+      "fallback_clock_offset_s": 68.2192946074688,
+      "closed_form_class_end_s": 108.65510221354052
+     },
+     {
+      "class": 5,
+      "mass_weight": 0.14292184288171855,
+      "d_range_mm": [
+       2.6143,
+       2.7613000000000003
+      ],
+      "radius_m": 0.0010722093688138247,
+      "reynolds": 37.09416393261594,
+      "coletto_h_w_m2_k": 95.68556717423375,
+      "multiplier": 0.20481979478266493,
+      "film_h_w_m2_k": 19.59829823228946,
+      "rate_1_s": 0.004056568440853998,
+      "forcing_timescale_s": 49.30275500489166,
+      "film_relaxation_s": 0.08242516454441604,
+      "relaxation_to_forcing_ratio": 0.00167181660611538,
+      "seed_stefan_flux": [
+       0.018151539545415228,
+       0.01803212152209013
+      ],
+      "fallback_clock_offset_s": 74.47321704824162,
+      "closed_form_class_end_s": 118.61592907268147
+     },
+     {
+      "class": 6,
+      "mass_weight": 0.14285057535288984,
+      "d_range_mm": [
+       2.7614,
+       2.888
+      ],
+      "radius_m": 0.0011265445944073648,
+      "reynolds": 38.97394583352602,
+      "coletto_h_w_m2_k": 93.71477671547002,
+      "multiplier": 0.20481979478266493,
+      "film_h_w_m2_k": 19.194641334965837,
+      "rate_1_s": 0.003781391613035272,
+      "forcing_timescale_s": 52.8905811581527,
+      "film_relaxation_s": 0.0859283641839862,
+      "relaxation_to_forcing_ratio": 0.0016246439782358292,
+      "seed_stefan_flux": [
+       0.017777680853823447,
+       0.017660722427153556
+      ],
+      "fallback_clock_offset_s": 79.89273074106988,
+      "closed_form_class_end_s": 127.24776582253651
+     },
+     {
+      "class": 7,
+      "mass_weight": 0.14288135351267064,
+      "d_range_mm": [
+       2.8881,
+       3.0
+      ],
+      "radius_m": 0.0011739677821349134,
+      "reynolds": 40.61459881692516,
+      "coletto_h_w_m2_k": 92.1019647855915,
+      "multiplier": 0.20481979478266493,
+      "film_h_w_m2_k": 18.864305526465085,
+      "rate_1_s": 0.003566191711933572,
+      "forcing_timescale_s": 56.08223453908511,
+      "film_relaxation_s": 0.08896412339538559,
+      "relaxation_to_forcing_ratio": 0.0015863155975602984,
+      "seed_stefan_flux": [
+       0.01747173064221838,
+       0.017356785045887998
+      ],
+      "fallback_clock_offset_s": 84.71381416647583,
+      "closed_form_class_end_s": 134.92646310871658
+     }
+    ],
+    "seven_class_closed_form": {
+     "crossing_s": 60.9532896159159,
+     "t010_s": 88.86004011431639,
+     "crossing_to_0p10_s": 27.90675049840049,
+     "ratio_to_measured": 0.6566280365581855,
+     "window_rule_rate_1_s": 0.005073784405710222,
+     "continuous_crossing_to_0p10_s": 27.43635466266145
+    }
+   }
+  }
+ }
+}

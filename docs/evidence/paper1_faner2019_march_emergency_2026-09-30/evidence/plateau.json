@@ -1,0 +1,86 @@
+{
+ "P3_soy_N2_f0999": {
+  "trace": "faner2019_soybean_120C",
+  "measured_plateau_mean_c_to_crossing": 69.11449999999999,
+  "measured_plateau_end_s_2K_rise": 89.71539763431348,
+  "measured_plateau_end_loading": 0.06325968872941157,
+  "measured_plateau_end_after_crossing_s": 43.85161736121442,
+  "marched_interface_temperature_c_range": [
+   68.75335616347832,
+   68.75335616347837
+  ],
+  "marched_mean_particle_temperature_c_start_end": [
+   68.71936168775437,
+   69.82029325146209
+  ],
+  "marched_surface_temperature_c_end": 70.40670613670812,
+  "march_end_loading": 0.04074283405161792,
+  "marched_time_to_measured_plateau_end_loading_s": 19.574233497042968,
+  "marched_time_to_that_loading_after_crossing_s_loading_matched": 19.680595733162534,
+  "marched_mean_T_rise_at_that_loading_K": 0.5656988495848623,
+  "marched_mean_T_rise_2K_reached": null
+ },
+ "P4_sun_N2_f0999": {
+  "trace": "faner2019_sunflower_100C",
+  "measured_plateau_mean_c_to_crossing": 68.51,
+  "measured_plateau_end_s_2K_rise": 117.36475679816168,
+  "measured_plateau_end_loading": 0.08540557964660069,
+  "measured_plateau_end_after_crossing_s": 52.30698520867483,
+  "marched_interface_temperature_c_range": [
+   68.75335616347832,
+   68.75335616347837
+  ],
+  "marched_mean_particle_temperature_c_start_end": [
+   68.7187190444892,
+   69.6366052850604
+  ],
+  "marched_surface_temperature_c_end": 70.1083766747389,
+  "march_end_loading": 0.041253850720783615,
+  "marched_time_to_measured_plateau_end_loading_s": 23.301361674175297,
+  "marched_time_to_that_loading_after_crossing_s_loading_matched": 23.44988796163635,
+  "marched_mean_T_rise_at_that_loading_K": 0.26638279702984846,
+  "marched_mean_T_rise_2K_reached": null
+ },
+ "P1_soy_N4_f0999": {
+  "trace": "faner2019_soybean_120C",
+  "measured_plateau_mean_c_to_crossing": 69.11449999999999,
+  "measured_plateau_end_s_2K_rise": 89.71539763431348,
+  "measured_plateau_end_loading": 0.06325968872941157,
+  "measured_plateau_end_after_crossing_s": 43.85161736121442,
+  "marched_interface_temperature_c_range": [
+   68.75335616347832,
+   68.75335616347837
+  ],
+  "marched_mean_particle_temperature_c_start_end": [
+   68.72220497727903,
+   68.95958999228355
+  ],
+  "marched_surface_temperature_c_end": 69.32648329994277,
+  "march_end_loading": 0.09609521645684603,
+  "marched_time_to_measured_plateau_end_loading_s": null,
+  "marched_time_to_that_loading_after_crossing_s_loading_matched": null,
+  "marched_mean_T_rise_at_that_loading_K": null,
+  "marched_mean_T_rise_2K_reached": null
+ },
+ "P2_sun_N4_f0999": {
+  "trace": "faner2019_sunflower_100C",
+  "measured_plateau_mean_c_to_crossing": 68.51,
+  "measured_plateau_end_s_2K_rise": 117.36475679816168,
+  "measured_plateau_end_loading": 0.08540557964660069,
+  "measured_plateau_end_after_crossing_s": 52.30698520867483,
+  "marched_interface_temperature_c_range": [
+   68.75335616347832,
+   68.75335616347837
+  ],
+  "marched_mean_particle_temperature_c_start_end": [
+   68.72133742747155,
+   68.92186719832955
+  ],
+  "marched_surface_temperature_c_end": 69.22015974962324,
+  "march_end_loading": 0.09628612439668129,
+  "marched_time_to_measured_plateau_end_loading_s": null,
+  "marched_time_to_that_loading_after_crossing_s_loading_matched": null,
+  "marched_mean_T_rise_at_that_loading_K": null,
+  "marched_mean_T_rise_2K_reached": null
+ }
+}

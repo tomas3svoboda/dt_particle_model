@@ -1,0 +1,24 @@
+\section{Gas-composition and outlet-equilibrium calculation}
+\label{sup:evidence:outlet}\label{sup:evidence:checks}\label{sup:evidence:outstanding}
+This section gives the equilibrium calculation behind the residual-hexane floor quoted in the main text. The pressure-feasible solvent activity used for the outlet check is $a_{\mathrm{h}}^{*}=\min(1,\yh P/P_{\mathrm{sat}}^{\mathrm{h}}(T))$. An equilibrium at a specified $y_h$ and temperature gives an \emph{equilibrium loading}, not the time to reach it. Table~\ref{tab:evidence:floor} separates GAB-retained solvent from the total dry-shell inventory, which also holds pore gas; its grid is a literature-based range of last-tray states, not a plant sensor trace. The last-tray total of $4.5$--$66.0$ ppm without the oil-solution arm refers to $y_h=0.003$--$0.03$ and 100--\SI{110}{\celsius}. With the oil-dissolution sensitivity it becomes $8.1$--$112.4$ ppm; this band must not be formed by adding the arm to a total-meal isotherm as if their overlap had been measured. In the experiments' pure-hexane gas the floor is many times higher. The DT march of Sec.~\ref{sup:dtmarch} reads this floor at its declared exit gas, $y_h=0.01$, below the dry-shell tail.
+
+Table~\ref{tab:evidence:floor} uses a pressure of \SI{101.3}{\kilo\pascal}.
+The $y_h=1$ row represents the experimental pure-hexane gas, not
+a desolventizer exit. The oil-solution sensitivity (Sec.~\ref{sup:missingfull})
+is not included in the table totals.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Equilibrium hexane inventories at atmospheric pressure (ppm dry meal).}
+\label{tab:evidence:floor}
+\begin{tabular}{@{}r rrrr@{}}\toprule
+ & \multicolumn{2}{c}{\SI{100}{\celsius}} & \multicolumn{2}{c}{\SI{110}{\celsius}}\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+$y_h$ & Sorbed & Total & Sorbed & Total\\\midrule
+$0.003$ & $5.55$ & $6.58$ & $3.51$ & $4.51$\\
+$0.01$ & $18.52$ & $21.94$ & $11.71$ & $15.04$\\
+$0.03$ & $55.76$ & $66.02$ & $35.24$ & $45.24$\\
+$0.10$ & $188.23$ & $222.45$ & $118.90$ & $152.22$\\
+$1.0$ & $2312.41$ & $2654.60$ & $1416.61$ & $1749.88$\\
+\bottomrule\end{tabular}\end{table}
+
+Two numerical checks mark the limits of the coupled form rather than validate it. In the ideal-binary reduction the scalar Fick identity holds to $6.34\times10^{-16}$, while at finite pressure the low-water coefficient comparison leaves a \SI{3.799}{\percent} discrepancy that no calibration sets to zero. The default coupled interface formulation at \SI{409.15}{\kelvin} admits a pore hexane fraction of at most $0.857$; this restriction does not define the supplied external bath. The Faner experiment with a water-bearing particle treats the pure bulk gas separately from its binary state in the pores and at the surface; the earlier property-table checks are separate from this march. The experiments that would settle what the comparisons leave open are listed at the end of Sec.~\ref{sup:missingfull}.

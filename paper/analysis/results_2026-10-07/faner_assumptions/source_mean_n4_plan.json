@@ -1,0 +1,8 @@
+{
+  "volume_mean_N4": {
+    "radius_m": 0.000885,
+    "water": 0.025,
+    "cells": 4,
+    "basis": "Faner reported number-mean volume-equivalent diameter divided by two; same four-cell resolution as the manuscript predecessor"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "root_seed": "paper\\analysis\\results_2026-10-08\\dt_contact_0p32\\b_01.birth_debug.json",
+  "root_seed_sha256": "ce6849b605772c8865a7f35bfc7a0ca6ecb042bd648bfd36f614a4f861fa6f85",
+  "same_IVP_seed_only": true,
+  "accepted_material_state_imported": false,
+  "acceptance_rules_changed": false,
+  "wrapper_sha256": "7e676d884f12be5ff96b069a3113c47f7c3d594c4cb8a9d26fe532492ad554d2"
+}

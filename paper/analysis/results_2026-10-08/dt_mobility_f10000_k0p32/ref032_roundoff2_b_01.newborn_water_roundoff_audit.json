@@ -1,0 +1,29 @@
+[
+  {
+    "before_time_s": 497.0264046524753,
+    "dt_s": 0.05,
+    "certify": true,
+    "newborn_water_allowance_active": true,
+    "internal_nonlinear_tolerance": 1e-09,
+    "maximum_scaled_residual": 5.579750949907162e-10,
+    "scaled_residuals": [
+      1.516073330224028e-15,
+      -3.1946353587962016e-16,
+      -5.579750949907162e-10,
+      1.820508034912858e-12,
+      -1.521251287919107e-12,
+      -7.648716151151762e-13,
+      -5.379533820389425e-11,
+      2.167171763043257e-12,
+      -1.001591570004216e-12,
+      1.301539159427782e-13,
+      -3.867337202375799e-14
+    ],
+    "evaluations": 24,
+    "conditioning_certified": true,
+    "newborn_water_raw_residual_mol": -3.803035128710857e-15,
+    "newborn_water_error_kg_kg_dry": 4.179090204880391e-12,
+    "all_other_requested_rows_pass_1e10": true,
+    "status": "SOLVED"
+  }
+]

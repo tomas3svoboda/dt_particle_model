@@ -1,0 +1,5 @@
+condition,check,counterpart,radius_mm_check,radius_mm_counterpart,rms_full_abs_diff,rms_decimated_abs_diff,band_equal,strides_check,strides_counterpart,max_rel_diff_mean_loading_path,max_abs_diff_stride_s,fires
+faner2008_sunflower_136C,sim_R0_law_over_rf2_faner2008_sunflower_136C,ladder_faner2008_sunflower_136C_n060_t1,0.885,0.7215,1.6459056340067946e-14,1.459943277382081e-14,True,483,483,8.327069311239635e-14,2.6645352591003757e-15,False
+faner2008_sunflower_136C,sim_R0_arrh_plus_over_rf2_faner2008_sunflower_136C,temp_arrh_ea_plus_half95_faner2008_sunflower_136C,0.885,0.7215,2.7755575615628914e-16,4.996003610813204e-16,True,481,481,4.40146972408493e-13,1.7763568394002505e-15,False
+faner2008_soybean_136C,sim_R0_law_over_rf2_faner2008_soybean_136C,ladder_faner2008_soybean_136C_n060_t1,0.885,0.666,4.804490139065365e-14,4.6157522248790883e-14,True,484,484,8.31715576034298e-13,2.6645352591003757e-15,False
+faner2008_soybean_136C,sim_R0_arrh_plus_over_rf2_faner2008_soybean_136C,temp_arrh_ea_plus_half95_faner2008_soybean_136C,0.885,0.666,1.6653345369377348e-16,1.1102230246251565e-16,True,482,482,3.186006814620439e-13,8.881784197001252e-16,False

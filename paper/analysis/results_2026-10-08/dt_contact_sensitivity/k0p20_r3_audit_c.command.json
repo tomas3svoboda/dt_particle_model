@@ -1,0 +1,11 @@
+{
+    "executable":  "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "arguments":  [
+                      "paper/analysis/harness/audit_radial_fast_wetting.py",
+                      "--result",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_r3_c_dt5.json",
+                      "--out",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_r3_c.audit.json"
+                  ],
+    "utc":  "2026-10-08T18:23:57.9382653Z"
+}

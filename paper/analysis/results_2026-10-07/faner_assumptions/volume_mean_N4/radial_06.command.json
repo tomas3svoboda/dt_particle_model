@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\paper\\analysis\\harness\\experiment_core2_faner.py",
+    "--out",
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_06.json",
+    "--resume",
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_05.accepted.pkl",
+    "--continued-water",
+    "--regional-tolerance",
+    "1e-09",
+    "--difference-mode",
+    "central",
+    "--steps",
+    "100",
+    "--continuation-dt",
+    "0.5",
+    "--horizon",
+    "72.16034788231417",
+    "--wall-budget",
+    "180"
+  ]
+}

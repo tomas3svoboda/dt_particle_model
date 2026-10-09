@@ -1,0 +1,46 @@
+{
+ "thesis_soybean_136C": {
+  "rate_pre_over_const": 0.554038546065528,
+  "mobile_fraction_gone_at_meanT_plus1K_rc": 0.8110585974834351,
+  "mobile_fraction_gone_at_meanT_plus1K_rpre": 0.8951646959599482,
+  "shell_over_film_closed_form": 0.018750846074291214,
+  "Tp_tc_minus_Tb_over_max_halfwidth_near_tc": 3.947924445826702,
+  "max_halfwidth_near_tc": 2.77619,
+  "released_minus_retained_plateau_s": 1.5898881830112988,
+  "released_over_retained_t010": 0.9946003665604256,
+  "sens_over_nosens_t010": 1.0179058995267964
+ },
+ "thesis_sunflower_136C": {
+  "rate_pre_over_const": 0.5250206059745008,
+  "mobile_fraction_gone_at_meanT_plus1K_rc": 0.7963075856135521,
+  "mobile_fraction_gone_at_meanT_plus1K_rpre": 0.8907785748012524,
+  "shell_over_film_closed_form": 0.020511872203710466,
+  "Tp_tc_minus_Tb_over_max_halfwidth_near_tc": 4.401426083424129,
+  "max_halfwidth_near_tc": 2.21918,
+  "released_minus_retained_plateau_s": 1.6754920435080667,
+  "released_over_retained_t010": 0.9941085659522476,
+  "sens_over_nosens_t010": 1.0195710061442336
+ },
+ "journal_soybean_120C": {
+  "rate_pre_over_const": 0.7170100660124655,
+  "mobile_fraction_gone_at_meanT_plus1K_rc": 0.8727322429909431,
+  "mobile_fraction_gone_at_meanT_plus1K_rpre": 0.9129706392456558,
+  "shell_over_film_closed_form": 0.01637743930353334,
+  "Tp_tc_minus_Tb_over_max_halfwidth_near_tc": -0.26899970165051257,
+  "max_halfwidth_near_tc": 1.4,
+  "released_minus_retained_plateau_s": 2.4855312780922425,
+  "released_over_retained_t010": 0.9962405514356445,
+  "sens_over_nosens_t010": 1.011934109536124
+ },
+ "journal_sunflower_100C": {
+  "rate_pre_over_const": 0.613316830126657,
+  "mobile_fraction_gone_at_meanT_plus1K_rc": 0.9135180577944217,
+  "mobile_fraction_gone_at_meanT_plus1K_rpre": 0.9559320074070002,
+  "shell_over_film_closed_form": 0.01951945382739513,
+  "Tp_tc_minus_Tb_over_max_halfwidth_near_tc": -0.18535276430006728,
+  "max_halfwidth_near_tc": 0.7,
+  "released_minus_retained_plateau_s": 3.753903048907347,
+  "released_over_retained_t010": 0.9969903736791389,
+  "sens_over_nosens_t010": 1.0086637130390808
+ }
+}

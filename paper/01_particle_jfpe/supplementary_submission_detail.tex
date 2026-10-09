@@ -1,0 +1,126 @@
+\section{Comparison inputs, uncertainties and source limitations in detail}
+\label{sup:detail:inputs}\label{sup:detail:numerics}\label{sup:detail:ensemble}
+This section gives the inputs of each measured-curve comparison and the source statements behind them. The comparisons carry three kinds of uncertainty, which are not combined into one error bar: the reading half-width of a point digitized from a published trace; a source statement (mass basis, particle shape, probe depth, gas flow) that admits more than one reading, each an alternative model input, not a sample from a distribution; and the covariance or prediction interval of a coefficient fitted to independent data, which does not cover a temperature extrapolation or an unmeasured geometry. The main text states the strongest condition beside each headline result.
+
+\subsection{Which source statements set a calculation}
+For the 2008 thesis, the nominal sample mass is read as the wet charge, because the printed flux definition then reproduces the plotted constant-rate slope; reading it as dry meal predicts much less duty and a later transition, and the two readings cannot be averaged. Within a source, a tabulated quantity takes precedence over a position digitized from a graph, and a later peer-reviewed statement of a condition over an earlier thesis sentence. On version two of the digitization, the thesis sunflower window holds fourteen points from the measured crossing on. The earlier $9.1$-percent residual on the 2019 sunflower sphere belongs to version one ($14$ of $15$ in band); rescored on version two it is $11.6$ percent ($13$ of $14$), a change of the scored reading, not of the equations. For the 2019 run, the particle sizes and sphericity come from the article; the current experiment declares one representative radius because no mass histogram of the charge is printed. The film exposure multiplier comes from the constant-rate slope; the gas flow through the holder, the wetness near the thermocouple and its depth remain unmeasured (Sec.~\ref{sup:journalmarch}).
+
+\subsection{External heat coefficient and finite sample geometry}
+\label{sup:detail:geometry}
+\paragraph{Film exposure multiplier: source data and calculation.}
+\label{sup:fanermultiplier}
+The multiplier was inferred from the constant-rate evaporation duty, including the Ackermann correction. For a
+sphere with a wet surface,
+$m''\Delta h_{\mathrm{vap}}=h_Q\Phi(\beta)(T_g-T_b)$ and
+$r_c=3m''/(\rho_{\mathrm{dm}}\Rp)$, where $r_c$ is the decline of
+hexane loading per unit dry mass and $\beta=m''c_{p,\mathrm v}/h_Q$.
+The original construction matched mass-weighted particle rates to a
+least-squares source slope of $7.26\times10^{-3}$ kg/(kg dry s), using
+the four soybean solvent-loading readings in Fig.~2 of
+\citet{faner2019kinetics}, above loading 0.2388. The digitized pairs
+$(t_j\text{ [s]},X_j\text{ [kg/kg dry]})$ are
+\[
+\begin{aligned}
+ &(0.000,\;0.492364),\quad(9.884,\;0.420900),\\
+ &(20.077,\;0.337384),\quad(29.961,\;0.278064).
+\end{aligned}
+\]
+These values keep the digitization precision for reconstruction; it does
+not represent experimental accuracy.
+With bars denoting the four-point arithmetic means, the slope is
+\[
+r_c=-\frac{\sum_j(t_j-\bar t)(X_j-\bar X)}
+                  {\sum_j(t_j-\bar t)^2}
+    =7.260603\times10^{-3}\ \mathrm{kg/(kg\ dry\ s)}.
+\]
+The construction used a truncated lognormal number distribution of sizes,
+consistent with the reported mean diameter and size fractions and converted
+to mass weights, with reference radius 0.666 mm and initial loading 0.4924.
+For each size class $i$, the Ackermann balance gives
+\[
+r_i(f)=\frac{3f h^0_{Q,i}}{\rho_{\mathrm{dm}}R_i c_{p,\mathrm v}}
+ \ln\!\left(1+\frac{c_{p,\mathrm v}(T_g-T_b)}
+ {\Delta h_{\mathrm{vap}}}\right),
+\]
+where $h^0_{Q,i}$ is the unscaled correlation coefficient.
+The earlier ensemble uses 400 mass-weighted classes. It chooses the
+single factor $f$ so that the least-squares decline of its mean loading,
+$\bar X(t;f)=\sum_i w_iX_i(t;f)$, at the same four times equals $r_c$.
+The smallest classes enter the falling-rate period inside that window;
+matching only the ensemble's initial rate would give 0.14508.
+The four-time rule gives $f=0.1457854364$; the present 0.885-mm particle
+uses it unchanged, with initial loading 0.475.
+The multiplier is therefore a boundary calibration carried over from an
+earlier geometry, not an independently measured transport property or
+exposed surface fraction. The later falling-rate and temperature readings
+were not used to identify it.
+The digitized data, distribution inputs, slope calculation and exact
+carried-over value are recorded in the reproducibility file
+\texttt{faner\_film\_boundary\_derivation\_2026-10-08.json}.
+
+The unscaled gas-film heat and mass coefficients use an industrial
+reference superficial velocity of 0.230 m/s, obtained from a 3.9 kg/s gas
+flow, a 6-m tower diameter, a gas density of 0.60 kg/m$^3$ and a bed voidage
+of 0.40 \citep{coletto2022modeling}. At the present reference radius, the
+heat coefficient is 104 W/(m$^2$ K) and the mass coefficient 0.0672 m/s;
+scaling gives 15.1 W/(m$^2$ K) and 0.00980 m/s. Both coefficients
+are scaled, while the geometric area remains $4\pi\Rp^2$.
+The heat-duty inference does not determine mass transfer separately,
+so applying the same factor to both is a declared boundary assumption.
+Faner's charge of about 30 g in a 0.011-m$^2$ holder forms a layer
+about three to five particle diameters deep \citep{faner2019kinetics}.
+The industrial reference coefficients cannot be assumed to describe that
+holder without a separate assessment of its gas flow and sample contact.
+
+An unscaled calculation, with multiplier one and otherwise the same
+four-cell particle, initial moisture, oil fraction, transport coefficients
+and prescribed vapour, depletes external free hexane at 6.8 s and crosses
+0.20 kg/kg dry at 6.8 s, rather than 46.8 s and 46.6 s, respectively.
+Its heat and mass coefficients are 6.86 times larger. The calculation
+enters regime B and continues to 6.88 s with the same component
+and energy checks; the bounded continuation then reaches its computing-time
+limit. This result shows the early boundary sensitivity; it is not a
+complete falling-rate history or a prediction of the later temperature.
+
+Separately, at the 2008 rig's own state, Whitaker's packed-bed correlation
+predicts $0.82$--$1.06$ of the constant-rate duties on the wet-charge
+basis (Sec.~\ref{sup:filmmatch}). Two inferred coefficients lie $3.7$ and
+\SI{4.2}{\percent} below it, so the bracketing criterion over three
+correlations, declared before the comparison, is narrowly missed; the film
+is reported as a duty comparison with the departure stated. A tray
+comparison needs its own gas composition, voidage, interfacial area and
+condensation balance; the holder's coefficient cannot simply be copied.
+
+\subsection{The declared spheres and the effective diffusivity law}
+This subsection details the declared spheres and diffusivity law of Sec.~\ref{sup:surfaceloading}. The convention $R_d=\psi d_{\mathrm{eq}}/2$ gives the sphere the particle's volume-to-surface ratio. It was adopted after the effective-radius sensitivity had been inspected and is an assumption for the 2008 samples, whose shape was not measured; the 2019 sphericity $0.74$ comes from later samples. At constant diffusivity the spherical diffusion time scales with $\Rp^2/\Deff$, so a drying curve alone cannot separate radius from diffusivity. The volume-to-surface equivalence is an early-time construction, while the scored window reaches a Fourier number near $0.3$. The law's temperature term is weakly resolved (the 95-percent half-width of the activation energy exceeds its central value), and its prediction factor is a spread within the regression domain, not a statement about the \SI{41}{\kelvin} transfer above it. Reading the coefficient at a weighted mean concentration instead of at the surface would raise it five- to seventy-five-fold and dry far too fast; reading it in each interior cell gave no mesh-refined solution.
+
+Table~\ref{tab:detail:geometry} compares these sphere conventions with
+the same coefficient law. Errors are RMS fractions of the measured loading
+drop; parentheses count points within the reading band, out of fourteen sunflower and fifteen soybean observations.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Particle geometry sensitivity in the 2008 falling-rate comparisons.}
+\label{tab:detail:geometry}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.49\textwidth}cc@{}}\toprule
+Sphere convention & Sunflower & Soybean\\\midrule
+Thesis volume-equivalent diameter & $0.379$ ($1$) & $0.310$ ($1$)\\
+2019 soybean volume-equivalent diameter, both traces & $0.317$ ($1$) & $0.303$ ($1$)\\
+$\psi$ times thesis sample diameter, declared & $0.172$ ($9$) & $0.156$ ($8$)\\
+$\psi$ times 2019 soybean diameter, both traces & $0.099$ ($14$) & $0.147$ ($9$)\\
+$\psi$ times 2019 sunflower diameter, sunflower only & $0.116$ ($13$) & --\\
+\bottomrule\end{tabular}\end{table}
+
+Table~\ref{tab:detail:dryladder} tests mesh and time-step sensitivity
+on each thesis sample's declared sphere. It reports the RMS error of the
+surface-read Fickian calculation as a fraction of the scored loading drop.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Space and time refinement of the 2008 Fickian comparisons.}
+\label{tab:detail:dryladder}\label{tab:evidence:dryladder}
+\begin{tabular}{@{}lccc@{}}\toprule
+Trace & 60 cells, nominal step & 120 cells, quarter step & 240 cells, quarter step\\\midrule
+Sunflower, $\Rp=0.7215$ mm & $0.1721$ & $0.1678$ & $0.1676$\\
+Soybean, $\Rp=0.6660$ mm & $0.1562$ & $0.1525$ & $0.1524$\\
+\bottomrule\end{tabular}\end{table}
+
+Across the law's prediction band, the residual on the declared sunflower sphere runs from $5.4$ to $52.6$ percent and on soybean from $7.7$ to $42.2$ percent; the best match lies inside the band, so points inside a broad band do not identify a mechanism. The central marches dry more slowly than both traces. Even so, a storage-consistent path with no coefficient fitted to the falling-rate points comes considerably closer than the same law on the volume-equivalent spheres. The uncertainty is dominated by particle shape and source conditions, not by truncation error in the surface-read form.

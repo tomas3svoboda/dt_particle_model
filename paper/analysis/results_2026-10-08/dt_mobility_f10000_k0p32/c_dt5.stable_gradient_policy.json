@@ -1,0 +1,7 @@
+{
+  "original_function_sha256": "daaa9e674a17cc7a8cab8826a2207cea35e8f48bb25ef5745e4c8b48e48b9946",
+  "rewritten_function_sha256": "dd2e620db68712288139f46b56ba0768546e7ffdcad6928549ace3c30313897a",
+  "only_liquid_gradient_AST_expression_changed": true,
+  "force": "(A1/A2)*(W_right-W_left)/(W_left*W_right)/distance",
+  "physical_law_changed": false
+}

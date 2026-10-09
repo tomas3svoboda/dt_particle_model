@@ -1,0 +1,37 @@
+[
+  {
+    "before_time_s": 497.0264046524753,
+    "dt_s": 0.05,
+    "reference_source": "uncommitted admissible numerical seed",
+    "original_tangent_vector": [
+      0.0,
+      0.0,
+      47725.6767626281,
+      0.0,
+      -11243.243182968841,
+      0.0,
+      0.3539805399078184,
+      0.354259675456305,
+      0.12693119953871843,
+      8.730924146386638e-10,
+      336.97063611791646
+    ],
+    "admissible_reference_vector": [
+      0.34783720444011124,
+      -3.1985070764184442e-06,
+      46968.82891873245,
+      3.3859405290388622,
+      -1860.0841955304313,
+      -0.045032715434247805,
+      0.34417577614876527,
+      0.3427903884124794,
+      0.11289592020249117,
+      8.380297212545948e-10,
+      337.1082367974175
+    ],
+    "tangent_based_physical_column_scales_changed": false,
+    "native_residual_scale_function_changed": false,
+    "physical_residual_assembly_changed": false,
+    "native_final_phase_balance_conditioning_changed": false
+  }
+]

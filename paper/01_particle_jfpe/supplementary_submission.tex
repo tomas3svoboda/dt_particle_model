@@ -1,0 +1,530 @@
+\documentclass[11pt]{article}
+\PassOptionsToPackage{round,authoryear,longnamesfirst,sort}{natbib}
+\usepackage[natbibapa]{apacite}
+\input{preamble.tex}
+\input{macros.tex}
+\input{core2_particle_results.tex}
+\usepackage{xr}
+\externaldocument[M-]{main}
+\newcommand{\Xhwa}{X_{\mathrm{h,w}}^{a}}
+\newcommand{\Lwh}{L_{\mathrm{wh}}^{\mathrm{eff}}}
+\newcommand{\Lwr}{L_{\mathrm{w,ret}}^{\mathrm{eff}}}
+\newcommand{\Kws}{K_{\mathrm{w,s}}}
+\newcommand{\Cdm}{\rho_{\mathrm{dm,p}}}
+\newcommand{\wo}{w_{\mathrm{o}}}
+\newcommand{\woref}{w_{\mathrm{o,ref}}}
+\newcommand{\Bh}{B_{\mathrm{h}}}
+\newcommand{\qnet}{q_{\mathrm{net}}}
+\newcommand{\Tg}{T_{\mathrm{g}}}
+\newcommand{\Tb}{T_{\mathrm{b}}}
+\newcommand{\dd}{\mathrm{d}}
+\captionsetup{font=small}
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.80}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thesubsection}{S\arabic{section}.\arabic{subsection}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\begin{document}
+\title{Supplementary Material for: A particle model of hexane removal and water uptake in soybean meal desolventizing}
+\author{Tom\'a\v{s} Svoboda$^{1,3,*}$, Marcela Slukov\'a$^{1}$, Svatopluk Henke$^{1}$, Tom\'a\v{s} Moucha$^{2}$\\[6pt]
+\parbox{0.88\textwidth}{\raggedright\normalsize
+$^{1}$University of Chemistry and Technology Prague, Department of Carbohydrates and Cereals, Technick\'a 5, 166~28 Prague 6, Czech Republic\\[2pt]
+$^{2}$University of Chemistry and Technology Prague, Department of Chemical Engineering, Technick\'a 5, 166~28 Prague 6, Czech Republic\\[2pt]
+$^{3}$Siemens, s.r.o., Digital Industries, Siemensova 1, 155~00 Prague, Czech Republic\\[2pt]
+$^{*}$Corresponding author: \texttt{tomas3.svoboda@vscht.cz}}}
+\date{}
+\maketitle
+
+\noindent\textbf{Purpose and scope.} This Supplementary Material gives the parameter and source conventions, the balance detail needed to reconstruct the model, the inputs and scores of every comparison in the main text, the observed numerical checks, and the records behind the desolventizer-toaster (DT) calculation. It does not prove convergence of every coupled trajectory or establish steam/hexane co-removal, calibration or validation in an operating unit. The two pure-hexane drying comparisons test different limits: the 2008 falling-rate curves against a \emph{separate Fickian shell}, and the 2019 soybean run against a water-bearing radial particle, whose volume-mean temperature differs from the local holder thermocouple. The DT history is a prescribed-bath particle experiment, not validation against measured coupled drying. A source release matched to these results and a preservation archive are in preparation; the Data availability statement gives the current access route.
+
+\noindent\textbf{Reading conventions.} All solvent and water loadings are kilograms per kilogram of dry, water- and solvent-free composite meal. A \emph{declared} input is chosen and bounded here; it is not a measured material property. An \emph{identified} coefficient was obtained from the series on which it is scored; a separate prediction was not. Where a source does not print its mass basis or size-distribution shape, both readings are reported. Thermocouple temperatures are read in a thin layer, not at a known position in a particle. Numbers prefixed S refer to this document; numbers without the prefix refer to the main manuscript.
+
+\section{Process, balances and independent property inputs}
+\label{sup:derivations}\label{sup:ale}\label{sup:closures}
+This section supports the main-text particle model and records its property sources. In the DT, heat reaches the meal through a gas film and indirectly heated trays; hexane leaves the wet meal, and injected steam may condense. The particle model resolves a liquid-hexane core of radius $\front$, a dry shell extending to the outer radius $\Rp$, and external free hexane in regime A. The external water film stores condensate separately; liquid-water imbibition can transfer it into retained water in the dry shell. As in the main text, a dry shell is depleted of free liquid hexane, not of water. The two components are water (w) and n-hexane (h); the dry meal and its reference residual oil are immobile. The main manuscript gives the local balances, the binary pore-gas mobility, the separate retained-water mobility and the jump conditions at the front. The concentration $C_k$ includes every phase in which $k$ is stored, not only the pore gas. A local phase change moves material between these stored terms; it is not a separate component source. One shared caloric reference per component ensures that vaporization and binding energy are not counted twice.
+
+The exact balances over a moving control volume are
+Eqs.~(\ref*{M-eq:movingcomp}) and~(\ref*{M-eq:movingenergy}) of the main
+text. Here $u$ is the total internal energy density, $j_k$ a molar component
+flux and $\JE=q+\sum_k\bar h_kj_k$ the total energy flux, on the same datum
+as storage. Terms proportional to the boundary speeds are fluxes of swept
+material; dropping them creates or destroys material, even when a
+fixed-mesh solver converges. The jump conditions,
+Eqs.~(\ref*{M-eq:rhcomp}) and~(\ref*{M-eq:rhenergy}), are the thin-volume
+limits of these balances. The wet-side \emph{donor} is the material actually
+swept, not an equilibrium interface trace substituted into only one balance.
+
+The denominator of the front velocity, Eq.~(\ref*{M-eq:frontvelocity}), is this jump written so that the latent heat appears once. Eq.~(\ref*{M-eq:shellconserved}) removes the wet-side relative hexane flux, so the dry-side hexane flux is $\dot{\front}(C_{\mathrm{h,d}}^{\Gamma}-C_{\mathrm{h,w}}^{\mathrm{b}})$. Substituting it into the energy jump leaves
+\begin{equation}
+\bar{h}_{\mathrm{h,d}}\bigl(C_{\mathrm{h,d}}^{\Gamma}-C_{\mathrm{h,w}}^{\mathrm{b}}\bigr)
+-\bigl(u_{\mathrm{d}}^{\Gamma}-u_{\mathrm{w}}^{\mathrm{b}}\bigr)
+\label{eq:sub:latent}
+\end{equation}
+in the denominator. On one caloric datum, $h_{v}-u_{l}=\Delta h_{\mathrm{vap}}+(h_{l}-u_{l})$. For the liquid, $h_{l}-u_{l}=Pv_{l}$ is negligible compared with the latent heat. For an ideal vapour, $h_{v}-u_{v}=RT/M_{\mathrm{h}}$, so $u_{v}-u_{l}=\Delta h_{\mathrm{vap}}-RT/M_{\mathrm{h}}$. The volumetric denominator therefore contains the latent heat of the liquid hexane swept by the front, a smaller ideal-gas correction on the pore-gas trace, and the binding-potential difference already stored in $u$. The smooth-region balances have no separate vaporization source, so this heat is not counted twice.
+
+\subsection{A shared donor, retained phases and caloric closure}
+\label{sup:donor}\label{sup:binding}\label{sup:stefanrecovery}\label{sup:singlecomponent}
+The liquid-hexane core carries its mobile n-hexane with the solid. Its local activity is one, but its stored loading is not re-equilibrated each time the front advances. The dry shell holds pore gas and retained material as separate inventories. The binary exchange flux separates the two vapours, and the summed component equations set the total (Stefan) molar flux $\Nt$, which meets no Darcy or Knudsen pressure resistance. At a pure n-hexane state the moving-front formulation is therefore heat-fed, even after the shell appears. The scalar Fickian dry shell of Eq.~\eqref{eq:ficklimit} is a different constitutive description. Its effective coefficient represents a slow transport path that the binary total-flux law does not supply. One cannot claim that both measured regimes are reproduced by switching an unidentified coefficient within one validated kinetic law.
+
+At a moving interface, the water and energy donor terms both use the state of the consumed wet-core material. A necessary discrete datum test is $\partial R_E/\partial c_{\mathrm w}=R_{\mathrm w}$, with $R_E$ and $R_{\mathrm w}$ the interfacial energy and water residuals and $c_{\mathrm w}$ an arbitrary shift of the caloric zero of water. When a stored bulk water term is mixed with a swept equilibrium trace, the test exposes a hidden pre-drainage assumption. The resolved moving-front comparisons in the main text use the corrected donor; both prescribed-bath experiments use the same radial closure and conservative transitions between regimes. The binding energy of retained hexane comes from the same Guggenheim--Anderson--de Boer (GAB) activity law that sets the stored solvent. With sorption potential $\psi_{\mathrm h}=(RT/M_{\mathrm h})\int_0^W\ln a_{\mathrm h}(\xi,T)\,\dd\xi$, the caloric potential is $\Bh=T\partial_T\psi_{\mathrm h}-\psi_{\mathrm h}$. No separately fitted heat-of-sorption source enters the energy equation. The modified Luikov water isotherm, Eq.~(\ref*{M-eq:luikov}), gives the retained-water activity within its measured activity and temperature domain. Condensing water on a surface exposed to vapour and retaining water in the meal are different operations: condensation changes the material inventory, and retention defines a constitutive state function.
+
+\subsection{Parameters, source hierarchy and film definition}
+\label{sup:parameters}\label{sup:luikov}\label{sup:oilmap}\label{sup:virial}\label{sup:filmconvention}
+This subsection records the source conventions behind the adopted parameter
+set, Table~\ref*{M-tab:parameters} of the main manuscript, which separates
+published property fits, derived quantities and declared transport inputs.
+The 2008 thesis and 2019 article are each used for their own runs, and a
+printed table takes precedence over a digitized plot. The 2019 samples' mean
+sphericity is not claimed as measured for the 2008 samples. Each published
+correlation has its own definition of gas velocity, voidage and transfer
+area; borrowing a coefficient without them would obscure the comparison.
+
+The cross second virial coefficient of the binary gas uses the
+corresponding-states correlation of \citet{plyasunov2003crossvirial}, with
+central interaction $k_{\mathrm{wh}}=0.494$ and source interval
+0.477--0.511. Both completed main trajectories use the central value;
+listing the interval does not mean that the full coupled histories were
+recalculated at its endpoints. The upper water capacity is the modified
+Luikov value at source-domain activity 0.799, $0.235670904$ kg/kg dry; the
+main table shows it rounded to 0.236. The reference lower moisture anchor is
+0.0230 kg/kg dry, and the adopted positive-water continuation has no lower
+moisture floor. The reference meal heat capacity is 2317 J/(kg K), shown as
+$2.32\times10^3$ in the main table; these display choices do not alter
+the calculation inputs.
+The derived dry-meal density used in the calculation is 1159.65 kg/m$^3$;
+it is shown as $1.16\times10^3$ kg/m$^3$ in the main table.
+
+The bed-film correlation is
+\[
+\Nu_\varepsilon=0.6941\Rey_\varepsilon^{0.579}\Pra^{1/3}.
+\]
+\citet{faner2008desolventizado} prints 0.6941; the value 0.6949 transcribed by
+\citet{coletto2022modeling} is not used.
+
+The source defines the bed groups as $\Rey_\varepsilon=\Rey/(1-\varepsilon)$ and $\Nu_\varepsilon=\Nu\varepsilon/(1-\varepsilon)$, with $\varepsilon$ the holder voidage and $\Rey$ formed with the gas approach velocity and equivalent particle diameter. The small change from the transcribed to the thesis prefactor does not settle the larger question of effective heat-transfer area. For the constant-rate benchmark, Whitaker's separate packed-bed correlation \citep{whitaker1972forced} is evaluated at each experimental rig state, without fitting its coefficient to the falling-rate curve. The 2019 experiment with a water-bearing particle instead uses one effective film exposure multiplier, chosen from \emph{that run's measured constant rate}; this distinction holds throughout. The main manuscript states the published scores on both possible sample-mass bases. The reference total-meal GAB isotherm already includes oil. Away from the reference anchor, the correction uses the reference-anchored weights stated in the main text for both retention and dry-meal sensible heat; it adds no second oil term at the anchor. The older additive oil-arm equilibrium floor remains a separately identified sensitivity bracket. The reference equation of state for water and the published one for hexane \citep{wagner2002iapws,span2003eos1,span2003eos2} supply phase caloric values; the cross-virial mixture term is used with an interval, not as an exact value. None of these property sources identifies, from plant data, the three unknown groups of pore-gas and retained-water transfer coefficients.
+
+\section{Conservative numerical method and observed accuracy}
+\label{sup:activation}\label{sup:acceptance}\label{sup:verification}
+This section supports the main text's numerical method and verification. The finite-volume scheme uses one swept wet-volume rate, Eq.~(\ref*{M-eq:sweptvolume}), for the wet cells, interface and dry cells. The front cuts a fixed set of material shells; grid-motion fluxes at the faces cancel in pairs when inventories are summed. Backward-Euler stepping solves the regional storage changes and the interface's component and energy jumps as one nonlinear system. The event at which the external liquid disappears is found from mass and energy conservation together, with event time and temperature as unknowns. An exactly dry core loses its degrees of freedom instead of being carried as an infinitesimal artificial core. Both event treatments must be checked with the interface formulation that applies to them, not inferred from a fixed-radius test. A step that leaves the admissible region (positive phases, a front that does not grow, non-negative holdups) is rejected; it is not clipped, and no acceptable regime configuration is taken from a rejected trial.
+
+These checks are evidence about the discretization, not a proof. Each manufactured-solution test reports the order of \emph{one operator}, not the observed order of a complete drying curve. Every accepted step must close the water, n-hexane and energy balances, per step and cumulatively. The last three rows of Table~\ref{tab:sub:verification} come from a numerical stress test, not a physically realizable process. Over \SI{0.225}{\second} the external temperature and composition are stepped and then restored, and the front moves only \SI{2.3}{\percent} of the radius. No desolventizer tray and no laboratory drying imposes this history. The manufactured-solution and balance rows above them are discretization checks that do not use this schedule.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Numerical checks and their scope.}\label{tab:sub:verification}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.29\textwidth}>{\raggedright\arraybackslash}p{0.33\textwidth}>{\raggedright\arraybackslash}p{0.29\textwidth}@{}}\toprule
+Quantity & Observation & Interpretation\\\midrule
+Fixed-domain manufactured tests & Space $1.95$--$2.00$, time $0.97$--$1.00$ & Separate wet/dry operators, not coupled measured trajectories\\
+Moving-front time operator & Time $0.98$--$0.99$ & Formal first-order temporal discretization\\
+Balance for short ladder & Bound $10^{-10}$, largest $7.8\times10^{-13}$ & Normalized conservation, not physical validation\\
+Geometric conservation identity & Exactly zero & Shared swept-volume quantity\\
+Caloric-datum check & $3.42\times10^{-10}$ & Under separately stated environment allowance\\
+Front on $12$--$48$ cells & Nine of ten three-level chains contract, finest pairs within \SI{0.20}{\percent} & Six chains need the declared face-residual bound\\
+Pulse component-flux integrals & No contracting chain; final-pair miss up to \SI{14.8}{\percent} & Stress schedule only; not a realizable drying history\\
+Final hexane inventory, same ten chains & Finest pair within \SI{0.40}{\percent} on every chain & Same unrealizable schedule\\
+Cumulative boundary hexane outflow & One-percent pair on nine of ten chains; worst pair \SI{4.8}{\percent} & Same unrealizable schedule\\
+\bottomrule\end{tabular}\end{table}
+
+\subsection{Acceptance, refinement and rejected steps}
+\label{sup:moved:verification}\label{sup:moved:ladder}
+The scaled nonlinear residual bound is $10^{-10}$, and the conservation bound per accepted step and cumulatively is $10^{-10}$ in physically normalized units. The activation subsystem keeps its separately declared $2.5\times10^{-10}$. At an exact grid face, the departure tangent admits an inward root under a declared $1.0\times10^{-10}$ bound, never an outward-moving front. If no positive state or admissible event is found, the input state is left intact; a step is not rescued by a coefficient floor, a source penalty, a forced smaller front, or a relaxed component or energy law. The refinement ladder uses radial counts $12,24,48,96$ and steps $0.075,0.0375,0.01875$ seconds on the same \SI{0.225}{\second} stress schedule. Adjacent differences must decrease and the finest pair must agree within one percent (\SI{0.1}{\kelvin} in temperature). Front position and inventories pass this test on that schedule (Table~\ref{tab:sub:verification}).
+
+The 2008 dry-shell curves have a different numerical test: the \emph{surface-read} variable-coefficient march (Sec.~\ref{sup:surfaceloading}) is second order in shell mesh (observed $2.00$--$2.12$) and first order in step ($1.10$--$1.16$); the reported residuals are within one percentage point of their continuum extrapolations. The current water-bearing experiments continue on a stationary radial particle after a conservative projection removes the core. Their history-specific mesh and time-step checks (Secs.~\ref{sup:journalmarch} and~\ref{sup:finitecontact}) do not establish whole-history convergence. Each accepted step thus conserves every component and energy; whole histories are not shown to converge.
+
+\section{Experimental sources and the regime comparison}
+\label{sup:validationdetail}\label{sup:datasetversions}\label{sup:tworegimes}\label{sup:filmmatch}\label{sup:moved:prereg}
+This section describes the two Faner sources and the regime test. The two sources serve different purposes: \citet{faner2008desolventizado} describes the rig and gives the 2008 thesis traces, and \citet{faner2019kinetics} reports later thin-layer results, the size descriptors and the measured transition. The layer is several particle diameters deep, and its thermocouple reads a position within it, not the temperature at the evaporating front. A pure-hexane gas cannot test the co-removal of water. The 2019 article does not tabulate every run's gas velocity and layer depth, so the thin-layer calculation cannot be treated as an identified operating condition. The thesis does not give the true sphericity of its samples. The curves were read with pixel uncertainty, and the digitizations are versioned: where an earlier point assignment was corrected, the comparison uses version two, and any older-version result is labeled, not silently substituted. The point-by-point extraction log belongs in the internal report; the reproducibility package must supply the scored points where redistribution is legally permitted, or a permitted route to the original source.
+
+The constant-rate period tests the external heat supply: the coefficient is evaluated at each run's reported gas state, holder footprint and sample mass. Reading the printed mass as the wet charge, the ratio of calculated to measured duty is $0.82$--$1.06$, and that of crossing times $0.86$--$1.13$. Reading the same mass as dry meal gives $0.53$--$0.61$ of the duty and $1.45$--$1.70$ of the crossing time. The thesis's printed flux convention supports the wet-charge reading but does not give an independently measured film coefficient. Of its three bed correlations, Whitaker's gives the closest coefficient. The bracketing criterion set before the comparison is not met, because the coefficients inferred at two conditions lie $3.7$ and \SI{4.2}{\percent} below Whitaker's. Keeping the result and stating the departure is more informative than silently fitting an effective film. This benchmark tests the external correlation and the supplied $\Xc$, not a hexane diffusion coefficient. The measured boiling-point plateaux separately check the pure-hexane property equation.
+
+The regime test is applied before any transport model is chosen. For each of the four plotted traces: interpolate the time at which the measured loading crosses $\Xc=\SI{0.20}{\kilogram\per\kilogram}$; average the thermocouple over the first thirty seconds; and interpolate the first rise one kelvin above that average. A plateau that ends after the crossing, at a temperature consistent with solvent boiling, is consistent with a receding liquid-hexane core. A plateau that ends before it, with the temperature several reading half-widths above boiling, is inconsistent with a boiling core at that loading. The diagnostic is the sign, not the precise heat-limited time. Table~\ref{tab:sub:criterion} keeps each trace's own clock and shows that the sign is unchanged for rise thresholds of one to five kelvin. The test cannot identify a mechanism inside each particle, because the source neither resolves intraparticle temperature nor holds all run conditions fixed.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Measured plateau end minus critical-loading crossing time (s).}\label{tab:sub:criterion}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Source/meal & $+1$ K & $+2$ K & $+3$ K & $+5$ K\\\midrule
+\citet{faner2008desolventizado}, soybean & $-34.4$ & $-32.1$ & $-29.9$ & $-22.6$\\
+\citet{faner2008desolventizado}, sunflower & $-18.4$ & $-15.9$ & $-13.5$ & $-8.9$\\
+\citet{faner2019kinetics}, soybean & $+41.2$ & $+44.6$ & $+47.9$ & $+54.5$\\
+\citet{faner2019kinetics}, sunflower & $+45.6$ & $+51.4$ & $+57.2$ & $+63.7$\\
+\bottomrule\end{tabular}\end{table}
+
+A heat-limited estimate supplies the latent heat per unit dry meal through the measured constant-rate film and a growing spherical dry shell. The measured 2019 intervals to $\Xh=0.10$ are $1.3$--$2.1$ times this isolated-particle estimate, and the 2008 intervals $12.8$--$25$ times it: the 2019 records are heat-fed, the 2008 records are not. The water-bearing particle (Sec.~\ref{sup:journalmarch}) and the Fickian shell (Sec.~\ref{sup:surfaceloading}) take up these two groups, respectively.
+
+\section{The 2008 falling-rate curves and independent uptake}
+\label{sup:surfaceloading}\label{sup:item27}\label{sup:item29}\label{sup:item31}\label{sup:item32}\label{sup:moved:uptake}
+The scalar Fick description used in the main text's separate comparison with these older, slower drying records is
+\begin{equation}
+\frac{\partial}{\partial t}\!\left[\varepsilon_{\mathrm{g}} c_{\mathrm{h,g}}
+ + \Cdm W_{\mathrm{eq}}\right]
+ = \frac{1}{r^{2}}\frac{\partial}{\partial r}
+   \!\left[r^{2}\Deff\,\frac{\partial c_{\mathrm{h,g}}}{\partial r}\right],
+\label{eq:ficklimit}
+\end{equation}
+where $\varepsilon_{\mathrm g}$ is the gas-filled porosity,
+$c_{\mathrm{h,g}}$ the hexane mass concentration in the pore gas, kg/m$^3$,
+$W_{\mathrm{eq}}$ the local equilibrium retained hexane, kg/kg dry meal,
+and $\Deff$ an effective transport coefficient
+\citep{cardarelli2002modeling}. The equilibrium capacity belongs inside the
+storage derivative, not inside the divergence as a face mobility.
+This equation serves only this separate comparison; neither its diffusivity
+nor its scalar flux replaces the binary particle law in the two main
+experiments.
+
+The 2008 thesis meal is already hotter than boiling at the reported critical loading. Its falling-rate trajectories are therefore tested against the \emph{separate} Fickian shell of Eq.~\eqref{eq:ficklimit}, not against an unobserved front. The soybean-meal apparent diffusivities of \citet{cardarelli1998thesis} refer to total stored solvent and need a storage conversion before they enter a pore-gas gradient model; the retained-hexane isotherm of \citet{cardarelli1996hexane} supplies it. The law used here is regressed on the seventeen soybean coefficients, so applying it to the 2008 sunflower trace is a cross-meal check, not a same-meal prediction. At \SI{50}{\celsius} twelve uptake series identify coefficients $8.4$--$20.1$ times the tabulated apparent values, within the model's storage retardation at that temperature. Since those values came from the same uptake curves, the match is an identification, not a new prediction. At hotter process conditions the retardation approaches unity, so the multiplier inferred from the low-temperature curves cannot be transferred unchanged.
+
+The source's thirty-four uptake coefficients across \SIrange{50}{95}{\celsius}
+define the separate effective law
+\begin{equation}
+\ln\Deff=\ln A-\frac{E_{\mathrm a}}{R_{\mathrm g}T}
++\beta\ln(\Xh/X_{\mathrm{ref}}),\label{eq:sup:defflaw}
+\end{equation}
+with $A=\SI{3.513e-9}{\meter\squared\per\second}$,
+$E_{\mathrm a}=0.31\pm\SI{16.1}{\kilo\joule\per\mole}$,
+$\beta=0.959\pm0.331$ (95-percent half-widths), and
+$X_{\mathrm{ref}}=\SI{0.01}{\kilogram\per\kilogram}$. The residual standard
+deviation is $0.410$ in $\ln\Deff$. The law is extrapolated
+\SI{41}{\kelvin} to the thesis drying
+conditions and read at the \emph{surface boundary loading} once per step, a
+declared convention. A weighted-mean diffusivity \citep{crank1956diffusion}
+predicts much faster desorption, and local evaluation gave no mesh-refined
+result on the tested spheres. Numerical convergence of the surface-read
+convention does not extend to those other implementations or remove the
+temperature and geometry uncertainty. Table~\ref{tab:sub:dry} reports
+root-mean-square (RMS) errors as percentages of the measured loading drop
+and counts points within the digitization band. Both particle sizes use the
+same coefficient law without refitting; geometry alternatives and the
+coefficient's prediction band are reported separately
+(Table~\ref{tab:detail:geometry}).
+
+The geometry matters separately from the coefficient. For the 2008 thesis diameters, the declared volume-to-surface sphere uses the 2019 meals' measured mean sphericity, $\psi=0.74$, \emph{as an assumption} on those earlier samples: $\Rp=0.7215$ mm for sunflower and $0.666$ mm for soybean. The diffusion time depends on $\Rp^2/\Deff$, so these drying curves cannot determine size and diffusivity independently. The conventional volume-equivalent sphere has a different residual; the match improved after a radius sensitivity had been inspected. This shape is justified as an early-time characteristic length, not as an exact solution for a non-spherical meal particle over the whole scored window. The source prints neither a sieve-cut experiment nor a measured shape for those 2008 particles.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Errors and digitization-band counts for the 2008 falling-rate comparisons.}\label{tab:sub:dry}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.38\textwidth}ll@{}}\toprule
+Representation & Sunflower & Soybean\\\midrule
+Volume-equivalent thesis sphere & $37.9\%$, $1$ of $14$ & $31.0\%$, $1$ of $15$\\
+Volume-to-surface thesis sphere & $17.2\%$, $9$ of $14$ & $15.6\%$, $8$ of $15$\\
+Reported discretization versus extrapolated & $17.2\%$ versus $16.7\%$ & $15.6\%$ versus $15.2\%$\\
+Across law's $95\%$ prediction factor & $5.4$--$52.6\%$ & $7.7$--$42.2\%$\\
+\bottomrule\end{tabular}\end{table}
+
+In the surface-read model the curves dry \emph{more slowly} than in either 2008 measurement. On the declared spheres the residuals are not zero, and the prediction bands include both faster and slower traces. Neither a radius sweep nor a favorable edge of the diffusivity band is an independent measurement of particle shape or pore kinetics. In summary, these data suggest that a Fickian path adjusted for sorption storage can operate in the earlier samples, but they cannot identify the material's true microstructure, its high-temperature transport coefficient, or why the two Faner source groups differ. A two-size experiment on one feed, with loading and particle temperature both measured, would separate film-dominated from shell-dominated scaling more directly than further adjustment of one sample's effective radius.
+
+\section{The Faner experiment with a water-bearing particle}
+\label{sup:journalmarch}\label{sup:journalensemble}
+This section gives the inputs, numerical settings and sensitivities of the
+main-text Faner experiment, which uses one declared representative sphere,
+not a mass-weighted ensemble. Its radius is 0.885 mm,
+oil fraction 0.0195, initial hexane 0.475 kg/kg dry meal and initial
+retained water 0.025 kg/kg dry meal. The source reports preheating in the
+apparatus, but not its exact endpoint or the initial water loading. The
+uniform particle starts at the calculated pure-hexane boiling temperature,
+341.903356 K. The vapour is pure hexane at 393.15 K and 101325 Pa.
+The film exposure multiplier (Sec.~\ref{sup:fanermultiplier}) is 0.145785436
+and the forcing timescale 29.749225 s. No falling-rate or temperature point
+is fitted.
+
+This experiment and the DT experiment use the same reference transport
+coefficients: binary pore diffusivity
+$6\times10^{-10}$ m$^2$/s, reference retained-water mobility
+$8.4741855104\times10^{-7}$ mol/(m s), and conductivity 0.24 W/(m K).
+The positive-water branch keeps the reference Luikov parameters
+$A_1=0.880$, $A_2=12.184$, upper capacity 0.235670904 kg/kg,
+and extends the same analytic expression below 0.023 kg/kg.
+This below-anchor domain is an explicitly declared constitutive
+extrapolation. It changes neither the original map within the measured band
+nor its state functions; dedicated tests confirm that they are bitwise
+identical. An analytic logarithm of the activity avoids underflow of the
+chemical-potential force at very small positive water loadings. Exactly
+absent water is a separate limit, not a positive loading floor.
+The surface film uses the analytic binary mass-coordinate partition and
+the both-component Ackermann correction stated in the main formulation. The study band is $|\beta|\le3$; the computed maximum is
+\FanerMaxBeta. This maximum remains within the unit reference band.
+
+While external free hexane covers the surface, water exchange is zero, but
+water storage and energy are retained. At \FanerFreeEnd\ s external free
+hexane is depleted. Conservative dry-shell activation is followed by
+same-cell radial steps, exact arrival at and departure from mesh faces,
+positive-core solves to target times and a conservative core-extinction
+projection. Four radial cells reach zero core at \FanerDryTime\ s
+and advance the dry radial particle to 240 s. The two-cell march at the
+source-mean radius reaches zero core at 90.1 s. Both use the stated
+water-law branch from the start. Each result stores its incoming state,
+component and energy checks, and the source files used for that interval.
+
+On the four-cell grid, $X_{\mathrm h}=0.20$ is reached at \FanerCrossTwenty\ s
+and $0.10$ is reached \FanerFallingInterval\ s later. The digitized source
+crossings are 45.9 and a further 25.4 s. At 240 s the four-cell loadings are
+\FanerExitHexane\ kg hexane/kg dry and \FanerExitWater\ kg water/kg dry;
+the mean temperature is \FanerExitTemperature\ degrees Celsius.
+The source's sample mass and holder thermocouple are shown as different
+spatial observables, not assimilated into the particle state. The loading
+discrepancy is not removed by fitting the tail.
+
+\paragraph{Numerical checks and allowances.}
+All balance checks (per step, cumulative, and combined component and
+energy) keep the normalized $10^{-10}$ bound, together with phase,
+regime-sequence and admissibility checks. Regular roots may use a local
+residual tolerance of $10^{-8}$. A dedicated vanishing-core mode permits
+$2\times10^{-8}$, only for an incoming wet volume fraction of at most
+$10^{-7}$. A tangent seed tolerance of up to
+$10^{-9}$ is used at mesh-face departures; that seed advances no time.
+A scaled condition-number ceiling of up to $10^{18}$ is declared for
+very-small-core coordinates. These change numerical controls, not the
+balance equations or their acceptance criteria. Tighter nonlinear
+convergence may be needed to meet the conservation criterion independently
+of the root-residual criterion.
+
+The last positive-core states are reached through real solved time
+intervals. The extrapolated remaining time depends on a stated future
+contraction ratio and is below the declared 20-ms allowance. The
+conservative projection at core extinction conserves inventories
+and includes external exchanges over the estimated interval; no dry state
+is substituted by hand. It does not fix the exact extinction time.
+
+An independent accumulation of the external fluxes over the whole four-cell
+history is reported against a whole-history bound of $4\times10^{-10}$,
+while every component and energy acceptance limit stays at $10^{-10}$.
+For the initial water loading of 0.025 kg/kg, the reporting bound
+corresponds to at most $10^{-11}$ kg water/kg dry meal. These error bounds
+are far below the observed loading discrepancy.
+
+For the earlier, smaller radius, halving the four-cell step of the
+stationary dry particle from 2.5 to 1.25 s changed final hexane by 0.24\%,
+water by 0.19\% and mean temperature by 0.072 K. These earlier time-step
+checks concern the 0.808-mm sphere. The current source-mean sphere is
+compared at two and four cells; because the positive-core step sequences
+differ, the whole difference cannot be assigned to the mesh alone. For this
+radius, the two-cell and four-cell core-depletion times differ by 2.0 s; at
+240 s, hexane differs by 0.024\%, water by 1.3\% and temperature by
+0.031 K. These are sensitivity checks, not proof of whole-history
+convergence.
+
+The initial water loading was varied over 0.025, 0.05 and 0.10
+kg/kg dry meal; regime-A histories are admissible at all three. The new
+0.05 attempts at the upper corner and at low water mobility find no
+admissible leading pore profile by shooting, and the 0.10 leading jump seed
+at the upper corner does not converge. These are unsuccessful finite
+searches, not proofs of physical impossibility or observations of external
+hexane condensation. Robustness to initial moisture and the regime-A
+water-access assumption remain open. The successful 0.025 charge is not
+presented as a validated reconstruction of a source experiment whose
+moisture was not reported.
+
+
+\subsection{Size distribution and startup interpretation}
+This subsection documents the size construction cited in the main text.
+The source reports a mean equivalent-sphere soybean
+diameter of 1.77 mm, a range of 0.5--4 mm, 95.1\% of particles between 1
+and 3 mm and mean sphericity 0.74. These are image-analysis summaries, not a
+printed mass histogram. An earlier construction used a lognormal number
+distribution truncated to 0.5--4 mm, with log-width about 0.280 and
+constraints from the source mean and 1--3-mm fraction. Weighting by $d^3$
+gives mass quantiles of about 1.50, 2.15 and 3.03 mm at 10, 50 and 90\%.
+The main calculation uses the source mean diameter as a volume-equivalent
+sphere. A new coarse size sensitivity uses three bins of equal dry mass
+with mass-mean diameters 1.60, 2.15 and 2.89 mm. With the surface-to-volume
+mapping $R=\psi d/2$, the corresponding radii are 0.593, 0.796 and
+1.068 mm. Their positive-core marches approach core depletion at
+about 49, 76 and 118 s. The continuations through core extinction are not
+yet resolved, so a complete charge-weighted drying curve is not yet
+established. This spread shows how a size distribution broadens removal; it
+does not quantify the improvement over the complete falling-rate interval.
+The assumed distribution is constrained by source summaries, not by fitting
+the measured drying trajectory.
+
+For classes of equal density and oil content, number weights must be
+converted to dry-mass weights before superposition:
+\[
+q_c=\frac{p_c d_c^3}{\sum_b p_b d_b^3},\qquad
+\overline X_k(t)=\sum_c q_c X_{k,c}(t).
+\]
+The mean temperature of such an ensemble still differs from a local
+thermocouple reading. Choosing a distribution to obtain a desired curve
+shift would not identify the experimental size distribution.
+
+The startup sensitivities below keep the earlier 0.808-mm sphere.
+The source has no warming stage because preheating is reported; the exact
+temperature and the moment measurement started are unknown. A bounded
+regime-A calculation with the same particle, bath and exposure gives
+external-hexane depletion at 41.078 s for a start at the boiling
+temperature, 41.437 s at an initial 68.5$^\circ$C and 42.143 s at
+68.0$^\circ$C. This modest subcooling thus shifts that event by about
+0.36--1.07 s; it does not produce a 10--20-s shift of the temperature curve.
+These are regime-A calculations only, not new complete drying histories.
+Starts at 65 and 60$^\circ$C gave no admissible step in the bounded search
+of the evaporation-only regime-A equations. A colder start therefore needs a
+separately examined thermal and phase treatment of the surface before it
+can give a new full curve; it is not represented by shifting the existing
+trajectory in time.
+
+\subsection{Source-size and vapour-temperature sensitivities}
+\label{sup:fanerassumptions}
+This subsection reports complete two-cell sensitivity calculations with the
+same transport coefficients, initial loadings and experimental clock.
+Replacing the earlier 0.808-mm radius with the source-mean
+0.885-mm radius moves the 0.20-kg/kg crossing from 41.0 to 46.6 s and
+lengthens the 0.20--0.10-kg/kg interval from 15.5 to 17.7 s. At 240 s,
+the temperature falls from 116.0 to 114.3 degrees Celsius. The size change
+thus improves two observables through a physical change in area per dry
+mass and transport distance; the remaining discrepancies stay explicit.
+
+A second calculation keeps the source-mean state at its computed core
+depletion, 90.1 s, and then applies the measured vapour-temperature trace
+to the same stationary-particle equations. The digitized gas readings are
+joined linearly; the last value, 117.82 degrees
+Celsius at 235.058 s, is held to 240 s. The final particle temperature is
+113.0 degrees Celsius and hexane is 0.00168 kg/kg dry, compared with
+114.3 degrees Celsius and 0.00161 kg/kg in the constant nominal bath.
+This is a boundary sensitivity after core depletion, not a reconstruction of
+the whole history in the measured bath. Its independent whole-history
+hexane, water and energy defects remain within $4\times10^{-10}$.
+
+More water could delay warming through evaporation and heat capacity, but
+it also changes the phase equilibrium and coupled transport. The water
+loading of the source charge is not reported; it was dried under nitrogen
+and stored in air before being re-soaked in hexane. Raising the water only to lower the temperature would need
+information the experiment does not provide.
+\par
+If the denominator is truly dry meal, reading total mass loss as solvent
+loss gives an apparent loading $X_{\mathrm h}(t)+X_{\mathrm w}(t)
+-X_{\mathrm w}(0)$. Water loss lowers this quantity, so it does not
+explain the underpredicted late solvent loading. Whether the source used a
+dry or an as-is denominator is a further uncertainty of interpretation.
+\par
+A further shell-formation search at 0.050 kg/kg, with central differences
+and the default finite-volume seed, was stopped when it exceeded its
+allotted search time; it gives no additional drying trajectory.
+
+
+Figure~\ref{fig:fanersupport} shows the calculated retained water in the
+particle and at its surface, and the liquid-hexane core volume fraction.
+These supporting quantities were not measured in the source experiment.
+In short, the calculated particle dries faster than the measured charge in
+the falling-rate period.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=0.9\textwidth]{figures/fig_faner_supporting_states.pdf}
+\caption{Faner particle: retained water and liquid-hexane core volume fraction.}
+\label{fig:fanersupport}
+\end{figure}
+
+\section{Process interpretation, sensitivity and limits}
+\label{sup:missingfull}\label{sup:extrapolationflags}\label{sup:regime}\label{sup:regimegrid}\label{sup:desolventizerfloor}\label{sup:envelopescoring}\label{sup:identifying}
+This section relates the particle results to the DT and states each comparison's scope. A process model needs both a particle source or sink and the gas and meal histories on a tray; this paper supplies only the first. Depletion of external free hexane allows the dry shell to form, but a tray model must still account for particles arriving at different loadings and sizes, steam condensation, finite residence, gas composition, mixing, jacket heat and vapour escape. A film coefficient deduced on a thin holder cannot be applied unchanged to an industrial bed, and the sample's local heat path and probe position were not measured.
+
+Within its modeled range, at the constant gas state of each separate march,
+the moving-front formulation is heat-fed: the binary pore mobility separates
+water from n-hexane but adds no independent resistance to their total
+escaping flux. For the \emph{separate Fickian dry-shell comparison}, the
+ratio of conductive heat supply, expressed as an evaporation flux, to
+diffusive solvent supply is
+\begin{equation}
+\Lambda=\frac{k_{\mathrm{dry}}(T_{\mathrm g}-T_{\mathrm{int}})
+                  /\Delta h_{\mathrm{vap}}(T_{\mathrm{int}})}
+                {D_{\mathrm{eff}}[c_{\mathrm{sat}}(T_{\mathrm g})-c_{\mathrm s}]},
+\label{eq:sub:bottleneck}
+\end{equation}
+where $c_{\mathrm{sat}}$ and $c_{\mathrm s}$ are the n-hexane mass
+concentrations at saturation and at the particle surface, respectively.
+On the declared gas-state grid, $\Lambda$ ranges from $7.80\times10^3$ to
+$6.29\times10^4$ over states with a receding front. A value above unity
+means that this Fickian comparison is limited by its assumed solvent
+transport. The ratio is not the moving-front model's vapour resistance; the
+grid is not a set of integrated drying trajectories and does not identify
+the resistance acting in a measured tray of steam-wet meal.
+
+Table~\ref{tab:sub:scope} summarizes what each comparison establishes and
+the measurements needed to distinguish the remaining mechanisms (DTDC:
+desolventizer-toaster-dryer-cooler).
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Scope of the benchmark evidence.}\label{tab:sub:scope}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.28\textwidth}>{\raggedright\arraybackslash}p{0.34\textwidth}>{\raggedright\arraybackslash}p{0.30\textwidth}@{}}\toprule
+Claim & What is actually tested & Missing discriminator\\\midrule
+Heat-fed surface period & Four measured duties under a declared mass basis and an independent packed-bed correlation & Source-specific exposed area and per-run state\\
+Slow Fickian shell & Two 2008 measured trajectories with one surface-read coefficient from uptake & Thesis particle shape, local-coefficient convergence, high-temperature transport\\
+2019 water-bearing particle & A four-cell radial particle with film from the constant rate; falling-rate loading is faster than the measured charge & Measured mass-weighted size histogram, wetness near the probe, its depth and gas flow through the holder\\
+Binary water--hexane storage/transport & Conservation and limiting-case numerical identities; no measured two-component drying trajectory & Water-isotherm and co-sorption data; coupled moisture and solvent profiles\\
+Industrial DT/DTDC & One radial particle on a declared bath; solvent, moisture and temperature lie within the published outlet ranges; Coletto et al.'s column integration is not the boundary, because its flashing zone uses eq.~A.17 and its toaster particle step has no water balance & Independent tray gas, steam, wall, residence and discharge observations\\
+\bottomrule\end{tabular}\end{table}
+
+With pressure and source-water-isotherm alternatives propagated, the sorption-elevated boiling condition $a_{\mathrm w}(\Xw)P_{\mathrm{sat}}^{\mathrm w}(T^*)=P$ of the main text gives $100.5$--$107.6$ degrees Celsius, a range spanning a published band of industrial discharge temperatures. The single point at the moisture of the temperature source itself lies 2.05 kelvin above that band. This is a cross-source check of equilibrium \emph{at supplied moisture}, not a drying trajectory of wet meal. At declared last-tray hexane mole fractions $0.003$--$0.03$ and temperatures 100--110 degrees Celsius, a dry-particle equilibrium calculation gives $4.5$--$66.0$ ppm without and $8.1$--$112.4$ ppm with a residual-oil solution arm (Sec.~\ref{sup:evidence:outlet}); only the richest and coolest oil-arm corner reaches the published residual-hexane class. This floor is not a simulated tray-discharge concentration. The total-meal GAB isotherm already includes reference oil, so the overlap with the oil arm is an explicit uncertainty, not an independently established extra inventory.
+
+Four groups of extrapolations or omissions limit the process reading. The GAB hexane isotherm is evaluated above its fitted temperatures or below some measured activities. The modified Luikov water isotherm has no soybean-meal data near desolventizer temperature, and its binary co-sorption evidence is narrow. The cross-virial gas interaction is an interval, not a measured term for every operating state. The declared binary pore diffusivity and reference retained-water mobility are not identified from coupled drying data on this soybean meal. Shrinkage, a Darcy or Knudsen resistance on the total vapour flux, a distributed instead of sharp phase change, and re-wetting of a receded core are not identified mechanisms here. Three groups of transport and surface coefficients have positive intervals without source-backed endpoints. No adjustment of numerical residual tolerances can make up for these missing material data.
+
+The experiments that would settle the remaining physical questions are specific: (i) a pure-hexane series on one meal at two controlled particle sizes, with temperature logged through the crossing; (ii) a mass-weighted size histogram, effective exposed area and wetness map around each thin-layer thermocouple; (iii) a high-temperature series of effective solvent transport on the same meal, read through the sorption isotherm; (iv) moisture profiles and a water isotherm at process temperature; and (v) transient solvent \emph{and} water measurements in a steam-exposed particle or thin layer with a known gas supply. At equipment scale, a particle-plus-tray DT calculation needs an independent published or plant record of feed, vapour, steam, wall duty, temperature and discharge, followed by the dryer-cooler and the whole-tower residence distribution. The present comparisons are a foundation for those tests, not a substitute for them.
+
+\input{supplementary_submission_detail.tex}
+\input{supplementary_submission_protocol.tex}
+\input{supplementary_submission_evidence.tex}
+\input{supplementary_submission_dtmarch.tex}
+\input{supplementary_submission_finite_contact.tex}
+
+\section{Reproduction inventory and accessibility}
+\label{sup:deposit}
+This section lists the released files and the planned release. At public
+revision \texttt{f451d0e}, the preliminary package
+distributes the analysis datasets and results as
+\texttt{paper/analysis/datasets.zip},
+\texttt{results\_2026-09-19.zip} and \texttt{results\_2026-10-01.zip}.
+In the results ZIP files, member paths begin with the results-directory
+name, not with \texttt{paper/analysis/}. The later results archive contains
+earlier reduced continuations but not the current water-bearing particle
+histories, and the public figure and supplement PDFs do not match this
+submission. The updated release is being prepared to carry the particle
+source code used to produce the results, the figure and table scripts, current run records, LaTeX sources and a SHA-256 manifest
+tied to the source revision. Digitized readings and their reading
+half-widths will be included only where redistribution is permitted;
+otherwise the release will give an authorized access route. The authors'
+code is under MIT terms, which do not cover the third-party publications or
+their digitizations. Until the matching release and preservation archive
+are available, the corresponding author can provide the current inputs and
+records on reasonable request.
+
+\clearpage
+\section*{Nomenclature of the supplement}
+\label{sec:si:nomenclature}
+{\footnotesize
+\setlength{\parindent}{0pt}
+\newcommand{\nomitem}[2]{\par\hangindent=1.6em\hangafter=1 #1\enspace #2\par}
+Symbols below appear in this supplement and not in the main-text nomenclature.
+Every other symbol keeps the meaning given there. The Ackermann blowing
+argument is $\beta_{\mathrm{A}}$ in both documents; $\beta$ here is only the
+exponent in the diffusivity fit.
+
+\nomitem{$a_{\mathrm{h}}^{*}$}{pressure-feasible n-hexane activity at a stated gas mole fraction, $\min(1,y_{\mathrm{h}}P/P_{\mathrm{sat}}^{\mathrm{h}})$; dimensionless}
+\nomitem{$A$}{pre-factor of the uptake diffusivity fit \eqref{eq:sup:defflaw}; \si{\square\metre\per\second}}
+\nomitem{$i$, $n$}{component and time indices where used; dimensionless}
+\nomitem{$C_{0}$, $K_{0}$}{reference constants of the native-meal GAB isotherm; dimensionless}
+\nomitem{$d_{\mathrm{eq}}$}{equivalent particle diameter printed by \citet{faner2008desolventizado}; \si{\metre}}
+\nomitem{$\Delta H_{C}$, $\Delta H_{K}$}{GAB energy parameters, reported as $\Delta H_{C}/R$ and $\Delta H_{K}/R$; \si{\joule\per\mole}}
+\nomitem{$E_{\mathrm{a}}$}{activation energy in the uptake diffusivity fit; \si{\joule\per\mole}}
+\nomitem{$h_{l}$, $h_{v}$}{specific enthalpy of liquid n-hexane and of n-hexane vapour; \si{\joule\per\kilogram}}
+\nomitem{$r_{1}$, $r_{2}$}{inner and outer radii of the spherical control volume; \si{\metre}}
+\nomitem{$r_{\mathrm{c}}$}{measured constant drying rate, loading lost per unit time; \si{\per\second}}
+\nomitem{$R_{\mathrm{d}}$}{radius of the declared volume-to-surface sphere; \si{\metre}}
+\nomitem{$\Tb$}{boiling temperature of n-hexane at the bed pressure; \si{\kelvin}}
+\nomitem{$u_{l}$, $u_{v}$}{specific internal energy of liquid n-hexane and of n-hexane vapour; \si{\joule\per\kilogram}}
+\nomitem{$v_{l}$}{specific volume of liquid n-hexane; \si{\cubic\metre\per\kilogram}}
+\nomitem{$W_{\mathrm{ref}}$}{lower anchor of the retained-water evidence; \si{\kilogram\per\kilogram}}
+\nomitem{$X_{\mathrm{e,sh}}$}{coupled-pore shell sorbate in the lumped desolventizer front relation, at the shell mean temperature and admitted near-interface gas composition; \si{\kilogram\per\kilogram}}
+\nomitem{$X_{\mathrm{ref}}$}{reference loading in the uptake diffusivity fit; \si{\kilogram\per\kilogram}}
+\nomitem{$\Delta z$}{sublayer thickness; \si{\metre}}
+\nomitem{$\beta$}{exponent of the loading term in the uptake diffusivity fit; dimensionless}
+\nomitem{$\epsilon$}{emissivity in the radiative bed term; dimensionless}
+\nomitem{$\varepsilon$}{holder voidage in the source bed-film definition; not the particle porosity $\varepsilon_{\mathrm{g}}$; dimensionless}
+\nomitem{$\Nu$, $\Rey$, $\Pra$}{Nusselt, Reynolds and Prandtl numbers of that definition; $\Nu_{\varepsilon}$ and $\Rey_{\varepsilon}$ are the source's voidage-based forms; dimensionless}
+\nomitem{$\sigma$}{Stefan--Boltzmann constant; \si{\watt\per\square\metre\per\kelvin\tothe{4}}}
+\nomitem{$\psi$}{sphericity; dimensionless}
+\nomitem{$\psi_{\mathrm{h}}$}{sorption potential of retained n-hexane; \si{\joule\per\kilogram}}
+}
+
+\clearpage
+\bibliographystyle{apacite}
+\bibliography{refs}
+\end{document}

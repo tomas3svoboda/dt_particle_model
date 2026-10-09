@@ -1,0 +1,38 @@
+\subsection{Verification of balances and numerical operators}
+\label{sec:verification}
+\label{sec:verification:table}
+\label{sec:verification:notvalidation}
+\label{sec:verification:donor}
+
+This subsection checks that the discrete operators converge at their
+expected orders and that the discrete balances conserve water, hexane and
+energy. Manufactured solutions give spatial orders $1.95$--$2.00$ and temporal
+orders $0.97$--$1.00$ for the fixed-domain components; the moving-front
+time operator gives $0.98$--$0.99$. These are tests of individual operators,
+not measured orders for an entire drying trajectory. Every step of
+the short refinement ladder satisfies its component and energy balances at
+or below $10^{-10}$ in physically normalized units (at most
+$7.8\times10^{-13}$ on that ladder). The same swept volume in all balances
+enforces the discrete geometric conservation identity exactly. Shifting the
+arbitrary enthalpy zero of hexane does not change the solution: the observed
+datum-invariance difference is $3.42\times10^{-10}$ under its separately
+stated environment allowance. The discrete identity
+\eqref{eq:gauge} is the corresponding test for water. It is the check we
+recommend for any moving-boundary model that claims to count latent and
+binding heat once (Section~\ref{sec:model:donor}).
+The full operator-by-operator table, an illustrative numerical sensitivity
+case that is not a valid limiting case at its initial state, and the
+unresolved tests are in Secs.~\ref*{S-sup:verification}
+and~\ref*{S-sup:acceptance}.
+
+The discrete caloric-datum test \eqref{eq:gauge} also exposed a
+consequential interfacial error in an earlier implementation, now corrected.
+There, the material swept by the front was removed at the equilibrium
+interface composition but debited from the liquid-hexane core at its bulk
+composition. Both component and energy must use the same consumed material,
+as required by \eqref{eq:rhcomp}--\eqref{eq:rhenergy}; the corrected
+comparisons use the wet-side material state. These numerical checks establish conservation
+of the stated equations, not the identity of their unmeasured transport
+coefficients or predictive accuracy in a plant. The front's trajectory
+refinement, including a nonconverged flux-integral result, is reported in
+Sec.~\ref*{S-sup:acceptance}.

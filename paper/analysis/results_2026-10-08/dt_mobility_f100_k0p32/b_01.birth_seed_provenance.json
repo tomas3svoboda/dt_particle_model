@@ -1,0 +1,8 @@
+{
+  "root_seed": null,
+  "root_seed_sha256": null,
+  "same_IVP_seed_only": true,
+  "accepted_material_state_imported": false,
+  "acceptance_rules_changed": false,
+  "wrapper_sha256": "6010102993601733075c082b4eed10141c41ea08e431c3c3a36147ada191d94b"
+}

@@ -1,0 +1,15 @@
+{
+  "physical_law_changed": false,
+  "native_acceptance_changed": false,
+  "inventory_fraction_arithmetic": "D9 drained mass / requested mass; no clipping",
+  "face_departure_step_factors": [
+    1,
+    0.25,
+    0.0625,
+    0.015625,
+    0.00390625,
+    0.0009765625
+  ],
+  "ordinary_dt_from_arguments": true,
+  "wrapper_sha256": "57812bf3eddfb1e5fa76b824bb55d340150bb537be1ea9853ebdfcfdc770ef0d"
+}

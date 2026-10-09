@@ -1,0 +1,175 @@
+frozen pair: live tree 103.73636577329322, committed 131.3373155755338 (committed used)
+IDENTITY v1: 1466 leaves exact against rerun_faner.json
+conditions.csv: the 15 keys stage 1 reads are identical in v1 and v2
+thesis v2 cross-check against item 35: 122 leaves exact
+journal v2 cross-check against item 37: 18 quantities within 1e-14
+faner2019_soybean_120C
+   X0                                       0.490628 -> 0.492364
+   measured_constant_rate_1_s               0.007264289979708323 -> 0.007260603277429236
+   constant_rate_window_samples             4 -> 4
+   measured_crossing_s                      45.45681121197562 -> 45.86378027309905
+   plateau_mean_c                           68.80931050000001 -> 69.11449999999999
+   gas_mean_c                               120.25962425 -> 119.44
+   specific_duty_w_per_kg_dry               2433.024768739569 -> 2431.7899835114126
+   demand_h_bed_charge_w_m2_k               86.52025633777734 -> 88.30631706632722
+   demand_h_bed_dry_w_m2_k                  128.96951666426838 -> 131.78516856237235
+   demand_h_particle_area_w_m2_k            16.177352583302923 -> 16.530535216576247
+   whitaker_h_w_m2_k                        78.648794255595 -> 78.648794255595
+   bird_h_w_m2_k                            180.3430299078706 -> 180.3430299078706
+   bradshaw_myers_h_w_m2_k                  198.13851855312134 -> 198.13851855312134
+   whitaker_over_demand                     0.909021743400159 -> 0.89063610473667
+   bird_over_demand                         2.084402399408142 -> 2.0422438156085057
+   bradshaw_myers_over_demand               2.2900824262422823 -> 2.2437638114190483
+   three_bracket_the_demand                 True -> True
+   whitaker_below_demand                    True -> True
+   whitaker_duty_ratio_charge               0.9061096002650859 -> 0.9076254937225525
+   whitaker_crossing_ratio_charge           0.9734866726619311 -> 0.9694699569988898
+   whitaker_duration_charge_s               44.25159989656771 -> 44.46355708916787
+   whitaker_duty_ratio_dry                  0.607871045133384 -> 0.6081797026211785
+   whitaker_crossing_ratio_dry              1.4511064918967094 -> 1.446802062906691
+   source_central_h_w_m2_k                  75.73333333333333 -> 75.73333333333333
+   slope_match_closest_miss_charge          0.008821306640576676 -> 0.007163095210078407
+   slope_match_closest_row                  'table 4.6 row 05' -> 'table 4.6 row 05'
+   slope_match_closest_miss_either_reading  0.008821306640576676 -> 0.007163095210078407
+faner2019_sunflower_100C
+   X0                                       0.499279 -> 0.50164
+   measured_constant_rate_1_s               0.004990407973378546 -> 0.005048149310668734
+   constant_rate_window_samples             6 -> 6
+   measured_crossing_s                      65.08484787750528 -> 65.05777158948685
+   plateau_mean_c                           68.63384060000001 -> 68.51
+   gas_mean_c                               101.8227394 -> 101.5544
+   specific_duty_w_per_kg_dry               1671.434681057839 -> 1690.7739563620464
+   demand_h_bed_charge_w_m2_k               91.60995671399586 -> 92.92881950250413
+   demand_h_bed_dry_w_m2_k                  137.348884292203 -> 139.54563251774033
+   demand_h_particle_area_w_m2_k            17.228422541912526 -> 17.503972699038204
+   whitaker_h_w_m2_k                        80.01326022231953 -> 80.01326022231953
+   bird_h_w_m2_k                            162.7641423653213 -> 162.7641423653213
+   bradshaw_myers_h_w_m2_k                  201.48404739492565 -> 201.48404739492565
+   whitaker_over_demand                     0.8734122697177891 -> 0.8610166431756237
+   bird_over_demand                         1.776707993362197 -> 1.7514926288387356
+   bradshaw_myers_over_demand               2.1993684379084923 -> 2.1681545991176217
+   three_bracket_the_demand                 True -> True
+   whitaker_below_demand                    True -> True
+   whitaker_duty_ratio_charge               0.8233213394545684 -> 0.8151857923353579
+   whitaker_crossing_ratio_charge           1.1215754069848691 -> 1.1290967979156452
+   whitaker_duration_charge_s               72.99756474676128 -> 73.45652158121703
+   whitaker_duty_ratio_dry                  0.5491448485936029 -> 0.5428636639509854
+   whitaker_crossing_ratio_dry              1.6815544546088679 -> 1.6954969156220498
+   source_central_h_w_m2_k                  76.66666666666667 -> 76.66666666666667
+   slope_match_closest_miss_charge          0.011280047750652944 -> 0.0012872101003578162
+   slope_match_closest_row                  'table 4.5 row 03' -> 'table 4.5 row 03'
+   slope_match_closest_miss_either_reading  0.011280047750652944 -> 0.0012872101003578162
+RANGES (min, max): before | printed now | after
+  whitaker_duty_ratio_charge         0.8233-0.9816 | 0.8233-1.0569 | 0.8152-1.0569
+  whitaker_crossing_ratio_charge     0.8938-1.1216 | 0.8574-1.1216 | 0.8574-1.1291
+  whitaker_duty_ratio_dry            0.5084-0.6079 | 0.5301-0.6091 | 0.5301-0.6091
+  whitaker_crossing_ratio_dry        1.4511-1.7448 | 1.4511-1.6816 | 1.4468-1.6955
+  whitaker_over_demand               0.8734-0.9977 | 0.8734-1.0742 | 0.8610-1.0742
+  bird_bm_over_demand                1.7767-2.5480 | 1.7767-2.7434 | 1.7515-2.7434
+  demand_h_bed_charge_w_m2_k         85.5014-97.1153 | 81.7029-91.6100 | 81.7029-92.9288
+  demand_h_bed_dry_w_m2_k            128.9695-168.5042 | 128.9695-156.5022 | 131.7852-156.5022
+  demand_h_particle_area_w_m2_k      16.1774-18.6522 | 16.1774-17.8236 | 16.4689-17.8236
+  specific_duty_w_per_kg_dry         1671.4347-3682.5905 | 1671.4347-3532.0849 | 1690.7740-3532.0849
+  slope_match_closest_miss_charge    0.0088-0.1019 | 0.0071-0.1004 | 0.0013-0.1004
+BRACKETING {
+"before_v1_everywhere": {
+"faner2008_sunflower_136C": {
+"three_bracket": true,
+"whitaker_below": true
+},
+"faner2008_soybean_136C": {
+"three_bracket": true,
+"whitaker_below": true
+},
+"faner2019_soybean_120C": {
+"three_bracket": true,
+"whitaker_below": true
+},
+"faner2019_sunflower_100C": {
+"three_bracket": true,
+"whitaker_below": true
+}
+},
+"printed_now_thesis_v2_journal_v1": {
+"faner2008_sunflower_136C": {
+"three_bracket": false,
+"whitaker_below": false
+},
+"faner2008_soybean_136C": {
+"three_bracket": true,
+"whitaker_below": true
+},
+"faner2019_soybean_120C": {
+"three_bracket": true,
+"whitaker_below": true
+},
+"faner2019_sunflower_100C": {
+"three_bracket": true,
+"whitaker_below": true
+}
+},
+"after_v2_everywhere": {
+"faner2008_sunflower_136C": {
+"three_bracket": false,
+"whitaker_below": false
+},
+"faner2008_soybean_136C": {
+"three_bracket": true,
+"whitaker_below": true
+},
+"faner2019_soybean_120C": {
+"three_bracket": true,
+"whitaker_below": true
+},
+"faner2019_sunflower_100C": {
+"three_bracket": true,
+"whitaker_below": true
+}
+}
+}
+LITERAL {
+"faner2008_sunflower_136C": {
+"source_central_h_w_m2_k": 97.26666666666667,
+"three_correlations": [
+96.8875157179044,
+183.7917223799386,
+247.45094575988963
+],
+"bracketed": true,
+"source_central_over_whitaker": 1.003913310667044,
+"below_low_edge_by": -0.003913310667043923
+},
+"faner2008_soybean_136C": {
+"source_central_h_w_m2_k": 94.25,
+"three_correlations": [
+75.71023712076614,
+188.29121375936182,
+190.28066155304973
+],
+"bracketed": true,
+"source_central_over_whitaker": 1.2448778868524861,
+"below_low_edge_by": -0.24487788685248613
+},
+"faner2019_soybean_120C": {
+"source_central_h_w_m2_k": 75.73333333333333,
+"three_correlations": [
+78.648794255595,
+180.3430299078706,
+198.13851855312134
+],
+"bracketed": false,
+"source_central_over_whitaker": 0.96293063422197,
+"below_low_edge_by": 0.037069365778029995
+},
+"faner2019_sunflower_100C": {
+"source_central_h_w_m2_k": 76.66666666666667,
+"three_correlations": [
+80.01326022231953,
+162.7641423653213,
+201.48404739492565
+],
+"bracketed": false,
+"source_central_over_whitaker": 0.9581745132450017,
+"below_low_edge_by": 0.04182548675499831
+}
+}

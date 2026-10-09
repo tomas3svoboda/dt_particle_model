@@ -1,0 +1,256 @@
+{
+"sunflower": {
+"0": [
+0.504,
+"m",
+"cross on the left axis, overlapped by the Tg triangle and first circle"
+],
+"10": [
+0.4434,
+"c",
+""
+],
+"20": [
+0.3915,
+"c",
+""
+],
+"30": [
+0.3421,
+"c",
+""
+],
+"40": [
+0.2964,
+"c",
+""
+],
+"50": [
+0.2525,
+"n",
+"Tp connecting line crosses the band near 48-50 s"
+],
+"60": [
+0.2161,
+"c",
+""
+],
+"70": [
+0.1833,
+"c",
+""
+],
+"80": [
+0.158,
+"c",
+""
+],
+"90": [
+0.1364,
+"c",
+""
+],
+"100": [
+0.1135,
+"c",
+""
+],
+"110": [
+0.0956,
+"c",
+""
+],
+"120": [
+0.0814,
+"c",
+""
+],
+"130": [
+0.0672,
+"c",
+""
+],
+"140": [
+0.0579,
+"c",
+""
+],
+"150": [
+0.0499,
+"c",
+""
+],
+"160": [
+0.0394,
+"c",
+""
+],
+"170": [
+0.0319,
+"c",
+"cross band rows 466-476 clear of circle tops (477)"
+],
+"180": [
+0.0282,
+"n",
+"cross lower arms touch circle tops; centre row 474 visible"
+],
+"190": [
+0.0208,
+"n",
+"last separable: cross centre row 480 visible 3 px above circle tops (483); lower arms hidden"
+],
+"200": [
+0.0174,
+"m",
+"cross centre at circle-top line; value from upper tips (top row 478 + 5 px)"
+],
+"210": [
+0.0159,
+"m",
+"value from cross tips above circle tops"
+],
+"220": [
+0.0134,
+"m",
+"value from cross tips"
+],
+"230": [
+0.0122,
+"m",
+"tips 1 px above circle tops"
+],
+"240": [
+0.0105,
+"i",
+"inferred: tips <=1 px above circle tops at 233-236 s; plausible range 0.0075-0.0125"
+]
+},
+"soybean": {
+"0": [
+0.4941,
+"m",
+"circle cut by the left axis"
+],
+"10": [
+0.4209,
+"c",
+"marker centred at 9.9 s"
+],
+"20": [
+0.3362,
+"c",
+""
+],
+"30": [
+0.2788,
+"n",
+"Tp line crosses near 31 s"
+],
+"40": [
+0.2256,
+"n",
+"Tp_sun diamond/line nearby"
+],
+"50": [
+0.1781,
+"c",
+""
+],
+"60": [
+0.1367,
+"c",
+""
+],
+"70": [
+0.1039,
+"c",
+""
+],
+"80": [
+0.0786,
+"c",
+""
+],
+"90": [
+0.0625,
+"c",
+""
+],
+"100": [
+0.0533,
+"c",
+""
+],
+"110": [
+0.0489,
+"c",
+""
+],
+"120": [
+0.0391,
+"c",
+""
+],
+"130": [
+0.0353,
+"c",
+""
+],
+"140": [
+0.0255,
+"c",
+""
+],
+"150": [
+0.023,
+"c",
+""
+],
+"160": [
+0.0175,
+"c",
+"circle chain solid top 478, bottom 488"
+],
+"170": [
+0.0184,
+"c",
+"top 477.5, bottom 487"
+],
+"180": [
+0.0135,
+"c",
+"top 481, bottom 491"
+],
+"190": [
+0.0112,
+"n",
+"top 483, bottom 493; crosses above"
+],
+"200": [
+0.0109,
+"n",
+"top 483, bottom 493"
+],
+"210": [
+0.0109,
+"n",
+""
+],
+"220": [
+0.0109,
+"n",
+""
+],
+"230": [
+0.0097,
+"n",
+"top 483.5, bottom 494"
+],
+"240": [
+0.0092,
+"m",
+"marker at 240 s hidden by the right axis line; value from 233-238 s circles"
+]
+}
+}

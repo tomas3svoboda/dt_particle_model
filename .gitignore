@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv/
+# LaTeX by-products of build.bat / build.sh
+paper/01_particle_jfpe/*.aux
+paper/01_particle_jfpe/*.bbl
+paper/01_particle_jfpe/*.blg
+paper/01_particle_jfpe/*.log
+paper/01_particle_jfpe/*.out
+paper/01_particle_jfpe/*.toc
+paper/01_particle_jfpe/*.fls
+paper/01_particle_jfpe/*.synctex.gz
+paper/01_particle_jfpe/*.fdb_latexmk
+# re-runs: write new outputs under reruns/ (see README); the feed march writes under paper/
+reruns/
+paper/analysis/reruns/

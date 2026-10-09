@@ -1,0 +1,339 @@
+{
+ "claim_flags": {
+  "fitted": false,
+  "physically_qualifying": false,
+  "plant_predictive": false
+ },
+ "impl": "journal2019 (extension)",
+ "record": "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-PycharmProjects-DTDC-Simulator\\12de7771-a4a7-4f35-9eaf-1e2190868947\\scratchpad\\faner2019_march\\evidence\\step4\\scores\\lognormal_soy__sample_clock.csv",
+ "results": [
+  {
+   "condition": "faner2019_soybean_120C",
+   "covered_window": {
+    "mean_signed_residual_normalized": -0.05617390518474838,
+    "points_inside_reading_band": 8,
+    "residuals": [
+     {
+      "band": 0.003,
+      "measured": 0.181719,
+      "model": 0.15322356869189901,
+      "point_id": "f2-soy-X-005",
+      "t_s": 50.039
+     },
+     {
+      "band": 0.003,
+      "measured": 0.135942,
+      "model": 0.11041969038263559,
+      "point_id": "f2-soy-X-006",
+      "t_s": 59.923
+     },
+     {
+      "band": 0.003,
+      "measured": 0.10265,
+      "model": 0.07819084845594469,
+      "point_id": "f2-soy-X-007",
+      "t_s": 70.116
+     },
+     {
+      "band": 0.003,
+      "measured": 0.0788,
+      "model": 0.05645838917062565,
+      "point_id": "f2-soy-X-008",
+      "t_s": 80.0
+     },
+     {
+      "band": 0.003,
+      "measured": 0.06299,
+      "model": 0.04150667819309055,
+      "point_id": "f2-soy-X-009",
+      "t_s": 89.884
+     },
+     {
+      "band": 0.003,
+      "measured": 0.05383,
+      "model": 0.031112661156813704,
+      "point_id": "f2-soy-X-010",
+      "t_s": 100.077
+     },
+     {
+      "band": 0.003,
+      "measured": 0.04901,
+      "model": 0.025157497029484922,
+      "point_id": "f2-soy-X-011",
+      "t_s": 109.961
+     },
+     {
+      "band": 0.003,
+      "measured": 0.0391,
+      "model": 0.02048146583289613,
+      "point_id": "f2-soy-X-012",
+      "t_s": 120.154
+     },
+     {
+      "band": 0.003,
+      "measured": 0.03514,
+      "model": 0.0167109829605753,
+      "point_id": "f2-soy-X-013",
+      "t_s": 130.039
+     },
+     {
+      "band": 0.003,
+      "measured": 0.02587,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-014",
+      "t_s": 139.923
+     },
+     {
+      "band": 0.003,
+      "measured": 0.02344,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-015",
+      "t_s": 150.116
+     },
+     {
+      "band": 0.003,
+      "measured": 0.01612,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-016",
+      "t_s": 160.0
+     },
+     {
+      "band": 0.006,
+      "measured": 0.017302,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-017",
+      "t_s": 169.884
+     },
+     {
+      "band": 0.006,
+      "measured": 0.012358,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-018",
+      "t_s": 180.077
+     },
+     {
+      "band": 0.006,
+      "measured": 0.011123,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-019",
+      "t_s": 189.961
+     },
+     {
+      "band": 0.006,
+      "measured": 0.010393,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-020",
+      "t_s": 200.154
+     },
+     {
+      "band": 0.006,
+      "measured": 0.010393,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-021",
+      "t_s": 210.039
+     },
+     {
+      "band": 0.006,
+      "measured": 0.009775,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-022",
+      "t_s": 219.923
+     },
+     {
+      "band": 0.006,
+      "measured": 0.009175,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-023",
+      "t_s": 230.116
+     },
+     {
+      "band": 0.006,
+      "measured": 0.008,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-024",
+      "t_s": 240.0
+     }
+    ],
+    "rms_kg_kg": 0.016068050593587645,
+    "rms_normalized_by_window_span": 0.09249449164217872,
+    "window_end_sample_s": 240.0,
+    "window_points": 20,
+    "window_span_kg_kg": 0.17371899999999998,
+    "window_start_sample_s": 50.039
+   },
+   "covers_rule_window": true,
+   "levels": {
+    "0.1": {
+     "marched_crossing_to_level_s": 16.897653479411275,
+     "marched_start_loading_to_level_s": 62.76143375251033,
+     "marched_time_s": 62.76143375251033,
+     "measured_crossing_to_level_s": 25.350441949123166,
+     "measured_start_loading_to_level_s": 71.2142222222222,
+     "measured_time_at_march_start_loading_s": 1.535520594340513e-14,
+     "measured_time_s": 71.21422222222222
+    }
+   },
+   "march_end_loading_kg_kg": 0.014972611402749855,
+   "march_end_s": 300.0,
+   "march_start_loading_kg_kg": 0.4923639999999999,
+   "march_start_s": 0.0,
+   "measured_crossing_of_0p20_s": 45.86378027309905,
+   "rule_window": {
+    "mean_signed_residual_normalized": -0.05617390518474838,
+    "points_inside_reading_band": 8,
+    "residuals": [
+     {
+      "band": 0.003,
+      "measured": 0.181719,
+      "model": 0.15322356869189901,
+      "point_id": "f2-soy-X-005",
+      "t_s": 50.039
+     },
+     {
+      "band": 0.003,
+      "measured": 0.135942,
+      "model": 0.11041969038263559,
+      "point_id": "f2-soy-X-006",
+      "t_s": 59.923
+     },
+     {
+      "band": 0.003,
+      "measured": 0.10265,
+      "model": 0.07819084845594469,
+      "point_id": "f2-soy-X-007",
+      "t_s": 70.116
+     },
+     {
+      "band": 0.003,
+      "measured": 0.0788,
+      "model": 0.05645838917062565,
+      "point_id": "f2-soy-X-008",
+      "t_s": 80.0
+     },
+     {
+      "band": 0.003,
+      "measured": 0.06299,
+      "model": 0.04150667819309055,
+      "point_id": "f2-soy-X-009",
+      "t_s": 89.884
+     },
+     {
+      "band": 0.003,
+      "measured": 0.05383,
+      "model": 0.031112661156813704,
+      "point_id": "f2-soy-X-010",
+      "t_s": 100.077
+     },
+     {
+      "band": 0.003,
+      "measured": 0.04901,
+      "model": 0.025157497029484922,
+      "point_id": "f2-soy-X-011",
+      "t_s": 109.961
+     },
+     {
+      "band": 0.003,
+      "measured": 0.0391,
+      "model": 0.02048146583289613,
+      "point_id": "f2-soy-X-012",
+      "t_s": 120.154
+     },
+     {
+      "band": 0.003,
+      "measured": 0.03514,
+      "model": 0.0167109829605753,
+      "point_id": "f2-soy-X-013",
+      "t_s": 130.039
+     },
+     {
+      "band": 0.003,
+      "measured": 0.02587,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-014",
+      "t_s": 139.923
+     },
+     {
+      "band": 0.003,
+      "measured": 0.02344,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-015",
+      "t_s": 150.116
+     },
+     {
+      "band": 0.003,
+      "measured": 0.01612,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-016",
+      "t_s": 160.0
+     },
+     {
+      "band": 0.006,
+      "measured": 0.017302,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-017",
+      "t_s": 169.884
+     },
+     {
+      "band": 0.006,
+      "measured": 0.012358,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-018",
+      "t_s": 180.077
+     },
+     {
+      "band": 0.006,
+      "measured": 0.011123,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-019",
+      "t_s": 189.961
+     },
+     {
+      "band": 0.006,
+      "measured": 0.010393,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-020",
+      "t_s": 200.154
+     },
+     {
+      "band": 0.006,
+      "measured": 0.010393,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-021",
+      "t_s": 210.039
+     },
+     {
+      "band": 0.006,
+      "measured": 0.009775,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-022",
+      "t_s": 219.923
+     },
+     {
+      "band": 0.006,
+      "measured": 0.009175,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-023",
+      "t_s": 230.116
+     },
+     {
+      "band": 0.006,
+      "measured": 0.008,
+      "model": 0.014972611402749855,
+      "point_id": "f2-soy-X-024",
+      "t_s": 240.0
+     }
+    ],
+    "rms_kg_kg": 0.016068050593587645,
+    "rms_normalized_by_window_span": 0.09249449164217872,
+    "window_end_sample_s": 240.0,
+    "window_points": 20,
+    "window_span_kg_kg": 0.17371899999999998,
+    "window_start_sample_s": 50.039
+   },
+   "sources": [
+    "paper/analysis/datasets/faner2019_v2/curves.csv",
+    "paper/analysis/datasets/faner2019_v2/adjudication_per_point.csv"
+   ]
+  }
+ ]
+}

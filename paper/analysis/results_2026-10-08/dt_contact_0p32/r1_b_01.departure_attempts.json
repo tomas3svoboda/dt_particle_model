@@ -1,0 +1,9 @@
+[
+  {
+    "before_time_s": 497.0262175037928,
+    "requested_dt_s": 0.05,
+    "accepted": false,
+    "error": "face-departure solve rejected with exact rollback: departure Jacobian column has no phase-safe central probe",
+    "exact_rollback_identity": true
+  }
+]

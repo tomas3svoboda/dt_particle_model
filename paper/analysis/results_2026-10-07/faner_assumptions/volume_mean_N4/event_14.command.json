@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\paper\\analysis\\harness\\experiment_particle_event.py",
+    "--out",
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_14.json",
+    "--resume",
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_13.accepted.pkl",
+    "--event",
+    "target",
+    "--target",
+    "1e-06",
+    "--dt",
+    "0.038512378376559735",
+    "--budget",
+    "4000",
+    "--regional-tolerance",
+    "1e-10",
+    "--condition-ceiling",
+    "1e+18"
+  ]
+}

@@ -1,0 +1,432 @@
+[
+  {
+    "before_time_s": 497.01734246955414,
+    "requested_dt_s": 0.05,
+    "reference_result_sha256": {
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v2.json": "63aef8a3f5edd508211eaa8e04c68112075ebea0416ea9ad97ce524faa382ae5",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v3.json": "7abf8d4652d4f8ca5701e5017fd69651dc7ff9d1773788a537e29c638036d66c",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v4.json": "dddd1be80dd860b21eed2feb562658413fa570e235892ce2b1e8e59142479cb4",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v5.json": "9e9d434ab58e35e2e3bc1d2c55555e903fcc1d987ccc39fdbd062f66b83eb106"
+    },
+    "candidate": {
+      "wet_temperatures_k": [
+        336.58253341340696
+      ],
+      "wet_retained_water_loadings": [
+        0.12402444695502075
+      ],
+      "dry_temperatures_k": [
+        337.2766802329654,
+        355.7076528939013
+      ],
+      "dry_y_hexane": [
+        0.8639647843916672,
+        0.703368696945805
+      ],
+      "dry_total_stefan_fluxes_mol_m2_s": [
+        0.36581648152235685,
+        0.36581648152235685,
+        0.12420006378830561
+      ],
+      "front_z": 0.12202312464151834,
+      "interface_temperature_k": 337.13497522351304,
+      "physically_qualifying": false
+    },
+    "native_acceptance_changed": false,
+    "neighbor_material_or_time_imported": false,
+    "accepted": true,
+    "ledger": {
+      "dt_s": 0.05,
+      "nonlinear_method": "safeguarded-direct-newton",
+      "nonlinear_evaluations": 93,
+      "rejected_trial_evaluations": 0,
+      "nonlinear_message": "direct physical Newton root; unchanged ordinary residual",
+      "residual_scales": {
+        "wet_water_mol_s": [
+          0.0002821607604269169
+        ],
+        "wet_energy_w": [
+          46.67749243057306
+        ],
+        "dry_water_mol_s": [
+          6.387415230470617e-06,
+          0.001839998670299455
+        ],
+        "dry_hexane_mol_s": [
+          2.0049878774497656e-07,
+          1.1120865262336802e-05
+        ],
+        "dry_energy_w": [
+          0.5612037716567448,
+          36.03944498351001
+        ],
+        "rh_water_mol_s": 0.0002754406459318313,
+        "rh_hexane_mol_s": 9.364592568343999e-05,
+        "rh_energy_w": 45.567831931134286,
+        "dry_energy_capacity_stencil_audits": [
+          {
+            "temperature_k": 337.2766802329654,
+            "pressure_pa": 101325.0,
+            "y_hexane": 0.8639647843916672,
+            "actual_oil_fraction_label": 0.013740458015267173,
+            "gas_accessible_fraction": 1.0,
+            "primitive_domain_kind": "GasOnlyPrimitiveDomain",
+            "stencil_kind": "gas_only_second_order_centered",
+            "delta_temperature_k": 0.001,
+            "sample_temperatures_k": [
+              337.2776802329654,
+              337.27568023296544
+            ],
+            "sample_full_coupled_pore_certified": [
+              true,
+              true
+            ],
+            "center_gas_only_admissible": true,
+            "central_lower_gas_only_admissible": true,
+            "central_upper_gas_only_admissible": true,
+            "forward_second_gas_only_admissible": null,
+            "backward_second_gas_only_admissible": null,
+            "capacity_j_m3_k": 1976884.2133134604,
+            "numerical_amendment_id": "GT-PS-2-P1E-19",
+            "normalization_only": true,
+            "accepted_residual_equations_changed": false,
+            "composition_or_activity_clipping_used": false,
+            "property_extrapolation_used": false,
+            "physically_qualifying": false
+          },
+          {
+            "temperature_k": 355.7076528939013,
+            "pressure_pa": 101325.0,
+            "y_hexane": 0.703368696945805,
+            "actual_oil_fraction_label": 0.013740458015267173,
+            "gas_accessible_fraction": 1.0,
+            "primitive_domain_kind": "GasOnlyPrimitiveDomain",
+            "stencil_kind": "gas_only_second_order_centered",
+            "delta_temperature_k": 0.001,
+            "sample_temperatures_k": [
+              355.7086528939013,
+              355.7066528939013
+            ],
+            "sample_full_coupled_pore_certified": [
+              true,
+              true
+            ],
+            "center_gas_only_admissible": true,
+            "central_lower_gas_only_admissible": true,
+            "central_upper_gas_only_admissible": true,
+            "forward_second_gas_only_admissible": null,
+            "backward_second_gas_only_admissible": null,
+            "capacity_j_m3_k": 404682.59999156,
+            "numerical_amendment_id": "GT-PS-2-P1E-19",
+            "normalization_only": true,
+            "accepted_residual_equations_changed": false,
+            "composition_or_activity_clipping_used": false,
+            "property_extrapolation_used": false,
+            "physically_qualifying": false
+          },
+          {
+            "temperature_k": 355.5381754369457,
+            "pressure_pa": 101325.0,
+            "y_hexane": 0.7054460340545842,
+            "actual_oil_fraction_label": 0.013740458015267173,
+            "gas_accessible_fraction": 1.0,
+            "primitive_domain_kind": "GasOnlyPrimitiveDomain",
+            "stencil_kind": "gas_only_second_order_centered",
+            "delta_temperature_k": 0.001,
+            "sample_temperatures_k": [
+              355.5391754369457,
+              355.53717543694574
+            ],
+            "sample_full_coupled_pore_certified": [
+              true,
+              true
+            ],
+            "center_gas_only_admissible": true,
+            "central_lower_gas_only_admissible": true,
+            "central_upper_gas_only_admissible": true,
+            "forward_second_gas_only_admissible": null,
+            "backward_second_gas_only_admissible": null,
+            "capacity_j_m3_k": 409724.0147739649,
+            "numerical_amendment_id": "GT-PS-2-P1E-19",
+            "normalization_only": true,
+            "accepted_residual_equations_changed": false,
+            "composition_or_activity_clipping_used": false,
+            "property_extrapolation_used": false,
+            "physically_qualifying": false
+          }
+        ],
+        "physically_qualifying": false
+      },
+      "scaled_residuals": [
+        -3.302146764029088e-17,
+        4.1326395331869524e-16,
+        1.0345608749730373e-11,
+        -3.901581079439496e-14,
+        1.1630931085107885e-13,
+        1.1707562797005628e-13,
+        5.66421119540018e-13,
+        8.23047318522348e-13,
+        1.6679238760515385e-13,
+        -2.2093970532799308e-14,
+        6.481434362905633e-15
+      ],
+      "maximum_scaled_residual": 1.0345608749730373e-11,
+      "condition_proxy": 15737.494280464553,
+      "raw_solver_condition_proxy": 25452036.05673006,
+      "physical_variable_scale_provenance": "unique exact-face tangent; fixed 1 s existing-rate widths; |g_T|/|g_y|/N_t/Q documented floors; T_Gamma=5 K",
+      "physical_variable_scale_labels": [
+        "wet_temperature_rate[0]",
+        "wet_water_rate[0]",
+        "newborn_temperature_gradient",
+        "outer_dry_temperature_rate[0]",
+        "newborn_composition_gradient",
+        "outer_dry_composition_rate[0]",
+        "total_stefan_flux[0]",
+        "total_stefan_flux[1]",
+        "total_stefan_flux[2]",
+        "newborn_volume_rate_Q",
+        "interface_temperature"
+      ],
+      "physical_variable_scales": [
+        36.85000000000002,
+        0.235670904,
+        47089.22674002833,
+        98.5196018406117,
+        1852.4186599043803,
+        1.0,
+        0.34284844196389364,
+        0.34279031494111756,
+        0.12420006378830561,
+        8.494471681430193e-10,
+        5.0
+      ],
+      "physical_jacobian_perturbations": [
+        0.0003685000000000003,
+        2.35670904e-06,
+        0.47089226740028334,
+        0.0009851960184061172,
+        0.018524186599043806,
+        1e-05,
+        3.4284844196389366e-06,
+        3.4279031494111758e-06,
+        1.2420006378830562e-06,
+        8.494471681430194e-15,
+        5e-05
+      ],
+      "jacobian_certificate": {
+        "dimensionless_jacobian": [
+          [
+            0.0,
+            0.09275232376983063,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.7492022883924173e-08,
+            6.798846739364313e-05
+          ],
+          [
+            0.005521273187915002,
+            0.0026829471198070516,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -8.763776182910909e-07,
+            -0.0004787497830053281
+          ],
+          [
+            0.0,
+            0.0,
+            -0.02588940451568354,
+            0.4829540554888021,
+            -0.1796718852346284,
+            0.40917808882772355,
+            -0.05049888914131145,
+            0.051248053599439014,
+            0.0,
+            -0.0427503403264477,
+            -2.95997359473886
+          ],
+          [
+            0.0,
+            0.0,
+            5.470852344628585e-05,
+            -0.3134098597718608,
+            0.0003561381279049946,
+            -0.26550615801324673,
+            0.0,
+            -0.0001779037144846181,
+            0.0005664192347339201,
+            6.64407633748608e-05,
+            0.010610746282915496
+          ],
+          [
+            0.0,
+            0.0,
+            -0.026096165190204242,
+            -2.377621072308274e-06,
+            0.09830986969484953,
+            -9.88976089871987e-05,
+            -10.285857483005856,
+            10.452429062238116,
+            0.0,
+            0.11985213697002736,
+            0.01296050020541119
+          ],
+          [
+            0.0,
+            0.0,
+            1.2281783793148471e-09,
+            -0.21023773658504238,
+            -0.0012017846126782877,
+            0.0799825871273113,
+            0.0,
+            -0.18844750894218995,
+            0.22211037023612176,
+            -3.442710242531994e-05,
+            -0.029267121196396555
+          ],
+          [
+            0.0,
+            0.0,
+            0.14081814693286573,
+            -0.011256124094816756,
+            -0.011108065180034198,
+            0.02253138709943431,
+            -0.046900815603311656,
+            0.053500476766764844,
+            0.0,
+            0.00043793583173236785,
+            -0.12421497094543792
+          ],
+          [
+            0.0,
+            0.0,
+            -4.783674078931041e-06,
+            0.01631644924483493,
+            0.00010133046957702792,
+            -0.08529430489310633,
+            0.0,
+            -0.0008331057639949887,
+            0.0027823564261257147,
+            -2.0430429579309356e-05,
+            0.002298279654573642
+          ],
+          [
+            0.0,
+            -3.18302002547559e-06,
+            1.0425862818005427e-10,
+            0.0,
+            0.00029020724021215345,
+            0.0,
+            0.0011710594583541512,
+            0.0,
+            0.0,
+            -0.0012168300689537896,
+            -0.047093593973038236
+          ],
+          [
+            0.0,
+            0.0,
+            1.9673003890268534e-11,
+            0.0,
+            -3.0581874493666724e-06,
+            0.0,
+            0.02202233510117312,
+            0.0,
+            0.0,
+            -0.022758205100129034,
+            0.0030448034705724816
+          ],
+          [
+            -0.00018145922152098672,
+            -9.206769020510869e-08,
+            -0.0017251824107729248,
+            0.0,
+            8.701741122428344e-06,
+            0.0,
+            0.0005776205163794991,
+            0.0,
+            0.0,
+            0.0011233996406070311,
+            -0.0007770344045507716
+          ]
+        ],
+        "singular_values": [
+          14.666462560576868,
+          3.0370763914298338,
+          0.43530629947509536,
+          0.3044981055974214,
+          0.14359113549368313,
+          0.092791256903659,
+          0.06003364688429281,
+          0.02629310836973023,
+          0.0055221142112214785,
+          0.0031942928044514074,
+          0.0009319439485854372
+        ],
+        "numerical_rank": 11,
+        "expected_rank": 11,
+        "rank_relative_tolerance": 1e-13,
+        "rank_absolute_threshold": 1.4666462560576868e-12,
+        "condition_number_2": 15737.494280464553,
+        "physically_qualifying": false
+      },
+      "accepted_state_conditioning_certified": true,
+      "conditioning_certificate_scope": "accepted requested-duration root only",
+      "minimum_fractional_distance_to_bound": 0.023792152299593416,
+      "minimum_front_z_distance_to_chart_boundary": 0.002974019037449177,
+      "used_sparse_jacobian": false,
+      "scalability_class": "dense finite-difference safeguarded direct-Newton correctness kernel",
+      "jacobian_structural_color_count": 11,
+      "jacobian_structural_nnz": 121,
+      "jacobian_structural_storage_bytes": 968,
+      "jacobian_dense_equivalent_bytes": 968,
+      "continuation_fallback_used": false,
+      "direct_requested_attempt_evaluations": 93,
+      "direct_requested_failure_message": null,
+      "direct_requested_failure_maximum_scaled_residual": null,
+      "auxiliary_stages": [],
+      "cauchy_globalization_used": false,
+      "cauchy_globalization_accepted_steps": 0,
+      "cauchy_line_search_trials": 0,
+      "cauchy_residual_evaluations": 0,
+      "dogleg_globalization_used": false,
+      "dogleg_globalization_accepted_steps": 0,
+      "dogleg_jacobian_linearizations": 0,
+      "dogleg_trial_attempts": 0,
+      "dogleg_residual_evaluations": 0,
+      "newborn_trace_gradients": {
+        "temperature_gradient_k_m": 47227.69179582605,
+        "composition_gradient_m_inv": 52.18242927431621,
+        "physically_qualifying": false
+      },
+      "water_step_residual_mol": 2.011255331427266e-18,
+      "hexane_step_residual_mol": -3.718838597915902e-20,
+      "energy_step_residual_j": 1.5147332173282013e-12,
+      "normalized_water_step_residual": 1.8959306767922158e-14,
+      "normalized_hexane_step_residual": 6.947764195064995e-15,
+      "normalized_energy_step_residual": 3.66244995204648e-13,
+      "water_cumulative_residual_mol": 9.959597034007433e-19,
+      "hexane_cumulative_residual_mol": -1.7765027143556354e-19,
+      "energy_cumulative_residual_j": 1.506853005783843e-12,
+      "normalized_water_cumulative_residual": 8.850126058501821e-15,
+      "normalized_hexane_cumulative_residual": 4.6296602987853636e-15,
+      "normalized_energy_cumulative_residual": 8.111386873353571e-14,
+      "boundary_water_out_mol": 2.249857041750621e-08,
+      "boundary_hexane_out_mol": 1.0964375410546666e-07,
+      "boundary_energy_out_j": -0.009731912297933985,
+      "source_accepted_steps": 42,
+      "source_cumulative_nonlinear_evaluations": 3927,
+      "accepted": true,
+      "physically_qualifying": false
+    }
+  }
+]

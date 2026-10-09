@@ -1,0 +1,11 @@
+{
+  "seed_only_tangent_residual_bound": 3e-10,
+  "bound_basis": "Existing B departure policy and owner RULE 2; native final conditioning and W/H/U acceptance unchanged",
+  "component_energy_tolerance": 1e-10,
+  "neighboring_result_is_numerical_guess_only": true,
+  "accepted_physical_coefficient": 0.32,
+  "source_sha256": {
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_neighbor_seed_policy_032.py": "043a90be9b9885d787b752c02423ce2e0c26859915bba69cce9991a20c2d48c6",
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_neighbor_departure_seed_032.py": "a9926a8a5d759d51ba657587e56f4d48f44e3ca6389a417fdee4fd033d6c4d3e"
+  }
+}

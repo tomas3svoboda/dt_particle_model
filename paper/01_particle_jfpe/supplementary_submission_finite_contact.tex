@@ -1,0 +1,232 @@
+\section{Liquid-water imbibition: coefficient basis and numerical evidence}
+\label{sup:finitecontact}
+This section derives the water-transport coefficients of the particle and
+gives the numerical evidence for the DT calculation with liquid-water
+imbibition. Imbibition is part of the particle formulation and
+is active only while the external water film contacts the dry shell. It is
+inactive in the Faner experiment, which keeps the reference pore-gas
+and retained-water fluxes. Its external series resistance, film-stock limit and energy transport
+are given in the main text.
+It introduces no extra water storage or retention capacity.
+
+\paragraph{Material interpretation.}
+Liquid-water imbibition into soy protein isolates combines adsorption,
+capillarity and loosely held interstitial water, and its capacity exceeds
+equilibrium vapour sorption several-fold \citep{jovanovich2003wateruptake}.
+Assigning the incoming liquid to one retained-water inventory is an
+effective closure, not a measurement of its microscopic phase partition. Displacement of hexane by water, swelling, liquid
+pressure and blocking of hexane by water are outside this closure.
+
+\paragraph{Reference transport coefficients.}
+The reference binary pore value $D_b=6.0\times10^{-10}$ m$^2$/s is an
+engineering sensitivity point, 1.5 times the scalar diffusivity used by
+\citet{cardarelli2002modeling}. The reference retained-water mobility is derived
+from the linearized coupled balances at $T=385.65$ K, $P=130$ kPa and
+$y_{\mathrm h}=0.80$, with the reference retention properties.
+Eliminating the total molar flux gives the local apparent response
+\[
+D_{\mathrm{app}}=D_{\mathrm{app,pore}}+g_{\mathrm{ret}}\mathcal L_{\mathrm{w,ret}},
+\]
+where $D_{\mathrm{app,pore}}=4.54\times10^{-12}$ m$^2$/s and
+$g_{\mathrm{ret}}=7.26\times10^{-4}$ m$^3$/mol are obtained from the
+same storage and chemical-potential derivatives. Setting the combined
+response to $6.2\times10^{-10}$ m$^2$/s gives the reference retained-water
+mobility $8.47\times10^{-7}$ mol/(m s). The target value is the maximum apparent
+moisture diffusivity reported by \citet{touffet2026moisture} for
+pelleted feed at \SI{60}{\celsius}; transferring it to this reference
+state is an engineering assumption. On the isothermal, uncapped Luikov
+branch, the diffusivity of the retained-water path is
+\[
+D_{\mathrm{ret}}=
+\frac{M_{\mathrm w}\mathcal L A_1}{\rho_{\mathrm{dm}}A_2W^2},
+\]
+which for the reference mobility is $3.8\times10^{-10}$ m$^2$/s at
+$W=0.05$ and $2.4\times10^{-11}$ m$^2$/s at $W=0.20$. That span covers
+the two available measurements on oilseed meal: vapour-sorption diffusivities of
+sunflower meal, $10^{-12}$ to $1.15\times10^{-10}$ m$^2$/s at
+50--\SI{95}{\celsius} \citep{cardarelli1998thesis}, and the soaking
+diffusivity of defatted soybean meal, $1.14$ to $2.07\times10^{-11}$
+m$^2$/s at 20--\SI{60}{\celsius} \citep{mukherjee2019soaking}. The
+reference retained-water mobility is therefore consistent with oilseed meal, although
+its value was taken from the pellet study.
+
+\paragraph{The liquid-water mobility factor.}
+The liquid-water mobility is $\mathcal L_\ell=999\,\mathcal
+L_{\mathrm{w,ret}}=8.47\times10^{-4}$ mol/(m s), so the total shell
+mobility is the reference value times a mobility factor of 1000. The
+number is the span of the liquid transport
+coefficient of porous hygroscopic solids between the dry state and
+free water saturation, which \citet{kunzel1995simultaneous} measured on
+bricks, sandstones and concretes and expressed as
+$1000^{\,w/w_f-1}$ with $w_f$ the free saturation (his eq.~24). In the
+sorption region of the same materials the liquid contribution is only
+one to two times the vapour transport, so a constant factor is the
+water-filled-pore limit of that law. We apply it because the pathway is
+active only in the dry shell while the external water film is filling
+its pores. Starting from the reference retained-water mobility, $D_{\mathrm{ret}}$ at $W=0.20$ is
+$2.4\times10^{-8}$ m$^2$/s on the enhanced pathway.
+
+The mobility factor and the liquid contact conductance act in series, with
+the interior
+term $d/\mathcal L_\ell$ and the surface term $1/K_\ell$, so a single
+uptake time fixes only their sum. Table~\ref{tab:finitecontact:factor}
+gives the interior share of the series resistance at the DT radius with
+$d=\Rp/5$, the lumped-sphere equivalent, for $K_\ell=0.32$ mol/(m$^2$ s).
+Above a factor of about 300 the surface controls the uptake and the
+result no longer depends on the factor. Below 100 the interior would
+double the resistance, and the conductance derived below would have to
+rise to reproduce the same measurement. Completed DT marches at factors
+100, 1000 and 10\,000 with the same $K_\ell$
+(Table~\ref{tab:finitecontact:factormarch}) confirm this. The tenfold
+reduction to 100 lowers the outlet moisture by 0.58 percentage points
+and raises hexane by 22.8 mg/kg dry; the tenfold increase to
+10\,000 moves them by only $+0.07$ points and $-2.7$ mg/kg dry. The
+outlet is on its plateau at 1000.
+
+\begin{table}[htbp]\centering\small
+\caption{Interior share of the series resistance to liquid entry at the
+DT radius, $K_\ell=0.32$ mol/(m$^2$ s), $d=\Rp/5$.}
+\label{tab:finitecontact:factor}
+\begin{tabular}{@{}rrr@{}}\toprule
+Mobility factor & Interior share & Uptake slowdown vs.\ contact alone\\\midrule
+30 & 0.79 & 4.8\\
+100 & 0.53 & 2.1\\
+300 & 0.27 & 1.4\\
+1000 & 0.10 & 1.1\\
+3000 & 0.04 & 1.04\\
+\bottomrule\end{tabular}\end{table}
+
+\begin{table}[htbp]\centering\small
+\caption{DT outlet against the liquid-water mobility factor at
+$K_\ell=0.32$ mol/(m$^2$ s); every other input as in
+Table~\ref{tab:finitecontact:sensitivity}. The last column gives the
+maximum normalized water, hexane and energy defects of the independent
+reconstruction from dry-shell formation to exit (acceptance $10^{-10}$).}
+\label{tab:finitecontact:factormarch}
+\begin{tabular}{@{}rrrrrrl@{}}\toprule
+Factor & Moisture, \% wet & Hexane, mg/kg dry & Hexane, ppm wet & Mean $T$, $^\circ$C & Film consumed, s & W / H / U defects\\\midrule
+100 & 17.62 & 158.0 & 130.1 & 105.01 & 702.5 & $7.1\times10^{-12}$ / $2.1\times10^{-12}$ / $2.7\times10^{-12}$\\
+1000 (adopted) & 18.20 & 135.2 & 110.6 & 104.98 & 624.5 & $4.2\times10^{-11}$ / $8.6\times10^{-13}$ / $6.2\times10^{-12}$\\
+10\,000 & 18.27 & 132.5 & 108.3 & 104.97 & 614.0 & $2.6\times10^{-11}$ / $2.8\times10^{-12}$ / $4.4\times10^{-12}$\\
+\bottomrule\end{tabular}\end{table}
+
+\paragraph{Construction of the contact conductance.}
+\label{sup:contactscale}
+The liquid contact conductance represents the resistance to liquid entry
+between the external water film and the connected particle matrix. It keeps
+the surface conductance finite when the shell forms, where the main-text law
+gives $G_\ell\to K_\ell$ as $d\to0$. Its value is derived from the only kinetic
+measurement of solvent-extracted soybean meal in liquid water
+\citep{hemmingsen2008water}: the coarse sieve fraction (above 0.5 mm,
+mean 1.43 mm; 25 g fat per kg dry matter; initial water 11.8\%, that is
+$W_0=0.134$ kg/kg dry) immersed at about \SI{80}{\celsius}: its
+rehydration index is on its plateau at the first sample, 90 s, and
+does not rise afterwards. The construction assumes a sphere of radius
+$R=0.715$ mm, entry through the surface alone, the surface at the film's state
+($W_{\mathrm{cap}}$) and the retention law of the main text. The water
+balance $(\rho_{\mathrm{dm}}V/M_{\mathrm w})\dot W
+=-A K_\ell[\psi(W)-\psi(W_{\mathrm{cap}})]$ with
+$\psi(W)=(1-A_1/W)/A_2$ integrates in closed form to
+\[
+t=\frac{\rho_{\mathrm{dm}}R A_2}{3M_{\mathrm w}A_1K_\ell}\,
+W_{\mathrm{cap}}\!\left[(W_0-W_1)+W_{\mathrm{cap}}
+\ln\frac{W_{\mathrm{cap}}-W_0}{W_{\mathrm{cap}}-W_1}\right],
+\]
+and requiring $W_1=W_{\mathrm{cap}}-0.01$ kg/kg at $t=90$ s gives
+$K_\ell=0.253$ mol/(m$^2$ s) at \SI{80}{\celsius}. Scaling the entry
+rate with the inverse viscosity of water from 80 to \SI{100}{\celsius}
+(a factor of 1.26) gives 0.318, adopted as 0.32. The end-point tolerance
+is the largest single uncertainty of the construction: 0.02 or 0.005
+kg/kg below capacity gives 0.21 or 0.43. Reading the measurement at
+\SI{20}{\celsius} with the same construction and viscosity scaling
+(a factor of 3.55) gives 0.90, so the adopted value is the lower,
+less extrapolated, of the two readings.
+
+The construction assumes that the sieve size is a sphere diameter, that
+the interior had reached the retention capacity when the first sample was
+drained, and that the entry rate scales with the liquid viscosity. The
+measurement is on a drained filter cake and does not separate particle,
+interstitial and surface water. The 90 s is therefore an upper bound on the
+entry time, and the derived conductance is the slowest value consistent
+with the measurement. It is a literature-derived value under these
+declared assumptions, not a measurement on DT meal, and no DT outlet value
+entered the calculation.
+
+With the adopted liquid-water mobility, the resistance length
+$\mathcal L_\ell/K_\ell$ is 2.65 mm, 1.76 times the DT radius. At
+$d=\Rp$ the series conductance is $G_\ell=0.204$ mol/(m$^2$ s), and the
+contact term's share of the series resistance is 0.64. The uniform-sphere linearization
+$\tau_K=\rho_{\mathrm{dm}}\Rp A_2W^2/(3M_{\mathrm w}K_\ell A_1)$ gives
+56 s at $W=0.20$, and the closed-form fill of a DT sphere limited by contact alone,
+from the feed loading 0.124 to $W_{\mathrm{cap}}-0.01$, takes 153 s
+(491 s in the earlier reference case 0.10). These are scale estimates;
+radial gradients, pore-gas exchange, the changing surface state, the
+film's water stock and the capacity all remain active in the calculation.
+
+\paragraph{Sensitivity to the contact conductance.}
+\label{sup:contactsensitivity}
+Table~\ref{tab:finitecontact:sensitivity} lists completed DT marches at
+four liquid contact conductances with every other input held constant,
+the earlier reference case 0.10 among them. The outlet moisture is bounded by the condensate supply
+and the retention capacity: the external water film is consumed before
+the exit in every case, and a fourfold change in $K_\ell$ moves the outlet
+moisture by 1.3 percentage points and the wet-basis hexane by 43 ppm.
+The conductance sets how long the film persists, not how much water the
+particle finally holds.
+
+\begin{table}[htbp]\centering\small
+\caption{DT outlet against the liquid contact conductance; mobility
+factor 1000, two radial cells, regime-C maximum step 5 s, exit at
+1766.5 s. Wet-basis values exclude the external film, which is zero at
+the exit in every case.}
+\label{tab:finitecontact:sensitivity}
+\begin{tabular}{@{}rrrrrr@{}}\toprule
+$K_\ell$, mol/(m$^2$ s) & Moisture, \% wet & Hexane, mg/kg dry & Hexane, ppm wet & Mean $T$, $^\circ$C & Film consumed, s\\\midrule
+0.05 & 16.68 & 194.5 & 162.0 & 105.09 & 816.8\\
+0.10 & 17.40 & 165.3 & 136.5 & 105.03 & 733.6\\
+0.20 & 17.94 & 144.8 & 118.8 & 104.99 & 662.4\\
+0.32 (adopted) & 18.20 & 135.2 & 110.6 & 104.98 & 624.5\\
+\bottomrule\end{tabular}\end{table}
+
+\paragraph{Events and refinement.}
+The adopted DT calculation uses the feed history up to 492.257073 s,
+effective radius 1.5 mm, two radial cells, the prescribed bath and the
+existing retention capacity. The moving-front calculation begins with a
+0.01-s shell-formation interval, advances regime B in 0.1-s intervals,
+shortened where events require, and resolves grid-face arrival and departure
+before core extinction at 503.560810 s. External water stays positive
+throughout regime B, so the zero-film regime-B branch, which is not
+implemented, is not exercised (Sec.~\ref{sup:dtmarch}).
+Regime C advances the stationary particle and the film together to the
+film's depletion at 624.548745 s and then to the exit.
+Table~\ref{tab:finitecontact:refinement} gives the regime-C step
+refinement, performed in the earlier reference case $K_\ell=0.10$ from the
+same moving-front end point; the 5-s maximum step is used in every
+reported march. The extra digits resolve the numerical sensitivity; the main
+text uses rounded values.
+
+\begin{table}[htbp]\centering\small
+\caption{Regime-C timestep sensitivity of the DT particle with liquid-water
+imbibition, $K_\ell=0.10$ mol/(m$^2$ s).}
+\label{tab:finitecontact:refinement}
+\begin{tabular}{@{}lrr@{}}\toprule
+Quantity & Maximum step 10 s & Maximum step 5 s\\\midrule
+Moisture, \% wet basis & 17.3813 & 17.4033\\
+Hexane, ppm wet basis & 137.222 & 136.474\\
+Mean temperature, $^\circ$C & 105.0329 & 105.0314\\
+External-water depletion time, s & 735.395 & 733.575\\
+\bottomrule\end{tabular}\end{table}
+
+\paragraph{Independent balances.}
+An independent reconstruction of the adopted march, from dry-shell
+formation to exit, evaluates water (W), hexane (H) and energy (U) in the
+particle and external water film at every accepted step. The maximum
+normalized W/H/U defects are $4.24\times10^{-11}$, $8.61\times10^{-13}$ and $6.16\times10^{-12}$,
+below the $10^{-10}$ acceptance limit; the regime-B segment alone gives
+$1.05\times10^{-11}$, $8.61\times10^{-13}$ and $3.94\times10^{-12}$. The
+unchanged feed history keeps its earlier check. Component partial
+enthalpies count each energy transfer once. These checks show conservation in the
+declared numerical experiment;
+whole-history mesh and time-step convergence remains open
+(Sec.~\ref{sup:dtmarch}), and conservation does not identify the material
+coefficients.

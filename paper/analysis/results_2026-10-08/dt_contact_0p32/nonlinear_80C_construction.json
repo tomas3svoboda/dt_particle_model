@@ -1,0 +1,54 @@
+{
+    "selected_march_K_l_mol_m2_s":  0.32,
+    "construction":  "Nonlinear well-mixed contact-only sphere; native cap-to-retained log activity force; 80 C coarse same-material meal, 90 s endpoint; inverse-viscosity extrapolation to 100 C.",
+    "rho_dry_kg_m3":  1159.65,
+    "water_molar_mass_kg_mol":  0.018015268,
+    "source_initial_moisture_wet_basis":  0.118,
+    "W_start_kg_kg_dry":  0.13378684807256236,
+    "source_sieve_mean_diameter_m":  0.00143,
+    "assumed_spherical_radius_m":  0.000715,
+    "native_A1":  0.88,
+    "native_A2":  12.184,
+    "native_W_cap":  0.235670904,
+    "first_sample_time_s":  90.0,
+    "assumed_endpoint_below_capacity_kg_kg_dry":  0.01,
+    "conditional_K_floor_at_80C":  0.25317017840013056,
+    "assumed_viscosity_80_to_100C_factor":  1.2553191489361704,
+    "conditional_K_floor_at_100C":  0.31780937288527034,
+    "endpoint_sensitivity_at_100C":  {
+                                         "0.02":  0.21073323604492936,
+                                         "0.01":  0.31780937288527034,
+                                         "0.005":  0.42837663816346716
+                                     },
+    "contact_only_DT_radius_fill_times_s":  {
+                                                "0.12":  {
+                                                             "0.1":  494.9459065203394957359867155,
+                                                             "0.32":  154.67059578760609241749584859
+                                                         },
+                                                "0.13378684807256236":  {
+                                                                            "0.1":  478.01362355269469047638739683,
+                                                                            "0.32":  149.37925736021709077387106151
+                                                                        },
+                                                "0.16":  {
+                                                             "0.1":  431.9256537392364542903344359,
+                                                             "0.32":  134.97676679351139196572951122
+                                                         }
+                                            },
+    "assumptions":  [
+                        "First sampled filter-cake plateau is interpreted as interior retained water within declared tolerance of model capacity.",
+                        "Sieve mean diameter is represented as a sphere and dry-material density is the model\u0027s declared value.",
+                        "Contact-only well-mixed interior excludes internal transport limitation and differs from the full DT march.",
+                        "Inverse water viscosity carries the coefficient from 80 C to 100 C; no fitted temperature dependence.",
+                        "Full by 90 s is one-sided, conditional on the measurement-to-retained-water mapping; earlier filling is possible.",
+                        "Endpoint sensitivity is a scenario range, not a confidence interval or finite upper bound."
+                    ],
+    "benchmark_output_used_for_selection":  false,
+    "manuscript_adoption":  false,
+    "sources_sha256":  {
+                           "literature_sources\\water_sorption\\Hemmingsen_Water_Adsorption_in_Feed_Ingredients_for_Animal_Pellets_at_Different_Temperatures_Particle_Size_and_Ingredient_Combinations.pdf":  "905ffd2f2149c773de7a6e267f951c62dcf3cbddead12f181dfec2a478b0112d",
+                           "src\\dtdc_simulator\\core2\\props\\sorption.py":  "c8755094b57e7d519071c44a891b8df42d5b43cfe9aab3f05b7a24ba08d9a702",
+                           "scratchpad\\dt_contact_sensitivity_2026_10_08\\verify_kl_032.py":  "ef04589f4375734bde0086bff198c02036861342c048b886a71d19d04f204f28"
+                       },
+    "requested_kl_single_value_script_found_in_repository":  false,
+    "contact_only_fill_time_note":  "Native activity law at selected coefficient; radius 1.5 mm, endpoint W_cap-0.01, starting loading given by each key. Viscosity scaling is already contained in selected K, not applied twice."
+}

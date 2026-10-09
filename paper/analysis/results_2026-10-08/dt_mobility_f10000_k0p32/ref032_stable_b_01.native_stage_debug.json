@@ -1,0 +1,125 @@
+[
+  {
+    "before_time_s": 497.0264046524753,
+    "dt_s": 0.05,
+    "certify": true,
+    "status": "REFUSED",
+    "error": "departure direct Newton correction has no residual-decreasing phase-safe step",
+    "evaluations": 260,
+    "maximum_scaled_residual": 5.579689505474783e-10,
+    "scaled_residuals": [
+      1.516073330224028e-15,
+      -3.1946353587962016e-16,
+      -5.579689505474783e-10,
+      1.8205081396111867e-12,
+      -1.5212363108795697e-12,
+      -7.648716151151762e-13,
+      -5.379494337658155e-11,
+      2.166691413668683e-12,
+      -1.0015918234409057e-12,
+      1.301539488761401e-13,
+      -3.8673381809434345e-14
+    ],
+    "candidate": {
+      "wet_temperatures_k": [
+        336.58352765713937
+      ],
+      "wet_retained_water_loadings": [
+        0.12401731179779409
+      ],
+      "dry_temperatures_k": [
+        337.2485638600687,
+        355.6520209620786
+      ],
+      "dry_y_hexane": [
+        0.8583645433751523,
+        0.6864711063057616
+      ],
+      "dry_total_stefan_fluxes_mol_m2_s": [
+        0.34417577614876527,
+        0.3427903884124794,
+        0.11289592020249117
+      ],
+      "front_z": 0.1220360761645424,
+      "interface_temperature_k": 337.1082367974175,
+      "physically_qualifying": false
+    },
+    "trace_gradients": {
+      "temperature_gradient_k_m": 46968.82891873245,
+      "composition_gradient_m_inv": -1860.0841955304313,
+      "physically_qualifying": false
+    }
+  },
+  {
+    "before_time_s": 497.0264046524753,
+    "dt_s": 5e-05,
+    "certify": false,
+    "status": "SOLVED",
+    "maximum_scaled_residual": 1.2918888151057515e-09
+  },
+  {
+    "before_time_s": 497.0264046524753,
+    "dt_s": 0.0005,
+    "certify": false,
+    "status": "SOLVED",
+    "maximum_scaled_residual": 1.719718811204915e-09
+  },
+  {
+    "before_time_s": 497.0264046524753,
+    "dt_s": 0.005,
+    "certify": false,
+    "status": "SOLVED",
+    "maximum_scaled_residual": 1.0259516119343735e-09
+  },
+  {
+    "before_time_s": 497.0264046524753,
+    "dt_s": 0.05,
+    "certify": true,
+    "status": "REFUSED",
+    "error": "departure direct Newton correction has no residual-decreasing phase-safe step",
+    "evaluations": 266,
+    "maximum_scaled_residual": 1.9338154292156922e-10,
+    "scaled_residuals": [
+      -3.4584484681546144e-15,
+      3.5157341198478443e-16,
+      1.760919399885101e-10,
+      -9.979986481994681e-13,
+      6.906764630752082e-11,
+      2.6844721347428343e-12,
+      1.9338154292156922e-10,
+      -9.985324560201353e-13,
+      3.72055175407647e-12,
+      -3.308487110792865e-13,
+      1.3209143833504175e-13
+    ],
+    "candidate": {
+      "wet_temperatures_k": [
+        336.58352765713755
+      ],
+      "wet_retained_water_loadings": [
+        0.12401731179779424
+      ],
+      "dry_temperatures_k": [
+        337.24856385999317,
+        355.6520209620723
+      ],
+      "dry_y_hexane": [
+        0.8583645433681149,
+        0.6864711063056091
+      ],
+      "dry_total_stefan_fluxes_mol_m2_s": [
+        0.3441757761409537,
+        0.3427903884024447,
+        0.11289592020040179
+      ],
+      "front_z": 0.1220360761646172,
+      "interface_temperature_k": 337.1082367973493,
+      "physically_qualifying": false
+    },
+    "trace_gradients": {
+      "temperature_gradient_k_m": 46968.82891745112,
+      "composition_gradient_m_inv": -1860.0841930626211,
+      "physically_qualifying": false
+    }
+  }
+]

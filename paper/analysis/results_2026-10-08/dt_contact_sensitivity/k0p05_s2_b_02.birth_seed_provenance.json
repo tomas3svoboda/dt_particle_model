@@ -1,0 +1,8 @@
+{
+  "root_seed": "paper\\analysis\\results_2026-10-08\\dt_contact_sensitivity\\k0p05_s2_b_01.birth_debug.json",
+  "root_seed_sha256": "357219b967110afb45ecc6d4126c4c0415bc0b246e7097b8a6ab741a511bd57e",
+  "same_IVP_seed_only": true,
+  "accepted_material_state_imported": false,
+  "acceptance_rules_changed": false,
+  "wrapper_sha256": "7e676d884f12be5ff96b069a3113c47f7c3d594c4cb8a9d26fe532492ad554d2"
+}

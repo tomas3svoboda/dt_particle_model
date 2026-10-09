@@ -1,0 +1,19 @@
+{
+    "executable":  "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "arguments":  [
+                      "scratchpad/dt_contact_sensitivity_2026_10_08/run_b_032.py",
+                      "--factor",
+                      "1000",
+                      "--contact-conductance",
+                      "0.32",
+                      "--dt",
+                      "0.1",
+                      "--steps",
+                      "300",
+                      "--until",
+                      "510",
+                      "--out",
+                      "paper/analysis/results_2026-10-08/dt_contact_0p32/b_01.json"
+                  ],
+    "utc":  "2026-10-08T20:33:08.7394340Z"
+}

@@ -1,0 +1,13 @@
+{
+    "executable":  "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "arguments":  [
+                      "paper/analysis/harness/audit_finite_wetting_b.py",
+                      "--result",
+                      "paper/analysis/results_2026-10-08/dt_mobility_f100_k0p32/b_02.json",
+                      "--parts",
+                      "paper/analysis/results_2026-10-08/dt_mobility_f100_k0p32/b_02.json",
+                      "--out",
+                      "paper/analysis/results_2026-10-08/dt_mobility_f100_k0p32/b.audit.json"
+                  ],
+    "utc":  "2026-10-08T21:43:18.5979033Z"
+}

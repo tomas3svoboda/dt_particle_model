@@ -1,0 +1,58 @@
+\section{Reproducing the comparisons: inputs, scores and stopping conditions}
+\label{sup:protocol}\label{sup:protocol:availability}
+\subsection{What is compared, and on which time origin}
+Every comparison in the main text names its observation and actual time
+origin; this section gives them, with the scores. The source
+records solvent loading per kilogram of dry meal and one holder thermocouple.
+The 2008 scalar Fickian shell starts at a measured loading crossing and is
+scored separately. The 2019 comparison uses a radial water-bearing particle
+with a declared initial state and the constant-rate film exposure
+multiplier. No time shift is applied to reduce its falling-rate
+discrepancy. The measured and calculated $X_{\mathrm h}=0.20$ crossings are
+45.9 s and \FanerCrossTwenty{} s. Their respective intervals to 0.10 kg/kg
+are 25.4 s and \FanerFallingInterval{} s.
+Crossings are interpolated linearly between successive calculated states;
+lines in a figure are not additional solved states. The calculated
+temperature is a volume-mean particle temperature, not a local holder
+thermocouple reading. Since the heat supply was identified on this run, the onset time is not
+an independent prediction of the film. Section~\ref{sup:journalmarch}
+gives the initial-water and preheat uncertainty, mesh and time-step
+sensitivity, and the component, energy and whole-history checks.
+
+\subsection{Scores and uncertainty conventions}
+The band around a digitized point is the reading half-width of this digitization, not an experimental standard deviation; a point \emph{in band} lies within that resolution. The RMS drying score is the root mean square of model minus measured loading over the scored window, divided by the measured loading drop over that window. Changing a class distribution, coefficient or window defines a new calculation, not a new reading of the same score. The regression of converted uptake coefficients states 95-percent half-widths on its exponents and a residual standard deviation in log coefficient; neither covers the thesis samples' geometry or the \SI{41}{\kelvin} transfer. Faner's image-analysis counts give neither a mass-weighted histogram nor the thermocouple's local wetness, and the digitization half-widths represent neither uncertainty.
+
+Table~\ref{tab:protocol:scoring} summarizes the observations and metrics
+of the separate comparisons and what each does not establish. Each score is
+thus tied to one observation, time origin and scored window.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Observations, comparison metrics and interpretation limits.}
+\label{tab:protocol:scoring}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.23\textwidth}>{\raggedright\arraybackslash}p{0.34\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}@{}}\toprule
+Observable & Input and metric & Not established\\\midrule
+Constant-rate duty & Rig gas and holder state, Whitaker film, measured slope; computed over observed duty & An intraparticle drying law, or an area valid on industrial trays\\
+2008 falling-rate loading & Surface-read, storage-corrected Fickian shell; RMS over the window drop & A moving-front march, or the thesis samples' shape\\
+2019 thermocouple & Four-cell representative-particle mean temperature compared diagnostically with one local holder probe; departure time and RMS & Particle mean is not local probe temperature; wetness and depth near the probe\\
+2019 loading tail & One declared sphere and constant-rate film; time from crossing to $0.10$ and window RMS & Charge-specific mass-weighted size histogram; a fit to later loading\\
+Uptake at \SI{50}{\celsius} & Coefficient conversion identified on the same measured curves & A held-out transport prediction at process temperature\\
+Desolventizer march & Declared bed history and deck duty, published envelope; station values & A tray trajectory or a measured discharge residual\\
+\bottomrule\end{tabular}\end{table}
+
+\section{Property domains and process boundaries}
+\label{sup:propertyledger}
+The particle formulation's property evidence is uneven; Table~\ref{tab:protocol:domains} states what each closure rests on and where it is open. The formulation carries hexane as mobile liquid, sorbate and pore gas, and water as retained and pore-gas inventories. A pure n-hexane inlet lies outside the measured water-activity range of the default binary interface formulation at the relevant temperature. The current pure bulk vapour is evaluated separately from the binary pore and surface state, while positive retained water remains active after the shell forms. The analytic low-water continuation is stated explicitly (Sec.~\ref{sup:journalmarch}).
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Property evidence and unresolved model assumptions.}
+\label{tab:protocol:domains}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}p{0.35\textwidth}>{\raggedright\arraybackslash}p{0.32\textwidth}@{}}\toprule
+Closure or path & Source-supported information & Outside or unresolved\\\midrule
+Hexane retention on reference meal & GAB fit on soybean meal containing residual oil; activity, loading and fitted temperature span from \citet{cardarelli1996hexane} & Process-temperature extension; an oil arm is not an independent inventory\\
+Water retention & Modified Luikov law and low-temperature meal measurements; capacity and lower anchor explicit & High-temperature soybean sorption and mixed water/hexane occupancy unmeasured\\
+Binary pore gas & Thermodynamic-force exchange plus continuity-derived total flux & Binary mobility and bulk-flow resistance unmeasured for this meal\\
+Retained-matrix water & Separate water mobility and an exposed-surface path & Neither identified on this meal\\
+Pure-hexane bath particle & Water-bearing radial particle, constant gas, film exposure multiplier, conservative core disappearance and stationary radial tail & Initial moisture/preheat, local bed geometry, mass-weighted sizes and robustness of shell formation at high moisture\\
+2008 effective solvent shell & Apparent uptake coefficients converted for sorption storage, read once per step at the surface & High-temperature extrapolation, sample shape, local-law convergence\\
+Oil-arm equilibrium floor & Four external oil/hexane determinations & Overlap with the total-meal fit unmeasured\\
+\bottomrule\end{tabular}\end{table}

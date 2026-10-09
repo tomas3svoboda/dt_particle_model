@@ -1,0 +1,14 @@
+{
+  "change": "Numerical chart and residual-row normalization reference uses an admissible seed rather than an inadmissible tangent prediction",
+  "basis": "Observed zero-evaluation initialization failures; owner RULE 2 authorizes numerical recovery with unchanged physical equations",
+  "physical_law_changed": false,
+  "native_final_acceptance_changed": false,
+  "tangent_based_physical_column_scales_retained": true,
+  "component_energy_tolerance": 1e-10,
+  "source_sha256": {
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_admissible_reference_032.py": "0b7aef967a58a94874a66aacbe9407da7475275defc4972011162e244507b102",
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_neighbor_seed_policy_032.py": "043a90be9b9885d787b752c02423ce2e0c26859915bba69cce9991a20c2d48c6",
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_neighbor_departure_seed_032.py": "a9926a8a5d759d51ba657587e56f4d48f44e3ca6389a417fdee4fd033d6c4d3e",
+    "src\\dtdc_simulator\\core2\\particle\\cut_face_departure_integrator.py": "c03292970e9f05f9fb25a5c275a6b44d097a4c3e4b363de35f742e9062379ef2"
+  }
+}

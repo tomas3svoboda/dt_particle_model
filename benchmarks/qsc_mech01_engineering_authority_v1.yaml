@@ -1,0 +1,203 @@
+schema_id: dtdc-core2-qsc-mech01-engineering-authority-v1
+schema_revision: 1
+authority_status: DECLARED_ENGINEERING_ASSUMPTION
+scope: MECH-01A_RUNTIME_AUTHORITY_ONLY
+authenticated_machine_parameter_count: 0
+source_authenticated: false
+machine_data_authenticated: false
+
+source_pins:
+  engineering_assumptions_ruling:
+    path: docs/GT_PS2_ENGINEERING_ASSUMPTIONS_RULING_RECORD_2026-08-10.md
+    digest_basis: canonical_lf_bytes_v1
+    sha256: 3eaf8787e0bcc001e24947794bd02c5f6619a39264811f1fbe908c5ec18e4e09
+
+machine_identity:
+  unit_id: QSC-ENGINEERING-REFERENCE-NOT-A-SELECTED-MACHINE
+  unit_class_id: SIX-TRAY-DTDC-ENGINEERING-REFERENCE
+  serial_id: UNAUTHENTICATED-NOT-ASSIGNED
+  configuration_id: QSC-MECH01-SIX-TRAY-ENGINEERING-V1
+  configuration_revision: declared-assumption-2026-08-15
+  classification: DECLARED_ENGINEERING_ASSUMPTION_D0
+  authenticated_machine_datum: false
+
+accepted_shaft_history:
+  history_id: QSC-NOMINAL-11RPM-ENGINEERING-HISTORY-NOT-MEASURED
+  history_status: ACCEPTED_ESTIMATED
+  history_schema_id: dtdc-qsc-declared-constant-rpm-history-v1
+  history_material: "time_start_s=0x0.0p+0;time_end_s=0x1.e1338p+24;rpm_start=0x1.6000000000000p+3;rpm_end=0x1.6000000000000p+3"
+  interval_start_utc: "2026-08-15T00:00:00Z"
+  interval_end_utc: "2027-08-15T00:00:00Z"
+  sensor_channel_id: NO-AUTHENTICATED-SENSOR-ENGINEERING-BOUNDARY
+  controller_channel_id: NO-AUTHENTICATED-CONTROLLER-ENGINEERING-BOUNDARY
+  classification: DECLARED_ENGINEERING_ASSUMPTION_D0
+  authenticated_machine_datum: false
+
+d1_common_shaft:
+  nominal_rpm: 11.0
+  operating_envelope_rpm: [8.0, 12.0]
+  design_envelope_rpm: [4.0, 15.0]
+  low_alarm_rpm: 8.0
+  low_speed_trip_rpm: 4.0
+  diameter_scaling: approximately_independent_across_class
+  retired_values_rpm: [3.0, 33.0, 60.0]
+  retired_gui_range_rpm: [0.0, 10.0]
+  classification: DECLARED_ENGINEERING_ASSUMPTION_D1
+  authenticated_machine_datum: false
+  schema_required_speed_states:
+    crawl_rpm: {nominal: 4.0, bracket: [1.0, 4.0]}
+    high_speed_trip_threshold_rpm: {nominal: 15.0, bracket: [15.0, 20.0]}
+    post_restart_target_rpm: {nominal: 8.0, bracket: [8.0, 12.0]}
+    classification: DECLARED_ENGINEERING_ASSUMPTION_D0_SCHEMA_OCCUPANCY
+    authenticated_machine_datum: false
+  schema_required_ramp_rate_rpm_per_s:
+    nominal: 0.5
+    bracket: [0.05, 2.0]
+    classification: DECLARED_ENGINEERING_ASSUMPTION_D0_SCHEMA_OCCUPANCY
+    authenticated_machine_datum: false
+
+d2_post_gearbox_shaft_power:
+  nominal_w: 50000.0
+  bracket_w: [25000.0, 165000.0]
+  omission_ceiling_w: 65000.0
+  omission_authorized: false
+  ledger_row_required: true
+  classification: DECLARED_ENGINEERING_ASSUMPTION_D2
+  authenticated_machine_datum: false
+  schema_required_drive_train:
+    gearbox_ratio_motor_speed_over_post_gearbox_speed:
+      nominal: 135.0
+      bracket: [50.0, 300.0]
+    efficiency_electrical_input_to_post_gearbox_output:
+      nominal: 0.9
+      bracket: [0.7, 0.98]
+    classification: DECLARED_ENGINEERING_ASSUMPTION_D0_SCHEMA_OCCUPANCY
+    authenticated_machine_datum: false
+
+d3_dissipation_partition:
+  nominal_boundary_partition: ALL_TO_MEAL
+  conservative_boundary_endpoint: ALL_TO_WALL
+  nominal_within_meal_distribution: WET_HOLDUP_PROPORTIONAL_BY_TRAY
+  sensitivity_within_meal_distribution: BOTTOM_HEAVY_BY_SOLID_ORDER_RANK
+  bottom_heavy_rank_multipliers_by_solid_order: [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
+  meal_energy_ledger_slot: Q_other_s
+  wall_endpoint_is_physical_claim: false
+  classification: DECLARED_ENGINEERING_ASSUMPTION_D3
+  bottom_heavy_numeric_form_classification: DECLARED_ENGINEERING_ASSUMPTION_D0
+  authenticated_machine_datum: false
+
+d4_arm_dispersion:
+  delta_z_ex_m:
+    nominal: 0.17
+    bracket: [0.09, 0.33]
+  phi_ex:
+    nominal: 0.5
+    bracket: [0.3, 0.7]
+  f_state:
+    nominal: 1.0
+    bracket: [1.0, 1.0]
+  form: "D_arm=0.5*phi_ex*delta_z_ex_m^2*f_rev*f_state"
+  directed_drift_selected: false
+  saturation_law_selected: false
+  state_modifier_identified: false
+  classification: DECLARED_ENGINEERING_ASSUMPTION_D4
+  authenticated_machine_datum: false
+
+d5_wet_bed_density:
+  nominal_kg_wet_per_m3: 600.0
+  bracket_kg_wet_per_m3: [480.0, 640.0]
+  tapped_ceiling_kg_wet_per_m3: 720.0
+  selected_machine_measurement: false
+  classification: DECLARED_ENGINEERING_ASSUMPTION_D5
+  authenticated_machine_datum: false
+
+schema_required_geometry_d0:
+  note: >-
+    These values occupy mandatory PR-08 geometry fields and the K2 numerical
+    mesh only. They are bracketed declared assumptions, not drawings, machine
+    data, a draw footprint, a flow law, or a dry-inventory authority.
+  arm_count: {nominal: 4, bracket: [2, 8], units: count}
+  arm_inner_radius_m: {nominal: 0.30, bracket: [0.10, 0.50], units: m}
+  arm_outer_radius_m: {nominal: 2.90, bracket: [2.70, 2.99], units: m}
+  blade_height_m: {nominal: 0.17, bracket: [0.09, 0.33], units: m}
+  blade_width_m: {nominal: 0.20, bracket: [0.05, 0.40], units: m}
+  blade_pitch_rad: {nominal: 0.0, bracket: [-0.7853981633974483, 0.7853981633974483], units: rad}
+  blade_rake_rad: {nominal: 0.0, bracket: [-0.7853981633974483, 0.7853981633974483], units: rad}
+  tip_clearance_m: {nominal: 0.0225, bracket: [0.020, 0.025], units: m}
+  swept_volume_per_revolution_m3: {nominal: 4.443468649237404, bracket: [1.0, 9.0], units: m3/rev}
+  k2_reference_dry_matter_density_kg_m3: {nominal: 400.0, bracket: [300.0, 500.0], units: kg_dry/m3}
+  classification: DECLARED_ENGINEERING_ASSUMPTION_D0
+  authenticated_machine_datum: false
+
+d6_discharge_configuration:
+  middle_tray_configuration: COMMON_SHAFT_SWEEP_CHUTE
+  sparge_tray_configuration: INDEPENDENT_VARIABLE_SPEED_ROTARY_VALVE
+  draw_footprint_selected: false
+  draw_flow_law_selected: false
+  classification: DECLARED_ENGINEERING_ASSUMPTION_D6
+  authenticated_machine_datum: false
+
+trays:
+  - tray_id: PD1
+    solid_order_rank: 1
+    diameter_m: 6.0
+    loaded_depth_m: 0.30
+    draw_device_id: PD1-TO-PD2-COMMON-SHAFT-CHUTE
+    draw_device_kind: INTERTRAY_SWEEP_PORT
+    conveyance_domain: COMMON_SHAFT_SWEEP_CONVEYED
+    actuation_domain: NO_SEPARATE_ACTUATOR
+  - tray_id: PD2
+    solid_order_rank: 2
+    diameter_m: 6.0
+    loaded_depth_m: 0.30
+    draw_device_id: PD2-TO-PD3-COMMON-SHAFT-CHUTE
+    draw_device_kind: INTERTRAY_SWEEP_PORT
+    conveyance_domain: COMMON_SHAFT_SWEEP_CONVEYED
+    actuation_domain: NO_SEPARATE_ACTUATOR
+  - tray_id: PD3
+    solid_order_rank: 3
+    diameter_m: 6.0
+    loaded_depth_m: 0.30
+    draw_device_id: PD3-TO-MN1-COMMON-SHAFT-CHUTE
+    draw_device_kind: INTERTRAY_SWEEP_PORT
+    conveyance_domain: COMMON_SHAFT_SWEEP_CONVEYED
+    actuation_domain: NO_SEPARATE_ACTUATOR
+  - tray_id: MN1
+    solid_order_rank: 4
+    diameter_m: 6.0
+    loaded_depth_m: 1.10
+    draw_device_id: MN1-TO-MN2-COMMON-SHAFT-CHUTE
+    draw_device_kind: INTERTRAY_SWEEP_PORT
+    conveyance_domain: COMMON_SHAFT_SWEEP_CONVEYED
+    actuation_domain: NO_SEPARATE_ACTUATOR
+  - tray_id: MN2
+    solid_order_rank: 5
+    diameter_m: 6.0
+    loaded_depth_m: 1.00
+    draw_device_id: MN2-TO-SP1-COMMON-SHAFT-CHUTE
+    draw_device_kind: INTERTRAY_SWEEP_PORT
+    conveyance_domain: COMMON_SHAFT_SWEEP_CONVEYED
+    actuation_domain: NO_SEPARATE_ACTUATOR
+  - tray_id: SP1
+    solid_order_rank: 6
+    diameter_m: 6.0
+    loaded_depth_m: 0.90
+    draw_device_id: SP1-INDEPENDENT-VARIABLE-SPEED-ROTARY-VALVE
+    draw_device_kind: ROTARY_AIRLOCK
+    conveyance_domain: INDEPENDENT_DRIVE
+    actuation_domain: INDEPENDENT_ACTUATOR
+
+claim_boundary:
+  f2: false
+  f3: false
+  f4: false
+  f5: false
+  f6: false
+  f7: false
+  f8a: false
+  f8b: false
+  qsc_10: false
+  physically_qualifying: false
+  plant_predictive: false
+  industry_feasible_operating_envelope: false
+  production_wired: false

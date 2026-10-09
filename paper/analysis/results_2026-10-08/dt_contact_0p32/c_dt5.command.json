@@ -1,0 +1,17 @@
+{
+    "executable":  "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "arguments":  [
+                      "paper/analysis/harness/experiment_core2_radial_fast_wetting.py",
+                      "--resume",
+                      "paper/analysis/results_2026-10-08/dt_contact_0p32/r3_b_01.accepted.pkl",
+                      "--factor",
+                      "1000",
+                      "--contact-conductance",
+                      "0.32",
+                      "--dt",
+                      "5",
+                      "--out",
+                      "paper/analysis/results_2026-10-08/dt_contact_0p32/c_dt5.json"
+                  ],
+    "utc":  "2026-10-08T21:12:42.4207745Z"
+}

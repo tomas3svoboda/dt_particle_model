@@ -1,0 +1,63 @@
+{
+  "complete_falling_rate_experiment": true,
+  "publication_ready": false,
+  "last_accepted": {
+    "t_s": 240.0,
+    "hexane_kg_kg_dry": 0.0016061807955119226,
+    "water_kg_kg_dry": 0.014404923606853838,
+    "mean_temperature_k": 387.50145306323697,
+    "surface_water_kg_kg_dry": 0.01394491561341879,
+    "interface_temperature_k": null,
+    "surface_temperature_k": 387.5487225057689,
+    "front_z": 0.0,
+    "stage": "stationary dry",
+    "energy_j": 0.7187938084461801,
+    "hexane_out_kg_s": 1.2742511012011144e-11,
+    "water_out_kg_s": 1.1701292156173276e-10,
+    "energy_out_w": -0.0005115985446743222,
+    "source": "dry_01.json"
+  },
+  "row_count": 582,
+  "independent_whole_history_external_ledger_maximum_normalized_residuals": [
+    1.4175643972452437e-11,
+    3.874456515956748e-10,
+    1.7542971765262335e-11
+  ],
+  "declared_whole_history_ledger_tolerance": 4e-10,
+  "whole_history_numerical_error_bounds_per_kg_dry": {
+    "hexane_kg_kg": 6.733430886914907e-12,
+    "water_kg_kg": 9.68614128989187e-12,
+    "energy_j_kg": 3.508594353052467e-06
+  },
+  "source_result_sha256": {
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\birth_01.json": "bdb1c11a9eab2783502dfa36dca11bb6ea42262e70f80048de2620f2e104bb2a",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_01.json": "9620f7eaa863553c2ab25e3789d04c4cd7987d0c02c8c22e7d4ae7ac9ef832be",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_02.json": "0c11faa2b3b9fd78da5d801fa9aec30cde1652ad3f72cebc9c154d9ca5149bf6",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_03.json": "621988a50c8213c786663085430410a68ce3b3fcfe6d5fd383ae329cdbf3386f",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_01.json": "0909f81b8bf0a3cc93531300f652aca0dafd28c0d25e738c586a02e546ad2bb5",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_06.json": "a1931f9c7652ad201736a1e20698a390aaa5d3a7f954219d6ca3e758d38b83a7",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_04.json": "dbc1bf17c0f09427b00d560eb61772dbfc9a77376d153e68bcb5214f66c4945d",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_05.json": "bdff71c2186544ff23ec3442cd1bfe7f326959e7e374188fd2421bdfaef1b669",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_06.json": "7e4e17a8410ee72bf6a5192c0f32865421dd005ef7296f7b1b4f612d28633e8f",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_07.json": "6c4e950e3a067981a4abdabacdb4c82ad9eedbbc084c59ddaa32c1041c81916b",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_07.json": "b9f78f2d8d18fce0cc4c5aed58c483a70861bf50d20e02ebc944edd8658ccefb",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_08.json": "e854ac11375b3ebc52509645e2ba51b320bd008a97888fa390ea4786d77ee56c",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_08.json": "a5d73e40b63e15d2d2cd64d7a8164a44d22478044bfced3e6a3e5aaa01d2a19e",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_09.json": "6c063bdce65e52517bb788c5a4cdde1489986c2e23dc57fb4e75ddb726e9f4a7",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_10.json": "77ee9c47a0d30cc2ff5c81d507690b0948dd0ce4835f04a018ab6ceb1ec89996",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\radial_11.json": "6e3c1046f023b511c2ceca3d3c57aab28fa3a3fbe9ccfde03ec1d8e11e5ffa53",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_09.json": "70d565397cc76cf2d9964d6c61cd8a4eecb7f2b7f01568cc48e26a94f18ce69f",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_10.json": "c8f15a3ae8241657cac6757e03bfd822463df77422ac8f0b32f5bdd51f53bccd",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_11.json": "8f4d09076b3dfdd687b5263b451e9997c433765a2f44972cc3a90c54b0ce8582",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_12.json": "892a1196ff9a4a60726bff266859eca33c3751e8897ee2001addb8d580720b1a",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_13.json": "3a078acdb5d2170e6d1af3149fecbd9c4e31e137e7aa62efdbec47bace38a23f",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_14.json": "0c391b05b283fd14410299ef9ab564d59df2513f346b922f1eeb65d9ca93a5d8",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_18.json": "892e574ee31738f4c29b7ccccda0cb01f2dcb47e087a348fb2cadd46659599fb",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_20.json": "af30777c42dd3b0b20257943a0169ef73ddaa3004fcd00787b7f0011e6fb8e93",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_21.json": "e999cfb8516075e56fa168939db5cc4cc85964e138f5c33114155fb8b3c6dd6d",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_22.json": "6df70bf4b6ec873a536ec28347a423dd948424ca99f90a813ac9d159e21c80b0",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_23.json": "cb22ec8169c6dd3214f7b46c5cde83d83928a812bbc88ebbde4fa8fae2c8a189",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_24.json": "027330c77dee40fbe0f1ab838e9f108f5453e09511b2e6cc728b7ab24f093a95",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\dry_01.json": "fd2b0beabaebc6d54609c0a73f6b2d5f379a48340b921d63493e02f40a6cded7"
+  }
+}

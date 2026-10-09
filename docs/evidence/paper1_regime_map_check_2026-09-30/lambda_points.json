@@ -1,0 +1,112 @@
+{
+ "points": {
+  "grid_408.15_0.79": {
+   "T_g_K": 408.15,
+   "y_h": 0.79,
+   "P_Pa": 101325.0,
+   "on_grid": true,
+   "T_eq_K (interface in the heat group)": 334.5454473153327,
+   "dh_vap_J_kg(T_eq)": 340357.8744338598,
+   "heat_group_k_dT_over_dh_kg_m_s": 5.190152475156829e-05,
+   "Psat_h(T_g)_Pa": 555483.470740631,
+   "P_over_Psat(T_g)": 0.1824086680111336,
+   "c_sat(T_g)_kg_m3 (interface in the Fick group)": 14.105802079930973,
+   "c_s_kg_m3": 2.03268624921682,
+   "fick_group_Deff_dc_kg_m_s": 4.829246332285661e-09,
+   "Lambda (item 07)": 10747.334300299302,
+   "Lambda recomputed": 10747.334300299302,
+   "c_at_pressure_ceiling_kg_m3": 2.5730205686288863,
+   "fick_group_pressure_feasible_kg_m_s": 2.161337277648265e-10,
+   "Lambda_pressure_feasible": 240136.1661056527,
+   "fick_overstatement_factor": 22.343788645242487,
+   "D_eff_m2_s": 4e-10,
+   "k_dry": 0.24
+  },
+  "grid_408.15_0.90": {
+   "T_g_K": 408.15,
+   "y_h": 0.9,
+   "P_Pa": 101325.0,
+   "on_grid": true,
+   "T_eq_K (interface in the heat group)": 338.5473743733247,
+   "dh_vap_J_kg(T_eq)": 337408.7163021023,
+   "heat_group_k_dT_over_dh_kg_m_s": 4.950859104494919e-05,
+   "Psat_h(T_g)_Pa": 555483.470740631,
+   "P_over_Psat(T_g)": 0.1824086680111336,
+   "c_sat(T_g)_kg_m3 (interface in the Fick group)": 14.105802079930973,
+   "c_s_kg_m3": 2.315718511765998,
+   "fick_group_Deff_dc_kg_m_s": 4.7160334272659895e-09,
+   "Lambda (item 07)": 10497.93047664012,
+   "Lambda recomputed": 10497.93047664012,
+   "c_at_pressure_ceiling_kg_m3": 2.5730205686288863,
+   "fick_group_pressure_feasible_kg_m_s": 1.0292082274515533e-10,
+   "Lambda_pressure_feasible": 481035.7100189393,
+   "fick_overstatement_factor": 45.82195615500928,
+   "D_eff_m2_s": 4e-10,
+   "k_dry": 0.24
+  },
+  "grid_413.15_0.90": {
+   "T_g_K": 413.15,
+   "y_h": 0.9,
+   "P_Pa": 101325.0,
+   "on_grid": true,
+   "T_eq_K (interface in the heat group)": 338.5473743733247,
+   "dh_vap_J_kg(T_eq)": 337408.7163021023,
+   "heat_group_k_dT_over_dh_kg_m_s": 5.30651085325578e-05,
+   "Psat_h(T_g)_Pa": 616315.5992941286,
+   "P_over_Psat(T_g)": 0.16440440598298725,
+   "c_sat(T_g)_kg_m3 (interface in the Fick group)": 15.4611519863878,
+   "c_s_kg_m3": 2.2876933573212925,
+   "fick_group_Deff_dc_kg_m_s": 5.269383451626604e-09,
+   "Lambda (item 07)": 10070.458720588487,
+   "Lambda recomputed": 10070.458720588487,
+   "c_at_pressure_ceiling_kg_m3": 2.54188150813477,
+   "fick_group_pressure_feasible_kg_m_s": 1.0167526032539094e-10,
+   "Lambda_pressure_feasible": 521907.771494597,
+   "fick_overstatement_factor": 51.825620458339785,
+   "D_eff_m2_s": 4e-10,
+   "k_dry": 0.24
+  },
+  "marched_state_409.15_0.85 (off grid, inside the band)": {
+   "T_g_K": 409.15,
+   "y_h": 0.85,
+   "P_Pa": 101325.0,
+   "on_grid": false,
+   "T_eq_K (interface in the heat group)": 336.7789926584653,
+   "dh_vap_J_kg(T_eq)": 338717.4173575777,
+   "heat_group_k_dT_over_dh_kg_m_s": 5.1278856273375934e-05,
+   "Psat_h(T_g)_Pa": 567273.0189441298,
+   "P_over_Psat(T_g)": 0.1786176966226899,
+   "c_sat(T_g)_kg_m3 (interface in the Fick group)": 14.369975202310492,
+   "c_s_kg_m3": 2.1817220904875914,
+   "fick_group_Deff_dc_kg_m_s": 4.87530124472916e-09,
+   "Lambda (item 07)": 10518.089795746488,
+   "Lambda recomputed": 10518.089795746488,
+   "c_at_pressure_ceiling_kg_m3": 2.5667318711618723,
+   "fick_group_pressure_feasible_kg_m_s": 1.5400391226971237e-10,
+   "Lambda_pressure_feasible": 332971.12727610127,
+   "fick_overstatement_factor": 31.656996065079678,
+   "D_eff_m2_s": 4e-10,
+   "k_dry": 0.24
+  }
+ },
+ "grid_check": {
+  "points": 414,
+  "live": 375,
+  "lambda_min": 7804.738606368701,
+  "lambda_max": 62914.76131270393,
+  "committed_min_max": [
+   7804.738606368701,
+   62914.76131270393
+  ],
+  "max_relative_difference_to_committed": 0.0,
+  "pressure_feasible_lambda_min_max": [
+   14171.518666644564,
+   3391276.592736881
+  ],
+  "fick_overstatement_min_max": [
+   1.0,
+   400.39517427628897
+  ],
+  "points_with_T_g_above_hexane_Tb_at_P (c_sat(T_g) above the pressure ceiling)": 306
+ }
+}

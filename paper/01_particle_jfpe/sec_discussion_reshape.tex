@@ -1,0 +1,132 @@
+\section{Discussion}\label{sec:discussion}\label{sec:discussion:scope}
+\label{sec:discussion:coefficients}\label{sec:discussion:refusal}\label{sec:discussion:envelope}
+The two prescribed-bath experiments show how a common particle
+formulation connects external-liquid evaporation, internal-core recession
+and residual-component transport. Their signed component and energy
+exchanges can supply a future tray calculation. Prescribing the bath
+isolates this particle response, while leaving countercurrent vapour,
+wall, residence and discharge balances to the equipment model. We first
+interpret the Faner comparison, then its meaning for DT practice and what
+is needed next.
+
+The calculated Faner particle still dries faster than the measured
+charge. Geometry is particularly consequential: image-analysis
+particle counts cannot be used directly as dry-mass weights, and a volume-equivalent sphere has a
+different surface area from an irregular flake of equal volume. For a
+number distribution $p_n(d)$ and common density, the corresponding
+mass distribution is proportional to $d^3p_n(d)$. A lognormal family
+constrained by the reported mean, range and 1--3-mm fraction provides
+a reproducible sensitivity construction, but does not recover the
+unreported histogram. Its larger-particle mass fraction can prolong
+drying even when small particles heat earlier. The direction and size
+of the resulting temperature change must come from class-resolved
+integration and the actual thermocouple sampling, rather than from
+weights selected to obtain a desired displacement of the curves.
+
+Faner reports preheating, so the observed lack of an initial
+warming stage has an experimental basis. The exact initial temperature
+and measurement trigger are not specified. A slightly subcooled start
+would be a different initial-value experiment, with sensible
+heating included in the balances; it cannot be represented by shifting
+the calculated temperature alone. The single-particle volume mean also
+does not determine the temperature of a holder probe. Simultaneous
+loading, spatial temperature and size-resolved observations would help
+separate startup, heat exposure and internal transport effects.
+
+For DT practice, the three regimes divide the heat demand.
+Indirect heating in PD removes external free hexane before live-steam
+contact; steam condensation then supplies heat for rapid solvent removal,
+and the remaining retained hexane determines the later approach to the
+outlet residual. Industrial DT residence and heat supply must serve these
+successive needs \citep{kemper2013solvent}. At the same time, the moist heat
+treatment must reduce antinutritional activity while preserving useful
+protein quality \citep{witte_nd_soybeanmeal,mustakas1981critical}.
+The calculated temperature and moisture histories describe that exposure;
+a meal-quality kinetic model is outside the present scope.
+
+The moisture result also matters for energy design: water retained
+at DT exit contributes to the load on the downstream dryer, which takes
+meal towards its storage moisture \citep{witte_nd_soybeanmeal}.
+More condensation can accelerate heat supply and solvent removal, while
+more retained water can increase later drying duty. A steam-saving claim
+therefore requires the full balance of steam, indirect heat and drying
+energy, rather than outlet solvent or moisture alone. These prescribed-bath
+experiments expose that coupling without quantifying a plant steam saving.
+
+Two independent equilibrium checks give further context for DT practice.
+At literature-motivated last-tray compositions, the dry-shell hexane equilibrium floor is
+4.5--66.0 ppm without the separate oil-solution sensitivity and
+8.1--112.4 ppm with it (Sec.~\ref*{S-sup:desolventizerfloor}). These
+equilibrium quantities do not set the residence needed to reach them.
+For retained water the diagnostic relation
+\begin{equation}
+\aw(\Xw)P_{\mathrm{sat}}^{\mathrm w}(T^*)=P
+\label{eq:sorbedbp}
+\end{equation}
+gives a sorption-elevated boiling range of 100.5--\SI{107.6}{\celsius}.
+It combines moisture and temperature observations from different sources;
+at the moisture of the temperature study, its prediction is 2.1 K above
+the observation (Sec.~\ref*{S-sup:envelopescoring}). Neither this check
+nor the calculated DT exit moisture is a validation of the
+coupled transient particle or the industrial tower.
+
+In the DT history, condensate wets accessible hexane-depleted material, and a
+finite pathway transfers it into the existing retained-water inventory.
+Experiments by \citet{jovanovich2003wateruptake} distinguish liquid-water
+imbibition from vapour sorption and show that it can include capillarity,
+matrix hydration and loosely held interstitial water. Their measurements concern
+protein isolates at \SI{20}{\celsius}, not extracted meal in a hot DT.
+They motivate an effective liquid-connected pathway but do not supply
+our coefficient, justify its 1000-fold mobility enhancement, or establish
+that all absorbed liquid is molecularly bound. The present closure keeps
+one capacity-bounded retained-water inventory and does not resolve those
+microscopic partitions.
+
+The imbibition closure also omits water-induced pore displacement, a
+hydraulic saturation front, swelling and extra resistance to hexane escape.
+In particular, the external water film is assumed permeable to hexane
+without an additional transport resistance
+(Section~\ref{sec:model:waterfilm}). Because the film persists for a
+substantial time in the finite-contact case, this assumption has
+experimental consequences. Independent transient uptake measurements on
+the actual extracted meal, with external liquid quantified separately and
+several particle sizes, are needed to identify the contact and internal
+resistances. Closer agreement with an outlet moisture range alone would
+not identify them.
+
+\label{sec:discussion:extrapolation}\label{sec:discussion:geometry}\label{sec:discussion:limits}
+Material and numerical limits set the present scope.
+The analytic water isotherm
+is extrapolated below its original 0.023 kg/kg anchor. Hexane retention
+and binary gas cross properties also have temperature and composition
+limits, and the transport coefficients are not yet identified from
+simultaneous water--hexane measurements. Radius and porosity are fixed. The isobaric
+pore closure omits a total-vapour Darcy/Knudsen resistance and assumes
+drainage of an immobile connected liquid-hexane core. Numerically, the
+two-cell DT and four-cell Faner histories provide complete discrete
+experiments, but operator verification and selected timestep checks do not
+yet establish whole-history continuum convergence.
+
+\section{Conclusions}\label{sec:conclusions}\label{sec:discussion:measurements}
+One conservative particle formulation completes both a 240-s
+water-bearing particle experiment in pure superheated hexane and a
+1766.5-s prescribed DT history. Component and energy balances
+continue through external-liquid depletion, internal-front recession and
+core extinction. External condensate is stored separately and exchanges
+water and energy with the particle and the prescribed gas.
+
+The declared Faner particle falls from 0.20 to 0.10 kg hexane/kg dry meal
+in \SI{\FanerFallingInterval}{\second}, compared with 25.4 s measured. The DT calculation includes liquid-water imbibition
+and reaches 18.2\% wet-basis moisture, 111 ppm wet-basis hexane and a
+volume-mean particle temperature of \SI{105.0}{\celsius}. Its liquid
+contact conductance is derived from one same-material uptake time and its
+liquid-water mobility is a declared literature limit; neither is measured
+on DT meal.
+
+The model's signed water, hexane and energy fluxes can be coupled to tray
+balances for DT design; in that coupled form the formulation is the
+particle-level basis for a DT digital twin that can shorten process
+design and support model-based control. The results connect the model's
+mechanisms to observable trajectories and show which independent
+geometry, uptake and temperature measurements are needed before it is
+used for predictive equipment calculations.

@@ -1,0 +1,80 @@
+\section{Numerical implementation and verification}
+\label{sec:events}\label{sec:numerics}\label{sec:events:exact}
+\label{sec:numerics:fv}\label{sec:numerics:reject}\label{sec:numerics:acceptance}
+This section explains how the particle equations are integrated in time
+and how accepted states are checked for admissibility and conservation.
+The numerical calculation advances component inventories and energy under
+the prescribed gas state, heat supply and exposure. Surface composition,
+particle temperature and front motion are solved responses. Each phase
+regime uses the corresponding equations of Section~\ref{sec:model}; the
+numerical scheme transfers the conserved quantities across regime changes.
+
+\subsection{Spatial discretization and coupled time integration}
+Regional balances are integrated in spherical finite volumes. In regime A,
+the present experiments represent the particle as a uniform thermal body,
+coupled to the liquid surface through a one-cell conductive resistance.
+This reduces the coupled startup problem to one body temperature, while
+retaining a separate surface temperature and conductive heat transfer.
+It is a coarse approximation, not a spatially resolved preheating
+calculation; its effect on the initial temperature profile should be
+assessed before detailed startup heating is interpreted. Regimes B and C
+resolve the radial particle.
+The receding interface cuts a fixed radial grid and is represented by the
+wet volume fraction $\frontz=(\front/\Rp)^3$. Its swept-volume rate is
+\begin{equation}
+Q_{\Gamma}=V_{\Rp}\frac{\frontz_{\mathrm{new}}-\frontz_{\mathrm{old}}}{\Delta t}.
+\label{eq:sweptvolume}
+\end{equation}
+The same rate enters both regional balances and the interfacial jumps.
+Backward-Euler integration solves temperatures, compositions, external
+liquid inventories and front position together. Component enthalpy transport
+and conductive heat use the same face states as the storage calculation.
+Detailed face reconstruction and nonlinear controls are given in
+Sec.~\ref*{S-sup:activation}.
+
+\subsection{Phase changes and moving-interface events}
+When external free hexane is depleted, the dry shell can appear from zero
+thickness.
+The first finite-volume interval satisfies the component and energy jumps
+without assigning an arbitrary initial shell. Arrival at and departure
+from radial grid faces are solved as geometric events. Near the centre,
+small positive-core intervals precede a conservative projection to the
+zero-core particle. That projection includes the external exchanges over
+its estimated duration; the conditional remaining-time allowance is below
+2 ms for DT and 20 ms for Faner. These bounds concern the terminal event,
+rather than the error of the complete trajectory.
+External water appearance and depletion likewise switch the surface
+equations while preserving water and energy. The liquid-water imbibition pathway
+operates only in a dry shell connected to external liquid. The DT
+trajectory retains positive external water throughout regime B, so this
+experiment does not exercise the moving front without a water film.
+Regime C includes liquid-present, contact and liquid-absent surface states.
+
+\subsection{Physical admissibility and conservation checks}
+At each time step, the nonlinear solution must satisfy non-negative
+inventories, pressure-feasible
+phase equilibrium, the receding-front geometry and the retained-water
+capacity. Capacity is expressed as an active set,
+\begin{equation}
+0\le\Wcap-\Wret\;\perp\;\lambda\ge0,
+\label{eq:capcomplementarity}
+\end{equation}
+with $\lambda$ its dimensionless dual variable. Local component, energy and
+combined inventory balances are checked at a normalized tolerance of
+$10^{-10}$. Independent accumulation of the external exchanges provides
+a separate whole-history check. The four-cell Faner reconstruction uses a
+reporting allowance of $4\times10^{-10}$, corresponding to at most
+$10^{-11}$ kg water/kg dry meal; its step acceptance tolerance
+remains $10^{-10}$.
+
+For regular Faner steps, the local nonlinear root criterion can be
+$10^{-8}$ while the component and energy acceptance checks retain
+$10^{-10}$. Near wet volume fractions below $10^{-7}$, the root criterion
+can be $2\times10^{-8}$ and the scaled conditioning ceiling $10^{18}$.
+These numerical controls do not change the component or energy equations,
+their conservation tolerance, or phase admissibility. The Supplementary
+Material reports the root residual, the conserved-inventory error and the
+terminal-time estimate separately. Halving the stationary-particle
+timestep and comparing two and four radial cells quantify particular
+sensitivities, not whole-history mesh convergence
+(Section~\ref{sec:discussion:limits}).

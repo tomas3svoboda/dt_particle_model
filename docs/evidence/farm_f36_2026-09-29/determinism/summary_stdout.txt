@@ -1,0 +1,58 @@
+cross-host pairs 40 bit-identical 1
+farm-internal pairs 14 bit-identical 11
+f36-010-f36an48d01875comb~runs_final/A_f30n48d01875comb      steps  529/1152 leaves 120/165 ev 3087/4310 gmax 1.4523256 (baseline_water_flux_time_integ) dT 6.1464788 FLIPS: 
+f36-011-f36an48d01875comp~runs_final/A_f30n48d01875comp      steps  531/1152 leaves 120/165 ev 3128/2500 gmax 1.4523256 (baseline_water_flux_time_integ) dT 4.5463366 FLIPS: 
+f36-012-f36an48d01875temp~runs_final/A_f30n48d01875temp      steps  537/1152 leaves 121/165 ev 2600/3607 gmax 3.7553336 (pulse_water_flux_time_integral) dT 9.2899199 FLIPS: 
+f36-013-f36an48d0375comb~runs_final/ON_f30n48d0375comb       steps  270/ 576 leaves 121/165 ev 1901/1892 gmax 5.3684144 (return_water_flux_time_integra) dT 3.6095570 FLIPS: 
+f36-013-f36an48d0375comb~runs_final/OFF_f30n48d0375comb      steps  270/ 576 leaves 121/165 ev 1901/1892 gmax 5.3684144 (return_water_flux_time_integra) dT 3.6095570 FLIPS: 
+f36-015-f36an48d0375temp~runs_final/A_f30n48d0375temp        steps  271/ 576 leaves 121/165 ev 1935/2029 gmax 7.4931474 (pulse_water_flux_time_integral) dT 7.7818640 FLIPS: 
+f36-016-f36an48d075comb~runs_final/A_f30n48d075comb          steps  135/ 288 leaves 120/165 ev 661/720 gmax 2.6031522 (pulse_hexane_flux_time_integra) dT 1.5580781 FLIPS: 
+f36-018-f36an48d075temp~runs_final/A_f30n48d075temp          steps  134/ 288 leaves 120/165 ev 674/674 gmax 3.2199040 (return_water_flux_time_integra) dT 3.3537617 FLIPS: 
+f36-022-f36an24d0375comb~runs_final/A_f30n24d0375comb        steps  264/ 576 leaves 86/131 ev 2944/2768 gmax 6.2297128 (return_hexane_flux_time_integr) dT 2.4448354 FLIPS: 
+f36-026-f36an24d075comp~runs_final/ON_f30n24d075comp         steps  136/ 288 leaves 86/131 ev 586/569 gmax 2.2229887 (return_water_flux_time_integra) dT 2.5403323 FLIPS: 
+f36-026-f36an24d075comp~runs_final/OFF_f30n24d075comp        steps  136/ 288 leaves 86/131 ev 586/569 gmax 2.2229887 (return_water_flux_time_integra) dT 2.5403323 FLIPS: 
+f36-029-f36an12d01875comp~runs_final/A_f30n12d01875comp      steps  546/1152 leaves 70/114 ev 3414/3937 gmax 4.4900213 (return_hexane_flux_time_integr) dT 1.3579892 FLIPS: 
+f36-031-f36an12d0375comb~runs_final/A_f30n12d0375comb        steps  271/ 576 leaves 69/114 ev 2001/2365 gmax 1.7053580 (pulse_hexane_flux_time_integra) dT 1.1101519 FLIPS: 
+f36-034-f36an12d075comb~runs_final/A_f30n12d075comb          steps    0/   0 leaves 0/3 ev None/None gmax  () dT  FLIPS: 
+f36-035-f36an12d075comp~runs_final/ON_f30n12d075comp         steps  139/ 288 leaves 70/114 ev 1508/1522 gmax 3.3024595 (return_water_flux_time_integra) dT 3.1076297 FLIPS: 
+f36-035-f36an12d075comp~runs_final/OFF_f30n12d075comp        steps  139/ 288 leaves 70/114 ev 1508/1522 gmax 3.3024595 (return_water_flux_time_integra) dT 3.1076297 FLIPS: 
+f36-036-f36an12d075temp~runs_final/ON_f30n12d075temp         steps  138/ 288 leaves 69/114 ev 1734/1555 gmax 1.5297934 (return_water_flux_time_integra) dT 6.4403593 FLIPS: 
+f36-036-f36an12d075temp~runs_final/OFF_f30n12d075temp        steps  138/ 288 leaves 69/114 ev 1734/1555 gmax 1.5297934 (return_water_flux_time_integra) dT 6.4403593 FLIPS: 
+f36b-001-f36bn12d01875comb~runs/B_f30n12d01875comb           steps  562/1152 leaves 74/114 ev 4882/3667 gmax 0.0607820 (return_water_flux_time_integra) dT 0.0119071 FLIPS: frozen_failed_leaf_gate: farm False / local True; adaptive_subdivision_used: farm True / local False; status: farm FAIL_CLOSED_ENGINEERING_NUMERICAL_CASE / local PASS_ENGINEERING_NUMERICAL_CASE
+f36b-002-f36bn12d01875temp~runs/B_f30n12d01875temp           steps  572/1152 leaves 71/114 ev 4270/3972 gmax 0.0898975 (return_water_flux_time_integra) dT 0.0082005 FLIPS: frozen_failed_leaf_gate: farm False / local True; status: farm FAIL_CLOSED_ENGINEERING_NUMERICAL_CASE / local PASS_ENGINEERING_NUMERICAL_CASE
+f36b-003-f36bn12d0375comp~runs/B_f30n12d0375comp             steps  271/ 576 leaves 69/114 ev 2073/1986 gmax 1.4274047 (return_hexane_flux_time_integr) dT 3.0581759 FLIPS: 
+f36b-004-f36bn12d0375temp~runs/B_f30n12d0375temp             steps  271/ 576 leaves 69/114 ev 1937/1985 gmax 1.0756346 (return_hexane_flux_time_integr) dT 3.5083758 FLIPS: 
+f36b-005-f36bn12d075comb~runs/B_f30n12d075comb               steps  139/ 288 leaves 70/114 ev 1924/1680 gmax 7.5809597 (return_water_flux_time_integra) dT 3.7516656 FLIPS: 
+f36b-006-f36bn24d01875comb~runs/B_f30n24d01875comb           steps  535/1152 leaves 86/131 ev 3059/3390 gmax 6.2726595 (return_hexane_flux_time_integr) dT 2.5119106 FLIPS: 
+f36b-007-f36bn24d01875comp~runs/B_f30n24d01875comp           steps  535/1152 leaves 86/131 ev 2983/2886 gmax 1.4531688 (pulse_hexane_flux_time_integra) dT 7.9580786 FLIPS: 
+f36b-008-f36bn24d01875temp~runs/B_f30n24d01875temp           steps  531/1152 leaves 86/131 ev 3084/3553 gmax 1.8179291 (pulse_water_flux_time_integral) dT 8.0149220 FLIPS: 
+f36b-009-f36bn24d0375comp~runs/B_f30n24d0375comp             steps  266/ 576 leaves 86/131 ev 996/937 gmax 4.3649732 (return_hexane_flux_time_integr) dT 2.1020696 FLIPS: 
+f36b-010-f36bn24d0375temp~runs/B_f30n24d0375temp             steps  278/ 576 leaves 91/131 ev 3081/2760 gmax 0.0916493 (pulse_water_flux_time_integral) dT 0.0218086 FLIPS: frozen_failed_leaf_gate: farm False / local True; adaptive_subdivision_used: farm True / local False; status: farm FAIL_CLOSED_ENGINEERING_NUMERICAL_CASE / local PASS_ENGINEERING_NUMERICAL_CASE
+f36b-011-f36bn24d075comb~runs/B_f30n24d075comb               steps  137/ 288 leaves 87/131 ev 1711/1554 gmax 3.4030558 (return_water_flux_time_integra) dT 2.8387603 FLIPS: 
+f36b-012-f36bn24d075temp~runs/B_f30n24d075temp               steps  143/ 288 leaves 88/131 ev 1804/1874 gmax 0.0194866 (pulse_water_flux_time_integral) dT 0.0224748 FLIPS: adaptive_subdivision_used: farm False / local True
+f36b-013-f36bn48d0375comp~runs/B_f30n48d0375comp             steps  275/ 576 leaves 123/165 ev 1729/1935 gmax 0.0017097 (return_hexane_flux_time_integr) dT 0.0146380 FLIPS: adaptive_subdivision_used: farm False / local True
+f36b-014-f36bn48d075comp~runs/B_f30n48d075comp               steps  135/ 288 leaves 121/165 ev 910/859 gmax 4.3893432 (pulse_hexane_flux_time_integra) dT 1.0112444 FLIPS: 
+f36c-001-f36bn96d075comb[N12]~runs/B_f30n12d075comb          steps  139/ 288 leaves 70/114 ev 1924/1680 gmax 7.5809597 (return_water_flux_time_integra) dT 3.7516656 FLIPS: 
+f36c-001-f36bn96d075comb[N96]~runs/B_f30n96d075comb          steps    0/   0 leaves / ev None/None gmax  () dT  FLIPS: 
+     .evaluations: farm 19229 / local 19437; .gates.accepted_grid_contract.adaptive_subdivision_used: farm True / local False; .gates.accepted_grid_contract.no_accepted_step_subdivision: farm False / local True; .gates.maximum_cumulative_ledger_residual: farm 1.22443416310541e-13 / local 9.262067858151504e-14; .gates.maximum_normalized_energy_residual: farm 8.034539475920964e-15 / local 8.106017864664508e-15; .gates.maximum_normalized_hexane_residual: farm 3.460899470457835e-14 / local 2.615736357325979e-14; .gates.maximum_normalized_water_residual: farm 1.22443416310541e-13 / local 9.262071619946458e-14; .gates.maximum_scaled_residual: farm 6.967286779006478e-11 / local 6.63522394461882e-11; .gates.maximum_step_ledger_residual: farm 1.0928785883651433e-13 / local 9.262071619946458e-14
+f36c-001-f36bn96d075comb[N96]~face_n96_diag/val1             steps    0/   0 leaves / ev None/None gmax  () dT  FLIPS: 
+     .evaluations: farm 19229 / local 19437; .gates.accepted_grid_contract.adaptive_subdivision_used: farm True / local False; .gates.accepted_grid_contract.no_accepted_step_subdivision: farm False / local True; .gates.maximum_cumulative_ledger_residual: farm 1.22443416310541e-13 / local 9.262067858151504e-14; .gates.maximum_normalized_energy_residual: farm 8.034539475920964e-15 / local 8.106017864664508e-15; .gates.maximum_normalized_hexane_residual: farm 3.460899470457835e-14 / local 2.615736357325979e-14; .gates.maximum_normalized_water_residual: farm 1.22443416310541e-13 / local 9.262071619946458e-14; .gates.maximum_scaled_residual: farm 6.967286779006478e-11 / local 6.63522394461882e-11; .gates.maximum_step_ledger_residual: farm 1.0928785883651433e-13 / local 9.262071619946458e-14
+f36c-001-f36bn96d075comb[N96]~face_n96_diag/val1/record      steps  146/ 288 leaves 191/233 ev 19229/19437 gmax 0.0179060 (return_water_flux_time_integra) dT 0.0971367 FLIPS: adaptive_subdivision_used: farm True / local False
+f36c-005-f36bn96d0375comp[N12]~runs/B_f30n12d0375comp        steps  271/ 576 leaves 69/114 ev 2073/1986 gmax 1.4274047 (return_hexane_flux_time_integr) dT 3.0581759 FLIPS: 
+f36c-006-f36bn96d0375temp[N12]~runs/B_f30n12d0375temp        steps  271/ 576 leaves 69/114 ev 1937/1985 gmax 1.0756346 (return_hexane_flux_time_integr) dT 3.5083758 FLIPS: 
+f36c-007-f36bn96d01875comb[N12]~runs/B_f30n12d01875comb      steps  562/1152 leaves 74/114 ev 4882/3667 gmax 0.0607820 (return_water_flux_time_integra) dT 0.0119071 FLIPS: frozen_failed_leaf_gate: farm False / local True; adaptive_subdivision_used: farm True / local False
+f36c-009-f36bn96d01875temp[N12]~runs/B_f30n12d01875temp      steps  572/1152 leaves 71/114 ev 4270/3972 gmax 0.0898975 (return_water_flux_time_integra) dT 0.0082005 FLIPS: frozen_failed_leaf_gate: farm False / local True
+f36c-001-f36bn96d075comb[N12]~farm/f36b-005-f36bn12d075comb                 steps 0/288 leaves 0/114 flips 
+f36c-001-f36bn96d075comb[N12]~farm/f36-034-f36an12d075comb                  steps 0/0 leaves 117/117 flips completed: farm True / local False; frozen_failed_leaf_gate: farm True / local None; adaptive_subdivision_used: farm False / local None
+f36c-002-f36bn96d075comp[N12]~farm/f36-035-f36an12d075comp                  steps 0/288 leaves 0/114 flips 
+f36c-003-f36bn96d075temp[N12]~farm/f36-036-f36an12d075temp                  steps 0/288 leaves 0/114 flips 
+f36c-004-f36bn96d0375comb[N12]~farm/f36-031-f36an12d0375comb                steps 0/576 leaves 0/114 flips 
+f36c-005-f36bn96d0375comp[N12]~farm/f36b-003-f36bn12d0375comp               steps 0/576 leaves 0/114 flips 
+f36c-005-f36bn96d0375comp[N12]~farm/f36-032-f36an12d0375comp                steps 0/0 leaves 117/117 flips completed: farm True / local False; frozen_failed_leaf_gate: farm True / local None; adaptive_subdivision_used: farm False / local None
+f36c-006-f36bn96d0375temp[N12]~farm/f36b-004-f36bn12d0375temp               steps 0/576 leaves 0/114 flips 
+f36c-006-f36bn96d0375temp[N12]~farm/f36-033-f36an12d0375temp                steps 0/0 leaves 117/117 flips completed: farm True / local False; frozen_failed_leaf_gate: farm True / local None; adaptive_subdivision_used: farm False / local None
+f36c-007-f36bn96d01875comb[N12]~farm/f36b-001-f36bn12d01875comb             steps 0/1152 leaves 0/114 flips 
+f36c-007-f36bn96d01875comb[N12]~farm/f36-028-f36an12d01875comb              steps 0/1152 leaves 0/114 flips 
+f36c-008-f36bn96d01875comp[N12]~farm/f36-029-f36an12d01875comp              steps 0/1152 leaves 0/114 flips 
+f36c-009-f36bn96d01875temp[N12]~farm/f36b-002-f36bn12d01875temp             steps 0/1152 leaves 0/114 flips 
+f36c-009-f36bn96d01875temp[N12]~farm/f36-030-f36an12d01875temp              steps 0/1152 leaves 0/114 flips 

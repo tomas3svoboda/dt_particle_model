@@ -1,0 +1,89 @@
+{
+ "primary_pairs": 29,
+ "pairs": [
+  "f36-010-f36an48d01875comb~runs_final/A_f30n48d01875comb",
+  "f36-011-f36an48d01875comp~runs_final/A_f30n48d01875comp",
+  "f36-012-f36an48d01875temp~runs_final/A_f30n48d01875temp",
+  "f36-013-f36an48d0375comb~runs_final/ON_f30n48d0375comb",
+  "f36-015-f36an48d0375temp~runs_final/A_f30n48d0375temp",
+  "f36-016-f36an48d075comb~runs_final/A_f30n48d075comb",
+  "f36-018-f36an48d075temp~runs_final/A_f30n48d075temp",
+  "f36-022-f36an24d0375comb~runs_final/A_f30n24d0375comb",
+  "f36-026-f36an24d075comp~runs_final/ON_f30n24d075comp",
+  "f36-029-f36an12d01875comp~runs_final/A_f30n12d01875comp",
+  "f36-031-f36an12d0375comb~runs_final/A_f30n12d0375comb",
+  "f36-034-f36an12d075comb~runs_final/A_f30n12d075comb",
+  "f36-035-f36an12d075comp~runs_final/ON_f30n12d075comp",
+  "f36-036-f36an12d075temp~runs_final/ON_f30n12d075temp",
+  "f36b-001-f36bn12d01875comb~runs/B_f30n12d01875comb",
+  "f36b-002-f36bn12d01875temp~runs/B_f30n12d01875temp",
+  "f36b-003-f36bn12d0375comp~runs/B_f30n12d0375comp",
+  "f36b-004-f36bn12d0375temp~runs/B_f30n12d0375temp",
+  "f36b-005-f36bn12d075comb~runs/B_f30n12d075comb",
+  "f36b-006-f36bn24d01875comb~runs/B_f30n24d01875comb",
+  "f36b-007-f36bn24d01875comp~runs/B_f30n24d01875comp",
+  "f36b-008-f36bn24d01875temp~runs/B_f30n24d01875temp",
+  "f36b-009-f36bn24d0375comp~runs/B_f30n24d0375comp",
+  "f36b-010-f36bn24d0375temp~runs/B_f30n24d0375temp",
+  "f36b-011-f36bn24d075comb~runs/B_f30n24d075comb",
+  "f36b-012-f36bn24d075temp~runs/B_f30n24d075temp",
+  "f36b-013-f36bn48d0375comp~runs/B_f30n48d0375comp",
+  "f36b-014-f36bn48d075comp~runs/B_f30n48d075comp",
+  "f36c-001-f36bn96d075comb[N96]~face_n96_diag/val1/record"
+ ],
+ "both_completed": 28,
+ "step_cells_compared": 18432,
+ "step_cells_differing": 8697,
+ "job_leaves_compared": 3926,
+ "job_leaves_differing": 2691,
+ "bit_identical_pairs": [
+  "f36-034-f36an12d075comb~runs_final/A_f30n12d075comb"
+ ],
+ "pairs_with_outcome_flip": {
+  "f36b-001-f36bn12d01875comb~runs/B_f30n12d01875comb": "frozen_failed_leaf_gate: farm False / local True; adaptive_subdivision_used: farm True / local False; status: farm FAIL_CLOSED_ENGINEERING_NUMERICAL_CASE / local PASS_ENGINEERING_NUMERICAL_CASE",
+  "f36b-002-f36bn12d01875temp~runs/B_f30n12d01875temp": "frozen_failed_leaf_gate: farm False / local True; status: farm FAIL_CLOSED_ENGINEERING_NUMERICAL_CASE / local PASS_ENGINEERING_NUMERICAL_CASE",
+  "f36b-010-f36bn24d0375temp~runs/B_f30n24d0375temp": "frozen_failed_leaf_gate: farm False / local True; adaptive_subdivision_used: farm True / local False; status: farm FAIL_CLOSED_ENGINEERING_NUMERICAL_CASE / local PASS_ENGINEERING_NUMERICAL_CASE",
+  "f36b-012-f36bn24d075temp~runs/B_f30n24d075temp": "adaptive_subdivision_used: farm False / local True",
+  "f36b-013-f36bn48d0375comp~runs/B_f30n48d0375comp": "adaptive_subdivision_used: farm False / local True",
+  "f36c-001-f36bn96d075comb[N96]~face_n96_diag/val1/record": "adaptive_subdivision_used: farm True / local False"
+ },
+ "noflip_count": 22,
+ "noflip_gated_rel_range": [
+  1.705358016217157e-11,
+  6.272659519058966e-10
+ ],
+ "noflip_temperature_max_k": 9.289919944421854e-10,
+ "flip_gated_rel": {
+  "f36b-001-f36bn12d01875comb~runs/B_f30n12d01875comb": [
+   0.06078206710575731,
+   "return_water_flux_time_integral_mol_s_m2",
+   0.01190717063008151
+  ],
+  "f36b-002-f36bn12d01875temp~runs/B_f30n12d01875temp": [
+   0.08989756028766283,
+   "return_water_flux_time_integral_mol_s_m2",
+   0.008200580748905395
+  ],
+  "f36b-010-f36bn24d0375temp~runs/B_f30n24d0375temp": [
+   0.09164934937670158,
+   "pulse_water_flux_time_integral_mol_s_m2",
+   0.021808679042692347
+  ],
+  "f36b-012-f36bn24d075temp~runs/B_f30n24d075temp": [
+   0.019486678926297393,
+   "pulse_water_flux_time_integral_mol_s_m2",
+   0.02247483569732367
+  ],
+  "f36b-013-f36bn48d0375comp~runs/B_f30n48d0375comp": [
+   0.0017097760160867217,
+   "return_hexane_flux_time_integral_mol_s_m2",
+   0.01463802776453349
+  ],
+  "f36c-001-f36bn96d075comb[N96]~face_n96_diag/val1/record": [
+   0.017906066372444653,
+   "return_water_flux_time_integral_mol_s_m2",
+   0.09713674695922236
+  ]
+ },
+ "evaluations_differ": 27
+}

@@ -1,0 +1,62 @@
+{
+ "literal|core18": {
+  "chains": 18,
+  "formed": 3,
+  "front_contracting": 3,
+  "front_not_contracting": [],
+  "observables_final_pair_meeting": "47 of 66",
+  "observables_contracting": "48 of 66",
+  "observables_gci_meeting": "38 of 66"
+ },
+ "literal|n96_extension12": {
+  "chains": 12,
+  "formed": 0,
+  "front_contracting": 0,
+  "front_not_contracting": [],
+  "observables_final_pair_meeting": "0 of 0",
+  "observables_contracting": "0 of 0",
+  "observables_gci_meeting": "0 of 0"
+ },
+ "literal_plus_ruled|core18": {
+  "chains": 18,
+  "formed": 10,
+  "front_contracting": 9,
+  "front_not_contracting": [
+   "composition_only time 12 (A/B/A) ratio 7.28"
+  ],
+  "observables_final_pair_meeting": "154 of 220",
+  "observables_contracting": "143 of 220",
+  "observables_gci_meeting": "122 of 220"
+ },
+ "literal_plus_ruled|n96_extension12": {
+  "chains": 12,
+  "formed": 3,
+  "front_contracting": 0,
+  "front_not_contracting": [
+   "composition_only mesh 0.075 (A/B/C) ratio 2.39",
+   "temperature_only mesh 0.075 (B/A/C) ratio 6.84",
+   "combined mesh 0.075 (B/A/C) ratio 8.7"
+  ],
+  "observables_final_pair_meeting": "44 of 66",
+  "observables_contracting": "17 of 66",
+  "observables_gci_meeting": "21 of 66"
+ },
+ "gate_complete_by_arm": {
+  "A": 13,
+  "B": 9,
+  "C": 3
+ },
+ "completed_by_arm": {
+  "A": 17,
+  "B": 14,
+  "C": 3
+ },
+ "levels_by_arm": {
+  "A": 36,
+  "B": 14,
+  "C": 9
+ },
+ "ledgers_above_1e-10": [],
+ "largest_ledger": 7.772904082778828e-13,
+ "largest_ledger_completed": 7.772904082778828e-13
+}

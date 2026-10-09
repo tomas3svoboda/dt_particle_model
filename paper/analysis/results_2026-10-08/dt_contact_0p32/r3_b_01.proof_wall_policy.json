@@ -1,0 +1,13 @@
+{
+  "owner_authority": "RULE 2: explicit numerical budget recovery with unchanged physics",
+  "old_step_proof_wall_s": 120.0,
+  "new_step_proof_wall_s": 600.0,
+  "proof_assembly_budget_unchanged": 3000000,
+  "component_energy_acceptance": 1e-10,
+  "physical_equations_changed": false,
+  "native_acceptance_tolerances_changed": false,
+  "sources_sha256": {
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_032_budget.py": "93fb70718d94c948b7e592ba7baf6f0eccec4c203312dd9c83390bde0516d1e0",
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_admissible_reference_032.py": "0b7aef967a58a94874a66aacbe9407da7475275defc4972011162e244507b102"
+  }
+}

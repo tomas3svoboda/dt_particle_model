@@ -1,0 +1,8 @@
+{
+  "root_seed": "paper\\analysis\\results_2026-10-08\\dt_mobility_f10000_k0p32\\b_01.birth_debug.json",
+  "root_seed_sha256": "cd125525bc0307cf45092b380f12682f304f58a213964dd7ae939cec9fe5646e",
+  "same_IVP_seed_only": true,
+  "accepted_material_state_imported": false,
+  "acceptance_rules_changed": false,
+  "wrapper_sha256": "6010102993601733075c082b4eed10141c41ea08e431c3c3a36147ada191d94b"
+}

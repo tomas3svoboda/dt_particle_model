@@ -1,0 +1,14 @@
+{
+  "owner_authority": "RULE 2: documented numerical relaxation with unchanged physical equations and negligible numerical error",
+  "observed_bounded_tangent_reconstruction_residual": 2.189e-10,
+  "previous_seed_only_tangent_bound": 2e-10,
+  "declared_seed_only_tangent_bound": 3e-10,
+  "tangent_is_accepted_time_step": false,
+  "native_accepted_step_controls_changed": false,
+  "component_energy_acceptance": 1e-10,
+  "physical_equations_or_coefficient_changed": false,
+  "sources_sha256": {
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_032_seed_bound.py": "a1392e2b152167ae988f636cae3170e753e76075b007ccc237ecc3a23bc6c85b",
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_032.py": "33398c4aae995d5f903f4f239621ac3b3f908c8ab212a22a82f69fcc86215c09"
+  }
+}

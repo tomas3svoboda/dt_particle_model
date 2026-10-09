@@ -1,0 +1,22 @@
+{
+    "status":  "COMPLETE_AND_AUDITED",
+    "K_l":  0.32,
+    "b_result":  "paper/analysis/results_2026-10-08/dt_contact_0p32/r3_b_01.json",
+    "b_parts":  [
+                    "paper/analysis/results_2026-10-08/dt_contact_0p32/b_02.json",
+                    "paper/analysis/results_2026-10-08/dt_contact_0p32/b_03.json",
+                    "paper/analysis/results_2026-10-08/dt_contact_0p32/b_04.json",
+                    "paper/analysis/results_2026-10-08/dt_contact_0p32/b_05.json",
+                    "paper/analysis/results_2026-10-08/dt_contact_0p32/b_06.json",
+                    "paper/analysis/results_2026-10-08/dt_contact_0p32/r1_b_01.json",
+                    "paper/analysis/results_2026-10-08/dt_contact_0p32/r1_b_02.json",
+                    "paper/analysis/results_2026-10-08/dt_contact_0p32/r2_b_01.json",
+                    "paper/analysis/results_2026-10-08/dt_contact_0p32/r3_b_01.json"
+                ],
+    "c_result":  "paper/analysis/results_2026-10-08/dt_contact_0p32/c_dt5.json",
+    "full_audit":  "paper/analysis/results_2026-10-08/dt_contact_0p32/through_exit.audit.json",
+    "manuscript_adoption":  false,
+    "manuscript_files_changed":  [
+
+                                 ]
+}

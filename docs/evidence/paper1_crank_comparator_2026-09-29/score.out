@@ -1,0 +1,45 @@
+checks 676, mismatches 0
+CC  declared   faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.4651 band 6 signed -0.3547 | dry 0.476 | ratio 1.84..7.54 geo 5.25 | ident None
+CC  declared   faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 0.6343 band 4 signed -0.5353 | dry 0.470 | ratio 2.10..7.63 geo 5.60 | ident None
+CX  declared   faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.9786 band 1 signed -0.8934 | dry 0.302 | ratio 4.69..74.24 geo 39.93 | ident None
+CX  declared   faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.9907 band 0 signed -0.9138 | dry 0.297 | ratio 4.34..74.50 geo 40.57 | ident None
+CX  declared   faner2008_soybean_136C   n120 t_max    t_end  2400.0 rms_v2 0.9786 band 1 signed -0.8935 | dry 0.302 | ratio 4.68..74.24 geo 39.93 | ident None
+CX  declared   faner2008_soybean_136C   n120 refused: t_end    96.8 rms_v2 - band None signed - | dry 0.297 | ratio 4.33..43.81 geo 19.47 | ident None
+CX  declared   faner2008_soybean_136C   n240 refused: t_end     3.9 rms_v2 - band None signed - | dry - | ratio -..- geo - | ident None
+CX  declared   faner2008_soybean_136C   n240 refused: t_end     4.6 rms_v2 - band None signed - | dry - | ratio 4.33..4.51 geo 4.45 | ident None
+CX  declared   faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 1.4112 band 0 signed -1.3465 | dry 0.289 | ratio 7.34..74.85 geo 44.53 | ident None
+CX  declared   faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 1.4283 band 0 signed -1.3695 | dry 0.284 | ratio 6.80..75.01 geo 44.99 | ident None
+CX  declared   faner2008_sunflower_136C n120 refused: t_end    91.3 rms_v2 - band None signed - | dry 0.289 | ratio 7.34..42.30 geo 21.71 | ident None
+CX  declared   faner2008_sunflower_136C n120 refused: t_end    89.9 rms_v2 - band None signed - | dry 0.284 | ratio 6.80..43.41 geo 21.82 | ident None
+CX  declared   faner2008_sunflower_136C n240 refused: t_end    13.6 rms_v2 - band None signed - | dry - | ratio 7.34..7.34 geo 7.34 | ident None
+CX  declared   faner2008_sunflower_136C n240 refused: t_end     7.2 rms_v2 - band None signed - | dry - | ratio -..- geo - | ident None
+CX  r0655      faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.9829 band 1 signed -0.8993 | dry 0.300 | ratio 4.63..74.22 geo 39.78 | ident None
+CX  r0655      faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 1.4460 band 0 signed -1.3916 | dry 0.278 | ratio 7.54..74.93 geo 44.84 | ident None
+CX  r0885      faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.8946 band 2 signed -0.7789 | dry 0.338 | ratio 4.74..73.67 geo 39.60 | ident None
+CX  r0885      faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 1.3226 band 0 signed -1.2332 | dry 0.314 | ratio 7.93..74.54 geo 44.69 | ident None
+CX  thesis_veq faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.8889 band 2 signed -0.7712 | dry 0.340 | ratio 4.79..73.65 geo 39.70 | ident None
+CX  thesis_veq faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 1.2753 band 0 signed -1.1725 | dry 0.327 | ratio 9.06..74.44 geo 45.79 | ident None
+CXp declared   faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.9772 band 1 signed -0.8923 | dry 0.302 | ratio 1.13..46.29 geo 4.74 | ident None
+CXp declared   faner2008_soybean_136C   n120 refused: t_end    96.9 rms_v2 - band None signed - | dry 0.302 | ratio 4.68..42.05 geo 19.13 | ident None
+CXp declared   faner2008_soybean_136C   n240 refused: t_end     3.9 rms_v2 - band None signed - | dry - | ratio -..- geo - | ident None
+CXp declared   faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 1.4095 band 0 signed -1.3450 | dry 0.289 | ratio 1.15..50.82 geo 5.19 | ident None
+CXp declared   faner2008_sunflower_136C n120 t_max    t_end  2400.0 rms_v2 1.4096 band 0 signed -1.3451 | dry 0.289 | ratio 1.15..50.84 geo 5.18 | ident None
+CXp declared   faner2008_sunflower_136C n240 refused: t_end    13.6 rms_v2 - band None signed - | dry - | ratio 7.34..7.34 geo 7.34 | ident None
+CXp r0655      faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.9815 band 1 signed -0.8982 | dry 0.300 | ratio 1.13..45.69 geo 4.65 | ident None
+CXp r0655      faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 1.4442 band 0 signed -1.3901 | dry 0.278 | ratio 1.10..46.69 geo 4.29 | ident None
+CXp r0885      faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.8932 band 2 signed -0.7778 | dry 0.338 | ratio 1.34..57.32 geo 9.24 | ident None
+CXp r0885      faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 1.3203 band 0 signed -1.2314 | dry 0.314 | ratio 1.30..59.00 geo 8.72 | ident None
+CXp thesis_veq faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.8876 band 2 signed -0.7702 | dry 0.340 | ratio 1.32..58.55 geo 9.50 | ident None
+CXp thesis_veq faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 1.2733 band 0 signed -1.1709 | dry 0.327 | ratio 1.37..62.35 geo 11.20 | ident None
+KX  declared   faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 1.0160 band 1 signed -0.9433 | dry 0.286 | ratio 6.04..104.41 geo 55.60 | ident None
+KX  declared   faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 1.4688 band 0 signed -1.4191 | dry 0.273 | ratio 9.64..105.24 geo 62.18 | ident None
+S2  declared   faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.1562 band 8 signed +0.1420 | dry 1.196 | ratio 1.00..1.00 geo 1.00 | ident (True, True)
+S2  declared   faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 0.1721 band 9 signed +0.1650 | dry 1.262 | ratio 1.00..1.00 geo 1.00 | ident (True, True)
+S   declared   faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.1562 band 8 signed +0.1420 | dry 1.196 | ratio 1.00..1.00 geo 1.00 | ident (True, True)
+S   declared   faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 0.1721 band 9 signed +0.1650 | dry 1.262 | ratio 1.00..1.00 geo 1.00 | ident (True, True)
+S   r0655      faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.1473 band 9 signed +0.1324 | dry 1.162 | ratio 1.00..1.00 geo 1.00 | ident (True, True)
+S   r0655      faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 0.0993 band 14 signed +0.0890 | dry 1.069 | ratio 1.00..1.00 geo 1.00 | ident (True, True)
+S   r0885      faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.3025 band 1 signed +0.2886 | dry 1.975 | ratio 1.00..1.00 geo 1.00 | ident (True, True)
+S   r0885      faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 0.3174 band 1 signed +0.3077 | dry 1.814 | ratio 1.00..1.00 geo 1.00 | ident (True, True)
+S   thesis_veq faner2008_soybean_136C   n 60 t_max    t_end  2400.0 rms_v2 0.3105 band 1 signed +0.2962 | dry 2.036 | ratio 1.00..1.00 geo 1.00 | ident (True, True)
+S   thesis_veq faner2008_sunflower_136C n 60 t_max    t_end  2400.0 rms_v2 0.3792 band 1 signed +0.3678 | dry 2.165 | ratio 1.00..1.00 geo 1.00 | ident (True, True)

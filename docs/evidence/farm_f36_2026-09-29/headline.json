@@ -1,0 +1,180 @@
+{
+ "jobs_by_arm_kind_rc": {
+  "A|item08|rc1": 1,
+  "A|item08|rc2": 7,
+  "A|item21|rc0": 10,
+  "A|ladder|rc0": 9,
+  "A|ladder|rc1": 9,
+  "A|ladder|rc2": 18,
+  "B|ladder|rc0": 5,
+  "B|ladder|rc2": 9,
+  "C|ladder|rc0": 2,
+  "C|ladder|rc2": 7
+ },
+ "records_present": 65,
+ "determinism_audit": {
+  "True|mesh48": 11,
+  "True|mesh24": 20,
+  "True|mesh12": 34
+ },
+ "source_digest": {
+  "de89be85fce5881c0c6356ac3253958e8947a8a2e5ea78cd9cd79adab3ba6171": 65,
+  "none": 12
+ },
+ "model_sources_unchanged": {
+  "True": 65,
+  "none": 12
+ },
+ "bound_declared_by_arm": {
+  "A|2e-11|False": 42,
+  "A||": 12,
+  "B|1e-10|True": 14,
+  "C|1e-10|True": 9
+ },
+ "release_contract": {
+  "A|ladder|True": 13,
+  "A|item21|False": 4,
+  "A|item21|True": 4,
+  "A|item21|": 2,
+  "B|ladder|True": 9,
+  "C|ladder|True": 3,
+  "A|ladder|": 9,
+  "A|ladder|False": 14,
+  "A|item08|False": 7,
+  "A|item08|": 1,
+  "B|ladder|False": 5,
+  "C|ladder|False": 6
+ },
+ "ladder_levels_gate_complete_by_arm": {
+  "A": 13,
+  "B": 9,
+  "C": 3
+ },
+ "ladder_levels_completed_leaf_false_by_arm": {
+  "A": 4,
+  "B": 5
+ },
+ "ladder_levels_refused_by_arm_and_text": {
+  "A|same-cell failed-leaf subdivision exhausted its documented m": 10,
+  "C|shared hot/lean baseline prefix failed without state commit:": 6
+ },
+ "arm_C_N96_levels": [
+  {
+   "job_id": "f36c-001-f36bn96d075comb",
+   "dt_s": "0.075",
+   "scenario": "combined",
+   "completed": "True",
+   "frozen_failed_leaf_gate": "True",
+   "accepted_steps": "3",
+   "max_scaled_residual": "6.967286779006478e-11",
+   "max_cumulative_ledger": "1.22443416310541e-13",
+   "error": ""
+  },
+  {
+   "job_id": "f36c-003-f36bn96d075temp",
+   "dt_s": "0.075",
+   "scenario": "temperature_only",
+   "completed": "True",
+   "frozen_failed_leaf_gate": "True",
+   "accepted_steps": "3",
+   "max_scaled_residual": "9.016976095404338e-11",
+   "max_cumulative_ledger": "1.0928785883651433e-13",
+   "error": ""
+  },
+  {
+   "job_id": "f36c-002-f36bn96d075comp",
+   "dt_s": "0.075",
+   "scenario": "composition_only",
+   "completed": "True",
+   "frozen_failed_leaf_gate": "True",
+   "accepted_steps": "3",
+   "max_scaled_residual": "9.544286574210889e-11",
+   "max_cumulative_ledger": "1.2618375677244682e-13",
+   "error": ""
+  },
+  {
+   "job_id": "f36c-004-f36bn96d0375comb",
+   "dt_s": "0.0375",
+   "scenario": "combined",
+   "completed": "False",
+   "frozen_failed_leaf_gate": "",
+   "accepted_steps": "",
+   "max_scaled_residual": "",
+   "max_cumulative_ledger": "",
+   "error": "shared hot/lean baseline prefix failed without state commit: time continuation requires a cut candidate"
+  },
+  {
+   "job_id": "f36c-005-f36bn96d0375comp",
+   "dt_s": "0.0375",
+   "scenario": "composition_only",
+   "completed": "False",
+   "frozen_failed_leaf_gate": "",
+   "accepted_steps": "",
+   "max_scaled_residual": "",
+   "max_cumulative_ledger": "",
+   "error": "shared hot/lean baseline prefix failed without state commit: time continuation requires a cut candidate"
+  },
+  {
+   "job_id": "f36c-006-f36bn96d0375temp",
+   "dt_s": "0.0375",
+   "scenario": "temperature_only",
+   "completed": "False",
+   "frozen_failed_leaf_gate": "",
+   "accepted_steps": "",
+   "max_scaled_residual": "",
+   "max_cumulative_ledger": "",
+   "error": "shared hot/lean baseline prefix failed without state commit: time continuation requires a cut candidate"
+  },
+  {
+   "job_id": "f36c-007-f36bn96d01875comb",
+   "dt_s": "0.01875",
+   "scenario": "combined",
+   "completed": "False",
+   "frozen_failed_leaf_gate": "",
+   "accepted_steps": "",
+   "max_scaled_residual": "",
+   "max_cumulative_ledger": "",
+   "error": "shared hot/lean baseline prefix failed without state commit: time continuation requires a cut candidate"
+  },
+  {
+   "job_id": "f36c-008-f36bn96d01875comp",
+   "dt_s": "0.01875",
+   "scenario": "composition_only",
+   "completed": "False",
+   "frozen_failed_leaf_gate": "",
+   "accepted_steps": "",
+   "max_scaled_residual": "",
+   "max_cumulative_ledger": "",
+   "error": "shared hot/lean baseline prefix failed without state commit: time continuation requires a cut candidate"
+  },
+  {
+   "job_id": "f36c-009-f36bn96d01875temp",
+   "dt_s": "0.01875",
+   "scenario": "temperature_only",
+   "completed": "False",
+   "frozen_failed_leaf_gate": "",
+   "accepted_steps": "",
+   "max_scaled_residual": "",
+   "max_cumulative_ledger": "",
+   "error": "shared hot/lean baseline prefix failed without state commit: time continuation requires a cut candidate"
+  }
+ ],
+ "walls_s": {
+  "A": [
+   5.001,
+   1138.491
+  ],
+  "B": [
+   53.066,
+   342.378
+  ],
+  "C": [
+   1184.28,
+   1439.188
+  ]
+ },
+ "farm_window_utc": [
+  "2026-09-29T19:53:32+00:00",
+  "2026-09-29T20:17:43+00:00"
+ ]
+}

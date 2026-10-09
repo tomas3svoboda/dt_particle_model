@@ -1,0 +1,21 @@
+{
+    "executable":  "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "arguments":  [
+                      "scratchpad/dt_contact_sensitivity_2026_10_08/run_b_with_birth_diagnostics.py",
+                      "--factor",
+                      "1000",
+                      "--contact-conductance",
+                      "0.20",
+                      "--dt",
+                      "0.025",
+                      "--steps",
+                      "300",
+                      "--until",
+                      "510",
+                      "--out",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_s2_b_06.json",
+                      "--resume",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_s2_b_05.accepted.pkl"
+                  ],
+    "utc":  "2026-10-08T12:13:11.4892197Z"
+}

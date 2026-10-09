@@ -1,0 +1,9 @@
+[
+  {
+    "before_time_s": 497.0262175037928,
+    "requested_dt_s": 0.05,
+    "accepted": false,
+    "error": "face-tangent bounded reconstruction found no admissible primary-drainage root: q_h=3.0136158143655095e-01, maximum scaled residual=2.189e-10 > 2.000e-10",
+    "exact_rollback_identity": true
+  }
+]

@@ -1,0 +1,172 @@
+{
+  "K_l_mol_m2_s": 0.05,
+  "shell_mobility_factor": 1000,
+  "fully_wet_before_time_s": 492.257073259448,
+  "study_debug": {
+    "encoded_initial_candidate": [
+      -0.7995886646863508,
+      -0.7995886646863508,
+      0.09900977621284679,
+      0.09900977621284679,
+      -11.30552929130883,
+      5.417478086825624,
+      0.2596071878205457,
+      0.2596071878205457,
+      7.415915053138658,
+      -11.224954866829544
+    ],
+    "native_lower_bounds": [
+      -30.0,
+      -30.0,
+      -30.0,
+      -30.0,
+      -30.0,
+      -30.0,
+      -Infinity,
+      -Infinity,
+      -30.0,
+      -30.0
+    ],
+    "native_upper_bounds": [
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      30.0,
+      Infinity,
+      Infinity,
+      30.0,
+      30.0
+    ],
+    "initial_surface_coordinates": [
+      334.48272263775715,
+      1.20091679832146,
+      0.014516063131331705
+    ],
+    "candidate": {
+      "wet_temperatures_k": [
+        334.5777131160297,
+        334.58694044963795
+      ],
+      "wet_retained_water_loadings": [
+        0.12366412213737844,
+        0.12366411426835595
+      ],
+      "dry_temperature_k": 337.1479247820365,
+      "dry_y_hexane": 0.8541470344251684,
+      "dry_total_stefan_fluxes_mol_m2_s": [
+        0.5615225744618213,
+        0.5669790308010562
+      ],
+      "front_z": 0.9960832869124245,
+      "interface_temperature_k": 337.06241045528554,
+      "physically_qualifying": false
+    },
+    "surface": {
+      "temperature_k": 337.23460109159447,
+      "surface_y_hexane": 0.7668880534154295,
+      "liquid_water_kg_m2": 0.01455014979651286,
+      "external_water_flux_kg_m2_s": -0.013275763351046747,
+      "external_hexane_flux_kg_m2_s": 0.0419024104130889,
+      "external_energy_flux_w_m2": -34802.021599194704,
+      "water_node_residual_kg_m2_s": 1.762479051592436e-15,
+      "hexane_node_residual_kg_m2_s": 3.400058012914542e-16,
+      "energy_node_residual_w_m2": -9.567884262651205e-10,
+      "water_activity_trace_deficit": 3.892457578480446e-09,
+      "beta": 0.6879977973325524,
+      "physically_qualifying": false
+    },
+    "scaled_residuals": [
+      2.6206188488923883e-17,
+      -2.0265035818076724e-17,
+      -1.3379680375478445e-16,
+      8.598574062594737e-17,
+      -2.290397420230928e-10,
+      4.283918179928705e-10,
+      -1.0851415098481727e-11,
+      2.2877847306340288e-10,
+      -2.1632337556349394e-11,
+      9.43812095251328e-15,
+      1.2204433991272782e-15,
+      2.354398683355773e-16,
+      -2.5807867093942507e-15
+    ],
+    "maximum_scaled_residual": 4.283918179928705e-10,
+    "external_beta_coordinate": 0.6879977973325306,
+    "nonlinear_solver": {
+      "success": false,
+      "message": "domain-aware Newton has no admissible decreasing step",
+      "residual_calls": 878,
+      "active_mask": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "physical_coordinates": [
+        334.5777131160297,
+        334.58694044963795,
+        0.12366412213737846,
+        0.12366411426835595,
+        337.1479247820365,
+        0.8883720016453576,
+        0.5615225744618213,
+        0.5669790308010562,
+        0.9960832869124244,
+        337.06241045528554,
+        337.23460109159447,
+        0.6879977973325306,
+        0.01455014979651286
+      ]
+    },
+    "initial_seed": {
+      "candidate": {
+        "wet_temperatures_k": [
+          334.57768300414784,
+          334.57768300414784
+        ],
+        "wet_retained_water_loadings": [
+          0.12366412213740458,
+          0.12366412213740458
+        ],
+        "dry_temperature_k": 334.4816103985725,
+        "dry_y_hexane": 0.7948411354729596,
+        "dry_total_stefan_fluxes_mol_m2_s": [
+          0.2596071878205457,
+          0.2596071878205457
+        ],
+        "front_z": 0.9994739150553407,
+        "interface_temperature_k": 334.48049815938793,
+        "physically_qualifying": false
+      },
+      "stefan_flux_scales_mol_m2_s": [
+        1.0,
+        1.0
+      ],
+      "label": "native two-liquid endpoint seed; actual old wet state; energy-scaled newborn thickness",
+      "physically_qualifying": false
+    },
+    "seed_surface_temperature_k": 334.48272263775715,
+    "seed_newborn_thickness_m": 2.6308861337760205e-07,
+    "seed_gas_heat_w_m2": 2029.258513903115,
+    "seed_wet_release_w_m2": 62.198300646341536,
+    "seed_native_water_trace_root_temperature_k": 337.0213862663956,
+    "surface_flux_coordinate": "exact native heat-beta inverse bounded to declared study band",
+    "optimizer_debug": null
+  },
+  "error": "actual-feed joint birth refused with exact fully-wet rollback: joint birth root did not certify success in open bounds",
+  "total_residual_assembly_attempts": 881,
+  "maximum_scaled_residual": 4.283918179928705e-10,
+  "failed_trial_advanced_physical_time": false,
+  "exact_fully_wet_rollback_identity_preserved": true
+}

@@ -1,0 +1,21 @@
+{
+  "contact_conductance_mol_m2_s": 0.32,
+  "physical_law_changed": false,
+  "native_acceptance_changed": false,
+  "same_IVP_failed_birth_iterate_may_be_reused_as_guess": true,
+  "other_case_accepted_material_imported": false,
+  "departure_duration_factors": [
+    1,
+    0.25,
+    0.0625,
+    0.015625,
+    0.00390625,
+    0.0009765625
+  ],
+  "component_energy_tolerance": 1e-10,
+  "manuscript_adoption": false,
+  "source_sha256": {
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_032.py": "33398c4aae995d5f903f4f239621ac3b3f908c8ab212a22a82f69fcc86215c09",
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_with_birth_diagnostics.py": "7e676d884f12be5ff96b069a3113c47f7c3d594c4cb8a9d26fe532492ad554d2"
+  }
+}

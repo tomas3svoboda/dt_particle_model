@@ -1,0 +1,75 @@
+\section{The prescribed DT bath and particle history}
+\label{sup:dtmarch}
+This section documents the main-text DT experiment. It prescribes the gas bath instead of
+solving tray vapour and energy balances. It uses the same particle
+conservation laws, positive-water retention branch and gas and matrix
+transport coefficients as the Faner experiment. The external water film
+stores water and energy separately, and liquid-water imbibition transfers
+water into the dry shell while the film is present. The surface closure adds
+no water-film resistance to hexane escape. No front temperature or
+particle-temperature history is imposed.
+
+\paragraph{Inputs.}
+The prescribed residence is 1766.535501 s and the effective spherical
+radius is 1.5 mm. This is a selected coarse-particle case; the main text
+states its origin and distinguishes it from a measured DT mean radius.
+Feed temperature is 322.15 K, hexane loading 0.387786 kg/kg dry meal,
+retained water 0.123664122 kg/kg dry meal and oil fraction 0.013740458.
+The pre-desolventizing (PD) bath is 345.15 K, with hexane mole fraction
+0.6644429974, exposure fraction 0.004081 and indirect duty 85 W/kg dry
+until 490.202242 s. The steam-rich bath then ends at 378.15 K;
+its gas states and timings are recorded in
+\texttt{destiny\_v3\_exit105.json}. These inputs define a scenario,
+not a measured plant bath or a new countercurrent-column calculation.
+
+\paragraph{Shared particle closure.}
+Both experiments use binary pore diffusivity $6\times10^{-10}$ m$^2$/s,
+reference retained-water mobility $8.47\times10^{-7}$ mol/(m s),
+conductivity 0.24 W/(m K), equation-of-state fugacities, retained-component
+state functions and component-consistent energy. The positive-water
+Luikov extension is stated in Sec.~\ref{sup:journalmarch}. Initial water, oil
+and radius differ between the experiments; the constitutive laws do not.
+Liquid-water imbibition uses the liquid contact conductance $K_\ell=0.32$ mol/(m$^2$ s) and a total-to-reference
+shell mobility factor of 1000, as derived in Sec.~\ref{sup:finitecontact}.
+The pathway is inactive in the Faner experiment, which has no water
+film.
+Regime A uses a uniform-temperature particle coupled to a separate
+surface; regimes B and C use two radial cells. These coarse
+representations are stated numerical limitations.
+
+\paragraph{Events and exit.}
+External free hexane is depleted at 492.257073 s, and the first dry-shell
+interval ends at 492.267073 s. Regime B resolves the front's grid-face
+arrival and departure before core extinction at 503.560810 s. The external water film stays positive throughout regime B.
+Regime C advances the stationary radial particle and water film together,
+resolves film depletion at 624.548745 s and continues to the prescribed
+exit at 1766.535501 s. Final core volume and external water film are zero.
+Particle water is 0.222554024 kg/kg dry, hexane is 0.000135230559 kg/kg dry
+and volume-mean temperature is 378.125370 K.
+
+Wet-basis moisture is $100X_{\mathrm w}/(1+X_{\mathrm w}+X_{\mathrm h})$,
+giving 18.2020\%. Residual hexane is 135.231 mg/kg dry, or 110.601 ppm
+on a wet basis with the same denominator. This conversion excludes the water
+stored in the external film. Figure~\ref*{M-fig:dtmarch} of the main text
+places the published outlet ranges at 30 min for visual reference; the
+computed clock and its earlier end point are not shifted. The published
+ranges are process context, not measurements of this particle or bath.
+
+\paragraph{Conservation and numerical scope.}
+An independent reconstruction covers every accepted step from
+dry-shell formation to exit, evaluating water, hexane and energy in the
+particle and external water film. The maximum normalized defects are
+$4.24\times10^{-11}$, $8.61\times10^{-13}$ and $6.16\times10^{-12}$,
+respectively.
+The preceding feed history keeps its separate check. Regime-C step
+halving is reported in Sec.~\ref{sup:finitecontact}. Whole-history mesh
+and time-step convergence has not been demonstrated, nor has the regime-B
+branch with a depleted film; the actual regime-B trajectory keeps a positive
+film and therefore does not exercise that branch.
+
+Each segment records its source-file hashes and starting checkpoint. Auxiliary code was developed between runs, so these records do
+not form one fixed, executable replay. The reproduction package must
+preserve the actual sources, inputs, histories and legally distributable
+measured data. Conservation and numerical checks support the reported
+discrete experiment; they do not identify the unmeasured material
+coefficients or validate an industrial DT.

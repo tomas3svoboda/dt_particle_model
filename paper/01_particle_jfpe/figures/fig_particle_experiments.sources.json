@@ -1,0 +1,329 @@
+{
+  "source_sha256": {
+    "paper\\analysis\\results_2026-10-08\\dt_contact_0p32\\b_02.json": "75f5c12e5c559bcb7d7bafa2f507fc9b03f58c2e6b8e21af0efb865bd3bf8638",
+    "paper\\analysis\\results_2026-10-08\\dt_contact_0p32\\r3_b_01.json": "9e8a263b08a842f69b40cb33a79f2f07cc5fe75e6b7953186ad26594829d7784",
+    "paper\\analysis\\results_2026-10-08\\dt_contact_0p32\\c_dt5.json": "2dfeda5fc7c3ae652168c794c19c926b4c1022f01571fd3422843fbbae23a532",
+    "paper\\analysis\\results_2026-10-08\\dt_contact_0p32\\through_exit.audit.json": "146bf802996dddac84ff58d7492ecaf5427f049370d242b247eea2adffca8212",
+    "paper\\analysis\\results_2026-10-08\\dt_contact_0p32\\b.audit.json": "398b7917026f25096eaef96c00731cfd232b0ca4496ad33135684565bfc7bb0b",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\history\\accepted_history.csv": "fb1183a76cf933fb2d5f32b05759374d0afe0b67394ff5bfd55642ad579db469",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\history\\summary.json": "973d09379517b2afb7a2e9f691239c6d2049b1ffaefafbc11749ec4c0709551b",
+    "paper\\analysis\\results_2026-10-07\\faner_assumptions\\source_mean_n4_plan.json": "588c36d62d814510bb6a86782d06d2d76f28b888141a9de1b94486c2da29982a",
+    "paper\\analysis\\results_2026-10-06\\repairs\\dt_shared_complete_trial\\accepted_history.csv": "dda6aea58e87c3b5162e701ceea45275d0822a720fc4f4ac0bd582907705ef35",
+    "paper\\analysis\\results_2026-10-01\\dtdc_particle_destiny\\destiny_v3_exit105.json": "2b30f5ec955621f888052d3805effe9785666adf0258f50123e474408dcf88d9",
+    "paper\\analysis\\results_2026-10-06\\shared_model\\dt_feed_massfilm_gated_R1p5.json": "246ad911f4d6a201e7694d2ce4d3a2f4a2387da2e729e1ed7fe0af2f8d11bf0a",
+    "paper\\analysis\\harness\\experiment_core2_dt_feed.py": "d03c9cac2e63e37c7cae0cb9fa5ece482a38442e79ce67a225d89d47129ae305",
+    "paper\\analysis\\harness\\experiment_core2_dt_face.py": "1ba0e2bccaba94d9162b33ab17539339a37d204f9edc82b716881ede419185ff",
+    "paper\\analysis\\harness\\dtdc_particle_destiny_march.py": "a31db8ff37daf3613dcb6de809758b66369a157224372a77e8115c0d77a93768",
+    "paper\\01_particle_jfpe\\regen\\fig_particle_experiments.py": "cdf8ef451b25e7e81fcd9dbffcc863cf62617b8925ffdc1cf7525a7ead66954e",
+    "paper\\analysis\\datasets\\faner2019_v2\\curves.csv": "1445dce1a36b98c1b2295988b08d9bb509fde85472f464c140cedc9b278bf3ef",
+    "paper\\analysis\\datasets\\faner2019_v2\\adjudication_per_point.csv": "dc381c7b81e3c251f92d3e95405019ad114f0e34919b873cdf85f39bffcfa9d8"
+  },
+  "dt_case": "k0p32",
+  "dt_extra_contact_parameters": {
+    "shell_mobility_factor": 1000,
+    "K_mol_m2_s": 0.32
+  },
+  "outlet_context": {
+    "hexane_ppm_wet_basis": [
+      100,
+      500
+    ],
+    "moisture_percent_wet_basis": [
+      16,
+      22
+    ],
+    "temperature_c": [
+      105,
+      110
+    ]
+  },
+  "outlet_ranges_are_transient_targets": false,
+  "outlet_reference_position_min": 30.0,
+  "dt_curves_shown": "proposed particle model including liquid-water imbibition",
+  "dt_prescribed_bath": {
+    "archived_feed_boundaries_checked": 697,
+    "maximum_temperature_difference_k": 0.0,
+    "maximum_hexane_mole_fraction_difference": 0.0,
+    "pd_temperature_k": 345.15,
+    "pd_hexane_mole_fraction": 0.6644429974143522,
+    "post_pd_interpolation": "piecewise linear through original bath knots",
+    "water_mole_fraction": "1 - hexane mole fraction (binary bath)",
+    "history": [
+      {
+        "time_s": 0.0,
+        "temperature_k": 345.15,
+        "y_hexane": 0.6644429974143522,
+        "y_water": 0.3355570025856478
+      },
+      {
+        "time_s": 490.20224190324825,
+        "temperature_k": 345.15,
+        "y_hexane": 0.6644429974143522,
+        "y_water": 0.3355570025856478
+      },
+      {
+        "time_s": 490.20224190324825,
+        "temperature_k": 371.69699899715204,
+        "y_hexane": 0.3685402138197578,
+        "y_water": 0.6314597861802422
+      },
+      {
+        "time_s": 490.2363770847598,
+        "temperature_k": 371.78910792919504,
+        "y_hexane": 0.36851268343856175,
+        "y_water": 0.6314873165614383
+      },
+      {
+        "time_s": 490.3037708996878,
+        "temperature_k": 372.35939132876643,
+        "y_hexane": 0.35502347502067194,
+        "y_water": 0.644976524979328
+      },
+      {
+        "time_s": 490.3694486299545,
+        "temperature_k": 372.93414712766673,
+        "y_hexane": 0.3412172938474712,
+        "y_water": 0.6587827061525289
+      },
+      {
+        "time_s": 490.43348201674723,
+        "temperature_k": 373.5134179713107,
+        "y_hexane": 0.3270844321165127,
+        "y_water": 0.6729155678834873
+      },
+      {
+        "time_s": 490.49593842235436,
+        "temperature_k": 374.09724629117125,
+        "y_hexane": 0.3126149408670993,
+        "y_water": 0.6873850591329007
+      },
+      {
+        "time_s": 490.5568811815642,
+        "temperature_k": 374.6856742413038,
+        "y_hexane": 0.297798620953017,
+        "y_water": 0.702201379046983
+      },
+      {
+        "time_s": 490.6163699186277,
+        "temperature_k": 375.2787436305622,
+        "y_hexane": 0.2826250143075745,
+        "y_water": 0.7173749856924255
+      },
+      {
+        "time_s": 490.67446083376,
+        "temperature_k": 375.876495850306,
+        "y_hexane": 0.26708339549386045,
+        "y_water": 0.7329166045061395
+      },
+      {
+        "time_s": 490.7312069626342,
+        "temperature_k": 376.47897179739783,
+        "y_hexane": 0.25116276353976813,
+        "y_water": 0.7488372364602318
+      },
+      {
+        "time_s": 490.7866584118689,
+        "temperature_k": 377.0862117922857,
+        "y_hexane": 0.23485183406351648,
+        "y_water": 0.7651481659364835
+      },
+      {
+        "time_s": 490.8423503816957,
+        "temperature_k": 377.69825549196946,
+        "y_hexane": 0.21813903170120855,
+        "y_water": 0.7818609682987915
+      },
+      {
+        "time_s": 490.9003165785448,
+        "temperature_k": 378.3151414415084,
+        "y_hexane": 0.2010068104350692,
+        "y_water": 0.7989931895649308
+      },
+      {
+        "time_s": 490.96135457639235,
+        "temperature_k": 378.9369076758863,
+        "y_hexane": 0.18344269135857091,
+        "y_water": 0.8165573086414291
+      },
+      {
+        "time_s": 491.0260877859904,
+        "temperature_k": 379.5635913687988,
+        "y_hexane": 0.16543542461500024,
+        "y_water": 0.8345645753849997
+      },
+      {
+        "time_s": 491.0953180512414,
+        "temperature_k": 380.1952286417013,
+        "y_hexane": 0.14697371580593147,
+        "y_water": 0.8530262841940686
+      },
+      {
+        "time_s": 491.1701039658283,
+        "temperature_k": 380.8318544533462,
+        "y_hexane": 0.12804631098099414,
+        "y_water": 0.8719536890190058
+      },
+      {
+        "time_s": 491.2518872627505,
+        "temperature_k": 381.4735024855795,
+        "y_hexane": 0.10864212465077237,
+        "y_water": 0.8913578753492276
+      },
+      {
+        "time_s": 491.3427078765872,
+        "temperature_k": 382.12020502700204,
+        "y_hexane": 0.08875043975784266,
+        "y_water": 0.9112495602421573
+      },
+      {
+        "time_s": 491.4455950931598,
+        "temperature_k": 382.77199285781114,
+        "y_hexane": 0.0683612357083238,
+        "y_water": 0.9316387642916762
+      },
+      {
+        "time_s": 491.5978715661833,
+        "temperature_k": 383.42889514306614,
+        "y_hexane": 0.04746576270838059,
+        "y_water": 0.9525342372916195
+      },
+      {
+        "time_s": 495.6590016415431,
+        "temperature_k": 373.15,
+        "y_hexane": 0.05,
+        "y_water": 0.95
+      },
+      {
+        "time_s": 511.41648155009347,
+        "temperature_k": 373.21199453652224,
+        "y_hexane": 0.04950404370782181,
+        "y_water": 0.9504959562921782
+      },
+      {
+        "time_s": 542.543439915768,
+        "temperature_k": 373.33445709832955,
+        "y_hexane": 0.04852434321336342,
+        "y_water": 0.9514756567866366
+      },
+      {
+        "time_s": 588.2734277191516,
+        "temperature_k": 373.5143722507202,
+        "y_hexane": 0.047085021994237926,
+        "y_water": 0.9529149780057621
+      },
+      {
+        "time_s": 647.4804208913971,
+        "temperature_k": 373.7473098855383,
+        "y_hexane": 0.04522152091569345,
+        "y_water": 0.9547784790843066
+      },
+      {
+        "time_s": 718.7065467638588,
+        "temperature_k": 374.02753430513883,
+        "y_hexane": 0.042979725558889265,
+        "y_water": 0.9570202744411107
+      },
+      {
+        "time_s": 800.1979817315976,
+        "temperature_k": 374.3481454542997,
+        "y_hexane": 0.04041483636560213,
+        "y_water": 0.9595851636343978
+      },
+      {
+        "time_s": 889.948136211141,
+        "temperature_k": 374.70124882248126,
+        "y_hexane": 0.03759000942014994,
+        "y_water": 0.9624099905798501
+      },
+      {
+        "time_s": 985.747063535517,
+        "temperature_k": 375.07814983287585,
+        "y_hexane": 0.0345748013369929,
+        "y_water": 0.9654251986630071
+      },
+      {
+        "time_s": 1089.7890670856973,
+        "temperature_k": 375.4874815170268,
+        "y_hexane": 0.031300147863785016,
+        "y_water": 0.968699852136215
+      },
+      {
+        "time_s": 1199.6244021100447,
+        "temperature_k": 375.91960586229783,
+        "y_hexane": 0.027843153101617085,
+        "y_water": 0.9721568468983829
+      },
+      {
+        "time_s": 1308.1074818989537,
+        "temperature_k": 376.3464100398093,
+        "y_hexane": 0.02442871968152535,
+        "y_water": 0.9755712803184746
+      },
+      {
+        "time_s": 1404.5262981715016,
+        "temperature_k": 376.72574987470256,
+        "y_hexane": 0.02139400100237949,
+        "y_water": 0.9786059989976205
+      },
+      {
+        "time_s": 1486.928725757872,
+        "temperature_k": 377.04994513537713,
+        "y_hexane": 0.018800438916982676,
+        "y_water": 0.9811995610830173
+      },
+      {
+        "time_s": 1561.7485643172479,
+        "temperature_k": 377.34430827219086,
+        "y_hexane": 0.016445533822472998,
+        "y_water": 0.983554466177527
+      },
+      {
+        "time_s": 1627.14350111149,
+        "temperature_k": 377.6015910877801,
+        "y_hexane": 0.014387271297759206,
+        "y_water": 0.9856127287022408
+      },
+      {
+        "time_s": 1681.503295763372,
+        "temperature_k": 377.8154584253523,
+        "y_hexane": 0.012676332597181435,
+        "y_water": 0.9873236674028185
+      },
+      {
+        "time_s": 1723.4894297187495,
+        "temperature_k": 377.98064416127147,
+        "y_hexane": 0.011354846709827927,
+        "y_water": 0.9886451532901721
+      },
+      {
+        "time_s": 1752.0680650156512,
+        "temperature_k": 378.09308087449926,
+        "y_hexane": 0.010455353004005512,
+        "y_water": 0.9895446469959945
+      },
+      {
+        "time_s": 1766.5355008060146,
+        "temperature_k": 378.15,
+        "y_hexane": 0.010000000000000002,
+        "y_water": 0.99
+      }
+    ]
+  },
+  "dt_events_s": {
+    "pd_exit": 490.20224190324825,
+    "regime_a_to_b": 492.257073259448,
+    "regime_b_to_c": 503.56080973909803,
+    "computed_exit": 1766.5355008060146
+  },
+  "outlet_context_sources": {
+    "moisture": "Witte, printed p.97: 16-22% at DT exit",
+    "residual_and_temperature": "Kemper, printed pp.112-113: 100-500 ppm and 105-110 C; ppm mass basis not explicit"
+  },
+  "faner_clock_shift_s": 0,
+  "faner_size_ensemble_claimed": false,
+  "faner_radius_m": 0.000885,
+  "faner_radial_cells": 4,
+  "faner_radius_basis": "reported mean volume-equivalent diameter divided by two",
+  "faner_primary_bath_temperature_k": 393.15,
+  "faner_measured_vapour_trace_is_prescribed_in_primary": false
+}

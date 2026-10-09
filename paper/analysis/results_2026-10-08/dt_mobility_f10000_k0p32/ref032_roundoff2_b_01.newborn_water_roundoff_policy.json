@@ -1,0 +1,29 @@
+{
+  "owner_authority": "RULE 2: explicitly allow negligible numerical imprecision with unchanged physics",
+  "scope": "Requested0.05 s departure at first face497.0264046524753 s only",
+  "newborn_water_scaled_residual_ceiling": 1e-09,
+  "every_other_requested_residual_ceiling": 1e-10,
+  "native_component_energy_step_and_cumulative_tolerance": 1e-10,
+  "independent_component_energy_tolerance": 1e-10,
+  "auxiliary_only_starting_guess_tolerance": 2e-09,
+  "phase_conditioning_topology_and_per_trial_path_gates_changed": false,
+  "physical_equations_or_parameters_changed": false,
+  "public_native_control_constructor_changed": false,
+  "step_proof_budget_points": 12000000,
+  "step_proof_wall_s": 1800,
+  "per_trial_path_points": 1200,
+  "evidence": "Repeated Newton stagnation at2.27e-10 or5.58e-10; stable-form failure localized to newborn-water row",
+  "stable_liquid_gradient": {
+    "original_function_sha256": "daaa9e674a17cc7a8cab8826a2207cea35e8f48bb25ef5745e4c8b48e48b9946",
+    "rewritten_function_sha256": "dd2e620db68712288139f46b56ba0768546e7ffdcad6928549ace3c30313897a",
+    "only_liquid_gradient_AST_expression_changed": true,
+    "force": "(A1/A2)*(W_right-W_left)/(W_left*W_right)/distance",
+    "physical_law_changed": false
+  },
+  "source_sha256": {
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_f10000_ref032_roundoff2.py": "6fad6c4f3d824fa3ec014f03ba96c9072bbc4db3e9059e010daee686dd3c9a91",
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\run_b_admissible_reference_f10000_ref032.py": "eea993d31f59610f8cde15c3e642e17c0b04ec86bc47ad7a95ffdbb38221561c",
+    "paper\\analysis\\results_2026-10-08\\dt_mobility_f10000_k0p32\\ref032_stable_b_01.native_stage_debug.json": "e7a72f7a75e366bc55873f0cd29819d3783293cafd042320532357c829b232b9",
+    "scratchpad\\dt_contact_sensitivity_2026_10_08\\liquid_gradient_f10000_ref032.py": "63097b84e13c9883ab3afd43510ce60cc1ec372a7caa429dbef4a441926a6796"
+  }
+}

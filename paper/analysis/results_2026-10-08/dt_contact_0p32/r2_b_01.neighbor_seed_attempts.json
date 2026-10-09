@@ -1,0 +1,174 @@
+[
+  {
+    "before_time_s": 497.0262175037928,
+    "requested_dt_s": 0.05,
+    "reference_result_sha256": {
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v2.json": "63aef8a3f5edd508211eaa8e04c68112075ebea0416ea9ad97ce524faa382ae5",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v3.json": "7abf8d4652d4f8ca5701e5017fd69651dc7ff9d1773788a537e29c638036d66c",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v4.json": "dddd1be80dd860b21eed2feb562658413fa570e235892ce2b1e8e59142479cb4",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v5.json": "9e9d434ab58e35e2e3bc1d2c55555e903fcc1d987ccc39fdbd062f66b83eb106"
+    },
+    "candidate": {
+      "wet_temperatures_k": [
+        336.5841412002011
+      ],
+      "wet_retained_water_loadings": [
+        0.1240174216303167
+      ],
+      "dry_temperatures_k": [
+        337.2766802329654,
+        355.6539417968859
+      ],
+      "dry_y_hexane": [
+        0.8639647843916672,
+        0.6878412000151555
+      ],
+      "dry_total_stefan_fluxes_mol_m2_s": [
+        0.3647715859404151,
+        0.3647715859404151,
+        0.1267100827353048
+      ],
+      "front_z": 0.12202312464151834,
+      "interface_temperature_k": 337.13497522351304,
+      "physically_qualifying": false
+    },
+    "native_acceptance_changed": false,
+    "neighbor_material_or_time_imported": false,
+    "accepted": false,
+    "error": "face-departure solve rejected with exact rollback: departure Jacobian column has no phase-safe central probe",
+    "maximum_scaled_residual": Infinity,
+    "nonlinear_evaluations": 0,
+    "last_candidate": null,
+    "scaled_residuals": [],
+    "exact_rollback_identity": true
+  },
+  {
+    "before_time_s": 497.0262175037928,
+    "requested_dt_s": 0.0125,
+    "reference_result_sha256": {
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v2.json": "63aef8a3f5edd508211eaa8e04c68112075ebea0416ea9ad97ce524faa382ae5",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v3.json": "7abf8d4652d4f8ca5701e5017fd69651dc7ff9d1773788a537e29c638036d66c",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v4.json": "dddd1be80dd860b21eed2feb562658413fa570e235892ce2b1e8e59142479cb4",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v5.json": "9e9d434ab58e35e2e3bc1d2c55555e903fcc1d987ccc39fdbd062f66b83eb106"
+    },
+    "candidate": {
+      "wet_temperatures_k": [
+        336.5706147928121
+      ],
+      "wet_retained_water_loadings": [
+        0.12401757534671409
+      ],
+      "dry_temperatures_k": [
+        337.1701887210078,
+        355.5268337041692
+      ],
+      "dry_y_hexane": [
+        0.8644758359708614,
+        0.68939920284674
+      ],
+      "dry_total_stefan_fluxes_mol_m2_s": [
+        0.3647715859404151,
+        0.3647715859404151,
+        0.1267100827353048
+      ],
+      "front_z": 0.12425578116037958,
+      "interface_temperature_k": 337.13497522351304,
+      "physically_qualifying": false
+    },
+    "native_acceptance_changed": false,
+    "neighbor_material_or_time_imported": false,
+    "accepted": false,
+    "error": "face-departure solve rejected with exact rollback: inner-face departure residual rejected with exact rollback: native whole-path proof computational budget exhausted; no path admitted",
+    "maximum_scaled_residual": Infinity,
+    "nonlinear_evaluations": 0,
+    "last_candidate": null,
+    "scaled_residuals": [],
+    "exact_rollback_identity": true
+  },
+  {
+    "before_time_s": 497.0262175037928,
+    "requested_dt_s": 0.003125,
+    "reference_result_sha256": {
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v2.json": "63aef8a3f5edd508211eaa8e04c68112075ebea0416ea9ad97ce524faa382ae5",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v3.json": "7abf8d4652d4f8ca5701e5017fd69651dc7ff9d1773788a537e29c638036d66c",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v4.json": "dddd1be80dd860b21eed2feb562658413fa570e235892ce2b1e8e59142479cb4",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v5.json": "9e9d434ab58e35e2e3bc1d2c55555e903fcc1d987ccc39fdbd062f66b83eb106"
+    },
+    "candidate": {
+      "wet_temperatures_k": [
+        336.5672331909649
+      ],
+      "wet_retained_water_loadings": [
+        0.12401761377581344
+      ],
+      "dry_temperatures_k": [
+        337.14376546635685,
+        355.49505668099005
+      ],
+      "dry_y_hexane": [
+        0.8646026408754832,
+        0.689788703554636
+      ],
+      "dry_total_stefan_fluxes_mol_m2_s": [
+        0.3647715859404151,
+        0.3647715859404151,
+        0.1267100827353048
+      ],
+      "front_z": 0.1248139452900949,
+      "interface_temperature_k": 337.13497522351304,
+      "physically_qualifying": false
+    },
+    "native_acceptance_changed": false,
+    "neighbor_material_or_time_imported": false,
+    "accepted": false,
+    "error": "face-departure solve rejected with exact rollback: inner-face departure residual rejected with exact rollback: native whole-path proof computational budget exhausted; no path admitted",
+    "maximum_scaled_residual": Infinity,
+    "nonlinear_evaluations": 0,
+    "last_candidate": null,
+    "scaled_residuals": [],
+    "exact_rollback_identity": true
+  },
+  {
+    "before_time_s": 497.0262175037928,
+    "requested_dt_s": 0.00078125,
+    "reference_result_sha256": {
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v2.json": "63aef8a3f5edd508211eaa8e04c68112075ebea0416ea9ad97ce524faa382ae5",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v3.json": "7abf8d4652d4f8ca5701e5017fd69651dc7ff9d1773788a537e29c638036d66c",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v4.json": "dddd1be80dd860b21eed2feb562658413fa570e235892ce2b1e8e59142479cb4",
+      "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v5.json": "9e9d434ab58e35e2e3bc1d2c55555e903fcc1d987ccc39fdbd062f66b83eb106"
+    },
+    "candidate": {
+      "wet_temperatures_k": [
+        336.56638779050303
+      ],
+      "wet_retained_water_loadings": [
+        0.12401762338308828
+      ],
+      "dry_temperatures_k": [
+        337.1371719660511,
+        355.4871124251952
+      ],
+      "dry_y_hexane": [
+        0.8646342830099757,
+        0.68988607873161
+      ],
+      "dry_total_stefan_fluxes_mol_m2_s": [
+        0.3647715859404151,
+        0.3647715859404151,
+        0.1267100827353048
+      ],
+      "front_z": 0.12495348632252372,
+      "interface_temperature_k": 337.13497522351304,
+      "physically_qualifying": false
+    },
+    "native_acceptance_changed": false,
+    "neighbor_material_or_time_imported": false,
+    "accepted": false,
+    "error": "face-departure solve rejected with exact rollback: inner-face departure residual rejected with exact rollback: native whole-path proof computational budget exhausted; no path admitted",
+    "maximum_scaled_residual": Infinity,
+    "nonlinear_evaluations": 0,
+    "last_candidate": null,
+    "scaled_residuals": [],
+    "exact_rollback_identity": true
+  }
+]

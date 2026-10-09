@@ -1,0 +1,153 @@
+{
+  "finite_parameters": {
+    "K_contact_mol_m2_s": 0.1,
+    "shell_total_to_base_mobility_factor": 1000,
+    "radius_m": 0.0015,
+    "radial_cells": 2,
+    "coefficients_identified": false
+  },
+  "regime_b_endpoint": {
+    "time_s": 503.64087009357723,
+    "temperature_k": 366.7661323451526,
+    "particle_water_kg_kg_dry": 0.12128232114260046,
+    "external_water_kg_kg_dry": 0.10161944556680204,
+    "hexane_kg_kg_dry": 0.0016368947417586901
+  },
+  "baseline": {
+    "moisture_percent_wet_basis": 12.991587466168063,
+    "hexane_mg_kg_dry": 384.88417927988905,
+    "hexane_ppm_wet_basis": 334.7527734388325,
+    "temperature_c": 105.4109506046243
+  },
+  "dt10": {
+    "time_s": 1766.5355008060146,
+    "particle_water_kg_kg_dry": 0.21041401835164747,
+    "exterior_water_kg_kg_dry": 0.0,
+    "moisture_percent_wet_basis": 17.381254816876215,
+    "hexane_mg_kg_dry": 166.11851710958447,
+    "hexane_ppm_wet_basis": 137.22223919786148,
+    "temperature_c": 105.03292364049565,
+    "depletion_time_s": 735.3950160750431
+  },
+  "dt5": {
+    "time_s": 1766.5355008060146,
+    "particle_water_kg_kg_dry": 0.21073629155468127,
+    "exterior_water_kg_kg_dry": 0.0,
+    "moisture_percent_wet_basis": 17.40325561029387,
+    "hexane_mg_kg_dry": 165.25625705477756,
+    "hexane_ppm_wet_basis": 136.47373508888325,
+    "temperature_c": 105.03136775536348,
+    "depletion_time_s": 733.5746913380635
+  },
+  "refinement": {
+    "moisture_delta_percentage_points": 0.022000793417653597,
+    "particle_water_delta_percent": 0.1531614697340311,
+    "hexane_delta_percent": -0.5190631783921429,
+    "temperature_delta_k": -0.0015558851321770817,
+    "depletion_time_delta_s": -1.8203247369796145,
+    "regime_b_mesh_time_convergence_established": false
+  },
+  "audits": {
+    "b_complete.audit.json": {
+      "passed": true,
+      "regime_b_completed": true,
+      "declared_tolerance": 1e-10,
+      "maximum_normalized_W_H_U": [
+        6.3132183358668004e-12,
+        2.3173321552129797e-12,
+        2.547974522095821e-12
+      ],
+      "physical_error_bounds_per_kg_dry_W_H_U": [
+        9.379575745243394e-13,
+        4.674108883184649e-13,
+        2.8872310221518486e-06
+      ],
+      "accepted_steps": 71,
+      "result_sha256": "9e9d434ab58e35e2e3bc1d2c55555e903fcc1d987ccc39fdbd062f66b83eb106",
+      "checkpoint_sha256": "353be4f1739d2ff34528688956603cba285a30dfe20143e8e3afb008f072831a",
+      "linked_results": {
+        "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v2.json": "63aef8a3f5edd508211eaa8e04c68112075ebea0416ea9ad97ce524faa382ae5",
+        "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v3.json": "7abf8d4652d4f8ca5701e5017fd69651dc7ff9d1773788a537e29c638036d66c",
+        "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v4.json": "dddd1be80dd860b21eed2feb562658413fa570e235892ce2b1e8e59142479cb4",
+        "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v5.json": "9e9d434ab58e35e2e3bc1d2c55555e903fcc1d987ccc39fdbd062f66b83eb106"
+      }
+    },
+    "c_f1000_k0p1_dt10.audit.json": {
+      "passed": true,
+      "declared_reporting_tolerance": 1e-10,
+      "maximum_normalized_W_H_U": [
+        1.38560462223586e-11,
+        8.724213297460933e-11,
+        7.181352395447846e-12
+      ],
+      "physical_error_bounds_per_kg_dry_W_H_U": [
+        3.0885371825708744e-12,
+        1.4280618872595043e-13,
+        1.7810939369523746e-06
+      ],
+      "accepted_steps": 128,
+      "last_time_s": 1766.5355008060146,
+      "storage_from_native_primitives_not_archived_ledger_deltas": true,
+      "result_sha256": "4b1ef60035dd5b5fd421e7344def556b12203d90a84f70ce605ed3bb29bc0aa7",
+      "auditor_sha256": "d2bc296a778232947b64d8c2e777751af48ad271b5af7d2fe5435feb50983ee5"
+    },
+    "c_f1000_k0p1_dt5.audit.json": {
+      "passed": true,
+      "declared_reporting_tolerance": 1e-10,
+      "maximum_normalized_W_H_U": [
+        1.1145594977990606e-11,
+        9.051274949158967e-11,
+        5.4650467879723466e-12
+      ],
+      "physical_error_bounds_per_kg_dry_W_H_U": [
+        2.4843728116215498e-12,
+        1.4815984370490468e-13,
+        1.355421815170731e-06
+      ],
+      "accepted_steps": 253,
+      "last_time_s": 1766.5355008060146,
+      "storage_from_native_primitives_not_archived_ledger_deltas": true,
+      "result_sha256": "a1473518b979fc5e44125e5c0dfd2d2407a96aaad278f3031827a41314e53fa2",
+      "auditor_sha256": "d2bc296a778232947b64d8c2e777751af48ad271b5af7d2fe5435feb50983ee5"
+    },
+    "b_through_exit_dt5.audit.json": {
+      "passed": true,
+      "regime_b_completed": true,
+      "bath_exit_reached": true,
+      "dry_result_sha256": "a1473518b979fc5e44125e5c0dfd2d2407a96aaad278f3031827a41314e53fa2",
+      "auditor_sha256": "de93b424c953529071b26abb41c85ebdad76a3e5b5accff0928cb8539a1dff7e",
+      "declared_tolerance": 1e-10,
+      "maximum_normalized_W_H_U": [
+        2.3035070595988536e-11,
+        3.0518481235920294e-12,
+        3.744131055899598e-12
+      ],
+      "physical_error_bounds_per_kg_dry_W_H_U": [
+        3.4223303861458894e-12,
+        6.155643416297773e-13,
+        4.24265283732258e-06
+      ],
+      "accepted_steps": 324,
+      "result_sha256": "9e9d434ab58e35e2e3bc1d2c55555e903fcc1d987ccc39fdbd062f66b83eb106",
+      "checkpoint_sha256": "353be4f1739d2ff34528688956603cba285a30dfe20143e8e3afb008f072831a",
+      "linked_results": {
+        "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v2.json": "63aef8a3f5edd508211eaa8e04c68112075ebea0416ea9ad97ce524faa382ae5",
+        "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v3.json": "7abf8d4652d4f8ca5701e5017fd69651dc7ff9d1773788a537e29c638036d66c",
+        "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v4.json": "dddd1be80dd860b21eed2feb562658413fa570e235892ce2b1e8e59142479cb4",
+        "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v5.json": "9e9d434ab58e35e2e3bc1d2c55555e903fcc1d987ccc39fdbd062f66b83eb106"
+      }
+    }
+  },
+  "manuscript_changed": false,
+  "source_sha256": {
+    "paper\\analysis\\results_2026-10-06\\repairs\\dt_shared_complete_trial\\accepted_history.csv": "dda6aea58e87c3b5162e701ceea45275d0822a720fc4f4ac0bd582907705ef35",
+    "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v2.json": "63aef8a3f5edd508211eaa8e04c68112075ebea0416ea9ad97ce524faa382ae5",
+    "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v3.json": "7abf8d4652d4f8ca5701e5017fd69651dc7ff9d1773788a537e29c638036d66c",
+    "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v4.json": "dddd1be80dd860b21eed2feb562658413fa570e235892ce2b1e8e59142479cb4",
+    "paper\\analysis\\results_2026-10-07\\finite_wetting\\b_f1000_k0p1_dt0p2_v5.json": "9e9d434ab58e35e2e3bc1d2c55555e903fcc1d987ccc39fdbd062f66b83eb106",
+    "paper\\analysis\\results_2026-10-07\\finite_wetting\\c_f1000_k0p1_dt10.json": "4b1ef60035dd5b5fd421e7344def556b12203d90a84f70ce605ed3bb29bc0aa7",
+    "paper\\analysis\\results_2026-10-07\\finite_wetting\\c_f1000_k0p1_dt5.json": "a1473518b979fc5e44125e5c0dfd2d2407a96aaad278f3031827a41314e53fa2",
+    "paper\\analysis\\results_2026-10-07\\finite_wetting\\finite_wetting_comparison.pdf": "7efa6b6c9080fb8342ea0cc2ef15ab57d43ed894ab45a834e9ff5c8206c26a9b",
+    "paper\\analysis\\results_2026-10-07\\finite_wetting\\finite_contact_equations.tex": "42b7193b9d4d08f317d387f170489dc3e00085cb1d9ad6069e4573b42174c022"
+  }
+}

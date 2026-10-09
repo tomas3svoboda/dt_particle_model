@@ -1,0 +1,65 @@
+[
+  {
+    "K_l_mol_m2_s": 0.1,
+    "time_s": 1766.5355008060146,
+    "particle_water_kg_kg_dry": 0.21073629155468127,
+    "moisture_percent_wet_basis": 17.40325561029387,
+    "hexane_mg_kg_dry": 165.25625705477756,
+    "hexane_ppm_wet_basis": 136.47373508888325,
+    "mean_temperature_c": 105.03136775536348,
+    "external_water_kg_kg_dry": 0.0,
+    "first_film_depletion_time_s": 733.5746913380635,
+    "maximum_external_water_kg_kg_dry": 0.10161944556680204,
+    "regime_B_end_time_s": 503.64087009357723,
+    "maximum_normalized_W_H_U": [
+      2.3035070595988536e-11,
+      3.0518481235920294e-12,
+      3.744131055899598e-12
+    ],
+    "result": "paper/analysis/results_2026-10-07/finite_wetting/c_f1000_k0p1_dt5.json",
+    "result_sha256": "a1473518b979fc5e44125e5c0dfd2d2407a96aaad278f3031827a41314e53fa2",
+    "full_audit": "paper/analysis/results_2026-10-07/finite_wetting/b_through_exit_dt5.audit.json"
+  },
+  {
+    "K_l_mol_m2_s": 0.2,
+    "time_s": 1766.5355008060146,
+    "particle_water_kg_kg_dry": 0.2186472582499705,
+    "moisture_percent_wet_basis": 17.939668147573773,
+    "hexane_mg_kg_dry": 144.84231372450438,
+    "hexane_ppm_wet_basis": 118.84087011846759,
+    "mean_temperature_c": 104.99340838439389,
+    "external_water_kg_kg_dry": 0.0,
+    "first_film_depletion_time_s": 662.4071696343968,
+    "maximum_external_water_kg_kg_dry": 0.09372025875041685,
+    "regime_B_end_time_s": 503.54310788484054,
+    "maximum_normalized_W_H_U": [
+      4.153923200107251e-11,
+      1.4500464130310247e-12,
+      4.949989840114802e-12
+    ],
+    "result": "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_r3_c_dt5.json",
+    "result_sha256": "0c83777de68554e971a9f354c182dfc3f37e349e54d833270428f691c5f430d7",
+    "full_audit": "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_r3_through_exit.audit.json"
+  },
+  {
+    "K_l_mol_m2_s": 0.32,
+    "time_s": 1766.5355008060146,
+    "particle_water_kg_kg_dry": 0.22255402379242303,
+    "moisture_percent_wet_basis": 18.202010281879744,
+    "hexane_mg_kg_dry": 135.23055866053903,
+    "hexane_ppm_wet_basis": 110.60092184445489,
+    "mean_temperature_c": 104.97536950952087,
+    "external_water_kg_kg_dry": 0.0,
+    "first_film_depletion_time_s": 624.5487448383641,
+    "maximum_external_water_kg_kg_dry": 0.08634573561703011,
+    "regime_B_end_time_s": 503.56080973909803,
+    "maximum_normalized_W_H_U": [
+      4.238540076562291e-11,
+      8.613159474662805e-13,
+      6.1624074051379644e-12
+    ],
+    "result": "paper/analysis/results_2026-10-08/dt_contact_0p32/c_dt5.json",
+    "result_sha256": "2dfeda5fc7c3ae652168c794c19c926b4c1022f01571fd3422843fbbae23a532",
+    "full_audit": "paper/analysis/results_2026-10-08/dt_contact_0p32/through_exit.audit.json"
+  }
+]

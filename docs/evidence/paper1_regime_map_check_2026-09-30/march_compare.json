@@ -1,0 +1,234 @@
+{
+ "inputs": {
+  "T_g": 409.15,
+  "y_h": 0.85,
+  "P": 101325.0,
+  "k": 0.24,
+  "D_eff_map": 4e-10,
+  "D_b_nominal": 4e-10,
+  "h_film1_W_m2K": 103.73636577329322,
+  "item07_heat_group_kg_m_s": 5.1278856273375934e-05,
+  "item07_fick_group_kg_m_s": 4.87530124472916e-09,
+  "item07_Lambda": 10518.089795746488,
+  "item07_T_eq_K": 336.7789926584653,
+  "fick_group_pressure_feasible_kg_m_s": 1.5400391226971237e-10
+ },
+ "R5_three_strides": {
+  "s/R~0.85": {
+   "t_mid_s": 0.6375,
+   "s_over_R": 0.8478904024251663,
+   "shell_um": 134.6169938537278,
+   "hexane_flux_out_kg_m2_s": 0.01063704557776373,
+   "hexane_flux_from_inventory_kg_m2_s": 0.010637045577764138,
+   "water_flux_out_kg_m2_s": 0.00043060869772285006,
+   "T_outer_dry_cell_K": 340.47962916008265,
+   "T_interface_K": 337.7170786205579,
+   "y_h_outer_dry_cell": 0.8395640531443624,
+   "y_h_interface_ideal": 0.8762439993257353,
+   "q_film_W_m2": 7123.614707237352,
+   "q_hexane_latent_W_m2": 3595.579736068753,
+   "q_water_desorption_W_m2_at_2.45MJ_kg": 1054.9913094209826,
+   "dE_dt_W_m2": 4403.764372139648,
+   "q_shell_conduction_to_front_W_m2": 4176.007836673516,
+   "q_series_film_plus_shell_W_m2": 6934.326158992421,
+   "film_share_of_heat_resistance": 0.9357822950763027,
+   "fick_capacity_map_kg_m2_s": 3.0707275626946054e-05,
+   "fick_capacity_map_pressure_feasible_kg_m2_s": 9.699996665450755e-07,
+   "fick_capacity_on_march_states_kg_m2_s": 3.407363230261778e-07,
+   "heat_capacity_map_kg_m2_s": 0.32298188242695614,
+   "binary_interdiffusion_bound_kg_m2_s": 2.8619753550038997e-07,
+   "ratio_flux_over_fick_map": 346.4014752396197,
+   "ratio_flux_over_fick_map_pressure_feasible": 10966.030138598435,
+   "ratio_flux_over_fick_on_march_states": 31217.821109569573,
+   "ratio_flux_over_interdiffusion_bound": 37166.79655946666,
+   "ratio_latent_over_film_heat": 0.5047409052620104,
+   "ratio_latent_over_series_heat": 0.5185189813152951,
+   "ratio_flux_over_map_heat_capacity": 0.03293387696496985,
+   "shell_peclet_N_L_over_cDb": 1379.7434154303405
+  },
+  "s/R~0.55": {
+   "t_mid_s": 3.862500000000004,
+   "s_over_R": 0.5459334955628685,
+   "shell_um": 401.8488564268614,
+   "hexane_flux_out_kg_m2_s": 0.006899574637263331,
+   "hexane_flux_from_inventory_kg_m2_s": 0.006899574637263306,
+   "water_flux_out_kg_m2_s": 0.00042011484009895077,
+   "T_outer_dry_cell_K": 347.75941053594045,
+   "T_interface_K": 337.7099323489523,
+   "y_h_outer_dry_cell": 0.7851640515879391,
+   "y_h_interface_ideal": 0.8760416958283532,
+   "q_film_W_m2": 6368.43664368176,
+   "q_hexane_latent_W_m2": 2332.2602862854214,
+   "q_water_desorption_W_m2_at_2.45MJ_kg": 1029.2813582424294,
+   "dE_dt_W_m2": 4132.065344038005,
+   "q_shell_conduction_to_front_W_m2": 3276.6628551770145,
+   "q_series_film_plus_shell_W_m2": 5622.188884618919,
+   "film_share_of_heat_resistance": 0.7586344247313951,
+   "fick_capacity_map_kg_m2_s": 6.623361514881947e-06,
+   "fick_capacity_map_pressure_feasible_kg_m2_s": 2.0922267865421602e-07,
+   "fick_capacity_on_march_states_kg_m2_s": 1.9191501147680964e-07,
+   "heat_capacity_map_kg_m2_s": 0.0696651111632198,
+   "binary_interdiffusion_bound_kg_m2_s": 1.5132095540861428e-07,
+   "ratio_flux_over_fick_map": 1041.7028606638435,
+   "ratio_flux_over_fick_map_pressure_feasible": 32977.18336101753,
+   "ratio_flux_over_fick_on_march_states": 35951.19831518261,
+   "ratio_flux_over_interdiffusion_bound": 45595.63226806429,
+   "ratio_latent_over_film_heat": 0.3662217930046142,
+   "ratio_latent_over_series_heat": 0.41483136446482194,
+   "ratio_flux_over_map_heat_capacity": 0.09903916784253998,
+   "shell_peclet_N_L_over_cDb": 2921.0252406466866
+  },
+  "s/R~0.3": {
+   "t_mid_s": 5.812500000000007,
+   "s_over_R": 0.3034137153616382,
+   "shell_um": 616.4788619049502,
+   "hexane_flux_out_kg_m2_s": 0.003316378925695945,
+   "hexane_flux_from_inventory_kg_m2_s": 0.0033163789256822184,
+   "water_flux_out_kg_m2_s": 0.0002973796117948963,
+   "T_outer_dry_cell_K": 353.65176087168936,
+   "T_interface_K": 337.7101261497181,
+   "y_h_outer_dry_cell": 0.7294559600031048,
+   "y_h_interface_ideal": 0.8760471816412778,
+   "q_film_W_m2": 5757.185633988123,
+   "q_hexane_latent_W_m2": 1121.0336849720854,
+   "q_water_desorption_W_m2_at_2.45MJ_kg": 728.5800488974959,
+   "dE_dt_W_m2": 4350.296722480422,
+   "q_shell_conduction_to_front_W_m2": 1883.0468009826373,
+   "q_series_film_plus_shell_W_m2": 3945.7131262197418,
+   "film_share_of_heat_resistance": 0.5324193102385351,
+   "fick_capacity_map_kg_m2_s": 2.39948740432006e-06,
+   "fick_capacity_map_pressure_feasible_kg_m2_s": 7.579643372944333e-08,
+   "fick_capacity_on_march_states_kg_m2_s": 1.0987408113789094e-07,
+   "heat_capacity_map_kg_m2_s": 0.02523802398240105,
+   "binary_interdiffusion_bound_kg_m2_s": 8.767435794859347e-08,
+   "ratio_flux_over_fick_map": 1382.1197476282246,
+   "ratio_flux_over_fick_map_pressure_feasible": 43753.75941213562,
+   "ratio_flux_over_fick_on_march_states": 30183.450831628987,
+   "ratio_flux_over_interdiffusion_bound": 37826.09879664535,
+   "ratio_latent_over_film_heat": 0.19471904438063461,
+   "ratio_latent_over_series_heat": 0.2841143410864517,
+   "ratio_flux_over_map_heat_capacity": 0.13140406428048876,
+   "shell_peclet_N_L_over_cDb": 2404.0665908755554
+  }
+ },
+ "R5_all_non_face_strides": {
+  "n": 75,
+  "ratio_flux_over_fick_map": [
+   260.7400327678003,
+   1831.0572985728527
+  ],
+  "ratio_flux_over_fick_map_pressure_feasible": [
+   8254.246191339002,
+   57965.773695856224
+  ],
+  "ratio_flux_over_fick_on_march_states": [
+   21062.531316308978,
+   38045.35753491091
+  ],
+  "ratio_flux_over_interdiffusion_bound": [
+   25329.50570717393,
+   48040.72494250298
+  ],
+  "ratio_latent_over_film_heat": [
+   0.06866476003017018,
+   0.6730908787375253
+  ],
+  "ratio_latent_over_series_heat": [
+   0.22408756022578322,
+   0.655938692643495
+  ],
+  "ratio_flux_over_map_heat_capacity": [
+   0.024789675485870397,
+   0.1740864866273847
+  ],
+  "film_share_of_heat_resistance": [
+   0.2193178502540356,
+   0.9573277630804378
+  ],
+  "shell_peclet_N_L_over_cDb": [
+   1088.0743351799933,
+   2927.0868933431248
+  ],
+  "T_interface_K": [
+   337.35533197217813,
+   337.7777895732413
+  ],
+  "T_outer_dry_cell_K": [
+   340.17557206739735,
+   357.70824917656194
+  ],
+  "y_h_outer_dry_cell": [
+   0.6837137981546977,
+   0.8414360746179397
+  ],
+  "s_over_R": [
+   0.09703606842625331,
+   0.8956354569563352
+  ]
+ },
+ "R9_all_non_face_strides": {
+  "n": 32,
+  "ratio_flux_over_fick_map": [
+   160.91295077860696,
+   406.30500187087205
+  ],
+  "ratio_flux_over_fick_map_pressure_feasible": [
+   5094.020649618721,
+   12862.395845448389
+  ],
+  "ratio_flux_over_fick_on_march_states": [
+   15829.968025309166,
+   34454.362790122774
+  ],
+  "ratio_flux_over_interdiffusion_bound": [
+   18851.208725411467,
+   41593.040656298246
+  ],
+  "ratio_latent_over_film_heat": [
+   0.4757045262502045,
+   0.8819831983641206
+  ],
+  "ratio_latent_over_series_heat": [
+   0.4844974426469436,
+   0.8478363119822488
+  ],
+  "ratio_flux_over_map_heat_capacity": [
+   0.015298685778826504,
+   0.0386291626864777
+  ],
+  "film_share_of_heat_resistance": [
+   0.9284337818513887,
+   0.9729697829324194
+  ],
+  "shell_peclet_N_L_over_cDb": [
+   658.6692720096352,
+   1458.9798300871132
+  ],
+  "T_interface_K": [
+   337.3546442831182,
+   337.80295326203003
+  ],
+  "T_outer_dry_cell_K": [
+   339.2739904173425,
+   341.99978531957277
+  ],
+  "y_h_outer_dry_cell": [
+   0.8276286695232427,
+   0.8476295822882591
+  ],
+  "s_over_R": [
+   0.7566050504226391,
+   0.8961050800690692
+  ]
+ },
+ "R9_over_R5_loading_lost_t>=0.45": [
+  0.6525984223690261,
+  0.6977145907280035
+ ],
+ "R9_over_R5_hexane_flux_equal_t_min_max": [
+  0.5940708862821207,
+  0.8228917691558288
+ ],
+ "R9_over_R5_hexane_flux_equal_t_n": 28,
+ "film_ratio": 0.6264
+}

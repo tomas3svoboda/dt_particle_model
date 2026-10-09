@@ -1,0 +1,18 @@
+{
+    "executable":  "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "arguments":  [
+                      "paper/analysis/harness/audit_finite_wetting_b.py",
+                      "--result",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_r3_b_01.json",
+                      "--parts",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_s2_b_02.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_s2_b_03.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_s2_b_04.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_s2_b_05.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_s2_b_06.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_r3_b_01.json",
+                      "--out",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p20_r3_b.audit.json"
+                  ],
+    "utc":  "2026-10-08T18:12:22.1091880Z"
+}

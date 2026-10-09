@@ -1,0 +1,50 @@
+[
+  {
+    "before_time_s": 497.01734246955414,
+    "requested_dt_s": 0.05,
+    "accepted": false,
+    "error": "face-tangent positive-sweep continuation rejected with exact rollback: actual-path newborn tangent predictor left its open storage/internal-face domain; do not clip",
+    "before_state_identity": 1977655906992,
+    "rollback_identity_if_exposed": true
+  },
+  {
+    "before_time_s": 497.01734246955414,
+    "requested_dt_s": 0.0125,
+    "accepted": false,
+    "error": "face-tangent positive-sweep continuation rejected with exact rollback: actual-path newborn tangent predictor left its open storage/internal-face domain; do not clip",
+    "before_state_identity": 1977655906992,
+    "rollback_identity_if_exposed": true
+  },
+  {
+    "before_time_s": 497.01734246955414,
+    "requested_dt_s": 0.003125,
+    "accepted": false,
+    "error": "face-tangent positive-sweep continuation rejected with exact rollback: actual-path newborn tangent predictor left its open storage/internal-face domain; do not clip",
+    "before_state_identity": 1977655906992,
+    "rollback_identity_if_exposed": true
+  },
+  {
+    "before_time_s": 497.01734246955414,
+    "requested_dt_s": 0.00078125,
+    "accepted": false,
+    "error": "face-tangent positive-sweep continuation rejected with exact rollback: actual-path newborn tangent predictor left its open storage/internal-face domain; do not clip",
+    "before_state_identity": 1977655906992,
+    "rollback_identity_if_exposed": true
+  },
+  {
+    "before_time_s": 497.01734246955414,
+    "requested_dt_s": 0.0001953125,
+    "accepted": false,
+    "error": "face-tangent positive-sweep continuation rejected with exact rollback: actual-path newborn tangent predictor left its open storage/internal-face domain; do not clip",
+    "before_state_identity": 1977655906992,
+    "rollback_identity_if_exposed": true
+  },
+  {
+    "before_time_s": 497.01734246955414,
+    "requested_dt_s": 4.8828125e-05,
+    "accepted": false,
+    "error": "face-tangent positive-sweep continuation rejected with exact rollback: actual-path newborn tangent predictor left its open storage/internal-face domain; do not clip",
+    "before_state_identity": 1977655906992,
+    "rollback_identity_if_exposed": true
+  }
+]

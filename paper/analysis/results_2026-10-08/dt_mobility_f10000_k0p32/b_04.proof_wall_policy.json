@@ -1,0 +1,10 @@
+{
+  "K_l_mol_m2_s": 0.32,
+  "mobility_factor": 10000.0,
+  "step_proof_wall_s": 600,
+  "proof_point_budget": 3000000,
+  "seed_only_tangent_bound": 3e-10,
+  "component_energy_tolerance": 1e-10,
+  "native_physical_equations_changed": false,
+  "owner_authority": "RULE 2; same documented numerical controls as the current 0.32 baseline"
+}

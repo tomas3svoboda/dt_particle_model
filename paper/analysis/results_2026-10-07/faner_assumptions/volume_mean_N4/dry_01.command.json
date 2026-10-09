@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\paper\\analysis\\harness\\experiment_particle_dry.py",
+    "--out",
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\dry_01.json",
+    "--resume",
+    "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\paper\\analysis\\results_2026-10-07\\faner_assumptions\\volume_mean_N4\\event_24.accepted.pkl",
+    "--dt",
+    "2.5",
+    "--steps",
+    "150",
+    "--wall-budget",
+    "180"
+  ]
+}

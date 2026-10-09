@@ -1,0 +1,30 @@
+{
+    "executable":  "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "arguments":  [
+                      "paper/analysis/harness/audit_finite_wetting_b.py",
+                      "--result",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r10_b_01.json",
+                      "--parts",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_s2_b_02.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_s2_b_03.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_s2_b_04.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_s2_b_05.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_s2_b_06.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r3_b_01.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r3_b_02.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r3_b_03.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r3_b_04.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r3_b_05.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r3_b_06.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r3_b_07.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r3_b_08.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r3_b_09.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r3_b_10.json",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r10_b_01.json",
+                      "--dry",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r10_c_dt5.json",
+                      "--out",
+                      "paper/analysis/results_2026-10-08/dt_contact_sensitivity/k0p05_r10_through_exit.audit.json"
+                  ],
+    "utc":  "2026-10-08T19:10:47.3585163Z"
+}

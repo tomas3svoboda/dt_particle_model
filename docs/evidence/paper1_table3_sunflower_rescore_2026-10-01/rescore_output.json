@@ -1,0 +1,209 @@
+{
+ "claim_flags": {
+  "fitted": false,
+  "physically_qualifying": false,
+  "plant_predictive": false
+ },
+ "impl": "copy",
+ "record": "C:\\Users\\z004d8nt\\PycharmProjects\\DTDC_Simulator\\paper\\analysis\\results_2026-09-19\\item_37_faner2019_v2_rescoring\\runs\\sun2019_aris_d1.81mm_faner2008_sunflower_136C_n060_t1_steps.csv",
+ "results": [
+  {
+   "committed_constants": {
+    "declared_sphere_radius_m": 0.0007215,
+    "last_loading_target_kg_kg": 0.1041772,
+    "sources": {
+     "t_c": "paper/analysis/results_2026-09-19/item_31_species_own_geometry/runs/ladder_faner2008_sunflower_136C_n060_t1.json",
+     "x0, x_c, target": "paper/analysis/results_2026-09-19/item_05_faner_comparison/rerun_2026-09-22_rig/rerun_faner.json"
+    },
+    "t_c_s": 51.570405232184214,
+    "x0_kg_kg": 0.7350938,
+    "x_c_kg_kg": 0.1993532212219423
+   },
+   "condition": "faner2008_sunflower_136C",
+   "drying_time": {
+    "ratio_sim_over_measured": 1.1100675965934097,
+    "rule": "first full-step interval with prev > target >= cur, linear in time (march_tail's hit rule); ratio over the last v2 sample time",
+    "sim_time_to_target_s": 333.15708004540403,
+    "target_last_measured_loading_kg_kg": 0.1041772,
+    "v2_last_sample": {
+     "loading_kg_kg": 0.1041772,
+     "t_s": 300.1232367
+    }
+   },
+   "headline_v2_rule": {
+    "condition": "faner2008_sunflower_136C",
+    "covers_window": true,
+    "drying_time_ratio": 1.1100675965934097,
+    "in_band_as_printed": 13,
+    "in_band_full_step": 13,
+    "junction_kg_kg": 1.0269562977782698e-15,
+    "mean_signed_over_span_as_printed": 0.10715691040624646,
+    "radius_equals_declared_sphere": null,
+    "rms_over_span_as_printed": 0.11584103586403083,
+    "rms_over_span_full_step": 0.11377809733695873,
+    "window_points": 14
+   },
+   "mapping": {
+    "basis": "hexane",
+    "format": "dryshell",
+    "march_end_s": 2451.5704052321844,
+    "march_initial_loading_kg_kg": 0.19935322122194332,
+    "march_initial_minus_x_c_kg_kg": 1.0269562977782698e-15,
+    "t_c_overridden": true,
+    "t_c_s": 51.570405232184214,
+    "time_origin": "crossing"
+   },
+   "series": "X_girasol",
+   "v1": {
+    "as_printed_decimated": {
+     "last_scored_sample_s": 300.1232367,
+     "max_absolute_residual_kg_kg": 0.013569666595351304,
+     "mean_signed_residual_kg_kg": 0.006542894136489488,
+     "mean_signed_residual_normalized": 0.0746322978004559,
+     "points_inside_reading_band": 14,
+     "rms_normalized_by_window_span": 0.09106158238364007,
+     "rms_residual_kg_kg": 0.007983223229041912,
+     "window_loading_span_kg_kg": 0.08766840000000001,
+     "window_points": 15
+    },
+    "covers_window": true,
+    "full_step": {
+     "last_scored_sample_s": 300.1232367,
+     "max_absolute_residual_kg_kg": 0.013461024911166186,
+     "mean_signed_residual_kg_kg": 0.006224669808395365,
+     "mean_signed_residual_normalized": 0.07100243426816691,
+     "points_inside_reading_band": 14,
+     "rms_normalized_by_window_span": 0.09084532626957031,
+     "rms_residual_kg_kg": 0.0079642644015312,
+     "window_loading_span_kg_kg": 0.08766840000000001,
+     "window_points": 15
+    },
+    "window_start_s": 57.6990581403738
+   },
+   "v2_p15": {
+    "as_printed_decimated": {
+     "last_scored_sample_s": 300.1232367,
+     "max_absolute_residual_kg_kg": 0.014913110098676324,
+     "mean_signed_residual_kg_kg": 0.005981267469822821,
+     "mean_signed_residual_normalized": 0.06224469960104004,
+     "points_inside_reading_band": 13,
+     "rms_normalized_by_window_span": 0.09057436617519654,
+     "rms_residual_kg_kg": 0.008703544453999927,
+     "window_loading_span_kg_kg": 0.0960928,
+     "window_points": 15
+    },
+    "covers_window": true,
+    "full_step": {
+     "last_scored_sample_s": 300.1232367,
+     "max_absolute_residual_kg_kg": 0.016780688313844577,
+     "mean_signed_residual_kg_kg": 0.005663043141728699,
+     "mean_signed_residual_normalized": 0.05893306409771282,
+     "points_inside_reading_band": 13,
+     "rms_normalized_by_window_span": 0.09164144809397147,
+     "rms_residual_kg_kg": 0.008806083343404382,
+     "window_loading_span_kg_kg": 0.0960928,
+     "window_points": 15
+    },
+    "window_start_s": 60.0408676
+   },
+   "v2_rule": {
+    "as_printed_decimated": {
+     "last_scored_sample_s": 300.1232367,
+     "max_absolute_residual_kg_kg": 0.013569666595351304,
+     "mean_signed_residual_kg_kg": 0.007473723010429902,
+     "mean_signed_residual_normalized": 0.10715691040624646,
+     "points_inside_reading_band": 13,
+     "rms_normalized_by_window_span": 0.11584103586403083,
+     "rms_residual_kg_kg": 0.008079402550958348,
+     "window_loading_span_kg_kg": 0.06974559999999999,
+     "window_points": 14
+    },
+    "covers_window": true,
+    "full_step": {
+     "last_scored_sample_s": 300.1232367,
+     "max_absolute_residual_kg_kg": 0.013461024911166186,
+     "mean_signed_residual_kg_kg": 0.007266166817126789,
+     "mean_signed_residual_normalized": 0.10418100664596462,
+     "points_inside_reading_band": 13,
+     "rms_normalized_by_window_span": 0.11377809733695873,
+     "rms_residual_kg_kg": 0.007935521665624588,
+     "window_loading_span_kg_kg": 0.06974559999999999,
+     "window_points": 14
+    },
+    "window_start_s": 60.144071395431766
+   }
+  }
+ ],
+ "scoring_code": [
+  {
+   "identical": true,
+   "name": "interp",
+   "source": "paper/analysis/results_2026-09-19/item_05_faner_comparison/rerun_2026-09-22_rig/run_rerun_faner.py"
+  },
+  {
+   "identical": true,
+   "name": "crossing",
+   "source": "paper/analysis/results_2026-09-19/item_05_faner_comparison/rerun_2026-09-22_rig/run_rerun_faner.py"
+  },
+  {
+   "identical": true,
+   "name": "FANER_DECLARED_CRITICAL",
+   "source": "paper/analysis/results_2026-09-19/item_05_faner_comparison/rerun_2026-09-22_rig/run_rerun_faner.py"
+  },
+  {
+   "identical": true,
+   "name": "score",
+   "source": "paper/analysis/results_2026-09-19/item_24_faner_refinement_and_band/run_item24.py"
+  },
+  {
+   "identical": true,
+   "name": "read_curves",
+   "source": "paper/analysis/results_2026-09-19/item_35_faner2008_v2_rescoring/v2common.py"
+  },
+  {
+   "identical": true,
+   "name": "measured_points",
+   "source": "paper/analysis/results_2026-09-19/item_35_faner2008_v2_rescoring/v2common.py"
+  },
+  {
+   "identical": true,
+   "name": "crossing_time",
+   "source": "paper/analysis/results_2026-09-19/item_35_faner2008_v2_rescoring/v2common.py"
+  },
+  {
+   "identical": true,
+   "name": "window_start",
+   "source": "paper/analysis/results_2026-09-19/item_35_faner2008_v2_rescoring/v2common.py"
+  },
+  {
+   "identical": true,
+   "name": "score",
+   "source": "paper/analysis/results_2026-09-19/item_35_faner2008_v2_rescoring/v2common.py"
+  },
+  {
+   "identical": true,
+   "name": "read_steps",
+   "source": "paper/analysis/results_2026-09-19/item_35_faner2008_v2_rescoring/v2common.py"
+  },
+  {
+   "identical": true,
+   "name": "trajectories_from_steps",
+   "source": "paper/analysis/results_2026-09-19/item_35_faner2008_v2_rescoring/v2common.py"
+  },
+  {
+   "identical": true,
+   "name": "THESIS",
+   "source": "paper/analysis/results_2026-09-19/item_35_faner2008_v2_rescoring/v2common.py"
+  },
+  {
+   "identical": true,
+   "name": "SERIES",
+   "source": "paper/analysis/results_2026-09-19/item_35_faner2008_v2_rescoring/v2common.py"
+  },
+  {
+   "identical": true,
+   "name": "VARIANTS",
+   "source": "paper/analysis/results_2026-09-19/item_35_faner2008_v2_rescoring/v2common.py"
+  }
+ ]
+}
