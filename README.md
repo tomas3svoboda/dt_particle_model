@@ -97,7 +97,9 @@ cross-document references; retain this layout and complete the build passes.
 
 Earlier constant-property sensitivity campaigns under the 2026-10-06 to
 2026-10-08 result folders are historical, as identified in the supplement.
-They are not the new nominal temperature-property/F100 calculation. In
+They are not the new nominal temperature-property/F100 calculation. To rerun
+those historical campaigns, check out `v1.0.0-submission`; the current root
+feed is the temperature-dependent-heat-capacity feed. In
 particular, factor 1000 and 111 ppm in historical records are not the current
 paper's nominal assumptions or prediction.
 

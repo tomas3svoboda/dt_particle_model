@@ -1132,7 +1132,8 @@
     "F100 wrappers use the public root import closure; the corrected constant-D restart guard changes metadata checking only.",
     "The native auditor normalizes stored Windows source-path separators before comparison, retaining its source-identity and tolerance checks.",
     "The numeric checker no longer reads an obsolete, unprinted 2026-10-06 DT comparison; current printed macros and their raw-record checks are retained.",
-    "The existing LaTeX packager removes full-line manuscript comments and prunes the bibliography to cited entries, removing annote/file fields; upload and repository layouts retain their respective established paths."
+    "The existing LaTeX packager removes full-line manuscript comments and prunes the bibliography to cited entries, removing annote/file fields; upload and repository layouts retain their respective established paths.",
+    "Explicitly re-stage retained files with --renormalize after setting -text so Git index bytes, original working-copy hashes and fresh checkout bytes agree. This corrects the first candidate snapshot b06ea706 without rewriting its history."
   ],
   "scientific_status": "Prescribed-bath feasibility studies; effective pore law remains unvalidated; no plant validation or whole-history convergence claim",
   "current_frozen_source_sha256": {
