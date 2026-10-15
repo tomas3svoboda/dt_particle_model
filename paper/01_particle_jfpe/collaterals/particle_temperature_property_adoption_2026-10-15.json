@@ -1,7 +1,7 @@
 {
   "passed": true,
   "summary": "paper/analysis/submission_2026-10-15/study_summary.json",
-  "summary_sha256": "d34c15fc76ef82fef5fa296866fde16aca9c7f98f7f3b774beafad5f57d2cf63",
+  "summary_sha256": "753af9a7a0d67a93314931aaa7c0d2b067fdfa5a8adf170908f0a0b6554d60c5",
   "property_law": {
     "variant": "literature-informed unvalidated effective-pore reference",
     "D_b_reference_m2_s": 4e-10,
@@ -39,13 +39,13 @@
       "sha256": "6da37102bcaf839468b5698a6d3109a3459d8de3e0b03c478de5b53e68cfdfc6"
     }
   ],
-  "checker_sha256": "a64702a61d174271eef2ad85e7565d0c7f2fef48252d1386c708f5e6f482c231",
+  "checker_sha256": "666ab5824f55e6bcdf6b852ee4efa0aab53e622f2415080e237f6e877c07fc89",
   "generated_figure_sha256": {
-    "fig_dt_particle_history_core2.pdf": "04771c6b2daf3caa5b7ae4eaa964bcae7a3bbe2adea3e604f092ddde8790624f",
+    "fig_dt_particle_history_core2.pdf": "0383378e4bd94aa630245054cfcc064e252414fe0f588ab9a5b830d88ace7ebb",
     "fig_dt_particle_history_core2.png": "b9dfa49a63535e0c39d7b8e83ec033428b98157e9e164d812664840482687e04",
-    "fig_faner_particle_history_core2.pdf": "0e5761bab0d899bb28818c0c10e6ee3ec7f27cab542799c5b4c2a47f0d6383a0",
+    "fig_faner_particle_history_core2.pdf": "b9ed8a2e906ec86fa0e9f1d026f7e3f8bf81a0cf452ea8e949367ce0ddc5d464",
     "fig_faner_particle_history_core2.png": "2ff86cff0099af14c6d13d1be4f3f8ee054154d0dc704db25eb322dab8b2423b",
-    "fig_faner_supporting_states.pdf": "fdd14e8bf9498788795dfe794f1749d12deea73160ba7918b3d4fd13627ee3c8",
+    "fig_faner_supporting_states.pdf": "2df4ae6cd9fa7fc406abb4027f3e16912478862337d5848e548c482937df78a4",
     "fig_faner_supporting_states.png": "0b4f6e2bbdca3b260b2b15eecca51fa2f892acc56bc4c6b870abb1fcb3b317fc"
   },
   "source_coefficient_convention_conversion_completed": false,

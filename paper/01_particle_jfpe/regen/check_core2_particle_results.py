@@ -55,6 +55,10 @@ def shown(path):
 
 
 def main():
+    import sys
+    sys.path.insert(0, str(REPO / "paper/analysis/harness"))
+    from submission_evidence import ensure_evidence
+    ensure_evidence()
     adoption = MANUSCRIPT / "collaterals/particle_temperature_property_adoption_2026-10-15.json"
     if not adoption.exists():
         adoption = MANUSCRIPT / "collaterals/particle_temperature_property_adoption_2026-10-14.json"

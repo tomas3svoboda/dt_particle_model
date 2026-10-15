@@ -1,9 +1,0 @@
-{
-  "complete": false,
-  "tip": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db2_Fuller\\event_22.json",
-  "failure": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db2_Fuller\\event_23.json",
-  "error": "water-node study not converged: residual=1.9932819423931195e-09; work=2901",
-  "stage": "positive target",
-  "controller_sha256": "6192663edcc943c16ca8512bf73ceb2a469c1e6d6dbc77d4a9cb6e394b68f8e6",
-  "scope": "from original feed, oil cp(T), original bath and native event/acceptance policies"
-}

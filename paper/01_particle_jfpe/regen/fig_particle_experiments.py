@@ -171,6 +171,10 @@ def save(fig, stem):
 
 
 def main():
+    import sys
+    sys.path.insert(0, str(ROOT / "paper/analysis/harness"))
+    from submission_evidence import ensure_evidence
+    ensure_evidence()
     adoption = PAPER / "collaterals/particle_temperature_property_adoption_2026-10-15.json"
     if not adoption.exists():
         adoption = PAPER / "collaterals/particle_temperature_property_adoption_2026-10-14.json"

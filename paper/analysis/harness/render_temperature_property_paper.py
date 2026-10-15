@@ -80,7 +80,11 @@ def figures(summary, draft):
     existing.main()
     path = draft / "figures/fig_particle_experiments.sources.json"
     provenance = json.loads(path.read_text())
-    provenance["temperature_property_study"] = summary
+    provenance["temperature_property_study"] = {
+        "summary": "paper/analysis/submission_2026-10-15/study_summary.json",
+        "dt_c": summary["dt_c"],
+        "faner_history": summary["faner_history"],
+    }
     provenance["adapter_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     path.write_text(json.dumps(provenance, indent=2), encoding="utf-8")
 
@@ -109,7 +113,11 @@ def numbers(summary, draft):
     existing.main()
     path = draft / "core2_particle_numbers_audit.json"
     provenance = json.loads(path.read_text())
-    provenance["temperature_property_study"] = summary
+    provenance["temperature_property_study"] = {
+        "summary": "paper/analysis/submission_2026-10-15/study_summary.json",
+        "dt_c": summary["dt_c"],
+        "faner_history": summary["faner_history"],
+    }
     provenance["adapter_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     path.write_text(json.dumps(provenance, indent=2), encoding="utf-8")
 

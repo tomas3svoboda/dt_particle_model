@@ -124,6 +124,10 @@ def main():
     parser.add_argument("--skip-faner", action="store_true", help="Check only DT (not the complete submission check)")
     args = parser.parse_args()
     os.chdir(ROOT)
+    import sys
+    sys.path.insert(0, str(ROOT / "paper/analysis/harness"))
+    from submission_evidence import ensure_evidence
+    ensure_evidence()
     summary = json.loads((STUDY / "study_summary.json").read_text(encoding="utf-8"))
     if not args.initialize:
         verify_manifest()

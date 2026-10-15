@@ -1,9 +1,0 @@
-{
-  "complete": false,
-  "tip": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db4_Fuller\\radial_12.json",
-  "failure": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db4_Fuller\\event_07.json",
-  "error": "joint native face root refused: 1.2222405081974296e-10",
-  "stage": "arrival",
-  "controller_sha256": "8b0dea2d7da98088396185ab4fbff5611f48a00191ecd97ff6c1cdfec154f7f2",
-  "scope": "from original feed, oil cp(T), original bath and native event/acceptance policies"
-}

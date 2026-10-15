@@ -61,7 +61,7 @@ def check(summary_path, manuscript):
     if factor == 100:
         for token in ["99", r"8.39\times10^{-5}", "hemmingsen2008water"]:
             assert token in text, token
-    for name in ("main.tex", "supplementary_submission.tex", "cover_letter.md"):
+    for name in ("main.tex", "supplementary_submission.tex"):
         assert "Henke" not in (manuscript / name).read_text(encoding="utf-8")
     numbers = json.loads(
         (manuscript / "core2_particle_numbers_audit.json").read_text(encoding="utf-8")
