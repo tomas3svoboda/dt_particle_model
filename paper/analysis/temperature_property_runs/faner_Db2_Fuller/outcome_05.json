@@ -1,0 +1,9 @@
+{
+  "complete": false,
+  "tip": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db2_Fuller\\event_25.json",
+  "failure": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db2_Fuller\\event_26.json",
+  "error": "water-node Jacobian condition exceeds native limit: 1.5739934260816776e+29",
+  "stage": "positive target",
+  "controller_sha256": "6192663edcc943c16ca8512bf73ceb2a469c1e6d6dbc77d4a9cb6e394b68f8e6",
+  "scope": "from original feed, oil cp(T), original bath and native event/acceptance policies"
+}

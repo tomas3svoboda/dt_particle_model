@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\harness\\experiment_particle_event.py",
+    "--out",
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db2_Fuller\\event_02.json",
+    "--resume",
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db2_Fuller\\event_01.accepted.pkl",
+    "--event",
+    "departure",
+    "--dt",
+    "0.0025",
+    "--regional-tolerance",
+    "1e-10",
+    "--tangent-tolerance",
+    "1e-09"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "complete": true,
+  "audit_passed": true,
+  "tip": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db6_Fuller_F100_K032\\c_01.json",
+  "b_tip": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db6_Fuller_F100_K032\\b_02.json",
+  "parts": [
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db6_Fuller_F100_K032\\b_02.json"
+  ],
+  "full_audit": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db6_Fuller_F100_K032\\audit_01.json",
+  "final": {
+    "time_s": 1766.5355008060146,
+    "temperature_k": 378.158514646656,
+    "particle_water_kg_kg_dry": 0.21384808142213835,
+    "external_water_kg_kg_dry": 0.0,
+    "hexane_kg_kg_dry": 0.00015815379572293146,
+    "moisture_wet_basis": 0.17615072741678456,
+    "retained_water_cells_kg_kg_dry": [
+      0.19425319359266102,
+      0.21657213973879644
+    ],
+    "y_hexane_cells": [
+      0.11025679399674658,
+      0.07491729436042814
+    ],
+    "combined_W_H_U": [
+      3.5058608693384337e-06,
+      2.5927995241998428e-09,
+      4.586212543523542
+    ],
+    "surface": {
+      "temperature_k": 378.16219395691513,
+      "surface_y_hexane": 0.010002311915797164,
+      "liquid_water_kg_m2": 0.0,
+      "external_water_flux_kg_m2_s": -3.7429459522563274e-06,
+      "external_hexane_flux_kg_m2_s": 1.6685481802002478e-07,
+      "external_energy_flux_w_m2": -9.018110133319604,
+      "water_node_residual_kg_m2_s": -1.1277862527864745e-16,
+      "hexane_node_residual_kg_m2_s": -5.64981563730459e-18,
+      "energy_node_residual_w_m2": -3.043396645807661e-10,
+      "water_activity_trace_deficit": 0.16797423861804028,
+      "beta": -8.780318907080964e-05,
+      "physically_qualifying": false
+    }
+  },
+  "factor": 100,
+  "contact_conductance_mol_m2_s": 0.32
+}

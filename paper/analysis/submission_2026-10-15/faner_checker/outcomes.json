@@ -1,0 +1,21 @@
+{
+  "volume_mean_N4": {
+    "complete": true,
+    "tip": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db4_Fuller\\dry_01.json",
+    "last_accepted": {
+      "time_s": 240.0,
+      "front_z": 0.0,
+      "X_hexane_kg_kg": 0.0016060314655520936,
+      "X_water_kg_kg": 0.014404369018436596,
+      "T_k": 387.5041222456275,
+      "interface_temperature_k": null,
+      "hexane_mol": 6.275037089703127e-08,
+      "water_mol": 2.692147590495104e-06,
+      "energy_j": 0.718814502888438
+    },
+    "error": null,
+    "export_passed": true,
+    "controller_sha256": "8b0dea2d7da98088396185ab4fbff5611f48a00191ecd97ff6c1cdfec154f7f2",
+    "scope": "from original feed, oil cp(T), original bath and native event/acceptance policies"
+  }
+}

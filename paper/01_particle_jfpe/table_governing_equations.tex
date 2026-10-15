@@ -1,0 +1,88 @@
+\begin{table}[htbp]
+\centering\small
+\caption{Governing balances and supporting closures of the particle model.
+Compact expressions omit repeated state arguments; the cited equations
+give the full definitions.}
+\label{tab:model:equations}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.14\linewidth}
+>{\raggedright\arraybackslash}p{0.33\linewidth}
+>{\raggedright\arraybackslash}p{0.24\linewidth}
+>{\raggedright\arraybackslash}p{\dimexpr0.29\linewidth-6\tabcolsep\relax}@{}}
+\toprule
+Block / equations & Compact expression & Physical role & Source / derivation\\
+\midrule
+Conservation\newline
+\eqref{eq:localcomp}--\eqref{eq:localenergy}
+& $\partial_t C_k+\mathcal D_r(j_k)=0$\newline
+  $\partial_t u+\mathcal D_r(J_E)=0$\newline
+  $J_E=q+\sum_k\bar h_kj_k$
+& Evolve water, hexane and energy with no separate phase-change source.
+& Component and energy conservation; regional coupling developed here.\\[5pt]
+Inventories\newline
+\eqref{eq:drystorage}--\eqref{eq:wetenergy}
+& $C_k^{\mathrm d}=\varepsilon_gcy_k+\Cdm W_k/M_k$\newline
+  $\mathrm D_s(\Cdm\Xhwa)/\mathrm Dt=0$
+& Store pore gas and retained material separately; preserve the wet-core donor loading.
+& Present regional storage and historical-core closure.\\[5pt]
+Internal transport\newline
+\eqref{eq:binaryflux}--\eqref{eq:compositionforcepath}
+& $J_{\mathrm w}=-J_{\mathrm h}=-\Lwh\nabla_{\!\mathrm{comp}}\Xi$\newline
+  $\Xi=(\mu_{\mathrm w}-\mu_{\mathrm h})/(RT)$\newline
+  $N_i^{\mathrm g}=y_iN_t+J_i$
+& Couple binary gas exchange to a separate retained-water path; obtain $N_t$ from continuity.
+& Maxwell--Stefan framework \citep{krishna1997maxwell}; present force reconstruction.\\[5pt]
+Moving front\newline
+\eqref{eq:movingcomp}--\eqref{eq:frontvelocity}
+& $[j_k-\dot s C_k]_{\mathrm w}^{\mathrm d}=0$\newline
+  $[J_E-\dot s u]_{\mathrm w}^{\mathrm d}=0$
+& Determine front recession from component and energy jumps, using the same swept donor.
+& Moving-boundary conservation \citep{crank1984free}; present donor-restricted closure.\\[5pt]
+Surface stocks\newline
+\eqref{eq:externalwatermass}--\eqref{eq:externalwaternode}
+& $\dot L_{\mathrm w}=j_{\mathrm w,p}-j_{\mathrm w,g}$\newline
+  $\mathrm d(L_{\mathrm w}u_{\mathrm w,l})/\mathrm dt
+   =J_{E,\mathrm p}-J_{E,\mathrm g}$
+& Conserve external condensate and its energy, with hexane continuity through the film.
+& Present surface balances; hexane-transparent water film is an assumption.\\[5pt]
+Gas-film exchange\newline
+\eqref{eq:gasfilmcomponents}--\eqref{eq:gasfilmenergy}
+& $q_{\mathrm{in}}=h_Q\Phi(\beta)(T_b-T_s)$\newline
+  $\Phi(x)=x/(e^x-1)$
+& Couple finite-flow component exchange, heat supply and transported enthalpy.
+& Analytic film closure adopted here; bed coefficient from \citet{faner2008desolventizado}.\\[5pt]
+Water imbibition\newline
+\eqref{eq:finitecontact}--\eqref{eq:liquidstocksupply}
+& $G_\ell=(d/\mathcal L_\ell+1/K_\ell)^{-1}$\newline
+  $N_\ell=-G_\ell\Delta\ln a_{\mathrm{w,ret}}$
+& Add finite liquid-connected entry, limited by available external water.
+& Present effective series closure; coefficient construction uses \citet{hemmingsen2008water}.\\[5pt]
+Retention\newline
+\eqref{eq:gab}--\eqref{eq:luikov}
+& $W_{\mathrm h}=\alpha_oW_{\mathrm{h,native}}+\beta_oq_o$\newline
+  $W_{\mathrm w}=A_1/[1+A_2\ln(1/a_{\mathrm w})]$
+& Close component storage and activities; adjust oil content relative to reference meal.
+& GAB \citep{cardarelli1996hexane}; water fit \citep{luz2006isotermas}; present oil anchoring.\\[5pt]
+Property laws\newline
+\eqref{eq:porediffusivitytemperature},
+\eqref{eq:oilheatcapacity}--\eqref{eq:drymatrixsensibleenergy}
+& $D_b\propto T^{1.75}/P$\newline
+  $c_{p,\mathrm o}=1024+3T$\newline
+  $\Delta u_{\mathrm{dm}}=\int c_{p,\mathrm{dm}}\,\mathrm dT$
+& Evaluate pore mobility and dry-matrix sensible energy at the evolving temperature.
+& Shape: \citet{fuller1966new}, assumed pore magnitude; oil: \citet{garciarojas2013thermophysical}.\\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\linewidth}\footnotesize
+$\mathcal D_r(F)=r^{-2}\partial_r(r^2F)$; $s$ is the core radius.
+Local $j_k$ is molar, while surface $j_k$ is a mass flux
+($j_k^{\mathrm{mass}}=M_kj_k^{\mathrm{molar}}$). Fluxes are outward-positive.
+$T$ is in kelvin and $c_{p,\mathrm o}$ in J/(kg K).
+The compact map does not replace the phase, capacity and caloric-consistency
+conditions in Eqs.~\eqref{eq:complementarity}, \eqref{eq:gauge}
+and~\eqref{eq:capcomplementarity}. Detailed property sources and the
+separate historical Fickian comparator are in Sec.~\ref*{S-sup:equations}.
+\end{minipage}
+\end{table}

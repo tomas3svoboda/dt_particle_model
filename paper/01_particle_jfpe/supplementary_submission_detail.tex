@@ -1,9 +1,49 @@
-\section{Comparison inputs, uncertainties and source limitations in detail}
+\section{Experimental inputs and comparison conventions}
 \label{sup:detail:inputs}\label{sup:detail:numerics}\label{sup:detail:ensemble}
-This section gives the inputs of each measured-curve comparison and the source statements behind them. The comparisons carry three kinds of uncertainty, which are not combined into one error bar: the reading half-width of a point digitized from a published trace; a source statement (mass basis, particle shape, probe depth, gas flow) that admits more than one reading, each an alternative model input, not a sample from a distribution; and the covariance or prediction interval of a coefficient fitted to independent data, which does not cover a temperature extrapolation or an unmeasured geometry. The main text states the strongest condition beside each headline result.
+This section collects the experimental inputs and boundary construction.
+Scoring and uncertainty conventions are specified in Sec.~\ref{sup:protocol}.
 
-\subsection{Which source statements set a calculation}
-For the 2008 thesis, the nominal sample mass is read as the wet charge, because the printed flux definition then reproduces the plotted constant-rate slope; reading it as dry meal predicts much less duty and a later transition, and the two readings cannot be averaged. Within a source, a tabulated quantity takes precedence over a position digitized from a graph, and a later peer-reviewed statement of a condition over an earlier thesis sentence. On version two of the digitization, the thesis sunflower window holds fourteen points from the measured crossing on. The earlier $9.1$-percent residual on the 2019 sunflower sphere belongs to version one ($14$ of $15$ in band); rescored on version two it is $11.6$ percent ($13$ of $14$), a change of the scored reading, not of the equations. For the 2019 run, the particle sizes and sphericity come from the article; the current experiment declares one representative radius because no mass histogram of the charge is printed. The film exposure multiplier comes from the constant-rate slope; the gas flow through the holder, the wetness near the thermocouple and its depth remain unmeasured (Sec.~\ref{sup:journalmarch}).
+\subsection{Source conventions and Faner setup}
+\label{sup:fanerinputs}
+Within a source, printed tables take precedence over digitized positions,
+and a later peer-reviewed condition over an earlier thesis statement.
+For the 2008 thesis the nominal mass is read as wet charge because that
+interpretation reproduces the printed flux convention; the dry-mass
+alternative is evaluated separately (Sec.~\ref{sup:filmmatch}). Version-two
+digitization uses fourteen sunflower points from the measured crossing.
+The earlier 9.1\% residual on the 2019 sunflower sphere was 14 of 15
+points in band on version one; version two gives 11.6\%, 13 of 14.
+This is a changed reading, not a changed model.
+
+For the 2019 soybean run, \citet{faner2019kinetics} supplies pure hexane
+vapour at 393.15 K and 101325 Pa. The source reports preheating in the
+apparatus and no visible warming stage, with an initial plateau near
+\SI{68.7}{\celsius}, but gives neither the exact preheat endpoint nor
+initial moisture. The flakes were desolventized in nitrogen, crumbled,
+stored at ambient conditions and re-embedded in hexane; their water
+loading cannot be inferred from fresh extractor meal. The declared body
+starts uniformly at the calculated boiling temperature, 341.903356 K,
+with hexane 0.475 and retained water 0.025 kg/kg dry meal, oil fraction
+0.0195 and recorded forcing timescale 29.749225 s. Water remains stored
+but has zero surface exchange during regime A under the access assumption
+in main Sec.~\ref*{M-sec:model:waterfilm}.
+
+The image-analysis mean equivalent-sphere diameter is 1.77 mm, mean
+sphericity 0.74, diameter range 0.5--4 mm and fraction between 1 and 3 mm
+95.1\%. The nominal radius 0.885 mm uses that mean directly, without
+adjusting it to the drying curve. It preserves equivalent volume and has
+less area per volume than the flakes; the alternative
+$R=0.74\times1.77/2=0.655$ mm preserves area-to-volume ratio but not
+internal transport distances. Neither mapping identifies the unreported
+mass-weighted histogram. Its assumed distribution and earlier
+size/startup sensitivities are given in Sec.~\ref{sup:fanersizes}.
+
+The gravimetric mass loss is read as solvent loss, although water loss was
+not measured separately. The reported temperature is one local holder
+thermocouple, while the calculated observable is the particle volume mean.
+Probe depth, wetness near the probe and run-specific holder gas flow are
+unreported. These measurement and boundary uncertainties remain distinct
+from digitization resolution (Sec.~\ref{sup:protocol}).
 
 \subsection{External heat coefficient and finite sample geometry}
 \label{sup:detail:geometry}
@@ -50,13 +90,15 @@ The smallest classes enter the falling-rate period inside that window;
 matching only the ensemble's initial rate would give 0.14508.
 The four-time rule gives $f=0.1457854364$; the present 0.885-mm particle
 uses it unchanged, with initial loading 0.475.
-The multiplier is therefore a boundary calibration carried over from an
-earlier geometry, not an independently measured transport property or
-exposed surface fraction. The later falling-rate and temperature readings
-were not used to identify it.
+The multiplier carries a constant-rate boundary calibration from the
+earlier geometry. Interpreting it as a transport property or exposed-area
+fraction would require independent flow and contact measurements. The later
+falling-rate and temperature readings are reserved for comparison. Faner also inferred heat-transfer coefficients
+from drying data \citep{faner2019kinetics}.
 The digitized data, distribution inputs, slope calculation and exact
-carried-over value are recorded in the reproducibility file
-\texttt{faner\_film\_boundary\_derivation\_2026-10-08.json}.
+carried-over value are kept in a derivation record of the authors, which
+is not part of the release (Sec.~\ref{sup:deposit}) and is available from
+the corresponding author on request.
 
 The unscaled gas-film heat and mass coefficients use an industrial
 reference superficial velocity of 0.230 m/s, obtained from a 3.9 kg/s gas
@@ -65,12 +107,12 @@ of 0.40 \citep{coletto2022modeling}. At the present reference radius, the
 heat coefficient is 104 W/(m$^2$ K) and the mass coefficient 0.0672 m/s;
 scaling gives 15.1 W/(m$^2$ K) and 0.00980 m/s. Both coefficients
 are scaled, while the geometric area remains $4\pi\Rp^2$.
-The heat-duty inference does not determine mass transfer separately,
-so applying the same factor to both is a declared boundary assumption.
+The inference identifies the heat duty; applying its factor to mass
+transfer as well is a declared boundary assumption.
 Faner's charge of about 30 g in a 0.011-m$^2$ holder forms a layer
 about three to five particle diameters deep \citep{faner2019kinetics}.
-The industrial reference coefficients cannot be assumed to describe that
-holder without a separate assessment of its gas flow and sample contact.
+Applying industrial reference coefficients to the holder requires a
+separate assessment of its gas flow and sample contact.
 
 An unscaled calculation, with multiplier one and otherwise the same
 four-cell particle, initial moisture, oil fraction, transport coefficients
@@ -79,19 +121,17 @@ and prescribed vapour, depletes external free hexane at 6.8 s and crosses
 Its heat and mass coefficients are 6.86 times larger. The calculation
 enters regime B and continues to 6.88 s with the same component
 and energy checks; the bounded continuation then reaches its computing-time
-limit. This result shows the early boundary sensitivity; it is not a
-complete falling-rate history or a prediction of the later temperature.
+limit. This result quantifies the early boundary sensitivity. Continuation
+beyond the computing-time limit is needed to assess the full falling-rate
+interval and later temperature.
 
-Separately, at the 2008 rig's own state, Whitaker's packed-bed correlation
-predicts $0.82$--$1.06$ of the constant-rate duties on the wet-charge
-basis (Sec.~\ref{sup:filmmatch}). Two inferred coefficients lie $3.7$ and
-\SI{4.2}{\percent} below it, so the bracketing criterion over three
-correlations, declared before the comparison, is narrowly missed; the film
-is reported as a duty comparison with the departure stated. A tray
-comparison needs its own gas composition, voidage, interfacial area and
-condensation balance; the holder's coefficient cannot simply be copied.
+The independent 2008 duty comparison, its two mass conventions and its
+narrowly missed bracketing criterion are reported in Sec.~\ref{sup:filmmatch}.
+Transferring a holder coefficient to a tray requires the tray's gas
+composition, voidage, interfacial area and condensation balance.
 
 \subsection{The declared spheres and the effective diffusivity law}
+\label{sup:detail:spheres}
 This subsection details the declared spheres and diffusivity law of Sec.~\ref{sup:surfaceloading}. The convention $R_d=\psi d_{\mathrm{eq}}/2$ gives the sphere the particle's volume-to-surface ratio. It was adopted after the effective-radius sensitivity had been inspected and is an assumption for the 2008 samples, whose shape was not measured; the 2019 sphericity $0.74$ comes from later samples. At constant diffusivity the spherical diffusion time scales with $\Rp^2/\Deff$, so a drying curve alone cannot separate radius from diffusivity. The volume-to-surface equivalence is an early-time construction, while the scored window reaches a Fourier number near $0.3$. The law's temperature term is weakly resolved (the 95-percent half-width of the activation energy exceeds its central value), and its prediction factor is a spread within the regression domain, not a statement about the \SI{41}{\kelvin} transfer above it. Reading the coefficient at a weighted mean concentration instead of at the surface would raise it five- to seventy-five-fold and dry far too fast; reading it in each interior cell gave no mesh-refined solution.
 
 Table~\ref{tab:detail:geometry} compares these sphere conventions with

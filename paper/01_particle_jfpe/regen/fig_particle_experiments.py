@@ -144,9 +144,7 @@ def read_finite(case):
     b_audit = json.loads(case["b_audit"].read_text())
     assert b_audit["passed"]
     for path in paths:
-        # the audit keys are Windows-style relative paths; look them up the same way
-        key = str(path.relative_to(ROOT)).replace("/", "\\")
-        expected = b_audit["linked_results"][key]
+        expected = b_audit["linked_results"][path.relative_to(ROOT).as_posix()]
         assert expected == hashlib.sha256(path.read_bytes()).hexdigest()
     paths.extend([dry_path, audit_path, case["b_audit"]])
     if case["summary"]:
@@ -173,6 +171,25 @@ def save(fig, stem):
 
 
 def main():
+    adoption = PAPER / "collaterals/particle_temperature_property_adoption_2026-10-15.json"
+    if not adoption.exists():
+        adoption = PAPER / "collaterals/particle_temperature_property_adoption_2026-10-14.json"
+    import sys
+
+    if (
+        adoption.exists()
+        and "--case" not in sys.argv
+        and not globals().get("_temperature_adapter_active", False)
+    ):
+        sys.path.insert(0, str(ROOT / "paper/analysis/harness"))
+        import render_temperature_property_paper as adapter
+
+        manifest = json.loads(adoption.read_text(encoding="utf-8"))
+        summary_path = (ROOT / manifest["summary"])
+        if not summary_path.is_absolute():
+            summary_path = ROOT / summary_path
+        adapter.figures(json.loads(summary_path.read_text(encoding="utf-8")), PAPER)
+        return
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--case", choices=sorted(CASES), default="k0p32")
     args = parser.parse_args()

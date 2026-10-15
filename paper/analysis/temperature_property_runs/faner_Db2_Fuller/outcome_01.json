@@ -1,0 +1,9 @@
+{
+  "complete": false,
+  "tip": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db2_Fuller\\event_01.json",
+  "failure": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db2_Fuller\\event_02.json",
+  "error": "face-departure solve rejected with exact rollback: departure direct Newton correction has no residual-decreasing phase-safe step",
+  "stage": "departure",
+  "controller_sha256": "4da35d034ce820ab866294e4070adccdd2e9e7159474e02fc6550c35fef37aff",
+  "scope": "from original feed, oil cp(T), original bath and native event/acceptance policies"
+}

@@ -34,6 +34,7 @@ import math
 import os
 import struct
 from dataclasses import dataclass, replace
+from types import MappingProxyType
 from typing import ClassVar
 
 from . import component_energy_datum_adapter as component_datum
@@ -847,6 +848,9 @@ class HighLoadingV1PacketAdapter:
             )
         except ValueError as error:
             raise HighLoadingPacketStateError(str(error)) from error
+        if exactness_mass_primary_armed():
+            # Owner ruling 1 of 2026-10-12: oil label and retained water from the decoded masses.
+            rebuilt = exactness_mass_primary_rebuild(rebuilt, native)
         exact_pairs = (
             (native.dry_meal_mass_kg, rebuilt.dry_meal_mass_kg),
             (native.oil_label_mass_kg, rebuilt.oil_label_mass_kg),
@@ -1067,6 +1071,100 @@ class HighLoadingV1PacketAdapter:
         if not math.isfinite(value):
             raise HighLoadingPacketStateError("packet envelope energy is not representable")
         return value
+
+
+#: Owner ruling 1 of 2026-10-12 (record GT-PS-2-OWNER-RULINGS-2026-10-12-OPEN-ITEMS-BATCH-01,
+#: item 1; option A of docs/GT_PS2_RULING_PACKET_TAG2_RETAINED_WATER_EXACTNESS_2026-10-12.md).  The
+#: exactness check of the tag-1, tag-2 and tag-3 ``_validate_complete`` rebuilds the decoded state
+#: through its native initializer from the state's own loadings, and the initializer books the
+#: oil-label and retained-water members as ``m_d * (m / m_d)``.  Since C8 Tier 1 and D8-d those two
+#: members are masses moved by mass arithmetic, and inside a binary64 band the divide-then-multiply
+#: comes back one ulp off.  Armed by exactly "1", the check takes those two members from the decoded
+#: masses (the loadings the initializer was given are derived from them, not the other way round);
+#: every member is still compared bit for bit, and the payload bytes, the codec, the tolerances and
+#: every law are untouched.  Off (the default), the former rebuild runs byte for byte.
+EXACTNESS_MASS_PRIMARY_ENVIRONMENT_VARIABLE = "DTDC_SUBCRITICAL_EXACTNESS_MASS_PRIMARY"
+EXACTNESS_MASS_PRIMARY_RULING_ID = "GT-PS-2-OWNER-RULINGS-2026-10-12-OPEN-ITEMS-BATCH-01"
+EXACTNESS_MASS_PRIMARY_DECLARED_ASSUMPTIONS = MappingProxyType(
+    {
+        "exactness_mass_primary": MappingProxyType(
+            {
+                "class": "DECLARED_ENGINEERING_ASSUMPTION",
+                "law_id": "packet-exactness-check-oil-and-retained-water-rebuilt-from-mass-v1",
+                "status": (
+                    "RULED by the owner 2026-10-12 (item 1: option A adopted); built behind "
+                    "its knob, default OFF; the default flip is a separate owner decision"
+                ),
+                "ruling_id": EXACTNESS_MASS_PRIMARY_RULING_ID,
+                "ruling_item": 1,
+                "ruling_record": "docs/GT_PS2_OWNER_RULINGS_2026-10-12_OPEN_ITEMS_BATCH.md",
+                "ruling_packet": (
+                    "docs/GT_PS2_RULING_PACKET_TAG2_RETAINED_WATER_EXACTNESS_2026-10-12.md"
+                ),
+                "knob": EXACTNESS_MASS_PRIMARY_ENVIRONMENT_VARIABLE,
+                "default": "0 (off; armed only by the exact string '1')",
+                "scope": (
+                    "the exact-pairs clause of _validate_complete in the tag-1 "
+                    "(high_loading_packet_adapter), tag-2 (engineering_subcritical_packet_"
+                    "adapter) and tag-3 (engineering_dry_sorbate_packet_adapter) adapters"
+                ),
+                "former_construction": (
+                    "rebuilt oil label = m_d * (m_o / m_d) and rebuilt retained water = "
+                    "m_d * (m_w / m_d), from the native initializer given the decoded "
+                    "state's loadings; bit equality against the decoded masses"
+                ),
+                "ruled_construction": (
+                    "the same initializer call with the same derived loadings; the rebuilt "
+                    "oil-label and retained-water members are the decoded masses themselves; "
+                    "bit equality on all five exact members (dry matter, oil label, retained "
+                    "water, energy, temperature) and every other clause unchanged"
+                ),
+                "oil_label": (
+                    "the oil label uses the same construction (m_d * w_o, w_o = m_o / m_d) and "
+                    "is treated the same way; the oil band X_o in [1/64, 0.0177) is latent, "
+                    "nothing books oil by mass arithmetic today"
+                ),
+                "measured_band_and_rate": (
+                    "representative sphere m_d = 3.367017345657225e-06 kg; retained water "
+                    "m_w in [m_d/8, 2^-21) kg, X_w in [0.125, 0.14162) kg/kg dry: 173,477 of "
+                    "400,000 sampled masses (0.434) rebuilt exactly 1 ulp (5.3e-23 kg) off, 0 "
+                    "of 400,000 below and 0 of 400,000 above; through the real tag-2 adapter "
+                    "1,257 of 3,000 in-band masses refused, 0 of 6,000 outside; the production "
+                    "point's 22.875 s terminal (step 99); "
+                    "docs/GT_PS2_TAG2_CODEC_EXACTNESS_WALL_DIAGNOSIS_2026-10-12.md"
+                ),
+                "unchanged": (
+                    "the payload bytes and the 30-field schemas, the state codec, the "
+                    "registry digests, the envelope-versus-native authority checks (bit), the "
+                    "initializer's material gates and its temperature-energy consistency, the "
+                    "hexane partition tolerance 2.0e-13 m_d, the envelope-energy consistency "
+                    "2.0e-10, every refusal text and every law"
+                ),
+                "rejecting_outcome": (
+                    "any knob-on acceptance of a state whose payload bytes do not round-trip; "
+                    "any knob-off leaf differing from the lane before the build"
+                ),
+                "physically_qualifying": False,
+            }
+        )
+    }
+)
+
+
+def exactness_mass_primary_armed() -> bool:
+    """True only for the exact string "1" in ``DTDC_SUBCRITICAL_EXACTNESS_MASS_PRIMARY``."""
+
+    return os.environ.get(EXACTNESS_MASS_PRIMARY_ENVIRONMENT_VARIABLE) == "1"
+
+
+def exactness_mass_primary_rebuild(rebuilt, native):
+    """The ruled rebuild: the oil-label and retained-water members from the decoded masses."""
+
+    return replace(
+        rebuilt,
+        oil_label_mass_kg=native.oil_label_mass_kg,
+        retained_water_mass_kg=native.retained_water_mass_kg,
+    )
 
 
 __all__ = (

@@ -2,8 +2,8 @@
 \documentclass[11pt]{article}
 \PassOptionsToPackage{round,authoryear,longnamesfirst,sort}{natbib}
 \usepackage[natbibapa]{apacite}
-\input{preamble.tex}
-\input{macros.tex}
+\input{../shared/preamble.tex}
+\input{../shared/macros.tex}
 \input{core2_particle_results.tex}
 \usepackage{xr}
 \externaldocument[S-]{supplementary_submission}
@@ -41,7 +41,8 @@
 \title{A particle model of hexane removal and water uptake in soybean meal
 desolventizing}
 
-\author{Tom\'a\v{s} Svoboda$^{1,3,*}$, Marcela Slukov\'a$^{1}$, Svatopluk Henke$^{1}$, Tom\'a\v{s} Moucha$^{2}$\\[6pt]
+\author{Tom\'a\v{s} Svoboda$^{1,3,*}$, Marcela Slukov\'a$^{1}$\\
+Tom\'a\v{s} Moucha$^{2}$, Phuong Hoang$^{2}$\\[6pt]
 \parbox{0.88\textwidth}{\raggedright\normalsize
 $^{1}$University of Chemistry and Technology Prague, Department of Carbohydrates and Cereals, Technick\'a 5, 166~28 Prague 6, Czech Republic\\[2pt]
 $^{2}$University of Chemistry and Technology Prague, Department of Chemical Engineering, Technick\'a 5, 166~28 Prague 6, Czech Republic\\[2pt]
@@ -63,8 +64,7 @@ Component and energy jump conditions determine how the liquid-hexane
 interface recedes; after the core disappears, the same inventories
 continue to evolve in a stationary radial particle. Published
 thermodynamic and retention properties, together with declared transport
-coefficients, parameterize the model. Converged discrete calculations
-conserve water, hexane and energy through all three regimes. The
+coefficients, parameterize the model. The
 formulation is exercised in two prescribed baths, in which the
 surrounding gas history is specified rather than solved. In the first, a
 water-bearing soybean particle in Faner's pure-hexane vapour at
@@ -72,9 +72,12 @@ water-bearing soybean particle in Faner's pure-hexane vapour at
 \SI{\FanerFallingInterval}{\second}, compared with 25.4 s measured. The
 source reports preheating, but not the exact initial temperature,
 moisture or mass-weighted particle sizes. In the second, a particle
-followed through a 1766.5-s prescribed DT history leaves with 18.2\%
-wet-basis moisture, 111 ppm wet-basis hexane and a mean temperature of
-\SI{105.0}{\celsius}. The particle response is benchmarked against available literature
+followed through a 1766.5-s prescribed DT history leaves with \DTFiniteMoisture\%
+wet-basis moisture, \DTFiniteHexaneWet\ ppm wet-basis hexane and a mean temperature of
+\SI{\DTFiniteTemperature}{\celsius}. In both calculations, independently accumulated
+water, hexane and energy balances close within $4\times10^{-10}$ in
+normalized units through all three regimes; whole-history mesh and
+time-step convergence is not yet established. The particle response is benchmarked against available literature
 experiments and published industrial outlet ranges, without fitting the
 falling-rate trajectories or DT outlet values. This common formulation
 provides the particle-level basis for a DT digital twin that can shorten
@@ -91,7 +94,7 @@ desolventizer-toaster (DT). The same particle equations describe a
 pure-hexane drying experiment and a steam-rich DT scenario. In the
 pure-hexane case, the calculated particle dries faster than the measured
 charge; better size, exposure and temperature information is needed to
-explain the difference. In the DT case, the particle reaches 18.2\%
+explain the difference. In the DT case, the particle reaches \DTFiniteMoisture\%
 wet-basis moisture with liquid-water imbibition included; the uptake rate
 rests on one same-material measurement. The model returns signed water,
 hexane and energy fluxes that can later be coupled to conservative tray
@@ -107,10 +110,10 @@ balances.
 \section*{Author contributions (CRediT)}
 Tom\'a\v{s} Svoboda: Conceptualization; methodology; software; formal
 analysis; validation; writing -- original draft; writing -- review and
-editing. Marcela Slukov\'a: Funding acquisition; resources; supervision;
-writing -- review and editing. Svatopluk Henke: Conceptualization;
-methodology; writing -- original draft. Tom\'a\v{s} Moucha: Investigation;
-writing -- review and editing. All authors have read and approved the
+editing. Marcela Slukov\'a: Resources; supervision;
+writing -- review and editing. Tom\'a\v{s} Moucha: Investigation;
+writing -- review and editing. Phuong Hoang: Writing -- review and editing.
+All authors have read and approved the
 submitted manuscript.
 
 \section*{Acknowledgments}
@@ -120,7 +123,7 @@ public, commercial, or not-for-profit sectors.
 \section*{Supplementary material}
 The submitted Supplementary Material, Secs.~\ref*{S-sup:derivations}
 to~\ref*{S-sup:deposit}, gives the regional and interface derivation,
-property and benchmark provenance, measured-curve scoring conventions,
+property and benchmark sources, measured-curve scoring conventions,
 numerical acceptance and observed convergence results, including the
 unfavorable cases. An extended technical report retains
 the longer derivations, former full manuscript passages and research
@@ -131,12 +134,18 @@ The governing balances, parameters, comparison conventions and numerical
 acceptance criteria are stated in the text, the tables and the submitted
 Supplementary Material. The particle-model source, the scripts that
 produced the two particle histories and the sensitivity cases, the run
-records behind every figure and printed number, and the LaTeX sources are
-released at \url{https://github.com/tomas3svoboda/dt_particle_model}
-(tag \texttt{v1.0.0-submission}, with a SHA-256 manifest of every file);
-a preservation archive with a persistent identifier is being prepared.
+records behind the figures and the headline numbers of the main text, and
+the LaTeX sources are released at
+\url{https://github.com/tomas3svoboda/dt_particle_model}
+(submission snapshot \texttt{submission-2026-10-15}, with a SHA-256 manifest of every file).
+The release's number check binds the printed numbers to the released
+records and names those that rest on records the release does not hold;
+such records, among them the authors' working notes and the independent
+balance record of the DT feed history, are available from the
+corresponding author on request. A preservation archive
+with a persistent identifier is being prepared.
 Digitized readings of published figures are shared subject to the
-publishers' redistribution terms, with reading half-widths and provenance.
+publishers' redistribution terms, with reading half-widths and their sources.
 The steady equipment-model calculation that supplies the prescribed bath
 of Section~\ref{sec:validation:dtmarch} is not part of the release, but
 its output is. Numerical material that does not yet exist is listed in
@@ -174,7 +183,7 @@ Supplementary Material are listed there.
 \nomitem{$a^{*}$}{pressure-feasible n-hexane activity \eqref{eq:aceiling}; dimensionless}
 \nomitem{$\ah$}{n-hexane activity; dimensionless}
 \nomitem{$\aw$}{water activity; dimensionless}
-\nomitem{$\bar{h}_{k}$}{partial enthalpy of component $k$ on the common caloric datum, per mole; $\bar{h}_{\mathrm{h,d}}$ that of n-hexane on the dry side; \si{\joule\per\mole}}
+\nomitem{$\bar{h}_{k}$}{partial molar enthalpy of a transported component on the common caloric datum; $\bar{h}_{\mathrm{h,d}}$ that of n-hexane on the dry side; \si{\joule\per\mole}}
 \nomitem{$B$}{Darcy permeability of the particle pore space \eqref{eq:darcy}; \si{\square\metre}}
 \nomitem{$\Bh$}{binding potential of n-hexane, per kilogram of dry meal \eqref{eq:wetenergy}; \si{\joule\per\kilogram}}
 \nomitem{$C$}{GAB energy constant in \eqref{eq:gab}; dimensionless}
@@ -182,7 +191,7 @@ Supplementary Material are listed there.
 \nomitem{$c_{\mathrm{h,g}}$}{n-hexane mass concentration in the pore gas; \si{\kilogram\per\cubic\metre}}
 \nomitem{$c_{p}$}{specific heat capacity at constant pressure; \si{\joule\per\kilogram\per\kelvin}}
 \nomitem{$C_{\mathrm{h,d}}^{\Gamma}$, $C_{\mathrm{h,w}}^{\mathrm{b}}$}{n-hexane concentration at the dry-side equilibrium interface trace, and in the wet-side donor state \eqref{eq:frontvelocity}; \si{\mole\per\cubic\metre}}
-\nomitem{$C_{k}$}{total local concentration of component $k$ over all of its phases; \si{\mole\per\cubic\metre}}
+\nomitem{$C_{k}$}{total component amount in all local forms per unit particle volume; \si{\mole\per\cubic\metre}}
 \nomitem{$c_{\mathrm{w}}$}{constant shift of the caloric zero of water \eqref{eq:gauge}; \si{\joule\per\mole}}
 \nomitem{$\Deff$}{effective diffusivity of n-hexane in the separate Fickian comparison, Eq.~(\ref*{S-eq:ficklimit}); \si{\square\metre\per\second}}
 \nomitem{$D_{b}$}{binary pore coefficient of the mobility $\Lwh$; \si{\square\metre\per\second}}
@@ -231,7 +240,7 @@ Supplementary Material are listed there.
 \nomitem{$T_{V}$}{vapour temperature in that interpolation; \si{\kelvin}}
 \nomitem{$\Tg$}{gas temperature; \si{\kelvin}}
 \nomitem{$\Tint$}{interface temperature; \si{\kelvin}}
-\nomitem{$T^{*}$}{boiling point of sorbed water \eqref{eq:sorbedbp}; \si{\kelvin}}
+\nomitem{$T^{*}$}{temperature of the retained-water vapour-pressure diagnostic \eqref{eq:sorbedbp}; \si{\kelvin}}
 \nomitem{$u$}{total local internal energy density; \si{\joule\per\cubic\metre}}
 \nomitem{$u_{\mathrm{d}}^{\Gamma}$, $u_{\mathrm{w}}^{\mathrm{b}}$}{$u$ at the dry-side equilibrium interface trace and in the wet-side donor state; \si{\joule\per\cubic\metre}}
 \nomitem{$u_{\mathrm{h,l}}$}{specific internal energy of liquid n-hexane; \si{\joule\per\kilogram}}
@@ -245,10 +254,10 @@ Supplementary Material are listed there.
 \nomitem{$w_{\mathrm{h}}$}{weight on the n-hexane boiling point in the flashing-zone interpolation of \citet{coletto2022modeling}; dimensionless}
 \nomitem{$\Wret_{\mathrm{w}}$}{retained-water loading of the Luikov isotherm \eqref{eq:luikov}; \si{\kilogram\per\kilogram}}
 \nomitem{$x$}{reduced activity $K\ah$ of the GAB isotherm \eqref{eq:gab}; dimensionless}
-\nomitem{$\Xc$}{critical loading, at which mobile liquid stops reaching the outer surface; \si{\kilogram\per\kilogram}}
-\nomitem{$\Xe$}{equilibrium n-hexane loading at the actual gas activity in the regime-C rate; Faner et al.'s source symbol in Eq.~\eqref{eq:faneroracle}; \si{\kilogram\per\kilogram}}
-\nomitem{$\Xe^{*}$}{pressure-feasible saturated equilibrium loading at the regime-B/C boundary; \si{\kilogram\per\kilogram}}
-\nomitem{$\Xf$}{external free-hexane loading; \si{\kilogram\per\kilogram}}
+\nomitem{$\Xc$}{critical hexane loading at external free-hexane exhaustion; \si{\kilogram\per\kilogram}}
+\nomitem{$\Xe$}{equilibrium hexane loading at specified gas conditions; Faner's value in Eq.~\eqref{eq:faneroracle}; \si{\kilogram\per\kilogram}}
+\nomitem{$\Xe^{*}$}{retained-hexane equilibrium reference at pressure-feasible saturated activity; \si{\kilogram\per\kilogram}}
+\nomitem{$\Xf$}{external free-hexane mass per unit dry meal mass; \si{\kilogram\per\kilogram}}
 \nomitem{$\Xh$}{total n-hexane loading; \si{\kilogram\per\kilogram}}
 \nomitem{$\Xhwa$}{apparent mobile-liquid n-hexane loading of the liquid-hexane core, set at activation and carried with the solid; distinct from the total loading $\Xh$ and from retained hexane; \si{\kilogram\per\kilogram}}
 \nomitem{$X_{m}$}{GAB monolayer loading \eqref{eq:gab}; \si{\kilogram\per\kilogram}}
@@ -259,7 +268,7 @@ Supplementary Material are listed there.
 \nomitem{$\frontz$}{wet-volume fraction $(\front/\Rp)^{3}$; $\frontz_{\mathrm{new}}$, $\frontz_{\mathrm{old}}$ at the new and old time level; dimensionless}
 
 \nomblock{Greek symbols}
-\nomitem{$\alpha$}{region label, $\mathrm{w}$ (liquid-hexane core) or $\mathrm{d}$ (dry shell)}
+\nomitem{$\alpha$}{physical region label, $\mathrm{w}$ (liquid-hexane core) or $\mathrm{d}$ (dry shell); not a cell index}
 \nomitem{$\beta_{\mathrm{A}}$}{Ackermann blowing argument of the film law; dimensionless}
 \nomitem{$\varepsilon_{\mathrm{g}}$}{gas-filled porosity of the dry shell; dimensionless}
 \nomitem{$\theta_{a}$}{temperature of a material shell at activation; \si{\kelvin}}
@@ -299,7 +308,7 @@ Supplementary Material are listed there.
 \nomitem{$\mathrm{w}$}{water; as a region label (on $\jump{\cdot}$, $C_{\mathrm{h,w}}$, $u_{\mathrm{w}}$), the liquid-hexane core}
 \nomitem{$\Gamma$}{interface; as a superscript, the equilibrium interface trace}
 \nomitem{$\alpha$}{region, $\mathrm{w}$ or $\mathrm{d}$}
-\nomitem{$^{*}$}{pressure-feasible (on $a$); boiling point of sorbed water (on $T$)}
+\nomitem{$^{*}$}{pressure-feasible equilibrium reference (on $a$ and $\Xe$); retained-water diagnostic (on $T$)}
 \nomitem{$^{-}$, $^{+}$}{lower and upper bound of an interval}
 
 \nomblock{Operators and notation}
@@ -314,6 +323,6 @@ Supplementary Material are listed there.
 }
 
 \bibliographystyle{apacite}
-\bibliography{refs}
+\bibliography{../shared/refs}
 
 \end{document}

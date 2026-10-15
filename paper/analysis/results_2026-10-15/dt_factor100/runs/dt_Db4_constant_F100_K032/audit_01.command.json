@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\harness\\run_temperature_property_driver.py",
+    "--Db-ref",
+    "4e-10",
+    "--constant-D",
+    "--driver",
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\harness\\audit_finite_wetting_b.py",
+    "--",
+    "--out",
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db4_constant_F100_K032\\audit_01.json",
+    "--result",
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db4_constant_F100_K032\\b_02.json",
+    "--parts",
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db4_constant_F100_K032\\b_02.json",
+    "--dry",
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db4_constant_F100_K032\\c_01.json"
+  ]
+}

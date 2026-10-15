@@ -1,0 +1,1 @@
+One conservative particle model couples hexane removal, water uptake and heat transfer through three phase regimes. The prescribed DT particle exits with 17.5% moisture and 138 ppm hexane on a wet basis. The Faner falling interval is 25.4 s measured and 17.7 s predicted.

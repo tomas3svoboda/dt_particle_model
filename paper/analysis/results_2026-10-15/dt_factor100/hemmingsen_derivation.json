@@ -1,0 +1,41 @@
+{
+  "source": "IAPWS SR6-08(2011), Eq. 7, Table 5; Table 8 verification points",
+  "url": "https://iapws.org/technical-guidance/release/LiquidWater.download",
+  "source_sha256": "fda79dde9f441a90da755477c6533e23065e4f90c7f59a505f64c394d775bd45",
+  "viscosity80_Pa_s": 0.00035404610618734804,
+  "viscosity100_Pa_s": 0.0002815810630719923,
+  "inverse_viscosity_ratio_80_to_100": 1.2573505559101767,
+  "Hemmingsen_evidence": {
+    "source": "Hemmingsen et al. (2008), Table 2 and Figure 4b",
+    "doi": "10.1080/07373930802046393",
+    "source_sha256": "905ffd2f2149c773de7a6e267f951c62dcf3cbddead12f181dfec2a478b0112d",
+    "mean_sieve_diameter_m": 0.00143,
+    "assumed_sphere_radius_m": 0.000715,
+    "first_coarse_immersion_sample_s": 90,
+    "drainage_s_approx": 150,
+    "fractions_are_declared_endpoint_conventions_not_measurements": true
+  },
+  "prior_sphere_calculation_sha256": "e38d692c24dece3d27ee1d5a8cba2eaa1c46c4ca4ecc308eaead48c720ef5e4c",
+  "baseline_local_W_kg_kg_dry": 0.2,
+  "baseline_local_D_m2_s": 2.3770841287687022e-11,
+  "endpoint_estimates": [
+    {
+      "assumed_uptake_fraction": 0.95,
+      "Fourier_number": 0.25311764200496667,
+      "D80_m2_s": 1.4377785170443232e-09,
+      "D100_m2_s": 1.8077916176813894e-09,
+      "F100C": 76.05080509362541
+    },
+    {
+      "assumed_uptake_fraction": 0.99,
+      "Fourier_number": 0.4161738231147972,
+      "D80_m2_s": 2.3639829191318025e-09,
+      "D100_m2_s": 2.9723552375325345e-09,
+      "F100C": 125.0420715682526
+    }
+  ],
+  "selected_total_factor": 100,
+  "added_factor": 99,
+  "contact_conductance_unchanged": 0.32,
+  "scope": "Approximate internal-transport scale; not a joint fit of internal and contact resistances"
+}

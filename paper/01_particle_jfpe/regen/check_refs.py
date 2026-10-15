@@ -25,6 +25,7 @@ MAIN_FILES = [
     "sec_verification_reshape.tex",
     "sec_validation_reshape.tex",
     "sec_discussion_reshape.tex",
+    "table_governing_equations.tex",
 ]
 MOVED = [
     "moved_full/" + n
@@ -44,6 +45,9 @@ SUPP_FILES = [
     "supplementary_submission_evidence.tex",
     "supplementary_submission_dtmarch.tex",
     "supplementary_submission_finite_contact.tex",
+    "supplementary_submission_controls.tex",
+    "supplementary_submission_properties.tex",
+    "supplementary_submission_equations.tex",
 ]
 ARCHIVE_FILES = ["supplementary.tex", *MOVED]
 

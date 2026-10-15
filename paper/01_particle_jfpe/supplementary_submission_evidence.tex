@@ -1,6 +1,6 @@
 \section{Gas-composition and outlet-equilibrium calculation}
 \label{sup:evidence:outlet}\label{sup:evidence:checks}\label{sup:evidence:outstanding}
-This section gives the equilibrium calculation behind the residual-hexane floor quoted in the main text. The pressure-feasible solvent activity used for the outlet check is $a_{\mathrm{h}}^{*}=\min(1,\yh P/P_{\mathrm{sat}}^{\mathrm{h}}(T))$. An equilibrium at a specified $y_h$ and temperature gives an \emph{equilibrium loading}, not the time to reach it. Table~\ref{tab:evidence:floor} separates GAB-retained solvent from the total dry-shell inventory, which also holds pore gas; its grid is a literature-based range of last-tray states, not a plant sensor trace. The last-tray total of $4.5$--$66.0$ ppm without the oil-solution arm refers to $y_h=0.003$--$0.03$ and 100--\SI{110}{\celsius}. With the oil-dissolution sensitivity it becomes $8.1$--$112.4$ ppm; this band must not be formed by adding the arm to a total-meal isotherm as if their overlap had been measured. In the experiments' pure-hexane gas the floor is many times higher. The DT march of Sec.~\ref{sup:dtmarch} reads this floor at its declared exit gas, $y_h=0.01$, below the dry-shell tail.
+This section gives the equilibrium calculation behind the residual-hexane floor quoted in the main text. The pressure-feasible solvent activity used for the outlet check is $a_{\mathrm{h}}^{*}=\min(1,\yh P/P_{\mathrm{sat}}^{\mathrm{h}}(T))$. The \emph{equilibrium loading} is evaluated at a specified $y_h$ and temperature; the time needed to approach it follows from the transient transport calculation. Table~\ref{tab:evidence:floor} separates GAB-retained solvent from the total dry-shell inventory, which also holds pore gas; its grid samples a literature-based range of last-tray conditions. The last-tray total of $4.5$--$66.0$ ppm without the oil-solution arm refers to $y_h=0.003$--$0.03$ and 100--\SI{110}{\celsius}. With the oil-dissolution sensitivity it becomes $8.1$--$112.4$ ppm; this band must not be formed by adding the arm to a total-meal isotherm as if their overlap had been measured. In the experiments' pure-hexane gas the floor is many times higher. The DT march of Sec.~\ref{sup:dtmarch} reads this floor at its declared exit gas, $y_h=0.01$, below the dry-shell tail.
 
 Table~\ref{tab:evidence:floor} uses a pressure of \SI{101.3}{\kilo\pascal}.
 The $y_h=1$ row represents the experimental pure-hexane gas, not
@@ -21,4 +21,48 @@ $0.10$ & $188.23$ & $222.45$ & $118.90$ & $152.22$\\
 $1.0$ & $2312.41$ & $2654.60$ & $1416.61$ & $1749.88$\\
 \bottomrule\end{tabular}\end{table}
 
-Two numerical checks mark the limits of the coupled form rather than validate it. In the ideal-binary reduction the scalar Fick identity holds to $6.34\times10^{-16}$, while at finite pressure the low-water coefficient comparison leaves a \SI{3.799}{\percent} discrepancy that no calibration sets to zero. The default coupled interface formulation at \SI{409.15}{\kelvin} admits a pore hexane fraction of at most $0.857$; this restriction does not define the supplied external bath. The Faner experiment with a water-bearing particle treats the pure bulk gas separately from its binary state in the pores and at the surface; the earlier property-table checks are separate from this march. The experiments that would settle what the comparisons leave open are listed at the end of Sec.~\ref{sup:missingfull}.
+Two numerical checks examine the limiting behaviour of the coupled formulation. In the ideal-binary reduction the scalar Fick identity holds to $6.34\times10^{-16}$, while at finite pressure the low-water coefficient comparison leaves a \SI{3.799}{\percent} discrepancy retained in the comparison. The default coupled interface formulation at \SI{409.15}{\kelvin} admits a pore hexane fraction of at most $0.857$; this restriction does not define the supplied external bath. The Faner experiment with a water-bearing particle treats the pure bulk gas separately from its binary state in the pores and at the surface; the earlier property-table checks are separate from this march. The experiments that would settle what the comparisons leave open are listed at the end of Sec.~\ref{sup:missingfull}.
+
+\subsection{Gas-phase flux contributions after core extinction}
+\label{sup:fluxcontributions}
+The transport decomposition uses the outer dry-shell face of the same
+Faner and DT histories plotted in the main text. For a recorded hexane
+transfer $\Delta n_{\mathrm{h,out}}$ over a step $\Delta t$, the particle-side
+boundary ledger gives $N_{\mathrm h}^{\mathrm g}
+=\Delta n_{\mathrm{h,out}}/(4\pi\Rp^2\Delta t)$. The recorded gas flux
+$\Nt$ excludes retained-matrix water transport. The discrete advective
+composition is the upstream value $y_{\mathrm{h,up}}$: the outer-cell
+value for outward gas motion and the surface value for inward motion.
+The contributions are
+\[
+N_{\mathrm h}^{\mathrm g}=y_{\mathrm{h,up}}\Nt+J_{\mathrm h},
+\qquad
+f_{\mathrm{motion}}=\frac{y_{\mathrm{h,up}}\Nt}{N_{\mathrm h}^{\mathrm g}},
+\qquad
+f_{\mathrm{diffusion}}=\frac{J_{\mathrm h}}{N_{\mathrm h}^{\mathrm g}}.
+\]
+These are signed fractions of net outward hexane flux. Negative values
+oppose removal; a fraction greater than unity represents an outward
+contribution partly cancelled by the other contribution.
+Table~\ref{tab:sub:fluxcontributions} gives representative values.
+
+\begin{table}[htbp]\centering\small
+\caption{Signed contributions to regime-C hexane flux at the outer dry-shell face.}
+\label{tab:sub:fluxcontributions}
+\begin{tabular}{@{}lrrr@{}}\toprule
+Experiment & Time, s & Total vapour motion, \% & Binary diffusion, \%\\\midrule
+Faner & 89.9 & 100.01 & $-0.01$\\
+Faner & 240.0 & 100.70 & $-0.70$\\
+DT & 508.5 & 97.33 & 2.67\\
+DT & 1766.5 & $-29.35$ & 129.35\\
+\bottomrule\end{tabular}\end{table}
+
+Binary diffusion opposes outward hexane removal in all 62 recorded
+Faner regime-C advances. In the DT history, total gas motion first turns
+inward at 613.5 s, turns outward after film depletion (first recorded
+at 708.3 s), then is inward in all 199 advances from 778.3 s to exit.
+Hexane continues to diffuse outward during these intervals. The reported clocks are discrete observation times, not
+localized events marking zero total gas flux. The decomposition identifies
+the direction and relative magnitude of the two gas-phase contributions.
+Determining which resistance controls removal requires a separate sensitivity
+analysis of heat supply, pore diffusivity and retained-water transport.

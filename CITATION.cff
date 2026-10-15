@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Please cite the accompanying manuscript and identify this submission snapshot when using the code."
+type: software
+title: "Particle model of hexane removal and water uptake in soybean meal desolventizing"
+version: "submission-2026-10-15"
+date-released: 2026-10-15
+repository-code: "https://github.com/tomas3svoboda/dt_particle_model"
+license: MIT
+authors:
+  - family-names: Svoboda
+    given-names: Tom??
+    orcid: "https://orcid.org/0000-0002-1568-4252"
+  - family-names: Slukov?
+    given-names: Marcela
+  - family-names: Moucha
+    given-names: Tom??
+  - family-names: Hoang
+    given-names: Phuong

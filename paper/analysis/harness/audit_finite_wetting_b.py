@@ -33,8 +33,8 @@ def audit(path, parts=None, dry_path=None):
             native_and_bath = {
                 name: sha
                 for name, sha in segment["source_sha256_at_entry"].items()
-                if "core2" in Path(name).parts
-                or Path(name).name
+                if "core2" in Path(name.replace("\\", "/")).parts
+                or Path(name.replace("\\", "/")).name
                 in ("destiny_v3_exit105.json", "dt_feed_massfilm_gated_R1p5.json")
             }
             if first is None:
@@ -86,7 +86,7 @@ def audit(path, parts=None, dry_path=None):
         if not tail["bath_exit_reached"] or not tail["sources_unchanged_during_run"]:
             raise ValueError("complete source-stable C required")
         for name, expected in data["source_sha256_at_entry"].items():
-            if "core2" in Path(name).parts or Path(name).name == "destiny_v3_exit105.json":
+            if "core2" in Path(name.replace("\\", "/")).parts or Path(name.replace("\\", "/")).name == "destiny_v3_exit105.json":
                 if tail["source_sha256_at_entry"].get(name) != expected:
                     raise ValueError("native physics or prescribed bath changed at B/C")
         if tail["initial"]["time_s"] != data["history"][-1]["time_s"]:

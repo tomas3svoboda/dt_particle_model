@@ -1,0 +1,48 @@
+{
+  "complete": true,
+  "audit_passed": true,
+  "tip": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db4_Fuller_F100_K032_C2p5\\c_01.json",
+  "b_tip": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db4_Fuller_F100_K032\\b_01.json",
+  "parts": [
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db4_Fuller_F100_K032\\b_01.json"
+  ],
+  "full_audit": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-15\\dt_factor100\\runs\\dt_Db4_Fuller_F100_K032_C2p5\\audit_01.json",
+  "final": {
+    "time_s": 1766.5355008060146,
+    "temperature_k": 378.11412889855734,
+    "particle_water_kg_kg_dry": 0.2117679932550341,
+    "external_water_kg_kg_dry": 0.0,
+    "hexane_kg_kg_dry": 0.00016722450350254204,
+    "moisture_wet_basis": 0.17473540677091395,
+    "retained_water_cells_kg_kg_dry": [
+      0.19422836827276943,
+      0.21419879750313914
+    ],
+    "y_hexane_cells": [
+      0.11166135825713067,
+      0.0797462447312413
+    ],
+    "combined_W_H_U": [
+      3.471759559374239e-06,
+      2.741506210040833e-09,
+      4.568796065789146
+    ],
+    "surface": {
+      "temperature_k": 378.12341919958163,
+      "surface_y_hexane": 0.010001805459500974,
+      "liquid_water_kg_m2": 0.0,
+      "external_water_flux_kg_m2_s": -2.2712691970924877e-06,
+      "external_hexane_flux_kg_m2_s": 1.6180004444363044e-07,
+      "external_energy_flux_w_m2": -8.286122660120519,
+      "water_node_residual_kg_m2_s": 6.904165553069802e-18,
+      "hexane_node_residual_kg_m2_s": 5.3723064679604e-19,
+      "energy_node_residual_w_m2": 4.660982710902317e-11,
+      "water_activity_trace_deficit": 0.16687494479861387,
+      "beta": -5.1834035901800405e-05,
+      "physically_qualifying": false
+    }
+  },
+  "scope": "Same accepted B history; regime-C maximum step 2.5 instead of 5 s",
+  "factor": 100,
+  "contact_conductance_mol_m2_s": 0.32
+}

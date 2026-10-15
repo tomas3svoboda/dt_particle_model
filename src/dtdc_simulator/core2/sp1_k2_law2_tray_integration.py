@@ -47,6 +47,7 @@ from __future__ import annotations
 
 import hashlib
 import math
+import os
 import struct
 from dataclasses import dataclass, field, replace
 from types import MappingProxyType
@@ -1549,7 +1550,17 @@ def _core_supplied_water_closure(
     dry_mass = inventory.dry_matter_kg
     loading = inventory.retained_water_kg / dry_mass
     try:
-        activity = arm.activity(loading)
+        # W2-C, owner ruling 3 of 2026-10-12 (study-lane knob, default OFF): with
+        # ``DTDC_PARTICLE_PAPER1_IMBIBITION`` exactly "1" the interface activity is the
+        # paper-1 convention's (``study_lane/paper1_particle_port.py``: the continued Luikov
+        # law through W_cap inclusive, typed refusals below W_ref and above W_cap).  Off,
+        # the ``else`` is the former call.
+        if os.environ.get("DTDC_PARTICLE_PAPER1_IMBIBITION") == "1":
+            from .study_lane import paper1_particle_port
+
+            activity = paper1_particle_port.closure_activity_at_site(arm, loading)
+        else:
+            activity = arm.activity(loading)
     except sorbed_water.SorbedWaterLawError as error:
         raise SP1K2SorbedWaterFloorError(
             f"K{inventory.layer} sorbed-water arm refused at retained loading "
@@ -3557,7 +3568,26 @@ def _packet_entries_after(
                 external_water_after = math.fsum((inventory.external_water_kg, -water_decrement))
         else:
             external_water_after = inventory.external_water_kg - water_decrement
-        if arm is not None:
+        if os.environ.get("DTDC_PARTICLE_PAPER1_IMBIBITION") == "1":
+            # W2-C, owner ruling 3 of 2026-10-12 (study-lane knob, default OFF): the
+            # paper-1 finite-contact imbibition law (eq:finitecontact, eq:liquidstocksupply)
+            # on this packet in place of the D9-a drain, which is not called; it refuses
+            # typed on a layer without the paper-convention arm.  The split is the shipped
+            # ``drain_split_kg``.  Off, the ``elif`` is the former D9-a block byte for byte.
+            from .study_lane import paper1_particle_port
+
+            external_water_after, retained_water_after = paper1_particle_port.drain_split_at_site(
+                arm=arm,
+                film_kg=external_water_after,
+                dry_matter_kg=inventory.dry_matter_kg,
+                retained_water_kg=retained_water_after,
+                front_fraction=packet_front,
+                macro_step_s=steps[layer].accepted.macro_step_s,
+                sphere_params=codec.sphere_params,
+                layer=layer,
+                packet_id=packet.packet_id,
+            )
+        elif arm is not None:
             # D9-a-2 (owner ruling 2026-09-13): THE DRAIN.  After the Law-2
             # advance and before the film-onset check, the surface film
             # imbibes into the hexane-free shell - the film-onset deposit's

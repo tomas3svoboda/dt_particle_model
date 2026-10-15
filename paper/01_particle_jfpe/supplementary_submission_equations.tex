@@ -1,0 +1,367 @@
+\section{Governing and supporting equations with their source basis}
+\label{sup:equations}
+The following tables expand the main-text equation map. They are a reading
+guide to the equations already defined in the two documents, with their
+literature basis or derivation stated alongside. A citation to a general
+framework does not identify the present coupled model or its coefficients
+as a published or experimentally validated law. ``Present closure'' denotes
+the formulation adopted here; a literature-informed coefficient can remain
+an engineering assumption.
+
+Throughout the tables, $\mathcal D_r(F)=r^{-2}\partial_r(r^2F)$,
+$s=\front$, $z=(s/\Rp)^3$, and $[\cdot]_{\mathrm w}^{\mathrm d}$ is the
+dry-side value minus the wet-side value. The region label w denotes the
+liquid-hexane core; component w denotes water. $C_k$ includes all local
+forms of component $k$ per particle volume, $u$ is total stored energy
+per volume, and $J_E=q+\sum_k\bar h_kj_k$. Local $j_k$ is molar;
+surface-film $j_k$ is mass-based and converts through $M_k$.
+$y_k$ and $Y_k$ are gas mole and mass fractions, respectively.
+Fluxes are outward-positive. Repeated state arguments are omitted;
+the referenced equation or section supplies the full definitions and domains.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{10pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.14\linewidth}
+>{\raggedright\arraybackslash}p{0.37\linewidth}
+>{\raggedright\arraybackslash}p{0.25\linewidth}
+>{\raggedright\arraybackslash}p{\dimexpr0.24\linewidth-6\tabcolsep\relax}@{}}
+\caption{Solved balances, regional inventories and interface conditions.}
+\label{tab:equations:balances}\\
+\toprule
+Equation / block & Compact expression & Physical role / scope & Source / derivation\\\midrule
+\endfirsthead
+\multicolumn{4}{l}{\tablename~\thetable\ (continued)}\\
+\toprule
+Equation / block & Compact expression & Physical role / scope & Source / derivation\\\midrule
+\endhead
+\midrule\multicolumn{4}{r}{Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Local components\newline
+(\ref*{M-eq:localcomp})
+& $\partial_t C_k^\alpha+\mathcal D_r(j_k^\alpha)=0$
+& Conserve water and hexane in either smooth region; phase redistribution has no separate source.
+& Component conservation, with the present regional storage and fluxes.\\[5pt]
+Local energy\newline
+(\ref*{M-eq:localenergy})
+& $\partial_t u^\alpha+\mathcal D_r(J_E^\alpha)=0$\newline
+  $J_E=q+\sum_k\bar h_kj_k$
+& Evolve temperature while counting each stream's enthalpy once; dry meal and oil are immobile.
+& Energy conservation on one component datum; present coupling.\\[5pt]
+Dry-shell storage\newline
+(\ref*{M-eq:drystorage})
+& $C_k^{\mathrm d}=\varepsilon_gcy_k+\Cdm W_k/M_k$
+& Add pore-gas and retained inventories without including gas in $W_k$.
+& Present phase-volume accounting, closed by the property laws in Table~\ref{tab:equations:closures}.\\[5pt]
+Core material label\newline
+(\ref*{M-eq:shellconserved})
+& $\mathrm D_s(\Cdm\Xhwa)/\mathrm Dt=0$
+& Preserve activation loading in surviving wet material; no relative core hexane flux.
+& Present historical-core assumption; $X_{\mathrm h,w}^a=X_c(\theta_a)$ at activation.\\[5pt]
+Wet-core energy\newline
+(\ref*{M-eq:wetenergy})
+& $\begin{aligned}
+e_{\mathrm w}={}&h_{\mathrm{dm}}+X_{\mathrm w}h_{\mathrm{w,l}}\\
+&+\Xhwa u_{\mathrm{h,l}}-B_{\mathrm h}(1,T,w_o)
+\end{aligned}$
+& Store matrix, water, historical hexane and binding energy per dry-meal mass.
+& Present composite caloric closure; pure-fluid and binding sources in Table~\ref{tab:equations:closures}.\\[5pt]
+Moving volumes\newline
+(\ref*{M-eq:movingcomp})--(\ref*{M-eq:movingenergy})
+& $\displaystyle\frac{\mathrm d}{\mathrm dt}\int_V b\,\mathrm dV
+  =-\int_{\partial V}(F_b-\dot r_b b)n_r\,\mathrm dA$\newline
+  $b=C_k,u$; $F_b=j_k,J_E$
+& Include material swept by the moving radial boundaries. Here $\dot r_b$ is their radial speed and $n_r=\pm1$.
+& Moving-control-volume conservation, specialized to a sphere in the main text.\\[5pt]
+Front jumps\newline
+(\ref*{M-eq:rhcomp})--(\ref*{M-eq:rhenergy})
+& $[j_k-\dot s C_k]_{\mathrm w}^{\mathrm d}=0$\newline
+  $[J_E-\dot s u]_{\mathrm w}^{\mathrm d}=0$
+& Match water, hexane and energy across the sharp front, with stored donor states in swept terms.
+& Rankine--Hugoniot conservation \citep{crank1984free}; present phase closures.\\[5pt]
+Front speed\newline
+(\ref*{M-eq:frontvelocity})
+& $\displaystyle\dot s=-\frac{[q]+\bar h_{\mathrm{w,d}}j_{\mathrm{w,d}}
+                   -\bar h_{\mathrm{w,w}}j_{\mathrm{w,w}}}{\mathcal E_\Gamma}$\newline
+  $\mathcal E_\Gamma=\bar h_{\mathrm{h,d}}(C_{\mathrm{h,d}}^\Gamma-C_{\mathrm{h,w}}^{\mathrm b})
+                  -(u_{\mathrm d}^\Gamma-u_{\mathrm w}^{\mathrm b})$
+& Heat-fed recession derived from both jumps and zero relative wet-side hexane flux; no total-vapour pressure resistance.
+& Present elimination of the hexane flux. Eq.~\eqref{eq:sub:latent} explains $\mathcal E_\Gamma$.\\[5pt]
+Sequential drainage\newline
+(\ref*{M-eq:complementarity})
+& $X_f\ge0$, $R_p-s\ge0$\newline
+  $X_f(R_p-s)=0$, $\dot s\le0$
+& Exhaust external free hexane before recession; admit primary drainage only.
+& Present regime and admissibility conditions; violations are rejected.\\[5pt]
+Shared swept volume\newline
+(\ref*{M-eq:sweptvolume})
+& $Q_\Gamma=V_{R_p}(z_{\mathrm{new}}-z_{\mathrm{old}})/\Delta t$
+& Use one signed volume-change rate in component, energy and front equations.
+& Present finite-volume geometric conservation.\\[5pt]
+Retained-water capacity\newline
+(\ref*{M-eq:capcomplementarity})
+& $0\le W_{\mathrm{cap}}-W\ \perp\ \lambda\ge0$
+& Enforce capacity as an active set; $\lambda=0$ below capacity.
+& Present constraint using the source-domain retention capacity; Sec.~\ref{sup:parameters}.\\
+\end{longtable}
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.14\linewidth}
+>{\raggedright\arraybackslash}p{0.37\linewidth}
+>{\raggedright\arraybackslash}p{0.25\linewidth}
+>{\raggedright\arraybackslash}p{\dimexpr0.24\linewidth-6\tabcolsep\relax}@{}}
+\caption{Transport, retention, surface exchange and thermophysical closures.}
+\label{tab:equations:closures}\\
+\toprule
+Equation / block & Compact expression & Physical role / scope & Source / derivation\\\midrule
+\endfirsthead
+\multicolumn{4}{l}{\tablename~\thetable\ (continued)}\\
+\toprule
+Equation / block & Compact expression & Physical role / scope & Source / derivation\\\midrule
+\endhead
+\midrule\multicolumn{4}{r}{Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Binary pore exchange\newline
+(\ref*{M-eq:binaryflux})
+& $J_{\mathrm w}=-J_{\mathrm h}=-\Lwh\nabla_{\mathrm{comp}}\Xi$\newline
+  $\Xi=(\mu_{\mathrm w}-\mu_{\mathrm h})/(RT)$\newline
+  $\Lwh=cy_{\mathrm w}y_{\mathrm h}D_b$
+& Separate the two vapours relative to molar-average motion; the mobility vanishes at purity.
+& Maxwell--Stefan framework \citep{krishna1997maxwell}; present nonideal force evaluation.\\[5pt]
+Retained-water and total gas flux\newline
+(\ref*{M-eq:retflux})
+& $N_{\mathrm{w,ret}}=-\Lwr\nabla_{\mathrm{comp}}(\mu_{\mathrm{w,ret}}/RT)$\newline
+  $N_i^{\mathrm g}=y_iN_t+J_i$
+& Supply a distinct water path; recover $N_t$ algebraically from continuity. Independent Soret terms are omitted.
+& Present two-path closure; retained mobility construction in Sec.~\ref{sup:finitecontact}.\\[5pt]
+Nonisothermal face force\newline
+(\ref*{M-eq:compositionforcepath})
+& $\displaystyle G_{\mathrm{comp}}(\Xi)=\frac1d\int_0^1
+ \left.\frac{\partial\Xi}{\partial y_{\mathrm h}}\right|_{T(\lambda),P}
+ \frac{\mathrm dy_{\mathrm h}}{\mathrm d\lambda}\,\mathrm d\lambda$
+& Integrate only the composition force along the actual interface reconstruction; ordinary faces use a common $T$.
+& Present reconstruction under the negligible-Soret approximation.\\[5pt]
+Pore diffusivity\newline
+(\ref*{M-eq:porediffusivitytemperature})
+& $\displaystyle D_b=4.0\times10^{-10}
+ \left(\frac{T}{378.15\,\mathrm K}\right)^{1.75}
+ \frac{101325\,\mathrm{Pa}}{P}$\newline
+  $[D_b]=\mathrm{m^2/s}$
+& Nominal pore-effective law; assumes constant hindrance. Prescribed magnitudes $(2$--$6)\times10^{-10}$ m$^2$/s are a sensitivity range.
+& Shape: \citet{fuller1966new}. Scalar scale: \citet{cardarelli2002modeling}. Binary magnitude unvalidated; Sec.~\ref{sup:temperatureproperties}.\\[5pt]
+External water and hexane\newline
+(\ref*{M-eq:externalwatermass})--(\ref*{M-eq:externalwaternode})
+& $\dot L_{\mathrm w}=j_{\mathrm w,p}-j_{\mathrm w,g}$\newline
+  $j_{\mathrm h,p}=j_{\mathrm h,g}$\newline
+  $\mathrm d(L_{\mathrm w}u_{\mathrm w,l})/\mathrm dt
+     =J_{E,\mathrm p}-J_{E,\mathrm g}$
+& Store condensate separately. Water appearance/depletion conserves stock and energy; hexane passes without added resistance.
+& Present surface balances and declared hexane-transparent water-film limit.\\[5pt]
+Gas-film components\newline
+(\ref*{M-eq:gasfilmcomponents})
+& $\begin{aligned}
+j_{\mathrm h,g}={}&Y_{\mathrm h,s}j_t\\
+ &+K_f(Y_{\mathrm h,s}-Y_{\mathrm h,b})\Phi(j_t/K_f)\\
+j_{\mathrm w,g}={}&j_t-j_{\mathrm h,g}
+\end{aligned}$
+& Finite-flow ideal binary mass-coordinate film, using equation-of-state phase traces.
+& Analytic film closure adopted here; heat/mass exposure convention in Sec.~\ref{sup:detail:geometry}.\\[5pt]
+Ackermann correction\newline
+(\ref*{M-eq:ackermannfactor})
+& $\Phi(x)=x/(e^x-1)$, $\Phi(0)=1$\newline
+  $\displaystyle\beta=\frac{j_{\mathrm w,g}c_{p,\mathrm w}^{f}
+                   +j_{\mathrm h,g}c_{p,\mathrm h}^{f}}{h_Q}$
+& Both signed component capacity fluxes enter, including opposing flows; declared band $|\beta|\le3$.
+& Adopted analytic finite-flow correction; the wider film-law band remains an assumption.\\[5pt]
+Gas-film energy\newline
+(\ref*{M-eq:gasfilmenergy})
+& $q_{\mathrm{in}}=h_Q\Phi(\beta)(T_{\mathrm{bulk}}-T_s)$\newline
+  $\displaystyle J_{E,\mathrm g}=-q_{\mathrm{in}}
+      +\sum_k(j_{k,\mathrm g}/M_k)\bar h_k(T_s)$
+& Combine sensible heat and stream enthalpy on the same datum; no added latent source.
+& Present energy coupling; bed coefficient from \citet{faner2008desolventizado}.\\[5pt]
+Finite liquid entry\newline
+(\ref*{M-eq:finitecontact})
+& $G_\ell=(d/\mathcal L_\ell+1/K_\ell)^{-1}$\newline
+  $N_\ell=-G_\ell(\psi_s-\psi_p)$, $\psi=\ln a_{\mathrm{w,ret}}$
+& Contact and interior resistances in series; active only in a liquid-connected dry shell. Donor energy follows the water.
+& Present effective closure. Mobility and contact constructions in Sec.~\ref{sup:contactscale} and Table~\ref{tab:equations:support}.\\[5pt]
+Finite film supply\newline
+(\ref*{M-eq:liquidstocksupply})
+& $\begin{aligned}
+j_{\ell,\mathrm{in}}\le\max\bigl(0,{}&L_{\mathrm w,old}/\Delta t\\
+ &+j_{\mathrm w,p}^{\mathrm{base}}-j_{\mathrm w,g}\bigr)
+\end{aligned}$
+& Bound inward addition by stored and newly supplied water; debit film and credit particle equally.
+& Present discrete stock-availability condition.\\[5pt]
+Native-meal hexane retention\newline
+(\ref*{M-eq:gab})
+& $\displaystyle W_{\mathrm{native}}=\frac{X_m Cx}{(1-x)(1-x+Cx)}$\newline
+  $x=K(T)a_{\mathrm h}$
+& GAB total-meal isotherm; the reference sample already includes residual oil.
+& Soybean-meal fit of \citet{cardarelli1996hexane}; temperature-dependent $C$ and $K$.\\[5pt]
+Oil anchoring\newline
+(\ref*{M-eq:oilanchorcorrection})
+& $W_{\mathrm h}=\alpha_oW_{\mathrm{h,native}}+\beta_oq_o$\newline
+  $\alpha_o=(1-w_o)/(1-w_{o,\mathrm{ref}})$\newline
+  $\beta_o=(w_o-w_{o,\mathrm{ref}})/(1-w_{o,\mathrm{ref}})$\newline
+  $q_o=0.9635a_{\mathrm h}^{2.7036}$
+& Adjust off-reference oil content without duplicating reference oil. Use the same weights for sensible heat.
+& Present reference-anchored composite construction; source and comparison convention in Sec.~\ref{sup:oilmap}.\\[5pt]
+Retained water\newline
+(\ref*{M-eq:luikov})
+& $W_{\mathrm w}=A_1/[1+A_2\ln(1/a_{\mathrm w})]$\newline
+  $\ln a_{\mathrm w}=(1-A_1/W_{\mathrm w})/A_2$
+& Temperature-independent nominal isotherm. Positive low-water extension is declared; no lower water floor.
+& Modified Luikov fit \citep{luz2006isotermas,pixton1975moisture,luikov1975systems}; source limits in main Sec.~\ref*{M-sec:thermo:properties}.\\[5pt]
+Oil heat capacity\newline
+(\ref*{M-eq:oilheatcapacity})
+& $c_{p,\mathrm o}(T)=1024+3T$ J/(kg K)
+& Soybean-oil sensible capacity; $T$ in kelvin, reported range 299.15--433.15 K.
+& Rounded linear fit, Table 7 of \citet{garciarojas2013thermophysical}.\\[5pt]
+Dry-matrix sensible energy\newline
+(\ref*{M-eq:drymatrixsensibleenergy})
+& $\begin{aligned}
+\Delta u_{\mathrm{dm}}={}&\alpha_oc_{p,\mathrm{native}}(T-T_r)\\
+ &+\beta_o[1024(T-T_r)\\
+ &\qquad+1.5(T^2-T_r^2)]
+\end{aligned}$
+& Analytic integral of the same capacity used for the temperature derivative. $T_r$ denotes the solid reference $T_s$ of the full equation.
+& Integration of the oil fit with present reference anchoring; oil correction cancels at $w_o=0.0195$.\\[5pt]
+Fluid properties and equilibrium\newline
+Sec.~\ref*{M-sec:thermo:properties}
+& $f_{i,\mathrm g}=f_{i,\mathrm l}$ at an admitted interface\newline
+  $\bar h_{i,\mathrm g}=h_{i,\mathrm g}^{\mathrm{ideal}}+\bar h_{i,\mathrm g}^{\mathrm{res}}$
+& Close liquid density, fugacities and caloric values. Binary gas uses a second-virial mixture with a cross term.
+& Hexane: \citet{span2003eos1,span2003eos2}; water: \citet{wagner2002iapws,iapws2018r695}; mixture: \citet{plyasunov2003crossvirial}.\\[5pt]
+Hexane binding energy\newline
+Sec.~\ref{sup:binding}
+& $\displaystyle\psi_{\mathrm h}=\frac{RT}{M_{\mathrm h}}\int_0^W
+                          \ln a_{\mathrm h}(\xi,T)\,\mathrm d\xi$\newline
+  $B_{\mathrm h}=T\partial_T\psi_{\mathrm h}-\psi_{\mathrm h}$
+& Derive retained-hexane calorics from the same retention law; no independently fitted sorption-heat source.
+& Present thermodynamic construction from the GAB activity law \citep{cardarelli1996hexane}.\\
+\end{longtable}
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.14\linewidth}
+>{\raggedright\arraybackslash}p{0.37\linewidth}
+>{\raggedright\arraybackslash}p{0.25\linewidth}
+>{\raggedright\arraybackslash}p{\dimexpr0.24\linewidth-6\tabcolsep\relax}@{}}
+\caption{Supporting correlations, coefficient constructions and diagnostics.
+The final three rows belong to the separate historical Fickian comparison.}
+\label{tab:equations:support}\\
+\toprule
+Equation / block & Compact expression & Physical role / scope & Source / derivation\\\midrule
+\endfirsthead
+\multicolumn{4}{l}{\tablename~\thetable\ (continued)}\\
+\toprule
+Equation / block & Compact expression & Physical role / scope & Source / derivation\\\midrule
+\endhead
+\midrule\multicolumn{4}{r}{Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Ideal activity reference\newline
+(\ref*{M-eq:aceiling})
+& $a^*=\min(1,P/P_{\mathrm{sat}}^{\mathrm h}(T))$
+& Diagnostic only. Actual binary phase equilibrium uses equation-of-state fugacities.
+& Ideal pressure-feasibility limit; present regime-ordering comparison.\\[5pt]
+Pressure-drop scale\newline
+(\ref*{M-eq:darcy})
+& $\Delta P\simeq(N_tRT/P)(\mu_g/B)(R_p-s)$
+& Assess the isobaric assumption. This estimate adds no Darcy resistance to the solved total-flux law.
+& Darcy scaling with declared illustrative permeability and vapour-flux bounds.\\[5pt]
+Ideal binary limit\newline
+(\ref*{M-eq:idealbinaryflux})
+& $J_{\mathrm h}=-cD_b\partial_r y_{\mathrm h}$\newline
+  $N_{\mathrm h}^{\mathrm g}=y_{\mathrm h}N_t+J_{\mathrm h}$
+& Interpret exchange versus carried flux. Computations retain the nonideal chemical force.
+& Ideal fixed-$(T,P)$ limit of the binary law \citep{krishna1997maxwell}.\\[5pt]
+Caloric consistency\newline
+(\ref*{M-eq:gauge})
+& $\partial R_E/\partial c_{\mathrm w}=R_{\mathrm w}$
+& Datum-shift identity for the discrete interface residuals; a consistency test, not an evolution equation.
+& Present consequence of consistent component and energy accounting.\\[5pt]
+Geometric comparator\newline
+(\ref*{M-eq:faneroracle})
+& $s=R_p[(X_{\mathrm h}-X_e)/(X_c-X_e)]^{1/3}$
+& Loading-to-radius comparison under uniform core/shell assumptions. The solved front instead follows the jumps.
+& Geometric reconstruction using source-based loadings; Sec.~\ref*{M-sec:validation:faner}.\\[5pt]
+Water-only temperature\newline
+(\ref*{M-eq:sorbedbp})
+& $a_{\mathrm w}(W_{\mathrm w})P_{\mathrm{sat}}^{\mathrm w}(T^*)=P$
+& Conditional equilibrium diagnostic. The coupled binary energy balance determines the actual temperature.
+& Water activity plus vapour-pressure relation; present interpretation.\\[5pt]
+Bed heat-transfer correlation\newline
+Sec.~\ref{sup:filmconvention}
+& $\Nu_\varepsilon=0.6941\Rey_\varepsilon^{0.579}\Pra^{1/3}$\newline
+  $\Rey_\varepsilon=\Rey/(1-\varepsilon)$\newline
+  $\Nu_\varepsilon=\Nu\varepsilon/(1-\varepsilon)$
+& Holder voidage $\varepsilon$ differs from particle porosity. Actual exposure and heat/mass scaling are separate assumptions.
+& Thesis convention \citep{faner2008desolventizado}; its 0.6941 prefactor is used.\\[5pt]
+Size-distribution weights\newline
+Sec.~\ref{sup:journalensemble}
+& $q_c=p_cd_c^3/\sum_b p_bd_b^3$\newline
+  $\overline X_k=\sum_cq_cX_{k,c}$
+& Convert number probabilities to dry-mass weights for equal-density spheres; requires complete class histories.
+& Geometric mass weighting; assumed distribution consistent with \citet{faner2019kinetics}.\\[5pt]
+Constant-rate slope\newline
+Sec.~\ref{sup:fanermultiplier}
+& $\displaystyle r_c=-\frac{\sum_j(t_j-\bar t)(X_j-\bar X)}
+                            {\sum_j(t_j-\bar t)^2}$
+& Least-squares slope of four digitized constant-rate observations; these data remain listed in the referenced section.
+& Observations: \citet{faner2019kinetics}, Fig.~2. Present boundary-exposure construction.\\[5pt]
+Exposure-factor construction\newline
+Sec.~\ref{sup:fanermultiplier}
+& $\displaystyle r_i(f)=\frac{3fh^0_{Q,i}}{\rho_{\mathrm{dm}}R_i c_{p,v}}
+ \ln\!\left(1+\frac{c_{p,v}(T_g-T_{\mathrm{boil}})}{\Delta h_{\mathrm{vap}}}\right)$
+& Match the constant-rate duty, then carry the exposure factor into the particle boundary. Falling-rate data are reserved for comparison.
+& Present inversion of the Ackermann heat balance; source data from \citet{faner2019kinetics}.\\[5pt]
+Saved flux decomposition\newline
+Sec.~\ref{sup:fluxcontributions}
+& $N_{\mathrm h}^{\mathrm g}=y_{\mathrm h,up}N_t+J_{\mathrm h}$\newline
+  $f_{\mathrm{motion}}=y_{\mathrm h,up}N_t/N_{\mathrm h}^{\mathrm g}$\newline
+  $f_{\mathrm{exchange}}=J_{\mathrm h}/N_{\mathrm h}^{\mathrm g}$
+& Signed diagnostic contributions; opposing terms can exceed 100\%. These are not causal rate-control fractions.
+& Present identity applied to saved native surface rates.\\[5pt]
+Reference water mobility\newline
+Sec.~\ref{sup:finitecontact}
+& $D_{\mathrm{app}}=D_{\mathrm{app,pore}}+g_{\mathrm{ret}}\mathcal L_{\mathrm{w,ret}}$
+& Original local linearization at a declared reference state; retain the resulting mobility when changing $D_b$.
+& Present construction using apparent response from \citet{touffet2026moisture}; material/state transfer assumed.\\[5pt]
+Retained-path diffusivity\newline
+Sec.~\ref{sup:finitecontact}
+& $D_{\mathrm{ret}}=M_{\mathrm w}\mathcal L A_1/(\rho_{\mathrm{dm}}A_2W^2)$
+& Isothermal uncapped Luikov limit. Liquid-connected shell uses total mobility factor 100; the added part is 99.
+& Derived from the activity derivative; factor scale informed by \citet{kunzel1995simultaneous}, transferred from other porous solids.\\[5pt]
+Contact-only fill time\newline
+Sec.~\ref{sup:contactscale}
+& $\begin{aligned}
+t={}&\frac{\rho_{\mathrm{dm}}R A_2W_{\mathrm{cap}}}{3M_{\mathrm w}A_1K_\ell}
+ \biggl[W_0-W_1\\
+ &+W_{\mathrm{cap}}\ln\frac{W_{\mathrm{cap}}-W_0}{W_{\mathrm{cap}}-W_1}\biggr]
+\end{aligned}$
+& Uniform-sphere scale used to construct $K_\ell$, with assumed endpoint and inverse-viscosity transfer. Actual march retains gradients and finite stock.
+& Present integration using the first 90-s uptake sample of \citet{hemmingsen2008water}; not an identified DT contact coefficient.\\[5pt]
+Historical Fickian shell\newline
+\eqref{eq:ficklimit}
+& $\begin{aligned}
+&\partial_t[\varepsilon_gc_{\mathrm{h,g}}+\rho_{\mathrm{dm,p}}W_{\mathrm{eq}}]\\
+&\qquad=\mathcal D_r(D_{\mathrm{eff}}\partial_r c_{\mathrm{h,g}})
+\end{aligned}$
+& Separate constitutive description for the 2008 falling-rate comparisons; not the nominal binary pore model.
+& Storage-corrected scalar diffusion comparison; \citet{cardarelli1998thesis,faner2008desolventizado}.\\[5pt]
+Historical diffusivity fit\newline
+\eqref{eq:sup:defflaw}
+& $\ln D_{\mathrm{eff}}=\ln A-E_a/(R_gT)$\newline
+  $\hspace*{2em}+\beta\ln(X_{\mathrm h}/X_{\mathrm{ref}})$
+& Arrhenius/loading fit for the separate Fickian comparator. This is not the nominal $D_b(T,P)$ law.
+& Regression on independent uptake coefficients \citep{cardarelli1998thesis}; Sec.~\ref{sup:surfaceloading}.\\[5pt]
+Historical supply diagnostic\newline
+\eqref{eq:sub:bottleneck}
+& $\displaystyle\Lambda=\frac{k_{\mathrm{dry}}(T_g-T_{\mathrm{int}})/\Delta h_{\mathrm{vap}}}
+ {D_{\mathrm{eff}}[c_{\mathrm{sat}}(T_g)-c_s]}$
+& Compare heat and diffusive supply at a fixed state in the separate Fickian description; no added resistance in the DT march.
+& Present scale comparison, defined in Sec.~\ref{sup:regime}.\\
+\end{longtable}
+\endgroup

@@ -581,6 +581,9 @@ class SubcriticalPacketAdapter:
             raise SubcriticalVariantHandoffRequired(str(error)) from error
         except SubcriticalStateError as error:
             raise SubcriticalPacketStateError(str(error)) from error
+        if tag1.exactness_mass_primary_armed():
+            # Owner ruling 1 of 2026-10-12: oil label and retained water from the decoded masses.
+            rebuilt = tag1.exactness_mass_primary_rebuild(rebuilt, native)
         exact_pairs = (
             (native.dry_meal_mass_kg, rebuilt.dry_meal_mass_kg),
             (native.oil_label_mass_kg, rebuilt.oil_label_mass_kg),

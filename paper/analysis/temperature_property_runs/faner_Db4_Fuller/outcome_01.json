@@ -1,0 +1,9 @@
+{
+  "complete": false,
+  "tip": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db4_Fuller\\event_03.json",
+  "failure": "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-14\\temperature_properties\\workspace_snapshot\\paper\\analysis\\temperature_property_runs\\faner_Db4_Fuller\\event_04.json",
+  "error": "face-departure solve rejected with exact rollback: face-departure accepted/cumulative ledger exceeded 1e-10",
+  "stage": "departure",
+  "controller_sha256": "fde7cc9da94f65e2ae1c89422b8e832570fede16a39dcf6ab68fcf5131b8f51d",
+  "scope": "from original feed, oil cp(T), original bath and native event/acceptance policies"
+}

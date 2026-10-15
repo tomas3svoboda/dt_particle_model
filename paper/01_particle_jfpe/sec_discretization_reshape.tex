@@ -29,8 +29,8 @@ The same rate enters both regional balances and the interfacial jumps.
 Backward-Euler integration solves temperatures, compositions, external
 liquid inventories and front position together. Component enthalpy transport
 and conductive heat use the same face states as the storage calculation.
-Detailed face reconstruction and nonlinear controls are given in
-Sec.~\ref*{S-sup:activation}.
+Detailed face reconstruction is given in Sec.~\ref*{S-sup:activation};
+history-specific controls are collected in Sec.~\ref*{S-sup:numericalcontrols}.
 
 \subsection{Phase changes and moving-interface events}
 When external free hexane is depleted, the dry shell can appear from zero
@@ -64,17 +64,15 @@ combined inventory balances are checked at a normalized tolerance of
 $10^{-10}$. Independent accumulation of the external exchanges provides
 a separate whole-history check. The four-cell Faner reconstruction uses a
 reporting allowance of $4\times10^{-10}$, corresponding to at most
-$10^{-11}$ kg water/kg dry meal; its step acceptance tolerance
-remains $10^{-10}$.
+$10^{-11}$ kg water/kg dry meal; its largest whole-history value is
+$3.9\times10^{-10}$, in water, and its step acceptance tolerance
+remains $10^{-10}$. The DT history stays below $5\times10^{-11}$ from
+dry-shell formation to exit and below $3.3\times10^{-13}$ before it
+(Section~\ref{sec:validation:dtmarch}).
 
-For regular Faner steps, the local nonlinear root criterion can be
-$10^{-8}$ while the component and energy acceptance checks retain
-$10^{-10}$. Near wet volume fractions below $10^{-7}$, the root criterion
-can be $2\times10^{-8}$ and the scaled conditioning ceiling $10^{18}$.
-These numerical controls do not change the component or energy equations,
-their conservation tolerance, or phase admissibility. The Supplementary
-Material reports the root residual, the conserved-inventory error and the
-terminal-time estimate separately. Halving the stationary-particle
-timestep and comparing two and four radial cells quantify particular
-sensitivities, not whole-history mesh convergence
+Root-residual criteria, seed tolerances and conditional extinction-time
+bounds are distinct from conservation acceptance; their case-specific
+values are stated once in Sec.~\ref*{S-sup:numericalcontrols}.
+The mesh and timestep comparisons reported with the results quantify
+selected sensitivities, not whole-history convergence
 (Section~\ref{sec:discussion:limits}).

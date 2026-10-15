@@ -36,7 +36,7 @@ def load_chain(tip):
         # the records store each parent as written on the authors' machine (absolute
         # or repository-relative, Windows separators); resolve it in this repository
         text = parent["result"].replace("\\", "/")
-        path = ROOT / text[text.index("paper/analysis/") :]
+        path = ROOT / text[text.rindex("paper/analysis/") :]
         if hashlib.sha256(path.read_bytes()).hexdigest() != parent["result_sha256"]:
             raise ValueError("parent result identity changed")
     return list(reversed(chain))

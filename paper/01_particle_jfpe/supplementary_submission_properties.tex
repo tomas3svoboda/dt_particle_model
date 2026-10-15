@@ -1,0 +1,73 @@
+\section{Temperature-dependent properties and prescribed sensitivity}
+\label{sup:temperatureproperties}
+The nominal pore and oil laws, source definitions and applicability
+assumptions are stated with main Eqs.~\ref*{M-eq:porediffusivitytemperature}
+and~\ref*{M-eq:oilheatcapacity}--\ref*{M-eq:drymatrixsensibleenergy}.
+The pore coefficient is evaluated at each common face temperature and
+pressure. Retained-water mobility, retention, conductivity, geometry and
+baths remain fixed; no moisture target or outlet is refitted.
+
+\paragraph{Reference-magnitude sensitivity.}
+The reference magnitudes $2$, $4$ and $6\times10^{-10}$ m$^2$/s are
+prescribed alternatives, not a measured uncertainty interval. Each case
+starts from the original feed; the DT regime-A feed is common because
+binary pore transport is inactive there. Accepted-state restarts retain
+their own property law and cumulative ledgers. The DT histories pass
+independent water, hexane and energy reconstruction from shell formation
+to exit at $10^{-10}$; complete Faner histories pass the independently
+accumulated exterior-rate audit at $4\times10^{-10}$.
+
+\begin{table}[htbp]\centering\small
+\caption{Complete DT histories under the temperature-dependent laws.
+Reference diffusivity in $10^{-10}$ m$^2$/s at 105$^\circ$C and one atmosphere;
+liquid contact conductance 0.32 mol/(m$^2$ s), total mobility factor 100.}
+\label{tab:temperatureproperties:dt}
+\begin{tabular}{@{}rrrrrr@{}}\toprule
+$D_{b,\mathrm{ref}}$ & \shortstack{Moisture\\\% wet} & \shortstack{Hexane\\ppm wet} & \shortstack{Hexane\\mg/kg dry} & \shortstack{$T$\\$^\circ$C} & \shortstack{Film ends\\s}\\\midrule
+2 & 17.3193 & 145.480 & 175.985 & 104.9340 & 703.666\\
+4 & 17.4618 & 138.389 & 167.695 & 104.9648 & 703.260\\
+6 & 17.6151 & 130.274 & 158.154 & 105.0085 & 702.554\\
+\bottomrule\end{tabular}\end{table}
+
+The endpoint span is 0.296 moisture percentage points; increasing the reference from 2 to 6 reduces residual hexane by 10.45\%. This quantifies sensitivity within the prescribed interval; it does not establish the true material coefficient.
+
+\begin{table}[htbp]\centering\small
+\caption{Complete Faner histories with the same prescribed reference diffusivities,
+four radial cells and the fixed constant-rate exposure multiplier.}
+\label{tab:temperatureproperties:faner}
+\begin{tabular}{@{}rrrrr@{}}\toprule
+$D_{b,\mathrm{ref}}$ & \shortstack{Core ends\\s} & \shortstack{$0.20\to0.10$\\s} & \shortstack{$X_{\mathrm h}(240)$\\kg/kg dry} & \shortstack{$T(240)$\\$^\circ$C}\\\midrule
+2 & 87.647 & 17.745 & 0.001606 & 114.351\\
+4 & 87.362 & 17.746 & 0.001606 & 114.354\\
+6 & 87.824 & 17.745 & 0.001606 & 114.349\\
+\bottomrule\end{tabular}\end{table}
+
+The Faner falling interval and outlet change very little across these cases. The adaptive histories use different accepted intervals and documented recovery controls. Without refinement of the complete histories, the subsecond differences in core-ending time cannot be separated from numerical-history effects.
+
+\paragraph{Temperature-shape comparison.}
+At the same reference magnitude 4 and with the oil law unchanged, a complete constant-$D_b$ DT history gives 138.286 ppm wet hexane and 17.4648\% moisture. Applying the Fuller shape changes them by +0.075\% and -0.00291 percentage points. The reference magnitude therefore matters more here than this prescribed temperature shape.
+
+The temperature-shape hexane difference is smaller than the observed regime-C timestep change below; it should not be interpreted as a resolved physical improvement.
+
+\paragraph{Regime-C timestep check.}
+With the same accepted regime-B checkpoint, the nominal laws, factor 100 and $K_\ell=0.32$ mol/(m$^2$ s), reducing the maximum regime-C step from 5 to 2.5 s changes wet-basis moisture by +0.01170 percentage points, residual hexane by -0.295\%, temperature by -0.00063 K and first recorded film depletion by -1.079 s. Both histories pass the independent component and energy audit at $10^{-10}$. This checks regime-C timestep sensitivity; full-history mesh and timestep convergence remains open.
+
+\paragraph{Oil heat capacity and caloric consistency.}
+The oil fit and its analytic energy integral are given in main
+Eqs.~\ref*{M-eq:oilheatcapacity}--\ref*{M-eq:drymatrixsensibleenergy}.
+At 105$^\circ$C it gives 2158.45 rather than 2000 J/(kg K).
+The reference anchoring cancels the oil correction for Faner; at the DT oil
+fraction 0.013740458, dry-matrix capacity at 105$^\circ$C changes from
+2318.8621 to 2317.9313 J/(kg K), or $-0.04014\%$. This is a capacity
+comparison, not a bound on the nonlinear trajectory error. Regenerated
+DT feed reaches shell activation 2.46 microseconds earlier than the
+former constant-oil feed. Its independent exterior-rate audit is stated
+in Sec.~\ref{sup:dtmarch}. The physical property adapter supplies the same capacity to wet and dry
+temperature derivatives; stored constant capacity fields remain numerical
+reference scales.
+
+Numerical recoveries and accepted-state controls for these cases are
+collected in Sec.~\ref{sup:numericalcontrols:properties}. Earlier contact,
+mobility-factor and mesh comparisons retain their constant-property scope.
+The new laws remain conditional material assumptions, not validated binary
+transport or an equipment model.

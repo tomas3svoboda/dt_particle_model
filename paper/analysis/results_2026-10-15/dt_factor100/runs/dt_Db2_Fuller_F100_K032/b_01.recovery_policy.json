@@ -1,0 +1,19 @@
+{
+  "factor": 100.0,
+  "contact_conductance": 0.32,
+  "reused_policy": "2026-10-14 nominal run_b_032.py and run_b_with_birth_diagnostics.py",
+  "root_seed": null,
+  "root_seed_sha256": null,
+  "same_IVP_failed_birth_iterate_only": true,
+  "other_case_accepted_material_imported": false,
+  "departure_duration_factors": [
+    1,
+    0.25,
+    0.0625,
+    0.015625,
+    0.00390625,
+    0.0009765625
+  ],
+  "native_acceptance_changed": false,
+  "source_sha256": "20b9dd14343470962431153d6f6c3022c6ae272e10e3c152f8e1dcd79efa2ffe"
+}
