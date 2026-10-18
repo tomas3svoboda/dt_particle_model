@@ -7,9 +7,12 @@ Sec.~\ref*{M-sec:model:liquidcontact}.
 
 The constitutive derivations below remain the basis of the updated DT case.
 The factor, contact-conductance and earlier timestep tables retain their
-original constant-property calculations: $D_b=6\times10^{-10}$ m$^2$/s
-and oil capacity 2000 J/(kg K). They document earlier sensitivity evidence,
-not sensitivity or convergence of the updated temperature-dependent case.
+original constant-property calculations: $D_b=6\times10^{-10}$ m$^2$/s,
+oil capacity 2000 J/(kg K), two radial cells and the earlier capacity
+bound on retained water, before the retained-water continuation of main
+Eq.~(\ref*{M-eq:waterbridge}) and the convergence ladder. They document
+earlier sensitivity evidence, not sensitivity or convergence of the
+reported 64-cell case.
 The updated nominal history and balances are reported in
 Sec.~\ref{sup:dtmarch}; its property sensitivities are reported separately.
 
@@ -125,7 +128,7 @@ Mobility factor $F$ & Interior share & Uptake slowdown vs.\ contact alone\\\midr
 \bottomrule\end{tabular}\end{table}
 
 \begin{table}[htbp]\centering\small
-\caption{DT outlet against the total liquid-water mobility factor $F$ at
+\caption{Earlier record: DT outlet against the total liquid-water mobility factor $F$ at
 $K_\ell=0.32$ mol/(m$^2$ s); every other input as in
 Table~\ref{tab:finitecontact:sensitivity}. The last three rows give the
 maximum normalized water (W), hexane (H) and energy (U) defects of the
@@ -184,6 +187,14 @@ separated; the cake uptake also exceeds the model's retained capacity.
 Thus 90 s is not an isolated intraparticle equilibration time or a strict
 bound on it. The resulting $K_\ell$ is a conditional scale estimate,
 transferred to DT meal without fitting its outlet.
+The anchor derivation drives $W$ towards $W_{\mathrm{cap}}$. Under the
+retained-water continuation of main Eq.~(\ref*{M-eq:waterbridge}),
+$W_{\mathrm{cap}}$ is no longer an upper bound: retained water continues
+above it towards the saturated loading 0.55 kg/kg, with activity rising to
+one along the continuation, and the 64-cell DT particle reaches 0.237 kg/kg at
+its peak. The anchor therefore fixes $K_\ell$ from the time to approach
+$W_{\mathrm{cap}}$, and above it the same $K_\ell$ acts on the activity
+difference given by the continuation.
 
 With the adopted liquid-water mobility, the resistance length
 $\mathcal L_\ell/K_\ell$ is 0.262 mm, 0.175 times the DT radius. At
@@ -200,16 +211,20 @@ film's water stock and the capacity all remain active in the calculation.
 \label{sup:contactsensitivity}
 Table~\ref{tab:finitecontact:sensitivity} lists completed DT marches at
 four liquid contact conductances with every other input held constant,
-the earlier reference case 0.10 among them. The outlet moisture is bounded by the condensate supply
-and the retention capacity: the external water film is consumed before
+the earlier reference case 0.10 among them. This is the earlier
+two-cell record, made while retained water was still bounded by the
+isotherm capacity. In it the outlet moisture is bounded by the condensate
+supply and that capacity: the external water film is consumed before
 the exit in every case, and a fourfold change in $K_\ell$ moves the outlet
 moisture by 1.3 percentage points and the wet-basis hexane by 43 ppm.
-The conductance sets how long the film persists, not how much water the
-particle finally holds.
+In that record the conductance sets how long the film persists rather
+than how much water the particle finally holds; the sensitivity has not
+been recomputed with the retained-water continuation or at 64 cells.
 
 \begin{table}[htbp]\centering\small
-\caption{DT outlet against the liquid contact conductance; total mobility
-factor 1000, two radial cells, regime-C maximum step 5 s, exit at
+\caption{Earlier record: DT outlet against the liquid contact conductance,
+computed before the retained-water continuation and the convergence
+ladder; total mobility factor 1000, two radial cells, regime-C maximum step 5 s, exit at
 1766.5 s. Wet-basis values exclude the external film, which is zero at
 the exit in every case. Ordinary regime-B intervals were 0.1 s, except
 0.2 s in the earlier 0.10 case.}

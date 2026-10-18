@@ -1,3 +1,5 @@
+% Quantitative checks transferred from the full-length SI without strengthening their claims.
+% Condensed 2026-10-03; the long version is in superseded_2026-10-03/.
 \section{Gas-composition and outlet-equilibrium calculation}
 \label{sup:evidence:outlet}\label{sup:evidence:checks}\label{sup:evidence:outstanding}
 This section gives the equilibrium calculation behind the residual-hexane floor quoted in the main text. The pressure-feasible solvent activity used for the outlet check is $a_{\mathrm{h}}^{*}=\min(1,\yh P/P_{\mathrm{sat}}^{\mathrm{h}}(T))$. The \emph{equilibrium loading} is evaluated at a specified $y_h$ and temperature; the time needed to approach it follows from the transient transport calculation. Table~\ref{tab:evidence:floor} separates GAB-retained solvent from the total dry-shell inventory, which also holds pore gas; its grid samples a literature-based range of last-tray conditions. The last-tray total of $4.5$--$66.0$ ppm without the oil-solution arm refers to $y_h=0.003$--$0.03$ and 100--\SI{110}{\celsius}. With the oil-dissolution sensitivity it becomes $8.1$--$112.4$ ppm; this band must not be formed by adding the arm to a total-meal isotherm as if their overlap had been measured. In the experiments' pure-hexane gas the floor is many times higher. The DT march of Sec.~\ref{sup:dtmarch} reads this floor at its declared exit gas, $y_h=0.01$, below the dry-shell tail.
@@ -47,21 +49,31 @@ contribution partly cancelled by the other contribution.
 Table~\ref{tab:sub:fluxcontributions} gives representative values.
 
 \begin{table}[htbp]\centering\small
-\caption{Signed contributions to regime-C hexane flux at the outer dry-shell face.}
+\caption{Signed contributions to regime-C hexane flux at the outer dry-shell
+face, first and last recorded advances of the 64-cell histories. The DT
+shares are not mesh-converged (see text).}
 \label{tab:sub:fluxcontributions}
 \begin{tabular}{@{}lrrr@{}}\toprule
 Experiment & Time, s & Total vapour motion, \% & Binary diffusion, \%\\\midrule
-Faner & 89.9 & 100.01 & $-0.01$\\
-Faner & 240.0 & 100.70 & $-0.70$\\
-DT & 508.5 & 97.33 & 2.67\\
-DT & 1766.5 & $-29.35$ & 129.35\\
+Faner & 85.7 & 100.01 & $-0.01$\\
+Faner & 240.0 & 100.68 & $-0.68$\\
+DT & 505.1 & 77.65 & 22.35\\
+DT & 1766.5 & 231.99 & $-131.99$\\
 \bottomrule\end{tabular}\end{table}
 
-Binary diffusion opposes outward hexane removal in all 62 recorded
-Faner regime-C advances. In the DT history, total gas motion first turns
-inward at 613.5 s, turns outward after film depletion (first recorded
-at 708.3 s), then is inward in all 199 advances from 778.3 s to exit.
-Hexane continues to diffuse outward during these intervals. The reported clocks are discrete observation times, not
+Binary diffusion opposes outward hexane removal in all 310 recorded
+Faner regime-C advances, by 0.005 to 0.68\% of the net flux. In the
+64-cell DT history, total gas motion turns inward at 512.6~s, while the
+external water film is still being imbibed, and stays inward through the
+water-uptake period until the particle water peaks, at
+\SI{0.237}{\kilogram\per\kilogram} dry, at 1385.1~s; hexane then leaves only
+by outward binary diffusion against the incoming gas. From the peak to exit
+the particle dries, the total gas flux is outward and diffusion opposes
+removal. These shares are not mesh-converged: the net exit flux is small
+beside its two opposing parts, and the diffusion share at exit is $+95$,
+$+50$, $-36$, $-87$ and $-132$\% at 2, 8, 16, 32 and 64 cells, while the
+gas-motion share at the first advance falls from 98.5\% at 2 cells to
+77.6\% at 64 cells. The reported clocks are discrete observation times, not
 localized events marking zero total gas flux. The decomposition identifies
 the direction and relative magnitude of the two gas-phase contributions.
 Determining which resistance controls removal requires a separate sensitivity

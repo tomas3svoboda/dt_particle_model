@@ -921,6 +921,49 @@ def drain_ledger_residual_kg(
     return math.fsum((film_after, retained_after)) - math.fsum((film_kg, retained_water_kg))
 
 
+def bridged_water_activity(loading_kg_kg_dry: float, saturated_loading_kg_kg_dry: float, luikov=None) -> float:
+    """THE single implementation of the retained-water law above the Luikov cap.
+
+    Shared by the tower's sorbed-water arm (``SorbedWaterArm.activity``) and the
+    Paper-1 particle path (``paper/analysis/harness/particle_imbibition_bridge``),
+    owner ruling GT_PS2_OWNER_RULING_PAPER1_FILM_IMBIBITION_BRIDGE_2026-10-17.
+    Horrobin's finite-intercept form ``W_sat - W = c1 (1 - a_w)`` joined
+    continuously at the published anchor ``(W_cap, 0.799)`` (so ``c1 =
+    (W_sat - W_cap)/(1 - 0.799)``): the pinned Luikov law at and below the cap,
+    the linear segment above it, exactly ``1.0`` at and above ``W_sat``. A
+    saturated loading at or below the cap is the high-loading record's
+    truncation case. Callers keep their own domain refusals.
+    """
+
+    loading = loading_kg_kg_dry
+    if loading >= saturated_loading_kg_kg_dry:
+        return 1.0
+    if loading <= BRIDGE_ANCHOR_LOADING_KG_KG:
+        return sorption.water_activity(loading, LUIKOV_PARAMS if luikov is None else luikov)
+    return BRIDGE_ANCHOR_ACTIVITY + (1.0 - BRIDGE_ANCHOR_ACTIVITY) * (
+        (loading - BRIDGE_ANCHOR_LOADING_KG_KG)
+        / (saturated_loading_kg_kg_dry - BRIDGE_ANCHOR_LOADING_KG_KG)
+    )
+
+
+def bridged_water_retained(activity: float, saturated_loading_kg_kg_dry: float) -> float:
+    """Inverse of the bridge segment for ``a_w >= 0.799``; ``W_sat`` at ``a_w >= 1``.
+
+    Defined only for a positive-width bridge (``W_sat > W_cap``); at and above
+    a water activity of one the loading is the saturated loading.
+    """
+
+    if not saturated_loading_kg_kg_dry > BRIDGE_ANCHOR_LOADING_KG_KG:
+        raise SorbedWaterLawError("the bridge inverse needs a saturated loading above the cap")
+    if not math.isfinite(activity) or activity < BRIDGE_ANCHOR_ACTIVITY:
+        raise SorbedWaterLawError("the bridge inverse is defined only at a_w >= 0.799")
+    if activity >= 1.0:
+        return saturated_loading_kg_kg_dry
+    return BRIDGE_ANCHOR_LOADING_KG_KG + (activity - BRIDGE_ANCHOR_ACTIVITY) / (
+        1.0 - BRIDGE_ANCHOR_ACTIVITY
+    ) * (saturated_loading_kg_kg_dry - BRIDGE_ANCHOR_LOADING_KG_KG)
+
+
 def bridge_join_discontinuity() -> float:
     """The published anchor minus the Luikov correlation AT the cap.
 
@@ -1011,14 +1054,9 @@ class SorbedWaterArm:
                 f"qualified Luikov lower bound {LUIKOV_PARAMS.W_ref}; no "
                 "low-moisture continuation is authorized (Tier 2 DRY_SURFACE)"
             )
-        if loading >= self.x_bf:
-            return 1.0
-        if loading <= BRIDGE_ANCHOR_LOADING_KG_KG:
-            return sorption.water_activity(loading, LUIKOV_PARAMS)
-        # x_bf > W_cap here, because loading < x_bf and loading > W_cap.
-        return BRIDGE_ANCHOR_ACTIVITY + (1.0 - BRIDGE_ANCHOR_ACTIVITY) * (
-            (loading - BRIDGE_ANCHOR_LOADING_KG_KG) / (self.x_bf - BRIDGE_ANCHOR_LOADING_KG_KG)
-        )
+        # The shared implementation (ruling 2026-10-17); bit-identical to the
+        # former inline segments.
+        return bridged_water_activity(loading, self.x_bf)
 
     def film_onset_ceiling_kg(self, dry_matter_kg: float) -> float:
         """The retained-water mass at which a packet deposits a free film."""

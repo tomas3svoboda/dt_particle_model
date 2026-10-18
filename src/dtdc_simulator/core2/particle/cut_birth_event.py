@@ -52,6 +52,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Sequence
 
+from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 from dtdc_simulator.core2.particle import coupled_pore as cp
 from dtdc_simulator.core2.particle import coupled_transport as ct
 from dtdc_simulator.core2.particle import cut_geometry as cg
@@ -458,6 +459,8 @@ def assemble_birth_backward_euler(
     surface_boundary: ct.PoreBoundary,
     *,
     enforce_reduced_film_thresholds: bool = True,
+    newborn_temperature_gradient_k_m: float | None = None,
+    newborn_composition_gradient_m_inv: float | None = None,
 ) -> BirthAssembly:
     """Assemble one exact zero-old-dry-volume birth residual or roll back."""
 
@@ -469,7 +472,11 @@ def assemble_birth_backward_euler(
             dt_s,
             surface_boundary,
             enforce_reduced_film_thresholds,
+            newborn_temperature_gradient_k_m,
+            newborn_composition_gradient_m_inv,
         )
+    except StepBudgetExceeded:
+        raise
     except BirthStepError:
         raise
     except Exception as exc:
@@ -488,6 +495,8 @@ def _assemble_birth_backward_euler(
     dt_s: float,
     surface_boundary: ct.PoreBoundary,
     enforce_reduced_film_thresholds: bool,
+    newborn_temperature_gradient_k_m: float | None = None,
+    newborn_composition_gradient_m_inv: float | None = None,
 ) -> BirthAssembly:
     if not isinstance(before, ww.WetWaterState):
         raise TypeError("before must be a WetWaterState")
@@ -593,6 +602,8 @@ def _assemble_birth_backward_euler(
         before.oil_fraction_labels,
         config,
         enforce_reduced_film_thresholds=enforce_reduced_film_thresholds,
+        newborn_temperature_gradient_k_m=newborn_temperature_gradient_k_m,
+        newborn_composition_gradient_m_inv=newborn_composition_gradient_m_inv,
     )
     changes = _inventory_changes(
         before,

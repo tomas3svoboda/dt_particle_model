@@ -6,14 +6,13 @@ This is a prescribed-bath numerical experiment, not a reconstructed measured
 preheating history or a qualified prediction of the missing initial moisture.
 """
 
-from dataclasses import asdict, dataclass, fields, replace
+from dataclasses import asdict, fields, replace
 from pathlib import Path
 import argparse
 import hashlib
 import json
 import math
 import pickle
-import sys
 import time
 import traceback
 
@@ -24,10 +23,11 @@ import experiment_core2_dt_birth as shared
 import finite_film_core2_study as study
 import positive_water_continuation as continued
 from era_stamp import REPO_ROOT
+from faner_numerical_controls import FanerStudyControls
+from particle_solver_configuration import ParticleModelParameters, PAPER_CHECKPOINT_CODEC
+from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 
-FANER_HELPERS = REPO_ROOT / "scratchpad/particle_destiny_2026-10-06/faner_recovery/active_faner"
-sys.path.insert(0, str(FANER_HELPERS))
-from attempt_active_faner import active_binary_controls  # noqa: E402
+from faner_initialization import active_binary_controls
 from bulk_endpoint import (  # noqa: E402
     INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER,
     declared_faner_film_multiplier,
@@ -36,34 +36,6 @@ from bulk_endpoint import (  # noqa: E402
 )
 
 core = study.core
-
-
-@dataclass(frozen=True)
-class FanerStudyControls(core.ci.CutSolverControls):
-    """Declared wider numerical chart; original acceptance fields validated.
-
-    The native constructor additionally caps a solver coordinate at 35.
-    The owner's RULE 2 authorizes this separately named study range through
-    70. The validation probe advances nothing and is never used in a solve.
-    """
-
-    def __post_init__(self):
-        if (
-            not math.isfinite(self.maximum_logit_magnitude)
-            or not 10 <= self.maximum_logit_magnitude <= 70
-        ):
-            raise ValueError("declared Faner coordinate magnitude must lie in [10,70]")
-        if (
-            not math.isfinite(self.nonlinear_residual_tolerance)
-            or not 0 < self.nonlinear_residual_tolerance <= 1e-9
-        ):
-            raise ValueError("declared local numerical residual tolerance cannot exceed 1e-9")
-        kwargs = {
-            f.name: getattr(self, f.name) for f in fields(core.ci.CutSolverControls) if f.init
-        }
-        kwargs["maximum_logit_magnitude"] = min(self.maximum_logit_magnitude, 35.0)
-        kwargs["nonlinear_residual_tolerance"] = min(self.nonlinear_residual_tolerance, 1e-10)
-        core.ci.CutSolverControls(**kwargs)
 
 
 def wider_numerical_controls(controls, magnitude, regional_tolerance=None, *, extended=False):
@@ -316,6 +288,8 @@ class FanerAttachedMarch:
 
     def __init__(self, args):
         self.wet = replace(core.wet_core.WetCoreParams(), X_water=args.water, w_o=args.oil)
+        if getattr(args, "paper_properties", False):
+            self.wet = ParticleModelParameters().wet_parameters(self.wet)
         self.params = core.sphere.SphereParams(
             particle_radius_m=args.radius, radial_cells=args.cells, wet_core=self.wet
         )
@@ -517,11 +491,20 @@ def continue_radial(checkpoint, surface, front_rate, record, args):
     dry_mass = (
         config.wet.wet.rho_dm_p * 4 / 3 * math.pi * before.transport.geometry.master_grid.R**3
     )
-    dt = args.continuation_dt
+    controller = checkpoint.get("radial_controller")
+    if controller is not None:
+        if (
+            controller["maximum_dt_s"] != args.continuation_dt
+            or controller["minimum_dt_s"] != args.minimum_dt
+        ):
+            raise ValueError("resume must preserve declared adaptive timestep controls")
+        dt = controller["next_dt_s"]
+    else:
+        dt = args.continuation_dt
     with (
         declared_faner_film_multiplier(boundary.film_boundary.stress_multiplier),
         pure_bulk_domain_adapter(),
-        shared.bounded_path_proof(3000000, args.wall_budget),
+        shared.physical_advance_proof_budget(3000000, args.wall_budget) as begin_advance,
         shared.path_bounds.monotone_hexane_path_enclosure([]),
         study.magnitude_storage_scale(),
     ):
@@ -532,6 +515,7 @@ def continue_radial(checkpoint, surface, front_rate, record, args):
                 break
             trial_dt = min(dt, args.horizon - before.transport.time_s)
             committed = before
+            path_work = begin_advance()
             while trial_dt >= args.minimum_dt:
                 candidate = core.cut.candidate_from_state(
                     before.transport,
@@ -564,6 +548,9 @@ def continue_radial(checkpoint, surface, front_rate, record, args):
                         gas_only_surface=True,
                         maximum_restart_trial_residual=0.05,
                         difference_mode=args.difference_mode,
+                        search_tolerance=(
+                            1e-11 if getattr(args, "paper_properties", False) else None
+                        ),
                         beta_decoder=lambda t, b, y: shared.film_at_beta(
                             boundary,
                             config,
@@ -585,12 +572,18 @@ def continue_radial(checkpoint, surface, front_rate, record, args):
                     ) / trial_dt
                     before, surface = step.after, audit
                     carry = {**carry, **combined}
+                    dt = min(args.continuation_dt, trial_dt * 1.5)
                     checkpoint.update(
                         before=before,
                         carry=carry,
                         surface=surface,
                         front_rate=front_rate,
                         source_record=str(args.out),
+                        radial_controller={
+                            "maximum_dt_s": args.continuation_dt,
+                            "minimum_dt_s": args.minimum_dt,
+                            "next_dt_s": dt,
+                        },
                     )
                     record["attempts"].append(
                         {
@@ -602,6 +595,7 @@ def continue_radial(checkpoint, surface, front_rate, record, args):
                             "ledger": asdict(step.ledger),
                             "surface": asdict(audit),
                             "combined_conservation": combined,
+                            "path_work": dict(path_work),
                         }
                     )
                     with args.out.with_suffix(".accepted.pkl").open("wb") as stream:
@@ -610,7 +604,6 @@ def continue_radial(checkpoint, surface, front_rate, record, args):
                     args.out.write_text(
                         json.dumps(record, indent=2, allow_nan=True), encoding="utf-8"
                     )
-                    dt = min(args.continuation_dt, trial_dt * 1.5)
                     break
                 except Exception as error:
                     record["attempts"].append(
@@ -626,7 +619,9 @@ def continue_radial(checkpoint, surface, front_rate, record, args):
                             "optimizer_debug": getattr(error, "optimizer_debug", None),
                         }
                     )
-                    if "computational budget exhausted" in str(error):
+                    if isinstance(
+                        error, StepBudgetExceeded
+                    ) or "computational budget exhausted" in str(error):
                         record["stop"] = "computation budget reached; accepted checkpoint preserved"
                         return
                     trial_dt *= 0.5
@@ -642,7 +637,15 @@ def run(args):
     sources = [
         Path(__file__),
         *sorted((REPO_ROOT / "src/dtdc_simulator/core2").rglob("*.py")),
-        *sorted(FANER_HELPERS.glob("*.py")),
+        *(
+            Path(__file__).with_name(name)
+            for name in (
+                "bulk_endpoint.py",
+                "faner_initialization.py",
+                "particle_solver_configuration.py",
+                "faner_numerical_controls.py",
+            )
+        ),
         *(
             REPO_ROOT / "paper/analysis/harness" / name
             for name in [
@@ -668,7 +671,11 @@ def run(args):
         "preheat_history_measured": False,
         "initial_hexane_basis": "declared kg/kg dry meal; source basis unspecified",
         "source_sha256_at_entry": entry,
+        "property_parameters": (
+            asdict(ParticleModelParameters()) if getattr(args, "paper_properties", False) else None
+        ),
         "attempts": [],
+        "checkpoint_codec": PAPER_CHECKPOINT_CODEC,
     }
     record["inputs"]["out"] = str(args.out)
     record["inputs"]["root_seed"] = str(args.root_seed) if args.root_seed else None
@@ -678,6 +685,10 @@ def run(args):
         try:
             parent_path = args.resume.with_name(args.resume.name.replace(".accepted.pkl", ".json"))
             parent = json.loads(parent_path.read_text(encoding="utf-8"))
+            if parent.get("checkpoint_codec") != PAPER_CHECKPOINT_CODEC:
+                raise ValueError(
+                    "canonical continuation requires the stable-controls v2 checkpoint codec; legacy __main__ checkpoints are separate diagnostic artifacts"
+                )
             if not parent["sources_unchanged_during_run"]:
                 raise ValueError("parent sources changed during its run")
             approved_changes = []
@@ -701,6 +712,8 @@ def run(args):
                     )
             with args.resume.open("rb") as stream:
                 checkpoint = pickle.load(stream)
+            if checkpoint.get("checkpoint_codec") != PAPER_CHECKPOINT_CODEC:
+                raise ValueError("checkpoint and result codec declarations differ")
             before = checkpoint["before"]
             if (
                 not isinstance(before, core.ci.CutIntegratorState)
@@ -808,7 +821,12 @@ def run(args):
                     args.root_seed.read_bytes()
                 ).hexdigest()
             before, config, controls, carry = shared.initialize_from_feed(
-                activation, coefficient_case=args.coefficient_case
+                activation,
+                coefficient_case=args.coefficient_case,
+                property_parameters=(
+                    ParticleModelParameters() if getattr(args, "paper_properties", False) else None
+                ),
+                dry_local_residual_tolerance=getattr(args, "dry_local_tolerance", None),
             )
             record["coefficient_case"] = {
                 "identifier": args.coefficient_case,
@@ -834,20 +852,30 @@ def run(args):
                 "reason": "native gas-only barrier can exceed 30 in admissible low-moisture newborn states",
             }
             seed_options = {}
-            if args.leading_seed:
+            if args.leading_seed or getattr(args, "auto_leading_seed", False):
                 leading = leading_birth_seed(before, config, controls, feed.boundary)
                 record["leading_birth_seed"] = leading
-                if not leading["success"]:
+                automatic = getattr(args, "auto_leading_seed", False)
+                if not leading["success"] and not automatic:
                     raise RuntimeError("native leading-balance seed root did not close")
-                seed_options.update(
-                    interface_seed_temperature=leading["interface_temperature_k"],
-                    film_beta_seed=leading["beta"],
-                )
-                profile = leading_pore_profile(before, config, feed.boundary, leading)
-                record["leading_pore_profile"] = profile
-                if not profile["success"]:
-                    raise RuntimeError("native leading pore-profile shooting did not close")
-                seed_options["leading_profile_seed"] = {**leading, **profile}
+                if leading["success"]:
+                    profile = leading_pore_profile(before, config, feed.boundary, leading)
+                    record["leading_pore_profile"] = profile
+                    if not profile["success"] and not automatic:
+                        raise RuntimeError("native leading pore-profile shooting did not close")
+                    if profile["success"]:
+                        seed_options.update(
+                            interface_seed_temperature=leading["interface_temperature_k"],
+                            film_beta_seed=leading["beta"],
+                            leading_profile_seed={**leading, **profile},
+                        )
+                record["birth_seed_selection"] = {
+                    "policy": "leading if both seed equations close; otherwise existing native finite-birth initializer",
+                    "selected": "leading" if seed_options else "native finite-birth",
+                    "physical_solve_attempts_started": 0,
+                    "physical_state_advanced_or_projected": False,
+                    "physical_work_allowance_reset": False,
+                }
             checkpoint = {
                 "before": before,
                 "config": config,
@@ -855,11 +883,29 @@ def run(args):
                 "carry": carry,
                 "boundary": feed.boundary,
                 "feed": activation,
+                "checkpoint_codec": PAPER_CHECKPOINT_CODEC,
             }
             with args.out.with_suffix(".activation.pkl").open("wb") as stream:
                 pickle.dump(checkpoint, stream)
             journal = []
-            with shared.path_bounds.monotone_hexane_path_enclosure(journal):
+            grouped = (
+                grouped_birth_search(before)
+                if getattr(args, "grouped_birth_search", False)
+                else None
+            )
+            if grouped is not None:
+                from scipy.optimize._numdiff import group_columns
+
+                record["declared_birth_search"] = {
+                    "option": "--grouped-birth-search",
+                    "search_colors": int(max(group_columns(grouped.pattern)) + 1),
+                    "unknowns": int(grouped.pattern.shape[1]),
+                    "budget_tolerance_cap_law_changed": False,
+                }
+            with (
+                shared.path_bounds.monotone_hexane_path_enclosure(journal),
+                grouped if grouped is not None else _no_search_change(),
+            ):
                 step, audit = shared.advance_birth(
                     before,
                     config,
@@ -870,6 +916,7 @@ def run(args):
                     args.budget,
                     solver_policy="physical",
                     gas_only_surface=True,
+                    trace_coordinates=getattr(args, "paper_properties", False),
                     root_seed=root_seed,
                     **seed_options,
                 )
@@ -901,7 +948,53 @@ def run(args):
     return record
 
 
-def main():
+class _no_search_change:
+    def __enter__(self):
+        return None
+
+    def __exit__(self, *exc):
+        return False
+
+
+class grouped_birth_search:
+    """Declared search option: grouped-colour Newton directions for the birth.
+
+    The search Jacobian of the joint birth is assembled by column groups of the
+    native birth sparsity (cell block) plus a safe dense superset for the three
+    surface variables and the exterior rows. Dense physical derivatives still own
+    the first and the final (acceptance/condition) Jacobians, so the budget,
+    tolerances, condition cap and laws are unchanged. Solves of another size
+    keep the former dense search.
+    """
+
+    def __init__(self, before):
+        layout = shared.birth.layout_for_birth(before)
+        native = shared.bi.birth_sparsity(layout).matrix.toarray()
+        pattern = np.zeros((layout.residual_count + 3, layout.unknown_count + 3), dtype=bool)
+        pattern[:-3, :-3] = native
+        pattern[:-3, -3:] = True
+        pattern[-3:, 2 * layout.wet_piece_count :] = True
+        self.pattern = pattern
+        self.grouped_solves = 0
+
+    def __enter__(self):
+        self.original = shared.study.numerics.domain_aware_newton
+
+        def search(fun, x0, **kwargs):
+            if np.size(x0) == self.pattern.shape[1] and "search_jacobian_sparsity" not in kwargs:
+                self.grouped_solves += 1
+                return self.original(fun, x0, search_jacobian_sparsity=self.pattern, **kwargs)
+            return self.original(fun, x0, **kwargs)
+
+        shared.study.numerics.domain_aware_newton = search
+        return self
+
+    def __exit__(self, *exc):
+        shared.study.numerics.domain_aware_newton = self.original
+        return False
+
+
+def argument_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--water", type=float, default=0.05)
@@ -920,6 +1013,7 @@ def main():
     parser.add_argument("--budget", type=int, default=2400)
     parser.add_argument("--root-seed", type=Path)
     parser.add_argument("--leading-seed", action="store_true")
+    parser.add_argument("--auto-leading-seed", action="store_true")
     parser.add_argument("--coordinate-limit", type=float, default=70.0)
     parser.add_argument(
         "--coefficient-case",
@@ -935,7 +1029,15 @@ def main():
     parser.add_argument("--difference-mode", choices=["forward", "central"], default="forward")
     parser.add_argument("--regional-tolerance", type=float, default=1e-10)
     parser.add_argument("--continued-water", action="store_true")
+    parser.add_argument("--paper-properties", action="store_true")
+    parser.add_argument("--dry-local-tolerance", type=float)
     parser.add_argument("--extended-regional-root", action="store_true")
+    parser.add_argument("--grouped-birth-search", action="store_true")
+    return parser
+
+
+def main():
+    parser = argument_parser()
     args = parser.parse_args()
     if args.extended_regional_root and not args.resume:
         raise SystemExit("extended root study requires an actual accepted continuation checkpoint")

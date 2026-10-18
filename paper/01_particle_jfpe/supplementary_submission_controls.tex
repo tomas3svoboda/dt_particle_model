@@ -1,7 +1,19 @@
+% History-specific controls consolidated from the Faner, contact and
+% temperature-property sections. No numerical setting is changed here.
 \subsection{Controls for the prescribed-bath histories}
 \label{sup:numericalcontrols}
 The histories use a uniform regime-A body with a separate surface
-temperature, followed by four radial cells for Faner and two for DT.
+temperature, followed by 64 uniform radial cells for both Faner and DT at
+the middle time level of the convergence ladder (Sec.~\ref{sup:ladder}).
+Every step of those histories is accepted under the gates of main
+Sec.~\ref*{M-sec:numerics:gates}, ``Solver acceptance gates'': water,
+hexane and surface rows at $10^{-10}$ with the Newton search targeting the
+same value, energy rows at $\max(10^{-10},2\eta_i)$ with the row's
+representability floor $\eta_i$ recorded, and the shell-birth step only
+when the condition number of the column-scaled Jacobian its search solves
+is below $10^{8}$. The root controls described in the paragraphs below
+belong to the earlier four-cell Faner and two-cell DT histories, which the
+ladder replaces; they are kept here as the record of those calculations.
 Root residuals, numerical seeds and terminal-time estimates are reported
 separately from the normalized component and energy acceptance limit
 $10^{-10}$. Accepted-state records retain the incoming state, source
@@ -10,7 +22,7 @@ remain available with the calculation records (Sec.~\ref{sup:deposit}).
 
 \paragraph{Faner roots and core extinction.}
 \label{sup:numericalcontrols:faner}
-The existing ordinary-root controller permits residuals up to $10^{-8}$;
+In the earlier four-cell Faner history, the ordinary-root controller permitted residuals up to $10^{-8}$;
 the updated positive-core target solves use the regional $10^{-9}$
 criterion where the stricter root stalls. The dedicated vanishing-core
 mode permits $2\times10^{-8}$ only for incoming wet volume fractions
@@ -31,10 +43,13 @@ caused by decimal rounding are refused under the unchanged conditioning
 ceiling, then replaced by the next prescribed target without changing
 stored geometry.
 
-Faner's independent whole-history exterior-rate accumulation uses a
-reporting allowance $4\times10^{-10}$, corresponding to at most
-$10^{-11}$ kg water/kg dry at initial water 0.025 kg/kg. This allowance
-is distinct from the per-step $10^{-10}$ conservation gate. The observed
+The earlier four-cell Faner history's independent whole-history
+exterior-rate accumulation used a reporting allowance $4\times10^{-10}$,
+corresponding to at most $10^{-11}$ kg water/kg dry at initial water
+0.025 kg/kg, distinct from the per-step $10^{-10}$ conservation gate. The
+64-cell ladder histories need no such allowance: their independent
+original-feed audits close at $1.2\times10^{-12}$ (Faner) and
+$5.0\times10^{-12}$ (DT) against $10^{-10}$. The observed
 defects are reported with the histories and are far below the loading
 discrepancy. Earlier mesh and timestep comparisons remain identified as
 constant-property evidence (Sec.~\ref{sup:fanerrefinement}).
@@ -70,9 +85,10 @@ from 5 to 1.25 s. At $K_\ell=0.20$, exact supply exhaustion gave a
 transferred/requested-water ratio $1+2\times10^{-16}$ through round-off;
 reordered arithmetic returned exactly one, without a clamp.
 
-\paragraph{Current property histories.}
+\paragraph{Earlier temperature-property histories.}
 \label{sup:numericalcontrols:properties}
-The adopted factor-100 DT histories use the archived native controller
+The former two-cell factor-100 DT histories of
+Sec.~\ref{sup:temperatureproperties}, computed before the ladder, use the archived native controller
 with the existing same-problem birth-iterate starting guesses and
 face-departure duration retries. A failed birth advances no physical
 time; accepted material from another coefficient case is not imported.

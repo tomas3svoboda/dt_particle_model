@@ -30,7 +30,6 @@ from dtdc_simulator.core2.particle import wet_core
 from dtdc_simulator.core2.particle import wet_water as ww
 from dtdc_simulator.core2.props import binary_gas as bg
 
-
 P1EF_DECISION_ID = "GT-PS-2-P1E-01"
 PRODUCTION_RADIUS_M = 0.885e-3
 DESIGN_TEMPERATURE_K = 385.65
@@ -236,9 +235,7 @@ def engineering_coefficient_cases() -> tuple[EngineeringCoefficientCase, ...]:
 def build_engineering_particle_configuration(
     coefficient_case: EngineeringCoefficientCase,
     *,
-    structural_conductivity_w_m_k: float = (
-        NOMINAL_STRUCTURAL_CONDUCTIVITY_W_M_K
-    ),
+    structural_conductivity_w_m_k: float = (NOMINAL_STRUCTURAL_CONDUCTIVITY_W_M_K),
     process_pressure_pa: float = NOMINAL_PROCESS_PRESSURE_PA,
     mass_force_mode: nip.NonisothermalMassForceMode = (
         nip.NonisothermalMassForceMode.COMMON_FACE_TEMPERATURE_NEGLIGIBLE_SORET
@@ -314,6 +311,7 @@ def build_engineering_particle_configuration(
         epsilon_p=pore.eps_g,
         cp_dry_meal=pore.cp_dry_meal,
         cp_oil=pore.cp_oil,
+        oil_heat_capacity_law=pore.oil_heat_capacity_law,
         T_ref_solid=pore.T_ref_solid,
         w_o=pore.w_o,
         gab=pore.gab,

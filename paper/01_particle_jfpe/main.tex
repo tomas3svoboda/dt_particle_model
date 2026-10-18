@@ -1,3 +1,10 @@
+% =====================================================================
+%  Paper 1 of the DTDC three-manuscript portfolio.
+%  Target: Journal of Food Process Engineering (JFPE).
+%  Build:  build.bat   (main.tex, then supplementary.tex)
+%  NOTE:   latexmk is unavailable on the authoring machine; do not use it.
+% =====================================================================
+% Preserve the supplied Figure 1, whose source PDF uses version 1.7.
 \pdfminorversion=7
 \documentclass[11pt]{article}
 \PassOptionsToPackage{round,authoryear,longnamesfirst,sort}{natbib}
@@ -5,11 +12,20 @@
 \input{../shared/preamble.tex}
 \input{../shared/macros.tex}
 \input{core2_particle_results.tex}
+% 2026-10-01 (REFEREE_AUDIT_8 part 7): the Supplementary Material's sections,
+% tables and figures are referenced by label through its aux file (prefix S-),
+% so that a later move inside the supplement cannot leave a stale number;
+% \ref* so that no link points to a destination outside this document.
+% build.bat builds the supplement and then main.tex once more.
 \usepackage{xr}
 \externaldocument[S-]{supplementary_submission}
+% Local to this manuscript: the reference list is set in two columns to hold
+% the page cap. Nothing else in the document uses multiple columns.
 \usepackage{multicol}
+% Keep the 2019 comparison beside its interpretation rather than floating away.
 \usepackage{float}
 
+% ---- Local notation used only in this manuscript ---------------------
 \newcommand{\Xhwa}{X_{\mathrm{h,w}}^{a}}         % historical wet-core hexane label
 \newcommand{\Lwh}{L_{\mathrm{wh}}^{\mathrm{eff}}}% binary pore mobility
 \newcommand{\Lwr}{L_{\mathrm{w,ret}}^{\mathrm{eff}}}% retained-matrix mobility
@@ -23,6 +39,11 @@
 \newcommand{\Tb}{T_{\mathrm{b}}}
 \newcommand{\dd}{\mathrm{d}}
 
+% ---- Float placement -------------------------------------------------
+% This manuscript carries five figures and five tables. The class defaults
+% push a full-width float onto a page of its own and leave a quarter of that
+% page blank; the values below let text share a page with a large float
+% without changing the type block, the font or the margins.
 \renewcommand{\topfraction}{0.90}
 \renewcommand{\bottomfraction}{0.80}
 \renewcommand{\textfraction}{0.07}
@@ -30,14 +51,26 @@
 \setcounter{topnumber}{3}
 \setcounter{bottomnumber}{2}
 \setcounter{totalnumber}{4}
+% Float and caption separations matched to the Supplementary Material. A
+% formatting choice local to this manuscript; the type block, the font and the
+% margins are unchanged, and no content is removed.
 \setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
 \setlength{\intextsep}{10pt plus 2pt minus 2pt}
 \setlength{\floatsep}{8pt plus 2pt minus 2pt}
 \setlength{\abovecaptionskip}{4pt}
+% Captions one step down from the body, and the four figures at 0.75 of the
+% type-block width. Both are formatting choices local to this manuscript, made
+% on 2026-09-24 to hold the 28-page cap after the related-work pass; the type
+% block, the body font and the margins are unchanged, and no caption, figure
+% or panel is removed or redrawn.
 \captionsetup{font=small}
 
 \begin{document}
 
+% Title before 2026-09-26 (independent review 1, editorial item: process
+% first, modifiers after):
+% \title{A conservative, binary, non-isothermal moving-front model of
+% n-hexane desolventization of a soybean meal particle}
 \title{A particle model of hexane removal and water uptake in soybean meal
 desolventizing}
 
@@ -55,31 +88,86 @@ $^{*}$Corresponding author: \texttt{tomas3.svoboda@vscht.cz}}}
 
 \noindent\textbf{Running title:} Hexane desolventization of meal
 
+% ---------------------------------------------------------------------
+% Four parts, one paragraph of prose: the problem; the formulation; the
+% strongest conditional comparison with its convention; the principal
+% limitations. P4 filled 2026-09-26: the falling-rate numbers are the
+% boundary-value read of item_27, refined and converged to within one point;
+% the moving-front trajectories remain unconverged (sec_validation.tex).
+% Fourth referee read, 2026-09-26: the law 'regressed on another
+% source's coefficients'; the uptake set without figure 3.17
+% (7.6-18.6, 18.4 refined, item_26); both floors named;
+% 'percentage point'.
+% 2026-09-27 (owner ruling "Adopt" on the comparison's geometry): the
+% falling-rate numbers are those of the declared volume-to-surface sphere
+% (item_30), the volume-equivalent sphere's beside them.
+% 2026-09-27, fifth referee read (M1, M3, minor 1): the declared sphere is
+% each sample's own (item_31: 13.3 and 19.7 per cent); the two caveats one
+% clause each; the source-particle wording gone; "Component" for "The component".
+% 2026-09-27, sixth referee read (M2, minors 4 and 10): the comparator
+% labelled as the 0.885 mm volume-equivalent sphere; "each sample's"
+% sphere; trimmed to at most 250 words with every unit symbol counted
+% (regen/count_frontmatter.py prints both counts).
+% 2026-09-27, owner's strategic clarity pass (STRATEGIC_PASS_2026-09-27.md):
+% every result under its primary condition, each source named; the dry-mass
+% reading, the volume-equivalent spheres, the two geometry caveats, the 41 K
+% extrapolation and the vessel-gas floor stay in Secs. 5.1, 5.2, 5.4 and 7.3,
+% unchanged; the limits stated positive-first (item_26, item_27, item_31;
+% the obstruction and the two reformulations of Sec. S14.1). 250 words with
+% unit symbols counted.
+% 2026-09-27, corrections fold-in (CORRECTIONS_FOLDIN_2026-09-27.md): the
+% numbers of version 2 of the three digitizations (item_35, item_36); the
+% sphericity measured on both 2019 meals and assumed for the thesis samples
+% (item_37); the owner's closing sentence in place of "plant validation
+% remains open". 250 words with unit symbols counted.
+% 2026-09-27, final polish (READER_CHECK_2026-09-27.md A1-A5, section 5;
+% item_39): the paper's own vocabulary replaced by plain phrases; the four
+% constant-rate conditions attributed to both sources; the crossing range on
+% version 2 of the journal inputs (0.86 to 1.13, item_39); Whitaker (1972)
+% named with its year. The owner's closing sentence unchanged.
+% 2026-09-30, rewrite R-P1 (REFEREE_AUDIT_7_2026-09-30.md, items A7, A9, B1,
+% B3 and the F36 ladder): the surface read named as a declared convention;
+% the last-tray floor with the oil arm; what the comparisons exercise; the
+% ladder sentence replaced by the two-tier result. The in-band clause of the
+% falling-rate sentence stays in Sec. 5.2 and Table 2.
+% 2026-09-30, REFEREE_AUDIT_8 part 2: the moving-front march of the journal
+% runs (Sec. 5.4) enters; the 2008 comparison named as the Fickian dry-shell
+% regime; "these comparisons exercise the formulation's two limits" and the
+% ladder sentence leave the abstract (Secs. 5, 6.1 and the conclusions keep
+% both); the sphere and drying-direction clauses stay in Sec. 5.2 and Table 2.
+% 250 words with unit symbols counted.
+% The soybean comparison retains its reduced continuation.
+% 2026-10-09, REFEREE_AUDIT_8 part 9 (section 8.T): "Converged discrete
+% calculations conserve ..." replaced by the measured bound over both
+% calculations, through all three regimes: Faner whole-history independent
+% accumulation at most 3.9e-10 (water), DT at most 3.3e-13 before and
+% 4.24e-11 after dry-shell formation; the open convergence stated beside it;
+% the sentence placed after the two results it qualifies.
 \begin{abstract}
 In a desolventizer-toaster (DT), steam desolventization of oilseed meal
 couples hexane removal, water uptake and heat transfer. We formulate a
 conservative particle model containing free liquid hexane, binary pore
 gas, retained water and hexane, and a separate external water film.
-Component and energy jump conditions determine how the liquid-hexane
-interface recedes; after the core disappears, the same inventories
-continue to evolve in a stationary radial particle. Published
+Component and energy jump conditions determine liquid-hexane interface
+recession; after core extinction, the same inventories
+evolve in a stationary radial particle. Published
 thermodynamic and retention properties, together with declared transport
 coefficients, parameterize the model. The
-formulation is exercised in two prescribed baths, in which the
-surrounding gas history is specified rather than solved. In the first, a
+formulation is exercised in two baths with prescribed gas histories. In the first, a
 water-bearing soybean particle in Faner's pure-hexane vapour at
 \SI{120}{\celsius} falls from 0.20 to 0.10 kg hexane/kg dry meal in
 \SI{\FanerFallingInterval}{\second}, compared with 25.4 s measured. The
 source reports preheating, but not the exact initial temperature,
-moisture or mass-weighted particle sizes. In the second, a particle
-followed through a 1766.5-s prescribed DT history leaves with \DTFiniteMoisture\%
+moisture or mass-weighted particle sizes. On a 64-cell radial mesh, the 1766.5-s DT history yields \DTFiniteMoisture\%
 wet-basis moisture, \DTFiniteHexaneWet\ ppm wet-basis hexane and a mean temperature of
 \SI{\DTFiniteTemperature}{\celsius}. In both calculations, independently accumulated
-water, hexane and energy balances close within $4\times10^{-10}$ in
-normalized units through all three regimes; whole-history mesh and
-time-step convergence is not yet established. The particle response is benchmarked against available literature
-experiments and published industrial outlet ranges, without fitting the
-falling-rate trajectories or DT outlet values. This common formulation
+water, hexane and energy balances close within $10^{-10}$ in
+normalized units through all three regimes. Mesh and time-step refinement
+to 64 radial cells converges the Faner history and the DT outlet hexane
+and temperature; DT outlet moisture converges more slowly, limited by a
+thin surface diffusion layer.
+Literature experiments and industrial outlet ranges benchmark the response
+without fitting falling-rate trajectories or DT outlets. This common formulation
 provides the particle-level basis for a DT digital twin that can shorten
 process design and support model-based control.
 \end{abstract}
@@ -94,9 +182,12 @@ desolventizer-toaster (DT). The same particle equations describe a
 pure-hexane drying experiment and a steam-rich DT scenario. In the
 pure-hexane case, the calculated particle dries faster than the measured
 charge; better size, exposure and temperature information is needed to
-explain the difference. In the DT case, the particle reaches \DTFiniteMoisture\%
-wet-basis moisture with liquid-water imbibition included; the uptake rate
-rests on one same-material measurement. The model returns signed water,
+explain the difference. In the DT case, the particle leaves with \DTFiniteMoisture\%
+wet-basis moisture and \DTFiniteHexaneWet\ ppm hexane, inside the published
+outlet ranges, with liquid-water imbibition included; the uptake rate
+rests on one same-material measurement. Between the two finest meshes
+these outlet values change by less than 1\% in hexane and by 0.07
+percentage points in moisture. The model returns signed water,
 hexane and energy fluxes that can later be coupled to conservative tray
 balances.
 
@@ -107,19 +198,24 @@ balances.
 \input{sec_validation_reshape.tex}
 \input{sec_discussion_reshape.tex}
 
+% 2026-10-09 (REFEREE_AUDIT_8 part 9, 8.T): "Funding acquisition" dropped from
+% Slukova's roles: the Acknowledgments state that no specific grant was
+% received, and the owner's answer of 2026-10-05 (E05-04) names no grant
+% ("Both statements accurate; no grant to name"); the role had been listed
+% by the owner on the same day (E05-03). Owner to confirm or name the source.
 \section*{Author contributions (CRediT)}
 Tom\'a\v{s} Svoboda: Conceptualization; methodology; software; formal
 analysis; validation; writing -- original draft; writing -- review and
 editing. Marcela Slukov\'a: Resources; supervision;
 writing -- review and editing. Tom\'a\v{s} Moucha: Investigation;
 writing -- review and editing. Phuong Hoang: Writing -- review and editing.
-All authors have read and approved the
-submitted manuscript.
 
 \section*{Acknowledgments}
 This research received no specific grant from any funding agency in the
 public, commercial, or not-for-profit sectors.
 
+% ---------------------------------------------------------------------
+% supplement pointer map 2026-09-28 applied (regen/supplement_pointer_map_2026-09-28.py)
 \section*{Supplementary material}
 The submitted Supplementary Material, Secs.~\ref*{S-sup:derivations}
 to~\ref*{S-sup:deposit}, gives the regional and interface derivation,
@@ -132,18 +228,25 @@ history; no main-text claim relies on that report alone.
 \section*{Data availability}
 The governing balances, parameters, comparison conventions and numerical
 acceptance criteria are stated in the text, the tables and the submitted
-Supplementary Material. The particle-model source, the scripts that
-produced the two particle histories and the sensitivity cases, the run
-records behind the figures and the headline numbers of the main text, and
-the LaTeX sources are released at
+Supplementary Material. The particle-model source, the case runner that
+produced every history reported here, and the LaTeX sources are released at
 \url{https://github.com/tomas3svoboda/dt_particle_model}
-(submission snapshot \texttt{submission-2026-10-15}, with a SHA-256 manifest of every file).
-The release's number check binds the printed numbers to the released
-records and names those that rest on records the release does not hold;
-such records, among them the authors' working notes and the independent
-balance record of the DT feed history, are available from the
-corresponding author on request. A preservation archive
-with a persistent identifier is being prepared.
+(snapshot \texttt{v1.1.0-submission}, with a SHA-256 manifest of every file).
+All reported histories, including the mesh and time-step ladder of
+Section~\ref{sec:verification:convergence}, were computed with one frozen
+execution tree of the particle code (identifier 151). The released solver
+files are byte-identical to that tree, apart from six documented path and
+packaging patches, and its freeze manifest with the hash of every file is
+included. Three data archives of the release hold the case records of
+every ladder and saturated-loading case, the independent original-feed
+audit of every history and the ladder report with its observed orders and
+GCI estimates (\texttt{runtime151\_ladder\_records}), the complete histories
+of the adopted 64-cell cases (\texttt{runtime151\_adopted\_cases}) and two
+8-cell reference cases (\texttt{runtime151\_reference}); a release script reruns
+the two reference cases and compares every recorded value with the
+archived original (Sec.~\ref*{S-sup:deposit}). No preservation DOI has
+yet been issued. Additional working notes are available from the
+corresponding author on request.
 Digitized readings of published figures are shared subject to the
 publishers' redistribution terms, with reading half-widths and their sources.
 The steady equipment-model calculation that supplies the prescribed bath
@@ -153,10 +256,15 @@ Section~\ref{sec:discussion:limits} and Sec.~\ref*{S-sup:missingfull};
 it is not described as available.
 
 \section*{Declaration of generative-AI assistance}
-The authors used AI assistants for language editing, code review and
-manuscript organization. All physical assumptions, equations, numerical
-results, claim boundaries and conclusions were formulated, checked and are
-owned by the authors.
+The authors used AI assistants, including OpenAI ChatGPT/Codex (2026), for
+language editing, code development and
+review, analysis support and manuscript organization. The authors are
+responsible for checking the assumptions, equations, code, numerical results
+and conclusions and for the published content.
+AI-assisted code was also used to prepare the numerical plots, solver
+flowchart and graphical abstract from the stated model, archived results
+and digitized literature readings. These are diagrams and data
+visualizations, not photographs or generated experimental observations.
 
 \section*{Conflict of interest}
 Tom\'a\v{s} Svoboda is affiliated with the University of Chemistry and
@@ -164,7 +272,16 @@ Technology Prague and with Siemens, s.r.o., of which he is an employee;
 Siemens, s.r.o. had no role in the design of the study, the analysis or
 the decision to publish. The other authors declare no competing interests.
 
+% ---------------------------------------------------------------------
+% Nomenclature, hand-edited 2026-10-04 to the submitted main text and the
+% submitted supplement. Do not regenerate it with
+% regen/nomenclature_build_2026-09-27.py: that script still targets the
+% September section list and also rewrites supplementary.tex.
+% 2026-09-30 (REFEREE_AUDIT_8 part 2): the Nomenclature starts on a page of
+% its own, so that its two columns balance inside the type block (outside
+% the generated block, which is unchanged).
 \clearpage
+% BEGIN NOMENCLATURE
 {\footnotesize
 \setlength{\parindent}{0pt}
 \setlength{\columnsep}{16pt}
@@ -182,7 +299,7 @@ Supplementary Material are listed there.
 \nomitem{$A_{2}$}{shape parameter of the modified Luikov water isotherm \eqref{eq:luikov}; dimensionless}
 \nomitem{$a^{*}$}{pressure-feasible n-hexane activity \eqref{eq:aceiling}; dimensionless}
 \nomitem{$\ah$}{n-hexane activity; dimensionless}
-\nomitem{$\aw$}{water activity; dimensionless}
+\nomitem{$\aw$}{water activity; $a_{\mathrm{w,cap}}$ its value at $\Wcap$, $a_{\mathrm{w,s}}$ at the film-free surface \eqref{eq:filmfreesurface}; dimensionless}
 \nomitem{$\bar{h}_{k}$}{partial molar enthalpy of a transported component on the common caloric datum; $\bar{h}_{\mathrm{h,d}}$ that of n-hexane on the dry side; \si{\joule\per\mole}}
 \nomitem{$B$}{Darcy permeability of the particle pore space \eqref{eq:darcy}; \si{\square\metre}}
 \nomitem{$\Bh$}{binding potential of n-hexane, per kilogram of dry meal \eqref{eq:wetenergy}; \si{\joule\per\kilogram}}
@@ -194,9 +311,16 @@ Supplementary Material are listed there.
 \nomitem{$C_{k}$}{total component amount in all local forms per unit particle volume; \si{\mole\per\cubic\metre}}
 \nomitem{$c_{\mathrm{w}}$}{constant shift of the caloric zero of water \eqref{eq:gauge}; \si{\joule\per\mole}}
 \nomitem{$\Deff$}{effective diffusivity of n-hexane in the separate Fickian comparison, Eq.~(\ref*{S-eq:ficklimit}); \si{\square\metre\per\second}}
-\nomitem{$D_{b}$}{binary pore coefficient of the mobility $\Lwh$; \si{\square\metre\per\second}}
+\nomitem{$c_{p,\mathrm{o}}$, $c_{p,\mathrm{native}}$}{heat capacity of soybean oil \eqref{eq:oilheatcapacity} and of the reference meal; \si{\joule\per\kilogram\per\kelvin}}
+\nomitem{$D_{b}$}{binary pore coefficient of the mobility $\Lwh$; $D_{b,\mathrm{ref}}$ its reference value at \SI{105}{\celsius} and \SI{101325}{\pascal} \eqref{eq:porediffusivitytemperature}; \si{\square\metre\per\second}}
+\nomitem{$d$}{face separation, or distance between the outer cell and the surface trace in \eqref{eq:finitecontact}; \si{\metre}}
+\nomitem{$G_{\ell}$, $N_{\ell}$}{series liquid-water conductance and outward-positive imbibition flux \eqref{eq:finitecontact}; \si{\mole\per\metre\squared\per\second}}
+\nomitem{$G_{\mathrm{comp}}$}{composition force integrated along the face path \eqref{eq:compositionforcepath}; \si{\per\metre}}
+\nomitem{$h_Q$}{external heat-transfer coefficient of the gas film \eqref{eq:gasfilmenergy}; \si{\watt\per\square\metre\per\kelvin}}
 \nomitem{$d_{p}$}{mean equivalent particle diameter in the dispersion estimate; \si{\metre}}
 \nomitem{$e_{\mathrm{w}}$}{specific energy of the liquid-hexane core, per kilogram of dry meal \eqref{eq:wetenergy}; \si{\joule\per\kilogram}}
+\nomitem{$c_{1}$}{slope of the retained-water continuation \eqref{eq:waterbridge}; \si{\kilogram\per\kilogram}}
+\nomitem{$f_{\mathrm{w}}^{\mathrm{g}}$, $f_{\mathrm{w}}^{\mathrm{l}}$}{fugacity of water in the gas and of pure liquid water \eqref{eq:filmfreesurface}; \si{\pascal}}
 \nomitem{$f_{\mathrm{exp}}$}{fraction of particle surface exposed to the external gas film in the prescribed DT bath experiment; dimensionless}
 \nomitem{$h$, $a$, $h a$}{external film coefficient per unit particle area; specific external area per dry mass; and their product, the film supply per kilogram of dry meal; \si{\watt\per\square\metre\per\kelvin}; \si{\square\metre\per\kilogram}; \si{\watt\per\kilogram\per\kelvin}}
 \nomitem{$h_{\mathrm{dm}}$}{specific enthalpy of the dry composite meal; \si{\joule\per\kilogram}}
@@ -204,6 +328,7 @@ Supplementary Material are listed there.
 \nomitem{$h_{\mathrm{w,l}}$}{specific enthalpy of liquid water; \si{\joule\per\kilogram}}
 \nomitem{$j_{\mathrm{dm}}$, $j_{L_{\mathrm{o}}}$}{fluxes of the immobile dry meal and residual oil, zero in \eqref{eq:localenergy}; \si{\kilogram\per\square\metre\per\second}}
 \nomitem{$\JE$}{total radial energy flux; \si{\watt\per\square\metre}}
+\nomitem{$j_t$, $j_{\ell,\mathrm{in}}$}{total outward mass flux through the gas film \eqref{eq:gasfilmcomponents}, and inward liquid-water addition limited by the film stock \eqref{eq:liquidstocksupply}; \si{\kilogram\per\square\metre\per\second}}
 \nomitem{$J_{i}$}{binary exchange flux of component $i$ in the pore gas, $J_{\mathrm{w}} = -J_{\mathrm{h}}$ \eqref{eq:binaryflux}; \si{\mole\per\square\metre\per\second}}
 \nomitem{$j_{k}$}{radial flux of component $k$; \si{\mole\per\square\metre\per\second}}
 \nomitem{$\mathcal L_\ell$, $K_\ell$}{additional retained-water shell mobility and finite liquid-contact conductance; \si{\mole\per\metre\per\second}; \si{\mole\per\metre\squared\per\second}}
@@ -212,7 +337,9 @@ Supplementary Material are listed there.
 \nomitem{$k_{\mathrm C}$}{regime-C particle-mean hexane relaxation rate, $15\Deff/\Rp^2$; \si{\per\second}}
 \nomitem{$k_{\mathrm{dry}}$}{thermal conductivity of the dry shell; \si{\watt\per\metre\per\kelvin}}
 \nomitem{$k_m$}{packed-bed external gas-film mass-transfer coefficient in the prescribed DT bath experiment; \si{\metre\per\second}}
+\nomitem{$K_f$}{gas-film mass conductance $\rho_f k_m$ \eqref{eq:gasfilmcomponents}; \si{\kilogram\per\square\metre\per\second}}
 \nomitem{$L$}{half-thickness of a plane flake; \si{\metre}}
+\nomitem{$L_{\mathrm w}$}{external water-film mass per unit particle area \eqref{eq:externalwatermass}; \si{\kilogram\per\square\metre}}
 \nomitem{$\Lwh$}{binary pore mobility \eqref{eq:binaryflux}; $L_{\mathrm{wh}}^{-}$, $L_{\mathrm{wh}}^{+}$ its lower and upper bound; \si{\mole\per\metre\per\second}}
 \nomitem{$\Lwr$}{retained-matrix water mobility \eqref{eq:retflux}; $L_{\mathrm{w,ret}}^{-}$, $L_{\mathrm{w,ret}}^{+}$ its lower and upper bound; \si{\mole\per\metre\per\second}}
 \nomitem{$M_{\mathrm w}$}{molar mass of water; \si{\kilogram\per\mole}}
@@ -223,6 +350,8 @@ Supplementary Material are listed there.
 \nomitem{$P$}{total pressure; \si{\pascal}}
 \nomitem{$P_{\mathrm{sat}}^{\mathrm{h}}$, $P_{\mathrm{sat}}^{\mathrm{w}}$}{vapour pressure of n-hexane and of water; \si{\pascal}}
 \nomitem{$q$}{radial conductive heat flux; \si{\watt\per\square\metre}}
+\nomitem{$q_{\mathrm{in}}$}{heat supplied across the gas film \eqref{eq:gasfilmenergy}; \si{\watt\per\square\metre}}
+\nomitem{$q_{o}$}{retained n-hexane of the oil arm in \eqref{eq:oilanchorcorrection}; \si{\kilogram\per\kilogram}}
 \nomitem{$Q_{\Gamma}$}{swept-volume rate of the front \eqref{eq:sweptvolume}; \si{\cubic\metre\per\second}}
 \nomitem{$R$, $R_{\mathrm{g}}$}{molar gas constant; \si{\joule\per\mole\per\kelvin}}
 \nomitem{$r$}{radial coordinate; \si{\metre}}
@@ -240,13 +369,15 @@ Supplementary Material are listed there.
 \nomitem{$T_{V}$}{vapour temperature in that interpolation; \si{\kelvin}}
 \nomitem{$\Tg$}{gas temperature; \si{\kelvin}}
 \nomitem{$\Tint$}{interface temperature; \si{\kelvin}}
+\nomitem{$T_{\mathrm s}$}{particle surface temperature; in \eqref{eq:drymatrixsensibleenergy} only, $T_s$ is the common solid reference temperature; \si{\kelvin}}
 \nomitem{$T^{*}$}{temperature of the retained-water vapour-pressure diagnostic \eqref{eq:sorbedbp}; \si{\kelvin}}
 \nomitem{$u$}{total local internal energy density; \si{\joule\per\cubic\metre}}
 \nomitem{$u_{\mathrm{d}}^{\Gamma}$, $u_{\mathrm{w}}^{\mathrm{b}}$}{$u$ at the dry-side equilibrium interface trace and in the wet-side donor state; \si{\joule\per\cubic\metre}}
 \nomitem{$u_{\mathrm{h,l}}$}{specific internal energy of liquid n-hexane; \si{\joule\per\kilogram}}
 \nomitem{$V_{\Rp}$}{particle volume; \si{\cubic\metre}}
 \nomitem{$\Wret$}{retained-water loading in \eqref{eq:capcomplementarity}; \si{\kilogram\per\kilogram}}
-\nomitem{$\Wcap$}{retained-water capacity, the upper end of the measured water evidence; \si{\kilogram\per\kilogram}}
+\nomitem{$\Wcap$}{retained-water anchor, the upper end of the measured water evidence, above which Eq.~\eqref{eq:waterbridge} applies; \si{\kilogram\per\kilogram}}
+\nomitem{$W_{\mathrm{sat}}$}{saturated retained-water loading at unit water activity, declared \eqref{eq:waterbridge}; \si{\kilogram\per\kilogram}}
 \nomitem{$W_{\mathrm{eq}}$}{equilibrium retained n-hexane loading in Eq.~(\ref*{S-eq:ficklimit}); \si{\kilogram\per\kilogram}}
 \nomitem{$W_{\mathrm{native}}$}{retained n-hexane on reference soybean meal \eqref{eq:gab}; \si{\kilogram\per\kilogram}}
 \nomitem{$\wo$}{residual-oil mass fraction of the dry meal; dimensionless}
@@ -269,8 +400,14 @@ Supplementary Material are listed there.
 
 \nomblock{Greek symbols}
 \nomitem{$\alpha$}{physical region label, $\mathrm{w}$ (liquid-hexane core) or $\mathrm{d}$ (dry shell); not a cell index}
-\nomitem{$\beta_{\mathrm{A}}$}{Ackermann blowing argument of the film law; dimensionless}
+\nomitem{$\beta$}{Ackermann blowing argument of the film law \eqref{eq:ackermannfactor}, written $\beta_{\mathrm{A}}$ in the Supplementary Material; dimensionless}
+\nomitem{$\eta_{i}$}{representability floor of residual row $i$, $\sum_j|J_{ij}|\,\mathrm{ulp}(x_j)$, with $J_{ij}$ the Jacobian and $x_j$ the unknowns of the step (Section~\ref{sec:numerics:gates}); units of the row}
+\nomitem{$\alpha_o$, $\beta_o$}{weights of the reference meal and of the oil correction in \eqref{eq:oilanchorcorrection}; dimensionless}
 \nomitem{$\varepsilon_{\mathrm{g}}$}{gas-filled porosity of the dry shell; dimensionless}
+\nomitem{$\kappa_v$}{critical-volume factor fixing $\Xc(T)$ from the reference capacity; dimensionless}
+\nomitem{$\Xi$}{logarithmic fugacity ratio whose composition gradient drives the face fluxes \eqref{eq:compositionforcepath}; dimensionless}
+\nomitem{$\Phi$}{Ackermann blowing factor $x/(e^x-1)$ \eqref{eq:ackermannfactor}; dimensionless}
+\nomitem{$\psi$}{activity potential $\ln a_{\mathrm{w,ret}}$ of retained water; $\psi_{\mathrm s}$, $\psi_{\mathrm p}$ at the surface trace and in the outer cell \eqref{eq:finitecontact}; dimensionless}
 \nomitem{$\theta_{a}$}{temperature of a material shell at activation; \si{\kelvin}}
 \nomitem{$\lambda$}{multiplier of the capacity condition \eqref{eq:capcomplementarity}, a contribution to $\mu_{\mathrm{w,ret}}/(RT)$ carrying no mass, volume, enthalpy or internal energy; dimensionless}
 \nomitem{$\mu_{g}$}{pore-gas viscosity \eqref{eq:darcy}; \si{\pascal\second}}
@@ -321,7 +458,11 @@ Supplementary Material are listed there.
 \nomitem{$\perp$}{complementarity: both sides non-negative and their product zero}
 \end{multicols}
 }
+% END NOMENCLATURE
 
+% ---------------------------------------------------------------------
+% JFPE requests APA references after the manuscript. Set them in one
+% readable column rather than compressing them to meet an obsolete page cap.
 \bibliographystyle{apacite}
 \bibliography{../shared/refs}
 

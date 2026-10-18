@@ -47,6 +47,7 @@ import math
 from dataclasses import dataclass, field, replace
 from typing import Sequence
 
+from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 from dtdc_simulator.core2.particle import coupled_pore as cp
 from dtdc_simulator.core2.particle import coupled_transport as ct
 from dtdc_simulator.core2.particle import cut_birth_event as birth
@@ -518,6 +519,8 @@ def assemble_face_departure(
             newborn_trace_gradients,
             enforce_reduced_film_thresholds,
         )
+    except StepBudgetExceeded:
+        raise
     except FaceDepartureStepError:
         raise
     except Exception as exc:

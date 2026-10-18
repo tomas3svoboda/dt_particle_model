@@ -1966,7 +1966,7 @@ def _face_constitutive_data(
             right_force_state.y_hexane,
         )
         evaluated_mobility = tc.evaluate_binary_mobility_interval(
-            config.binary_diffusivity.interval,
+            config.binary_diffusivity.interval_at(face_temperature, config.pressure_pa),
             binary_face,
         ).select(config.binary_diffusivity.fraction)
         gas_flux = cp.independent_maxwell_stefan_flux(

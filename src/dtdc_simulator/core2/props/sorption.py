@@ -38,15 +38,40 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from enum import Enum
 
 from dtdc_simulator.core2.props import hexane as hx
 
-R = 8.31451              # J/(mol K)  (matches the hexane authority)
-W_O_REF = 0.0195         # PHY-040/048 native residual-oil mass fraction
-W_O_MIN = 0.012          # PHY-048 composition-applicability envelope
+R = 8.31451  # J/(mol K)  (matches the hexane authority)
+W_O_REF = 0.0195  # PHY-040/048 native residual-oil mass fraction
+W_O_MIN = 0.012  # PHY-048 composition-applicability envelope
 W_O_MAX = 0.030
 CP_NATIVE_DRY_MEAL = 2317.0  # J/(kg dry composite meal K), native anchor
-CP_OIL = 2000.0              # J/(kg oil K), signed off-anchor correction
+CP_OIL = 2000.0  # J/(kg oil K), signed off-anchor correction
+
+
+class OilHeatCapacityLaw(str, Enum):
+    """Explicit caloric model identity; constant behavior remains the default."""
+
+    CONSTANT = "constant"
+    GARCIA_ROJAS_2013 = "garcia_rojas_2013_1024_plus_3T"
+
+
+def oil_heat_capacity(
+    temperature_k: float,
+    law: OilHeatCapacityLaw,
+    constant_j_kg_k: float = CP_OIL,
+) -> float:
+    """J/(kg K); Garcia Rojas et al. (2013), Table 7, 10.1080/10942912.2011.604889."""
+    if not isinstance(law, OilHeatCapacityLaw):
+        raise TypeError("oil heat capacity requires an explicit supported law")
+    if not math.isfinite(temperature_k) or temperature_k <= 0:
+        raise ValueError("oil caloric temperature must be positive finite Kelvin")
+    if law is OilHeatCapacityLaw.GARCIA_ROJAS_2013:
+        return 1024.0 + 3.0 * temperature_k
+    if not math.isfinite(constant_j_kg_k) or constant_j_kg_k <= 0:
+        raise ValueError("constant oil heat capacity must be positive and finite")
+    return constant_j_kg_k
 
 
 # ---------------------------------------------------------------------------
@@ -89,8 +114,8 @@ class LuikovParams:
 
     A1: float = 0.880
     A2: float = 12.184
-    W_cap: float = 0.2356709040   # evidence cap W_w(a_w=0.799)
-    W_ref: float = 0.023          # qualified lower moisture anchor
+    W_cap: float = 0.2356709040  # evidence cap W_w(a_w=0.799)
+    W_ref: float = 0.023  # qualified lower moisture anchor
 
 
 @dataclass(frozen=True)
@@ -214,6 +239,9 @@ def composite_dry_meal_heat_capacity(
     w_o: float,
     cp_native: float = CP_NATIVE_DRY_MEAL,
     cp_oil: float = CP_OIL,
+    *,
+    temperature_k: float | None = None,
+    oil_law: OilHeatCapacityLaw = OilHeatCapacityLaw.CONSTANT,
 ) -> float:
     r"""Reference-anchored PHY-048 dry-meal heat capacity, J/(kg K).
 
@@ -226,6 +254,14 @@ def composite_dry_meal_heat_capacity(
     correction, exactly as it is in the frozen retention and caloric-potential
     closures.
     """
+    if not isinstance(oil_law, OilHeatCapacityLaw):
+        raise TypeError("unsupported oil heat-capacity law")
+    if oil_law is not OilHeatCapacityLaw.CONSTANT:
+        if temperature_k is None:
+            raise ValueError(
+                "temperature-dependent capacity requires its physical temperature"
+            )
+        cp_oil = oil_heat_capacity(temperature_k, oil_law, cp_oil)
     if not all(math.isfinite(value) and value > 0.0 for value in (cp_native, cp_oil)):
         raise ValueError("native-meal and oil heat capacities must be positive and finite")
     alpha, beta = _oil_weights(w_o)
@@ -241,10 +277,21 @@ def composite_dry_meal_sensible_energy(
     w_o: float,
     cp_native: float = CP_NATIVE_DRY_MEAL,
     cp_oil: float = CP_OIL,
+    *,
+    oil_law: OilHeatCapacityLaw = OilHeatCapacityLaw.CONSTANT,
 ) -> float:
     """PHY-048 sensible state function, J/kg dry composite meal."""
     if not all(math.isfinite(value) for value in (T, T_ref)):
         raise ValueError("dry-meal sensible-energy temperatures must be finite")
+    if not isinstance(oil_law, OilHeatCapacityLaw):
+        raise TypeError("unsupported oil heat-capacity law")
+    if oil_law is OilHeatCapacityLaw.GARCIA_ROJAS_2013:
+        oil_heat_capacity(T, oil_law, cp_oil)
+        oil_heat_capacity(T_ref, oil_law, cp_oil)
+        if not math.isfinite(cp_native) or cp_native <= 0:
+            raise ValueError("native-meal heat capacity must be positive and finite")
+        alpha, beta = _oil_weights(w_o)
+        return (T - T_ref) * (alpha * cp_native + beta * (1024.0 + 1.5 * (T + T_ref)))
     return composite_dry_meal_heat_capacity(w_o, cp_native, cp_oil) * (T - T_ref)
 
 

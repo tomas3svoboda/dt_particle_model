@@ -54,6 +54,7 @@ class DryThermoParams:
     rho_dm_p: float = 1159.65
     cp_dry_meal: float = sp.CP_NATIVE_DRY_MEAL
     cp_oil: float = sp.CP_OIL
+    oil_heat_capacity_law: sp.OilHeatCapacityLaw = sp.OilHeatCapacityLaw.CONSTANT
     T_ref_solid: float = 298.15
     X_water: float = 0.10
     w_o: float = sp.W_O_REF
@@ -184,10 +185,21 @@ def evaluate(
     c_h = mixture.hexane_density_kg_m3
     storage = p.eps_g * c_h + p.rho_dm_p * retained
 
-    dry_meal_cp = sp.composite_dry_meal_heat_capacity(p.w_o, p.cp_dry_meal, p.cp_oil)
+    dry_meal_cp = sp.composite_dry_meal_heat_capacity(
+        p.w_o,
+        p.cp_dry_meal,
+        p.cp_oil,
+        temperature_k=T,
+        oil_law=p.oil_heat_capacity_law,
+    )
     dry_meal_capacity = p.rho_dm_p * dry_meal_cp
     dry_meal_energy = p.rho_dm_p * sp.composite_dry_meal_sensible_energy(
-        T, p.T_ref_solid, p.w_o, p.cp_dry_meal, p.cp_oil
+        T,
+        p.T_ref_solid,
+        p.w_o,
+        p.cp_dry_meal,
+        p.cp_oil,
+        oil_law=p.oil_heat_capacity_law,
     )
     liquid_water = wa.state_Tp(T, p.pressure_pa, "liquid")
     # G1G-01 nominal retained-water bookkeeping assigns zero retained partial

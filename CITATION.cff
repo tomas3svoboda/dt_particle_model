@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "Please cite the accompanying manuscript and identify this submission snapshot when using the code."
 type: software
 title: "Particle model of hexane removal and water uptake in soybean meal desolventizing"
-version: "submission-2026-10-15"
-date-released: 2026-10-15
+version: "v1.1.0-submission"
+date-released: 2026-10-19
 repository-code: "https://github.com/tomas3svoboda/dt_particle_model"
 license: MIT
 authors:

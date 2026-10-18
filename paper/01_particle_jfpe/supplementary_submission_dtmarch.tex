@@ -20,45 +20,56 @@ plant dynamics requires measured tray histories or a coupled column calculation.
 
 The common material inputs are in main Table~\ref*{M-tab:parameters};
 DT imbibition coefficients are constructed in Sec.~\ref{sup:finitecontact}.
-The coarse spatial representation and numerical controls are specified
+The spatial representation and numerical controls are specified
 in Sec.~\ref{sup:numericalcontrols}.
 
 \paragraph{Events and exit.}
-External free hexane is depleted at 492.257071 s, and the first dry-shell
-interval ends at 492.267071 s. Regime B resolves the front's grid-face
-arrival and departure before core extinction at 503.540021 s. The external water film stays positive throughout regime B.
+The values below are those of the 64-cell history at the middle time
+level of the convergence ladder (Sec.~\ref{sup:ladder}), which the main
+text reports. External free hexane is depleted at 492.257251 s, and the
+first dry-shell interval ends at 492.312251 s. Regime B resolves the
+front's grid-face arrivals and departures before core extinction at
+502.587745 s. The external water film stays positive throughout regime B.
 Regime C advances the stationary radial particle and water film together,
-resolves film depletion at 703.259973 s and continues to the prescribed
-exit at 1766.535501 s. Final core volume and external water film are zero.
-Particle water is 0.211596339 kg/kg dry, hexane is 0.000167695203 kg/kg dry
-and volume-mean temperature is 378.114756 K.
+resolves film depletion at 552.629015 s, about one minute after dry-shell
+formation, and continues to the prescribed exit at 1766.535501 s. Final
+core volume and external water film are zero. Particle water is
+0.234328355 kg/kg dry, hexane is 0.000157928910 kg/kg dry and volume-mean
+temperature is 377.861233 K.
 
 Wet-basis moisture is $100X_{\mathrm w}/(1+X_{\mathrm w}+X_{\mathrm h})$,
-giving 17.4618\%. Residual hexane is 167.695 mg/kg dry, or 138.389 ppm
-on a wet basis with the same denominator. This conversion excludes the water
+giving 18.9819\%. Residual hexane is 157.929 mg/kg dry, or 127.931 ppm
+on a wet basis with the same denominator. The earlier two-cell history,
+computed before the retained-water continuation, gave 17.4618\%, 138.389 ppm and
+film depletion at 703.26 s; with the present code the two-cell rung gives
+18.32\%, 112.5 ppm and film depletion at 573.3 s, and its distance from
+64 cells is in Table~\ref{tab:sub:ladderdt}. This conversion excludes the water
 stored in the external film. Figure~\ref*{M-fig:dtmarch} of the main text
 places the published outlet ranges at 30 min for visual reference; the
 computed clock and its earlier end point are not shifted. The published ranges place the particle result in industrial context;
 direct validation requires observations matched to the particle and bath.
 
 \paragraph{Conservation and numerical scope.}
-An independent reconstruction covers every accepted step from
-dry-shell formation to exit, evaluating water, hexane and energy in the
-particle and external water film. The maximum normalized defects are
-$8.31\times10^{-12}$, $2.37\times10^{-12}$ and $2.34\times10^{-12}$,
-respectively.
-The preceding feed history is regenerated with the integrated oil law;
-independently reconstructed exterior rates give maximum normalized
-hexane, water and energy defects $3.76\times10^{-13}$,
-$1.11\times10^{-13}$ and $1.89\times10^{-13}$. The feed is common to
-the diffusivity sensitivities because regime A contains no binary pore
-transport. Its inputs and boundary are held fixed.
-The updated regime-C step check is in Sec.~\ref{sup:temperatureproperties};
-regime-B recoveries and their numerical scope are in
+An independent reconstruction covers every accepted step of the 64-cell
+history from the original feed to exit, evaluating water, hexane and
+energy in the particle and external water film. The maximum normalized
+defects are $5.02\times10^{-12}$, $3.59\times10^{-13}$ and
+$2.04\times10^{-12}$, respectively, against the declared $10^{-10}$.
+Within it, the feed history up to dry-shell activation, regenerated with
+the integrated oil law, gives maximum normalized water, hexane and energy
+defects $1.58\times10^{-12}$, $3.45\times10^{-13}$ and
+$9.4\times10^{-14}$. The feed does not depend on the pore diffusivity
+because regime A contains no binary pore transport. Its inputs and
+boundary are held fixed.
+Mesh and time-step refinement of this history is in Sec.~\ref{sup:ladder};
+the earlier regime-C step check of the two-cell history is in
+Sec.~\ref{sup:temperatureproperties}, and its regime-B recoveries in
 Sec.~\ref{sup:numericalcontrols:properties}.
 
-The available checks quantify selected numerical sensitivities;
-complete-history mesh and time-step refinement remains to be established.
+The convergence ladder establishes mesh and time-step convergence of the
+outlet hexane and temperature at 64 cells; the outlet moisture converges
+at an order of about one half under a thin surface diffusion layer, and a
+surface-graded mesh is the next refinement (Sec.~\ref{sup:ladder}).
 The regime-B trajectory retains a positive water film throughout, so assessing
 the depleted-film branch requires a separate case.
 

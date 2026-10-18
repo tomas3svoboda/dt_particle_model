@@ -5,37 +5,128 @@ prospective 128-epsilon arithmetic-scale budget, not a composition clamp.
 """
 
 import math
+from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 import numpy as np
 from scipy.optimize import OptimizeResult
+from scipy.optimize._numdiff import group_columns
 from dtdc_simulator.core2.particle import external_film_reduced as efr
 
 
+# Owner ruling GT_PS2_OWNER_RULING_PAPER1_NUMERICAL_GATE_HYGIENE_2026-10-17 item 3:
+# the dense certificate Jacobian taken at an iterate that already meets gtol
+# (it owns the native condition gate) is counted outside max_nfev, the search
+# budget, which is unchanged. False restores the former counting for replay.
+CERTIFICATE_JACOBIAN_OUTSIDE_SEARCH_BUDGET = True
+
+# Lead decision (Class A) under the hygiene principle of
+# GT_PS2_OWNER_RULING_PAPER1_NUMERICAL_GATE_HYGIENE_2026-10-17, recorded in
+# docs/GT_PS2_PAPER1_LINE_SEARCH_MERIT_BUILD_2026-10-18.md (evidence 149, 150):
+# with a per-row acceptance clause, the line search's sufficient-decrease test
+# is taken on the gate-normalized residual r_i / g_i, g the clause's own row
+# gates at the current iterate from the Jacobian the Newton already holds
+# there (no residual call is added), so a step is judged in the units that
+# accept the iterate and rounding noise below a row's gate cannot refuse it.
+# The norm of the normalized vector is declared here ("2" or "max"); without
+# an acceptance clause the former unweighted 2-norm is used, bit for bit.
+GATE_NORMALIZED_MERIT_NORM = "max"
+GATE_NORMALIZED_MERIT_NORMS = ("2", "max")
+
+
+def gate_normalized_merit(residual, gates, norm=None):
+    """The line-search merit in gate units: the norm of residual_i / gate_i."""
+    norm = GATE_NORMALIZED_MERIT_NORM if norm is None else norm
+    if norm not in GATE_NORMALIZED_MERIT_NORMS:
+        raise ValueError(f"undeclared gate-normalized merit norm {norm!r}")
+    scaled = np.asarray(residual, dtype=float) / gates
+    return float(np.linalg.norm(scaled) if norm == "2" else np.max(np.abs(scaled)))
+
+
+def merit_row_gates(acceptance, x, jac, size):
+    """The acceptance clause's row gates at x (its gates(x, jac)), validated."""
+    gates = np.asarray(acceptance.gates(x, jac)[0], dtype=float)
+    if gates.shape != (size,) or not np.all(np.isfinite(gates)) or not np.all(gates > 0):
+        raise ValueError("acceptance row gates must be positive, finite and one per residual row")
+    return gates
+
+
+def search_column_scale(jac):
+    """The column 2-norm scaling of the domain-aware Newton's least-squares step.
+
+    domain_aware_newton solves (jac * search_column_scale(jac)) for its step;
+    owner ruling GT_PS2_OWNER_RULING_PAPER1_GATE_UNITS_2026-10-17 point 3
+    takes the birth condition certificate on exactly this matrix.
+    """
+    return 1 / np.maximum(np.linalg.norm(jac, axis=0), np.finfo(float).tiny)
+
+
+def searched_matrix_condition(jac):
+    """np.linalg.cond of the column-2-norm-scaled matrix the Newton step solves."""
+    matrix = np.asarray(jac, dtype=float)
+    if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
+        return math.inf
+    return float(np.linalg.cond(matrix * search_column_scale(matrix)))
+
+
 def domain_aware_newton(
-    fun, x0, *, bounds, max_nfev=400, gtol=1e-11, difference_mode="forward", **unused
+    fun, x0, *, bounds, max_nfev=400, gtol=1e-11, difference_mode="forward",
+    search_jacobian_sparsity=None, acceptance=None, **unused
 ):
     """Backtrack undefined physical trials; never replace their residuals.
 
     Jacobians use finite differences with one-sided retreat when a probe is
     outside the physical domain. Every real residual call counts in nfev.
+
+    acceptance (default None: the former code path, bit for bit) is a declared
+    per-row acceptance clause whose row gates are never tighter than gtol:
+    an object with candidate(residual) (every row with a fixed gate passes it)
+    and accepts(x, residual, jac) (every row passes its gate, some gates
+    depending on the dense Jacobian at x). An iterate it accepts is returned
+    as converged although its maximum exceeds gtol. The dense Jacobian at a
+    candidate iterate is its certificate: counted outside max_nfev when the
+    iterate is returned (the hygiene ruling's item 3), charged to max_nfev
+    when the clause then refuses it (it is the next step's search Jacobian).
+    With a clause, the line search's sufficient-decrease merit is the
+    gate-normalized residual (gate_normalized_merit with the clause's
+    gates(x, jac) at the current iterate, from the Jacobian already held there:
+    no residual call is added); the merit and each accepted step's damping,
+    length and retreat count are returned as line_search. Without a clause the
+    merit is the former unweighted 2-norm and the result carries no new key.
     """
     x = np.array(x0, dtype=float, copy=True)
     lower, upper = map(np.asarray, bounds)
     work = 0
+    certificate = {"active": False, "calls": 0}
     rejected = 0
     rejection_causes = {}
     if difference_mode not in ("forward", "central"):
         raise ValueError("unknown numerical derivative mode")
+    pattern = None
+    if search_jacobian_sparsity is not None:
+        if difference_mode != "forward":
+            raise ValueError("grouped search currently requires forward differences")
+        pattern = np.asarray(search_jacobian_sparsity, dtype=bool)
+        if pattern.ndim != 2 or pattern.shape[1] != x.size or not np.all(np.any(pattern, axis=0)):
+            raise ValueError("invalid declared search Jacobian structure")
+        groups = group_columns(pattern)
+        for group in np.unique(groups):
+            if np.any(np.sum(pattern[:, groups == group], axis=1) > 1):
+                raise ValueError("declared Jacobian colors collide in a residual row")
 
     def evaluate(values):
         nonlocal work, rejected
-        if work >= max_nfev:
-            raise RuntimeError("domain-aware Newton residual-call budget exhausted")
-        work += 1
+        if certificate["active"]:
+            certificate["calls"] += 1
+        else:
+            if work >= max_nfev:
+                raise RuntimeError("domain-aware Newton residual-call budget exhausted")
+            work += 1
         try:
             result = np.asarray(fun(values), dtype=float)
             if not np.all(np.isfinite(result)):
                 raise ValueError("physical residual is nonfinite")
             return result
+        except StepBudgetExceeded:
+            raise
         except (ValueError, RuntimeError) as exc:
             if "budget" in str(exc).lower() or "source" in str(exc).lower():
                 raise
@@ -62,6 +153,8 @@ def domain_aware_newton(
                         continue
                     try:
                         sample = evaluate(trial)
+                    except StepBudgetExceeded:
+                        raise
                     except (ValueError, RuntimeError) as exc:
                         if "budget" in str(exc).lower() or "source" in str(exc).lower():
                             raise
@@ -87,13 +180,71 @@ def domain_aware_newton(
                 raise RuntimeError("no admissible one-sided physical Jacobian probe")
         return np.column_stack(columns)
 
+    def grouped_search_jacobian(values, residual):
+        matrix = np.zeros(pattern.shape)
+        for group in np.unique(groups):
+            columns = np.flatnonzero(groups == group)
+            trial = values.copy()
+            steps = math.sqrt(np.finfo(float).eps) * np.maximum(1.0, np.abs(values[columns]))
+            signs = np.where(values[columns] + steps < upper[columns], 1.0, -1.0)
+            trial[columns] += signs * steps
+            if np.any(trial[columns] <= lower[columns]) or np.any(trial[columns] >= upper[columns]):
+                return jacobian(values, residual)
+            try:
+                sample = evaluate(trial)
+            except StepBudgetExceeded:
+                raise
+            except (ValueError, RuntimeError) as exc:
+                if "budget" in str(exc).lower() or "source" in str(exc).lower():
+                    raise
+                return jacobian(values, residual)
+            for column in columns:
+                rows = pattern[:, column]
+                matrix[rows, column] = (sample[rows] - residual[rows]) / (trial[column] - values[column])
+        return matrix
+
     residual = evaluate(x)
     best = (float(np.max(np.abs(residual))), x.copy())
+    line_search = None
+    if acceptance is not None:
+        line_search = {
+            "merit": "gate-normalized residual r_i / g_i, g the acceptance clause's row gates "
+            "at the current iterate from the Newton's Jacobian there",
+            "norm": GATE_NORMALIZED_MERIT_NORM,
+            "merit_residual_calls": 0,
+            "steps": [],
+        }
     try:
         for iteration in range(max_nfev):
-            jac = jacobian(x, residual)
             maximum = float(np.max(np.abs(residual)))
-            if maximum <= gtol:
+            # Dense original-coordinate derivatives own final conditioning.
+            # Grouping only accelerates intermediate Newton search directions.
+            provisional = (
+                acceptance is not None and maximum > gtol and bool(acceptance.candidate(residual))
+            )
+            certificate["active"] = (
+                maximum <= gtol or provisional
+            ) and CERTIFICATE_JACOBIAN_OUTSIDE_SEARCH_BUDGET
+            calls_before = certificate["calls"]
+            try:
+                jac = (
+                    jacobian(x, residual)
+                    if pattern is None or iteration == 0 or maximum <= gtol or provisional
+                    else grouped_search_jacobian(x, residual)
+                )
+            finally:
+                certificate["active"] = False
+            if pattern is not None and iteration == 0 and np.any(jac[~pattern] != 0.0):
+                raise ValueError("declared grouped Jacobian misses measured dependencies")
+            accepted_by_rows = provisional and bool(acceptance.accepts(x, residual, jac))
+            if provisional and not accepted_by_rows:
+                # Not returned: this Jacobian is the next step's search Jacobian.
+                charged = certificate["calls"] - calls_before
+                certificate["calls"] = calls_before
+                work += charged
+                if work > max_nfev:
+                    raise RuntimeError("domain-aware Newton residual-call budget exhausted")
+            if maximum <= gtol or accepted_by_rows:
                 return OptimizeResult(
                     x=x,
                     fun=residual,
@@ -102,12 +253,22 @@ def domain_aware_newton(
                     active_mask=np.zeros(x.size),
                     nfev=work,
                     optimality=float(np.max(np.abs(jac.T @ residual))),
-                    message="domain-aware Newton converged",
+                    message=(
+                        "domain-aware Newton converged"
+                        if maximum <= gtol
+                        else "domain-aware Newton converged under the declared per-row acceptance"
+                    ),
+                    certificate_jacobian_calls_outside_search_budget=certificate["calls"],
                     rejected_trial_evaluations=rejected,
+                    **({} if line_search is None else {"line_search": line_search}),
                 )
-            column_scale = 1 / np.maximum(np.linalg.norm(jac, axis=0), np.finfo(float).tiny)
+            column_scale = search_column_scale(jac)
             scaled_jac = jac * column_scale
-            old_norm = np.linalg.norm(residual)
+            if acceptance is None:
+                old_norm = np.linalg.norm(residual)
+            else:
+                merit_gates = merit_row_gates(acceptance, x, jac, residual.size)
+                old_norm = gate_normalized_merit(residual, merit_gates, line_search["norm"])
             advanced = False
             for damping in (0.0, 1e-6, 1e-4, 0.01, 1.0, 100.0):
                 matrix = np.vstack((scaled_jac, math.sqrt(damping) * np.eye(x.size)))
@@ -136,12 +297,29 @@ def domain_aware_newton(
                     trial = x + alpha * step
                     try:
                         candidate = evaluate(trial)
+                    except StepBudgetExceeded:
+                        raise
                     except (ValueError, RuntimeError) as exc:
                         if "budget" in str(exc).lower() or "source" in str(exc).lower():
                             raise
                         alpha *= 0.5
                         continue
-                    if np.linalg.norm(candidate) < (1 - 1e-4 * alpha) * old_norm:
+                    merit = (
+                        np.linalg.norm(candidate)
+                        if acceptance is None
+                        else gate_normalized_merit(candidate, merit_gates, line_search["norm"])
+                    )
+                    if merit < (1 - 1e-4 * alpha) * old_norm:
+                        if line_search is not None:
+                            line_search["steps"].append(
+                                {
+                                    "damping": damping,
+                                    "step_length": float(alpha),
+                                    "retreats": retreat,
+                                    "merit_before": float(old_norm),
+                                    "merit_after": float(merit),
+                                }
+                            )
                         x, residual = trial, candidate
                         if np.max(np.abs(residual)) < best[0]:
                             best = (float(np.max(np.abs(residual))), x.copy())
@@ -161,6 +339,7 @@ def domain_aware_newton(
                     optimality=float(np.max(np.abs(jac.T @ residual))),
                     message="domain-aware Newton has no admissible decreasing step",
                     rejected_trial_evaluations=rejected,
+                    **({} if line_search is None else {"line_search": line_search}),
                 )
     except Exception as exc:
         exc.optimizer_debug = {
@@ -170,12 +349,14 @@ def domain_aware_newton(
             "rejected_trials": rejected,
             "rejection_causes": rejection_causes,
         }
+        if line_search is not None:
+            exc.optimizer_debug["line_search"] = line_search
         raise
     raise RuntimeError("domain-aware Newton iteration limit exhausted")
 
 
 def physical_chart_solve(
-    fun, x0, *, decode, encode, physical_bounds, temperature_indices, **kwargs
+    fun, x0, *, decode, encode, physical_bounds, temperature_indices, physical_fun=None, **kwargs
 ):
     """Pull back the unchanged native residual into physical primitives.
 
@@ -196,7 +377,9 @@ def physical_chart_solve(
         return encoded
 
     def residual(values):
-        return fun(native(values + origin))
+        physical = values + origin
+        encoded = native(physical)
+        return fun(encoded) if physical_fun is None else physical_fun(physical, encoded)
 
     try:
         result = domain_aware_newton(
@@ -233,6 +416,8 @@ def physical_chart_solve(
                     )
                     pullback.append(change)
                     break
+                except StepBudgetExceeded:
+                    raise
                 except ValueError, RuntimeError:
                     h *= 0.5
             else:

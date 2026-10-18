@@ -45,6 +45,7 @@ from __future__ import annotations
 import math
 import os
 from dataclasses import dataclass, field, replace
+import sys
 from typing import Sequence
 
 import numpy as np
@@ -60,6 +61,7 @@ from dtdc_simulator.core2.particle import cut_transport as cut
 from dtdc_simulator.core2.particle import transport_coefficients as tc
 from dtdc_simulator.core2.particle import wet_water as ww
 from dtdc_simulator.core2.props import hexane as hx
+from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 
 
 class FaceTangentTopologyError(ValueError):
@@ -509,6 +511,8 @@ def _stock_candidate_from_committed_face(
         raise
     except FaceTangentStepError:
         raise
+    except StepBudgetExceeded:
+        raise
     except Exception as exc:
         if not isinstance(before, face_solver.FaceArrivalCommittedState):
             raise
@@ -685,6 +689,8 @@ def _new_call_report(
         report["time_s"] = float(before.time_s)
         report["arrival_face_index"] = int(before.arrival_face_index)
         report["cells"] = int(before.geometry.master_grid.n)
+    except StepBudgetExceeded:
+        raise
     except Exception:  # noqa: BLE001 - report only; the solve owns validation
         report["time_s"] = None
         report["arrival_face_index"] = None
@@ -706,6 +712,8 @@ def _finish_root_report(
     if five_row is None:
         try:
             five_row = _maximum_scaled_root_residual(_assemble_face_tangent(before, candidate))
+        except StepBudgetExceeded:
+            raise
         except Exception:  # noqa: BLE001 - report only
             five_row = None
     seed_flux = report.get("seed_hexane_flux_mol_m2_s")
@@ -972,6 +980,8 @@ class _InwardSeedReduction:
     def safe_rows(self, temperature, ratio):
         try:
             return self.rows(temperature, ratio)
+        except StepBudgetExceeded:
+            raise
         except Exception:  # noqa: BLE001 - a map point outside the closures' domain
             return None, None
 
@@ -1045,6 +1055,8 @@ class _InwardSeedReduction:
     def water_on_curve(self, ratio, guess=None):
         try:
             temperature, brackets = self.temperature_on_energy_row_warm(ratio, guess)
+        except StepBudgetExceeded:
+            raise
         except Exception:  # noqa: BLE001 - a curve point outside the domain
             return np.nan, None, -1
         if temperature is None:
@@ -1122,7 +1134,9 @@ def _inward_seed_root_candidates(
             guess = temperature
         points.append((float(ratio), water, temperature))
     found: list[tuple[str, float, float]] = []
-    for (ratio_a, water_a, temperature_a), (ratio_b, water_b, _tb) in zip(points[:-1], points[1:]):
+    for (ratio_a, water_a, temperature_a), (ratio_b, water_b, _tb) in zip(
+        points[:-1], points[1:]
+    ):
         if not (np.isfinite(water_a) and np.isfinite(water_b)) or water_a * water_b > 0:
             continue
         low, high, water_low = ratio_a, ratio_b, water_a
@@ -1158,6 +1172,8 @@ def _inward_seed_root_candidates(
                 diff_step=1e-5,
             )
             found.append(("stock_lsq_reseeded", float(solution.x[0]), float(solution.x[1])))
+        except StepBudgetExceeded:
+            raise
         except Exception:  # noqa: BLE001 - the re-seeded polish is optional
             pass
     return found
@@ -1186,6 +1202,8 @@ def _inward_root_seed(
     try:
         reduction = _InwardSeedReduction(before)
         found = _inward_seed_root_candidates(reduction)
+    except StepBudgetExceeded:
+        raise
     except Exception as exc:  # noqa: BLE001 - the stock refusal stands
         report["seed_search_error"] = f"{type(exc).__name__}: {exc}"
         return None
@@ -1219,6 +1237,8 @@ def _inward_root_seed(
             if not five_row <= bound:
                 row["rejected"] = f"five-row residual {five_row:.3e} > bound {bound:.3e}"
                 continue
+        except StepBudgetExceeded:
+            raise
         except Exception as exc:  # noqa: BLE001 - an inadmissible candidate
             row["rejected"] = f"{type(exc).__name__}: {exc}"
             continue
@@ -1467,6 +1487,8 @@ def assemble_face_tangent(
         return _assemble_face_tangent(before, candidate)
     except FaceTangentStepError:
         raise
+    except StepBudgetExceeded:
+        raise
     except Exception as exc:
         if not isinstance(before, face_solver.FaceArrivalCommittedState):
             raise
@@ -1552,6 +1574,8 @@ def audit_face_tangent_rank(
         )
     except FaceTangentStepError:
         raise
+    except StepBudgetExceeded:
+        raise
     except Exception as exc:
         if before is None:
             raise
@@ -1559,6 +1583,116 @@ def audit_face_tangent_rank(
             f"face-tangent rank audit rejected with exact rollback: {exc}",
             before,
         ) from exc
+
+
+@dataclass(frozen=True)
+class FaceTangentPhaseDirectionAudit:
+    """Necessary first-order gas-domain condition at a saturated trace.
+
+    A negative directional d(log a_h)/dr enters the gas-only side. A positive
+    value leaves it. A roundoff-overlapping zero needs higher-order analysis.
+    This local derivative audit is not a finite-path or existence certificate.
+    """
+
+    hexane_activity: float
+    temperature_gradient_k_m: float
+    composition_gradient_m_inv: float
+    hexane_log_activity_temperature_derivative_k_inv: float
+    hexane_log_activity_composition_derivative: float
+    hexane_log_activity_directional_derivative_m_inv: float
+    arithmetic_allowance_m_inv: float
+    direction: str
+    physically_qualifying: bool = field(default=False, init=False)
+
+
+class FaceTangentPhaseDirectionError(FaceTangentStepError):
+    """The supplied zero-volume branch has no certified inward phase direction.
+
+    This refuses qualification of that branch. It does not assert global
+    nonexistence of another root or of a finite-duration discrete solution.
+    """
+
+    def __init__(self, before, audit):
+        super().__init__(
+            "face-transition right limit is not certified gas-inward: "
+            f"d(log a_h)/dr={audit.hexane_log_activity_directional_derivative_m_inv:.17g} /m; "
+            "a finite-duration root cannot waive this transition check",
+            before,
+        )
+        self.phase_direction_audit = audit
+
+
+def certify_face_tangent_phase_direction(
+    assembly: FaceTangentAssembly,
+) -> FaceTangentPhaseDirectionAudit:
+    """Require the strict first-order gas-inward branch for qualification.
+
+    A zero direction requires a higher-order analysis; it is not rounded into
+    an inward direction. Existing solvers opt into this additional check.
+    """
+    audit = audit_face_tangent_phase_direction(assembly)
+    if audit.direction != "gas_inward":
+        raise FaceTangentPhaseDirectionError(assembly.before, audit)
+    return audit
+
+
+def audit_face_tangent_phase_direction(
+    assembly: FaceTangentAssembly,
+) -> FaceTangentPhaseDirectionAudit:
+    r"""Evaluate g_T*d_T(log a_h)+g_y*d_y(log a_h) using native EOS derivatives.
+
+    At a_h=1 an outward radial gas-only trace requires this derivative <=0.
+    Use the same Gibbs-Helmholtz and virial derivatives already used by the
+    actual-composition-path authority; no finite-difference probe, composition
+    clipping, new phase law or fitted coefficient is introduced.
+    """
+    if not isinstance(assembly, FaceTangentAssembly):
+        raise TypeError("phase-direction audit requires an assembled face tangent")
+    before, interface = assembly.before, assembly.interface
+    pore = replace(
+        before.config.dry.pore,
+        w_o=before.oil_fraction_labels[before.arrival_face_index - 1],
+    )
+    activities = acfp._PathActivities(
+        interface.temperature_k,
+        interface.y_hexane,
+        interface.temperature_k,
+        interface.y_hexane,
+        before.config.dry.pressure_pa,
+        pore,
+    )
+    _, activity, _, _, derivative_t = activities._evaluate_coordinates(
+        interface.temperature_k, interface.y_hexane
+    )
+    _, _, _, derivative_y = cp._gas_component_activities_with_derivatives(
+        interface.temperature_k, before.config.dry.pressure_pa, interface.y_hexane, pore
+    )
+    log_derivative_y = derivative_y / activity
+    composition_gradient = (
+        assembly.candidate.dry_gas_force_gradient_m_inv
+        / assembly.force_map.gas_force_derivative_per_y
+    )
+    term_t = assembly.candidate.dry_temperature_gradient_k_m * derivative_t
+    term_y = composition_gradient * log_derivative_y
+    directional = math.fsum((term_t, term_y))
+    # Arithmetic screening only; the native property-derivative authorities
+    # retain their own applicability/enclosure conditions.
+    allowance = 128 * sys.float_info.epsilon * math.fsum((abs(term_t), abs(term_y)))
+    direction = (
+        "gas_inward"
+        if directional < -allowance
+        else "gas_outward" if directional > allowance else "unresolved_first_order"
+    )
+    return FaceTangentPhaseDirectionAudit(
+        activity,
+        assembly.candidate.dry_temperature_gradient_k_m,
+        composition_gradient,
+        derivative_t,
+        log_derivative_y,
+        directional,
+        allowance,
+        direction,
+    )
 
 
 def _assemble_face_tangent(
@@ -1913,6 +2047,8 @@ def continue_to_positive_sweep(
         )
     except FaceTangentStepError:
         raise
+    except StepBudgetExceeded:
+        raise
     except Exception as exc:
         if before is None:
             raise
@@ -2110,7 +2246,9 @@ def _interface_binary_mobility(
         dry.y_hexane,
     )
     result = tc.evaluate_binary_mobility_interval(
-        config.dry.binary_diffusivity.interval,
+        config.dry.binary_diffusivity.interval_at(
+            interface.temperature_k, config.dry.pressure_pa
+        ),
         face,
     ).select(config.dry.binary_diffusivity.fraction)
     mobility = result.value_mol_m_s

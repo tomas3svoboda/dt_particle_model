@@ -104,6 +104,7 @@ from functools import lru_cache
 from typing import Sequence
 
 from dtdc_simulator.core2.exact_cache import float_bits_key
+from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 from dtdc_simulator.core2.particle import actual_composition_force_path as acfp
 from dtdc_simulator.core2.particle import condensed_solvent_reduced_film as csrf
 from dtdc_simulator.core2.particle import coupled_pore as cp
@@ -225,10 +226,13 @@ class InterfaceCompositionBracket:
     y_hexane_bounds: tuple[float, float]
     label: str
     log_fugacity_tolerance: float = 2.0e-11
+    finish_at_representable_bracket: bool = False
     physically_qualifying: bool = field(default=False, init=False)
 
     def __post_init__(self) -> None:
         lower, upper = self.y_hexane_bounds
+        if not isinstance(self.finish_at_representable_bracket, bool):
+            raise TypeError("representable interface-root selection must be boolean")
         if not all(math.isfinite(value) for value in (lower, upper)):
             raise ValueError("interface composition bracket must be finite")
         if not 0.0 < lower < upper < 1.0:
@@ -346,8 +350,17 @@ class CutTransportConfig:
                 "sensitivity requires a matched wet-side implementation"
             )
         shared_state_fields = (
-            ("dry-meal heat capacity", self.dry.pore.cp_dry_meal, self.wet.wet.cp_dry_meal),
+            (
+                "dry-meal heat capacity",
+                self.dry.pore.cp_dry_meal,
+                self.wet.wet.cp_dry_meal,
+            ),
             ("oil heat capacity", self.dry.pore.cp_oil, self.wet.wet.cp_oil),
+            (
+                "oil heat-capacity law",
+                self.dry.pore.oil_heat_capacity_law,
+                self.wet.wet.oil_heat_capacity_law,
+            ),
             ("solid energy datum", self.dry.pore.T_ref_solid, self.wet.wet.T_ref_solid),
             ("hexane GAB authority", self.dry.pore.gab, self.wet.wet.gab),
             ("oil isotherm authority", self.dry.pore.oil, self.wet.wet.oil),
@@ -779,9 +792,23 @@ class DryFaceFlux:
     # exact-equality contract unsatisfiable.  Retaining the state here is
     # audit-only: it changes no equation, no flux, and no accepted value.
     selected_binary_mobility_face_state: tc.SymmetricBinaryFaceState | None = None
+    # Exact trace coordinates avoid recovering a small increment by endpoint
+    # subtraction. The path audit retains its represented endpoint secants;
+    # these two fields identify the gradient used to contract those secants.
+    newborn_temperature_gradient_k_m: float | None = None
+    newborn_composition_gradient_m_inv: float | None = None
     physically_qualifying: bool = field(default=False, init=False)
 
     def __post_init__(self) -> None:
+        trace = (self.newborn_temperature_gradient_k_m, self.newborn_composition_gradient_m_inv)
+        if any(value is not None for value in trace):
+            if not all(value is not None and math.isfinite(value) for value in trace):
+                raise ValueError('dry-face exact trace requires both finite gradients')
+            if self.composition_force_path is not None:
+                path = self.composition_force_path
+                if (math.fsum((path.left_state.temperature_k, trace[0]*path.distance_m)) != path.right_state.temperature_k
+                    or math.fsum((path.left_state.y_hexane, trace[1]*path.distance_m)) != path.right_state.y_hexane):
+                    raise ValueError('dry-face gradient audit does not reconstruct its represented endpoints')
         if not isinstance(
             self.thermodynamic_force_reconstruction,
             DryThermodynamicForceReconstruction,
@@ -1590,6 +1617,8 @@ def assemble_backward_euler(
             target_config,
             enforce_reduced_film_thresholds,
         )
+    except StepBudgetExceeded:
+        raise
     except CutTransportStepError:
         raise
     except Exception as exc:
@@ -2608,7 +2637,9 @@ def _dry_flux(
         right.y_hexane,
     )
     mobility = tc.evaluate_binary_mobility_interval(
-        config.dry.binary_diffusivity.interval,
+        config.dry.binary_diffusivity.interval_at(
+            face_temperature, config.dry.pressure_pa
+        ),
         face,
     ).select(config.dry.binary_diffusivity.fraction)
     common_face_force_mode = config.mass_force_mode in (
@@ -2620,6 +2651,27 @@ def _dry_flux(
         assert composition_force_path is not None
         gas_force_gradient = composition_force_path.gas_force_gradient_m_inv
         retained_force_gradient = composition_force_path.retained_force_gradient_m_inv
+        if uses_exact_trace:
+            assert composition_gradient_m_inv is not None
+            if composition_gradient_m_inv == 0.0:
+                gas_force_gradient = retained_force_gradient = 0.0
+            elif composition_force_path.delta_y_hexane == 0.0:
+                raise CutTransportTopologyError(
+                    "nonzero exact-trace increment has coalesced endpoint compositions; "
+                    "the actual-path secant is unresolved at this floating-point resolution"
+                )
+            else:
+                # The certified finite path supplies mean constitutive slopes.
+                # Contract with the caller's trace gradient, rather than the
+                # rounded difference of two almost equal stored compositions.
+                gas_force_gradient = (
+                    composition_force_path.gas_force_secant_per_y_hexane
+                    * composition_gradient_m_inv
+                )
+                retained_force_gradient = (
+                    composition_force_path.retained_force_secant_per_y_hexane
+                    * composition_gradient_m_inv
+                )
         selected_binary_mobility = mobility.as_coupled_pore_selection()
         independent = cp.IndependentMaxwellStefanFlux(
             water_diffusive_flux_mol_m2_s=(
@@ -2932,6 +2984,8 @@ def _dry_flux(
         thermodynamic_force_temperature_k=(None if uses_actual_path else face_temperature),
         thermodynamic_force_reconstruction=reconstruction,
         composition_force_path=composition_force_path,
+        newborn_temperature_gradient_k_m=temperature_gradient_k_m,
+        newborn_composition_gradient_m_inv=composition_gradient_m_inv,
         mass_force_mode=config.mass_force_mode,
         selected_binary_mobility_mol_m_s=(independent.mobility.value_mol_m_s),
         # A20 section 3.4 recomputability primitive; see the field comment.
@@ -3891,6 +3945,28 @@ def _solve_interface_composition_with_audit(
     no_distinct_midpoint_encountered = False
     bisection_iteration_count = 0
     for _ in range(120):
+        if (
+            config.interface_composition.finish_at_representable_bracket
+            and not rounding_plateau_encountered
+            and math.nextafter(lo, math.inf) == hi
+            and representable_lo_in_tolerance
+            and representable_lo_dry is not None
+            and representable_lo_activity is not None
+        ):
+            return make_root(
+                lo,
+                r_lo,
+                representable_lo_dry,
+                representable_lo_activity,
+                final_lower=lo,
+                final_upper=hi,
+                iteration_count=bisection_iteration_count,
+                rounding_plateau=False,
+                no_distinct_midpoint=False,
+                upper_classification=upper_classification,
+                upper_residual=r_hi,
+                upper_product_activity=upper_product_activity,
+            )
         mid = 0.5 * (lo + hi)
         if mid == lo or mid == hi:
             no_distinct_midpoint_encountered = True
@@ -3909,7 +3985,10 @@ def _solve_interface_composition_with_audit(
         else:
             mid_dry, mid_activity = certify_representable_trace(mid)
             if mid_dry is not None:
-                if not rounding_plateau_encountered:
+                if (
+                    not rounding_plateau_encountered
+                    and not config.interface_composition.finish_at_representable_bracket
+                ):
                     return make_root(
                         mid,
                         r_mid,

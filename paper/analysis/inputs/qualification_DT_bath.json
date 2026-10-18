@@ -1,0 +1,951 @@
+{
+ "name": "dtdc_particle_destiny_v3_exit105",
+ "scope": "One particle. PHZ and flash from the tower solve (v2); toaster bath = declared bed-temperature ladder with near-pure steam (benchmarking of physical feasibility, not validation).",
+ "sources": [
+  "Paraiso 2008 COAMO stream table and seven-stage meal temperatures",
+  "Kemper / published envelope for residence, residual class, dryer/cooler boxes",
+  "app_specifications/DTDC_steady_state_reference.md (industry_benchmark --strict, every gate passing: dome 72.38 C / 90.25 wt% hexane, DT exit 111.73 C / 19.64 %wb / 284 ppm)",
+  "scenarios/soybean_default.yaml, benchmarks/coamo_industrial.yaml"
+ ],
+ "radii_m": [
+  0.0005,
+  0.000885,
+  0.0015
+ ],
+ "radii_origin": "thermal_oracle.BARE_FILM_H_W_M2_K / qualify_a2c_wet_core_scales Coletto-film sizes; 0.885 mm is the production Faner/P1EF sphere",
+ "particle": {
+  "radius_m": 0.000885,
+  "feed_temperature_K": 322.15,
+  "feed_hexane_kg_kg_dry": 0.3877862595419847,
+  "feed_water_kg_kg_dry": 0.12366412213740458,
+  "feed_oil_kg_kg_dry": 0.013740458015267173,
+  "feed_initializes_in_sphere": true,
+  "Xc_at_feed_kg_kg_dry": 0.20562060696802772,
+  "attached_hexane_at_feed_kg_kg_dry": 0.18216565257395698
+ },
+ "time_convention": {
+  "total_dt_s": 1770.1747624283955,
+  "note": "Sum of per-stage inventory residence from inventory_residence_audit on the steady solve; cells inside a stage share the stage residence by depth."
+ },
+ "waypoints": [
+  {
+   "t_s": 0.0,
+   "stage": "feed/top vapour",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "first cell vapour held at entry"
+  },
+  {
+   "t_s": 4.085018682527067,
+   "stage": "PD1/PHZ/cell0",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 12.2550560475812,
+   "stage": "PD1/PHZ/cell1",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 20.425093412635334,
+   "stage": "PD1/PHZ/cell2",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 28.595130777689466,
+   "stage": "PD1/PHZ/cell3",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 36.7651681427436,
+   "stage": "PD1/PHZ/cell4",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 44.93520550779773,
+   "stage": "PD1/PHZ/cell5",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 53.10524287285187,
+   "stage": "PD1/PHZ/cell6",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 61.275280237906,
+   "stage": "PD1/PHZ/cell7",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 69.44531760296013,
+   "stage": "PD1/PHZ/cell8",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 77.61535496801427,
+   "stage": "PD1/PHZ/cell9",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 85.7853923330684,
+   "stage": "PD1/PHZ/cell10",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 93.95542969812253,
+   "stage": "PD1/PHZ/cell11",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 102.12546706317667,
+   "stage": "PD1/PHZ/cell12",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 110.29550442823081,
+   "stage": "PD1/PHZ/cell13",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 118.46554179328494,
+   "stage": "PD1/PHZ/cell14",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 126.63557915833907,
+   "stage": "PD1/PHZ/cell15",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 134.8056165233932,
+   "stage": "PD1/PHZ/cell16",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 142.97565388844734,
+   "stage": "PD1/PHZ/cell17",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 151.14569125350144,
+   "stage": "PD1/PHZ/cell18",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 159.31572861855557,
+   "stage": "PD1/PHZ/cell19",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 167.4857659836097,
+   "stage": "PD2/PHZ/cell20",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 175.6558033486638,
+   "stage": "PD2/PHZ/cell21",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 183.82584071371792,
+   "stage": "PD2/PHZ/cell22",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 191.99587807877205,
+   "stage": "PD2/PHZ/cell23",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 200.16591544382618,
+   "stage": "PD2/PHZ/cell24",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 208.3359528088803,
+   "stage": "PD2/PHZ/cell25",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 216.5059901739344,
+   "stage": "PD2/PHZ/cell26",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 224.67602753898854,
+   "stage": "PD2/PHZ/cell27",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 232.84606490404266,
+   "stage": "PD2/PHZ/cell28",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 241.01610226909676,
+   "stage": "PD2/PHZ/cell29",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 249.1861396341509,
+   "stage": "PD2/PHZ/cell30",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 257.356176999205,
+   "stage": "PD2/PHZ/cell31",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 265.52621436425915,
+   "stage": "PD2/PHZ/cell32",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 273.6962517293133,
+   "stage": "PD2/PHZ/cell33",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 281.86628909436746,
+   "stage": "PD2/PHZ/cell34",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 290.0363264594216,
+   "stage": "PD2/PHZ/cell35",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 298.2063638244758,
+   "stage": "PD2/PHZ/cell36",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 306.37640118952993,
+   "stage": "PD2/PHZ/cell37",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 314.5464385545841,
+   "stage": "PD2/PHZ/cell38",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 322.7164759196382,
+   "stage": "PD2/PHZ/cell39",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 330.88651328469234,
+   "stage": "PD3/PHZ/cell40",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 339.0565506497465,
+   "stage": "PD3/PHZ/cell41",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 347.22658801480065,
+   "stage": "PD3/PHZ/cell42",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 355.3966253798548,
+   "stage": "PD3/PHZ/cell43",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 363.5666627449089,
+   "stage": "PD3/PHZ/cell44",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 371.73670010996307,
+   "stage": "PD3/PHZ/cell45",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 379.9067374750172,
+   "stage": "PD3/PHZ/cell46",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 388.0767748400714,
+   "stage": "PD3/PHZ/cell47",
+   "T_bath_K": 359.13588417717773,
+   "y_hexane": 0.4081280800612516,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 396.24681220512554,
+   "stage": "PD3/PHZ/cell48",
+   "T_bath_K": 359.2196687154178,
+   "y_hexane": 0.4061975839369566,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 404.4168495701797,
+   "stage": "PD3/PHZ/cell49",
+   "T_bath_K": 359.3480272794586,
+   "y_hexane": 0.40322982511436295,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 412.58688693523385,
+   "stage": "PD3/PHZ/cell50",
+   "T_bath_K": 359.47713397473416,
+   "y_hexane": 0.40023225222341297,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 420.756924300288,
+   "stage": "PD3/PHZ/cell51",
+   "T_bath_K": 359.60699699573746,
+   "y_hexane": 0.397204413728404,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 428.92696166534216,
+   "stage": "PD3/PHZ/cell52",
+   "T_bath_K": 359.73762466895295,
+   "y_hexane": 0.3941458489293243,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 437.09699903039626,
+   "stage": "PD3/PHZ/cell53",
+   "T_bath_K": 359.8690254556688,
+   "y_hexane": 0.39105608772817085,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 445.2670363954504,
+   "stage": "PD3/PHZ/cell54",
+   "T_bath_K": 360.00120795486305,
+   "y_hexane": 0.38793465038807956,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 453.4370737605046,
+   "stage": "PD3/PHZ/cell55",
+   "T_bath_K": 360.1341809061681,
+   "y_hexane": 0.3847810472850089,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 461.60711112555873,
+   "stage": "PD3/PHZ/cell56",
+   "T_bath_K": 360.26795319291335,
+   "y_hexane": 0.3815947786517076,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 469.7771484906129,
+   "stage": "PD3/PHZ/cell57",
+   "T_bath_K": 360.40253384525073,
+   "y_hexane": 0.37837533431368453,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 477.94718585566704,
+   "stage": "PD3/PHZ/cell58",
+   "T_bath_K": 360.5379320433646,
+   "y_hexane": 0.3751221934168886,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 486.1172232207212,
+   "stage": "PD3/PHZ/cell59",
+   "T_bath_K": 360.6741571207697,
+   "y_hexane": 0.3718348241467925,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.2363770847598,
+   "stage": "MN1/FTRZ/cell60",
+   "T_bath_K": 371.78910792919504,
+   "y_hexane": 0.36851268343856175,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.3037708996878,
+   "stage": "MN1/FTRZ/cell61",
+   "T_bath_K": 372.35939132876643,
+   "y_hexane": 0.35502347502067194,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.3694486299545,
+   "stage": "MN1/FTRZ/cell62",
+   "T_bath_K": 372.93414712766673,
+   "y_hexane": 0.3412172938474712,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.43348201674723,
+   "stage": "MN1/FTRZ/cell63",
+   "T_bath_K": 373.5134179713107,
+   "y_hexane": 0.3270844321165127,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.49593842235436,
+   "stage": "MN1/FTRZ/cell64",
+   "T_bath_K": 374.09724629117125,
+   "y_hexane": 0.3126149408670993,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.5568811815642,
+   "stage": "MN1/FTRZ/cell65",
+   "T_bath_K": 374.6856742413038,
+   "y_hexane": 0.297798620953017,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.6163699186277,
+   "stage": "MN1/FTRZ/cell66",
+   "T_bath_K": 375.2787436305622,
+   "y_hexane": 0.2826250143075745,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.67446083376,
+   "stage": "MN1/FTRZ/cell67",
+   "T_bath_K": 375.876495850306,
+   "y_hexane": 0.26708339549386045,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.7312069626342,
+   "stage": "MN1/FTRZ/cell68",
+   "T_bath_K": 376.47897179739783,
+   "y_hexane": 0.25116276353976813,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.7866584118689,
+   "stage": "MN1/FTRZ/cell69",
+   "T_bath_K": 377.0862117922857,
+   "y_hexane": 0.23485183406351648,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.8423503816957,
+   "stage": "MN1/FTRZ/cell70",
+   "T_bath_K": 377.69825549196946,
+   "y_hexane": 0.21813903170120855,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.9003165785448,
+   "stage": "MN1/FTRZ/cell71",
+   "T_bath_K": 378.3151414415084,
+   "y_hexane": 0.2010068104350692,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 490.96135457639235,
+   "stage": "MN1/FTRZ/cell72",
+   "T_bath_K": 378.9369076758863,
+   "y_hexane": 0.18344269135857091,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 491.0260877859904,
+   "stage": "MN1/FTRZ/cell73",
+   "T_bath_K": 379.5635913687988,
+   "y_hexane": 0.16543542461500024,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 491.0953180512414,
+   "stage": "MN1/FTRZ/cell74",
+   "T_bath_K": 380.1952286417013,
+   "y_hexane": 0.14697371580593147,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 491.1701039658283,
+   "stage": "MN1/FTRZ/cell75",
+   "T_bath_K": 380.8318544533462,
+   "y_hexane": 0.12804631098099414,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 491.2518872627505,
+   "stage": "MN1/FTRZ/cell76",
+   "T_bath_K": 381.4735024855795,
+   "y_hexane": 0.10864212465077237,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 491.3427078765872,
+   "stage": "MN1/FTRZ/cell77",
+   "T_bath_K": 382.12020502700204,
+   "y_hexane": 0.08875043975784266,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 491.4455950931598,
+   "stage": "MN1/FTRZ/cell78",
+   "T_bath_K": 382.77199285781114,
+   "y_hexane": 0.0683612357083238,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 491.5978715661833,
+   "stage": "MN1/FTRZ/cell79",
+   "T_bath_K": 383.42889514306614,
+   "y_hexane": 0.04746576270838059,
+   "origin": "benchmarked steady-state tower solve, countercurrent vapour at the cell the particle occupies"
+  },
+  {
+   "t_s": 495.6590016415431,
+   "stage": "MN1/DCZ/cell80",
+   "T_bath_K": 373.15,
+   "y_hexane": 0.05,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 511.41648155009347,
+   "stage": "MN1/DCZ/cell81",
+   "T_bath_K": 373.21199453652224,
+   "y_hexane": 0.04950404370782181,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 542.543439915768,
+   "stage": "MN1/DCZ/cell82",
+   "T_bath_K": 373.33445709832955,
+   "y_hexane": 0.04852434321336342,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 588.2734277191516,
+   "stage": "MN1/DCZ/cell83",
+   "T_bath_K": 373.5143722507202,
+   "y_hexane": 0.047085021994237926,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 647.4804208913971,
+   "stage": "MN1/DCZ/cell84",
+   "T_bath_K": 373.7473098855383,
+   "y_hexane": 0.04522152091569345,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 718.7065467638588,
+   "stage": "MN1/DCZ/cell85",
+   "T_bath_K": 374.02753430513883,
+   "y_hexane": 0.042979725558889265,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 800.1979817315976,
+   "stage": "MN1/DCZ/cell86",
+   "T_bath_K": 374.3481454542997,
+   "y_hexane": 0.04041483636560213,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 889.948136211141,
+   "stage": "MN1/DCZ/cell87",
+   "T_bath_K": 374.70124882248126,
+   "y_hexane": 0.03759000942014994,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 985.747063535517,
+   "stage": "MN1/DCZ/cell88",
+   "T_bath_K": 375.07814983287585,
+   "y_hexane": 0.0345748013369929,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1089.7890670856973,
+   "stage": "MN2/DCZ/cell89",
+   "T_bath_K": 375.4874815170268,
+   "y_hexane": 0.031300147863785016,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1199.6244021100447,
+   "stage": "MN2/DCZ/cell90",
+   "T_bath_K": 375.91960586229783,
+   "y_hexane": 0.027843153101617085,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1308.1074818989537,
+   "stage": "MN2/DCZ/cell91",
+   "T_bath_K": 376.3464100398093,
+   "y_hexane": 0.02442871968152535,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1404.5262981715016,
+   "stage": "SP1/DCZ/cell92",
+   "T_bath_K": 376.72574987470256,
+   "y_hexane": 0.02139400100237949,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1486.928725757872,
+   "stage": "SP1/DCZ/cell93",
+   "T_bath_K": 377.04994513537713,
+   "y_hexane": 0.018800438916982676,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1561.7485643172479,
+   "stage": "SP1/DCZ/cell94",
+   "T_bath_K": 377.34430827219086,
+   "y_hexane": 0.016445533822472998,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1627.14350111149,
+   "stage": "SP1/DCZ/cell95",
+   "T_bath_K": 377.6015910877801,
+   "y_hexane": 0.014387271297759206,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1681.503295763372,
+   "stage": "SP1/DCZ/cell96",
+   "T_bath_K": 377.8154584253523,
+   "y_hexane": 0.012676332597181435,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1723.4894297187495,
+   "stage": "SP1/DCZ/cell97",
+   "T_bath_K": 377.98064416127147,
+   "y_hexane": 0.011354846709827927,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1752.0680650156512,
+   "stage": "SP1/DCZ/cell98",
+   "T_bath_K": 378.09308087449926,
+   "y_hexane": 0.010455353004005512,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  },
+  {
+   "t_s": 1766.5355008060146,
+   "stage": "SP1/DCZ/cell99",
+   "T_bath_K": 378.15,
+   "y_hexane": 0.010000000000000002,
+   "origin": "v3 declared toaster bed ladder: gas at the bed temperature, near-pure steam; T 100.0->105.0 C, y_h 0.05->0.01 linear in residence"
+  }
+ ],
+ "declared_not_measured": [
+  "Tower strict benchmark FAILS at HEAD (dome 86 C, meal 124 C, 14 % wb, 4184 ppm); its DCZ vapour is not used.",
+  "Toaster gas at the bed temperature (jacketed tray: interstitial gas takes the bed temperature); bed ladder and exit temperature declared from the plant box / Paraiso outlet.",
+  "Toaster gas hexane fraction declared (sparge steam near-pure at the bottom).",
+  "PD section meal history from the tower PHZ (jacket heating to the hexane boiling point).",
+  "Equal-velocity plug flow in each stage; no feedback from the particle onto the vapour."
+ ],
+ "outlet_box": {
+  "dt_temperature_C": [
+   105.0,
+   110.0
+  ],
+  "dt_moisture_wt_pct_wb": [
+   16.0,
+   21.0
+  ],
+  "dt_hexane_ppm": [
+   100.0,
+   500.0
+  ],
+  "dryer_temperature_C": [
+   55.0,
+   65.0
+  ],
+  "dryer_moisture_wt_pct_wb": [
+   12.0,
+   13.0
+  ],
+  "cooler_above_ambient_K": [
+   0.0,
+   10.0
+  ],
+  "paraiso_dt_outlet": {
+   "T_C": 110.0,
+   "moisture_wt_pct_wb": 19.0,
+   "hexane_ppm": 280.0
+  }
+ },
+ "steady_state_summary": {
+  "converged": true,
+  "outer_iterations": 12,
+  "tray_summaries": [
+   {
+    "id": "PD1",
+    "T_K": 330.49316804202897,
+    "X1": 0.12366412213415441,
+    "X2": 0.38778625957309343
+   },
+   {
+    "id": "PD2",
+    "T_K": 338.83633608405796,
+    "X1": 0.12366412213415441,
+    "X2": 0.38778625957309343
+   },
+   {
+    "id": "PD3",
+    "T_K": 341.9,
+    "X1": 0.12366412213415441,
+    "X2": 0.3286916142888685
+   },
+   {
+    "id": "MN1",
+    "T_K": 395.43303416800944,
+    "X1": 0.16890674065887848,
+    "X2": 0.007448235977519853
+   },
+   {
+    "id": "MN2",
+    "T_K": 395.56807658526344,
+    "X1": 0.16817683928681382,
+    "X2": 0.005761037051178047
+   },
+   {
+    "id": "SP1",
+    "T_K": 397.3198394596949,
+    "X1": 0.16577789517774935,
+    "X2": 0.004183771259108353
+   }
+  ],
+  "stages": [
+   {
+    "stage_id": "PD1",
+    "role": "PREDESOLV",
+    "fill_fraction": 0.5,
+    "inventory_kg_dry": 4016.3180296556616,
+    "inventory_residence_s": 163.40074730108265,
+    "exit_meal_T_C": 57.34316804202899
+   },
+   {
+    "stage_id": "PD2",
+    "role": "PREDESOLV",
+    "fill_fraction": 0.5,
+    "inventory_kg_dry": 4016.3180296556616,
+    "inventory_residence_s": 163.40074730108265,
+    "exit_meal_T_C": 65.68633608405798
+   },
+   {
+    "stage_id": "PD3",
+    "role": "PREDESOLV",
+    "fill_fraction": 0.5,
+    "inventory_kg_dry": 4016.3180296556616,
+    "inventory_residence_s": 163.40074730108265,
+    "exit_meal_T_C": 68.75
+   },
+   {
+    "stage_id": "MN1",
+    "role": "MAIN",
+    "fill_fraction": 0.5,
+    "inventory_kg_dry": 13387.726765518872,
+    "inventory_residence_s": 544.6691576702755,
+    "exit_meal_T_C": 122.28303416800946
+   },
+   {
+    "stage_id": "MN2",
+    "role": "MAIN",
+    "fill_fraction": 0.5,
+    "inventory_kg_dry": 8032.636059311323,
+    "inventory_residence_s": 326.8014946021653,
+    "exit_meal_T_C": 122.41807658526346
+   },
+   {
+    "stage_id": "SP1",
+    "role": "SPARGE",
+    "fill_fraction": 0.5,
+    "inventory_kg_dry": 10040.795074139154,
+    "inventory_residence_s": 408.50186825270663,
+    "exit_meal_T_C": 124.16983945969491
+   }
+  ],
+  "metrics": [
+   {
+    "name": "DT dome vapor temperature",
+    "value": 85.98588417717775,
+    "unit": "C",
+    "low": 70.0,
+    "high": 75.0,
+    "central": "None",
+    "note": ""
+   },
+   {
+    "name": "DT dome vapor hexane",
+    "value": 76.73583811965011,
+    "unit": "wt%",
+    "low": 88.0,
+    "high": 94.0,
+    "central": 91.0,
+    "note": ""
+   },
+   {
+    "name": "DT meal outlet temperature",
+    "value": 124.16983945969491,
+    "unit": "C",
+    "low": 108.0,
+    "high": 112.0,
+    "central": 110.0,
+    "note": ""
+   },
+   {
+    "name": "DT meal outlet moisture",
+    "value": 14.005034860421285,
+    "unit": "wt%wb",
+    "low": 16.0,
+    "high": 21.0,
+    "central": 19.0,
+    "note": ""
+   },
+   {
+    "name": "DT meal residual hexane",
+    "value": 4183.771259108353,
+    "unit": "ppm",
+    "low": 100.0,
+    "high": 500.0,
+    "central": 280.0,
+    "note": ""
+   },
+   {
+    "name": "DT pre-desolv tray outlet T",
+    "value": 57.34316804202899,
+    "unit": "C",
+    "low": 64.0,
+    "high": 72.0,
+    "central": 68.0,
+    "note": ""
+   },
+   {
+    "name": "DT specific direct steam",
+    "value": 112.31999999999998,
+    "unit": "kg/t_raw",
+    "low": 110.0,
+    "high": 116.0,
+    "central": "None",
+    "note": "(scenario setpoint, not yet calibrated)"
+   },
+   {
+    "name": "DT solver fully converged",
+    "value": 1.0,
+    "unit": "bool",
+    "low": 1.0,
+    "high": 1.0,
+    "central": "None",
+    "note": "outer=12 (ok), dcz_inner=3/500 (ok)"
+   }
+  ]
+ },
+ "axial_profile_csv": "paper/analysis/results_2026-10-01/dtdc_particle_destiny/destiny_v2.csv",
+ "v3_parameters": {
+  "toaster_entry_c": 100.0,
+  "toaster_exit_c": 105.0,
+  "yh_entry": 0.05,
+  "yh_exit": 0.01,
+  "tag": "exit105"
+ }
+}

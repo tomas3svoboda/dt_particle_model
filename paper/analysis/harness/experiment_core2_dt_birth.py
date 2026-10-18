@@ -27,12 +27,13 @@ import native_water_path_bounds as path_bounds
 from dtdc_simulator.core2.particle import cut_birth_event as birth
 from dtdc_simulator.core2.particle import cut_birth_integrator as bi
 from dtdc_simulator.core2.particle import wet_water as ww
+from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 from era_stamp import REPO_ROOT, era_stamp
 
 core = study.core
 
 
-class BirthAssemblyBudget(RuntimeError):
+class BirthAssemblyBudget(StepBudgetExceeded):
     """Includes seed, finite-difference, invalid trial and final assemblies."""
 
 
@@ -40,16 +41,89 @@ class UnresolvedTrialPath(ValueError):
     """Reject a trial whose enclosure work exceeds the per-path allowance."""
 
 
+# Owner ruling GT_PS2_OWNER_RULING_PAPER1_NUMERICAL_GATE_HYGIENE_2026-10-17 item 2:
+# the whole-path proof allowance has no wall-clock clause (point clause and the
+# 1200-per-path limit unchanged). True restores the former clause for replay.
+PROOF_WALL_CLOCK_CLAUSE = False
+
+# Owner ruling GT_PS2_OWNER_RULING_PAPER1_GATE_UNITS_2026-10-17 point 3: the
+# birth condition certificate's own cap, in the units of the matrix the
+# domain-aware Newton's least-squares step solves (column-2-norm-scaled
+# physical joint Jacobian; measured 4e3 to 8e4 on DT, 6.6e4 to 1.0e6 on Faner
+# across the stored runtime-131 rungs, evidence 140/142). Declared beside, not
+# in place of, controls.maximum_condition_proxy (1e12), which the film node,
+# the face solve and the extinction projection keep on their own matrices.
+GATE_UNITS_RULING = "GT_PS2_OWNER_RULING_PAPER1_GATE_UNITS_2026-10-17"
+MAXIMUM_BIRTH_CONDITION_PROXY = 1.0e8
+
+
+def birth_condition_certificate(
+    solution, former_gated_proxy, former_gated_matrix, former_cap=None, solver_policy=None
+):
+    """The gated birth certificate and the former proxies, reported not gated."""
+    physical = np.asarray(solution.jac, dtype=float)
+    native = getattr(solution, "native_jac", None)
+    return {
+        "ruling": GATE_UNITS_RULING,
+        "gated_matrix": "column-2-norm-scaled physical joint birth Jacobian "
+        "(particle_numerical_repairs.search_column_scale, the domain-aware Newton's "
+        "least-squares matrix), DT and Faner alike",
+        "solver_policy": solver_policy,
+        "gated_condition": study.numerics.searched_matrix_condition(physical),
+        "cap": MAXIMUM_BIRTH_CONDITION_PROXY,
+        "reported_not_gated": {
+            "raw_column_physical_proxy": core.ci._jacobian_condition_proxy(physical),
+            "native_pullback_condition": (
+                None if native is None else core.ci._jacobian_condition_proxy(native)
+            ),
+            "former_gated_proxy": former_gated_proxy,
+            "former_gated_matrix": former_gated_matrix,
+            "former_cap": former_cap,
+        },
+    }
+
+
+def _proof_memo_key(self, temperature_k, y_hexane):
+    """Exact-bit key of every input the native coordinate evaluation reads."""
+    try:
+        hash(self.pore)
+    except TypeError:
+        return None
+    return (
+        float(temperature_k).hex(),
+        float(y_hexane).hex(),
+        float(self.pressure_pa).hex(),
+        self.pore,
+    )
+
+
 @contextmanager
-def bounded_path_proof(point_budget, wall_s):
-    """Stop unresolved native path proofs without admitting any unchecked path."""
+def bounded_path_proof(point_budget, wall_s, *, memoize_identical_points=False):
+    """Stop unresolved native path proofs without admitting any unchecked path.
+
+    Declared option memoize_identical_points (default off): within this one
+    allowance, a native coordinate evaluation whose inputs (T, y, P, pore) are
+    bit-identical to an earlier one returns that earlier, bit-identical result.
+    Every requested point, cache hits included, is still counted against the
+    point clause, the per-path 1200 limit and the wall clause before the lookup,
+    so the allowance and its meaning are unchanged; only repeated work is saved.
+    """
     authority = core.cut.acfp._PathActivities
     original = authority._evaluate_coordinates
     started = time.perf_counter()
-    audit = {"point_budget": point_budget, "wall_budget_s": wall_s, "points_started": 0}
+    audit = {
+        "point_budget": point_budget,
+        "wall_budget_s": wall_s if PROOF_WALL_CLOCK_CLAUSE else None,
+        "points_started": 0,
+    }
+    memo = {} if memoize_identical_points else None
+    if memo is not None:
+        audit["memoized_points"] = 0
 
     def evaluate(self, temperature_k, y_hexane):
-        if audit["points_started"] >= point_budget or time.perf_counter() - started >= wall_s:
+        if audit["points_started"] >= point_budget or (
+            PROOF_WALL_CLOCK_CLAUSE and time.perf_counter() - started >= wall_s
+        ):
             audit["computational_budget_exhausted"] = True
             raise BirthAssemblyBudget(
                 "native whole-path proof computational budget exhausted; no path admitted"
@@ -68,6 +142,15 @@ def bounded_path_proof(point_budget, wall_s):
         }
         audit["last_temperature_k"] = temperature_k
         audit["last_y_hexane"] = y_hexane
+        if memo is not None:
+            key = _proof_memo_key(self, temperature_k, y_hexane)
+            if key is not None:
+                if key in memo:
+                    audit["memoized_points"] += 1
+                    return memo[key]
+                value = original(self, temperature_k, y_hexane)
+                memo[key] = value
+                return value
         return original(self, temperature_k, y_hexane)
 
     authority._evaluate_coordinates = evaluate
@@ -77,6 +160,32 @@ def bounded_path_proof(point_budget, wall_s):
         authority._evaluate_coordinates = original
         audit["wall_s"] = time.perf_counter() - started
         audit["native_callable_restored"] = authority._evaluate_coordinates is original
+
+
+@contextmanager
+def physical_advance_proof_budget(point_budget, wall_s, *, memoize_identical_points=False):
+    """Share one budget across every trial of one physical advance.
+
+    The caller begins a new allowance only after committing the previous
+    advance. Output/checkpoint boundaries do not decide allowance scope.
+    """
+    active = []
+
+    def begin_advance():
+        if active:
+            active.pop().__exit__(None, None, None)
+        context = bounded_path_proof(
+            point_budget, wall_s, memoize_identical_points=memoize_identical_points
+        )
+        audit = context.__enter__()
+        active.append(context)
+        return audit
+
+    try:
+        yield begin_advance
+    finally:
+        if active:
+            active.pop().__exit__(None, None, None)
 
 
 @contextmanager
@@ -127,7 +236,13 @@ def liquid_internal_energy_node(holder, dt, old_loading, old_temperature, pressu
 
 
 def initialize_from_feed(
-    feed_result, *, cells=None, coefficient_case="nominal_log_center", continued_water=False
+    feed_result,
+    *,
+    cells=None,
+    coefficient_case="nominal_log_center",
+    continued_water=False,
+    property_parameters=None,
+    dry_local_residual_tolerance=None,
 ):
     if feed_result["status"] != "ACTUAL_FEED_TO_RADIAL_ACTIVATION":
         raise ValueError("birth requires an actual accepted feed activation")
@@ -173,6 +288,16 @@ def initialize_from_feed(
 
         config = continuation.continued_configuration(config)
         wet_model = config.wet
+    if property_parameters is not None:
+        config = property_parameters.cut_configuration(config)
+    if dry_local_residual_tolerance is not None:
+        # Explicit per-case native policy, fixed before radial state creation.
+        # Native configuration validation retains its supported 1e-10 ceiling.
+        config = replace(
+            config,
+            dry=replace(config.dry, nonlinear_residual_tolerance=dry_local_residual_tolerance),
+        )
+    wet_model = config.wet
     grid = core.backend.uniform_grid(count, radius)
     # Uniform activation permits lossless grid refinement; these are the
     # actual event labels, never recalculated from a later temperature.
@@ -345,7 +470,13 @@ def advance_birth(
     interface_seed_temperature=None,
     film_beta_seed=None,
     leading_profile_seed=None,
+    trace_coordinates=False,
+    experimental_radius_birth_conditioning_audit=None,
 ):
+    if trace_coordinates and solver_policy != "physical":
+        raise ValueError("birth trace coordinates require the physical primitive solver")
+    if experimental_radius_birth_conditioning_audit is not None and not trace_coordinates:
+        raise ValueError("radius-normalized birth conditioning requires explicit trace coordinates")
     layout = birth.layout_for_birth(before)
     bi._validate_birth_chart(before, config, controls)
     chart = bi._coordinate_chart(before, config, controls)
@@ -545,7 +676,7 @@ def advance_birth(
         "initial_surface_coordinates": solver_surface_seed.tolist(),
     }
 
-    def assemble(candidate):
+    def assemble(candidate, trace_gradients=None):
         if counter["attempts"] >= budget:
             raise BirthAssemblyBudget(f"total birth residual-assembly budget {budget} exhausted")
         counter["attempts"] += 1
@@ -557,6 +688,12 @@ def advance_birth(
                 dt,
                 boundary,
                 enforce_reduced_film_thresholds=False,
+                newborn_temperature_gradient_k_m=(
+                    None if trace_gradients is None else trace_gradients[0]
+                ),
+                newborn_composition_gradient_m_inv=(
+                    None if trace_gradients is None else trace_gradients[1]
+                ),
             )
         except Exception:
             counter["rejected"] += 1
@@ -622,7 +759,36 @@ def advance_birth(
                         np.ones(3),
                     ]
 
-                    def residual(x):
+                    def trace_geometry(candidate):
+                        geometry = core.cut.cg.partition_master_grid(
+                            before.grid, z=candidate.front_z
+                        )
+                        distance = (
+                            core.cut._dry_piece_center(geometry.cells[-1], geometry.front.radius_m)
+                            - geometry.front.radius_m
+                        )
+                        interface = core.cut.evaluate_interface_state(
+                            candidate.interface_temperature_k,
+                            config,
+                            before.historical_hexane_loadings[-1],
+                            before.oil_fraction_labels[-1],
+                        )
+                        return distance, interface
+
+                    def physical_trace_candidate(values):
+                        coordinates = birth.BirthUnknowns.from_vector(layout, values[:-3])
+                        distance, interface = trace_geometry(coordinates)
+                        gradients = coordinates.dry_temperature_k, coordinates.dry_y_hexane
+                        candidate = replace(
+                            coordinates,
+                            dry_temperature_k=math.fsum(
+                                (interface.temperature_k, gradients[0] * distance)
+                            ),
+                            dry_y_hexane=math.fsum((interface.y_hexane, gradients[1] * distance)),
+                        )
+                        return candidate, gradients
+
+                    def residual(x, *, physical_candidate=None, trace_gradients=None):
                         if gas_only_surface:
                             if not 0.0 < x[-1] < 1.0:
                                 raise ValueError(
@@ -643,10 +809,14 @@ def advance_birth(
                         holder["x"] = np.array(
                             [x[-3], total_mass, 0.0 if gas_only_surface else x[-1]]
                         )
-                        candidate = bi._decode_candidate(
-                            x[:-3], layout, chart, seed.stefan_flux_scales_mol_m2_s
+                        candidate = (
+                            physical_candidate
+                            if physical_candidate is not None
+                            else bi._decode_candidate(
+                                x[:-3], layout, chart, seed.stefan_flux_scales_mol_m2_s
+                            )
                         )
-                        assembly = assemble(candidate)
+                        assembly = assemble(candidate, trace_gradients)
                         audit = assembly.dry_face_fluxes[-1].surface_film_audit
                         native = (
                             np.asarray(birth.datum_covariant_residual_vector(assembly.residuals))
@@ -664,6 +834,7 @@ def advance_birth(
                             scaled_residuals=values.tolist(),
                             maximum_scaled_residual=float(np.max(np.abs(values))),
                             external_beta_coordinate=float(x[-2]),
+                            newborn_trace_gradients=trace_gradients,
                         )
                         return values * row_weights
 
@@ -680,20 +851,38 @@ def advance_birth(
                             candidate = bi._decode_candidate(
                                 values[:-3], layout, chart, seed.stefan_flux_scales_mol_m2_s
                             )
-                            lo, hi = interval(candidate.dry_temperature_k)
-                            candidate = replace(
-                                candidate, dry_y_hexane=(candidate.dry_y_hexane - lo) / (hi - lo)
-                            )
+                            if trace_coordinates:
+                                distance, interface = trace_geometry(candidate)
+                                candidate = replace(
+                                    candidate,
+                                    dry_temperature_k=(
+                                        candidate.dry_temperature_k - interface.temperature_k
+                                    )
+                                    / distance,
+                                    dry_y_hexane=(candidate.dry_y_hexane - interface.y_hexane)
+                                    / distance,
+                                )
+                            else:
+                                lo, hi = interval(candidate.dry_temperature_k)
+                                candidate = replace(
+                                    candidate,
+                                    dry_y_hexane=(candidate.dry_y_hexane - lo) / (hi - lo),
+                                )
                             return np.r_[candidate.vector(), values[-3:]]
 
                         def encode(values):
-                            candidate = birth.BirthUnknowns.from_vector(layout, values[:-3])
-                            if not 0 < candidate.dry_y_hexane < 1:
-                                raise ValueError("gas interval fraction outside its open domain")
-                            lo, hi = interval(candidate.dry_temperature_k)
-                            candidate = replace(
-                                candidate, dry_y_hexane=lo + (hi - lo) * candidate.dry_y_hexane
-                            )
+                            if trace_coordinates:
+                                candidate, _ = physical_trace_candidate(values)
+                            else:
+                                candidate = birth.BirthUnknowns.from_vector(layout, values[:-3])
+                                if not 0 < candidate.dry_y_hexane < 1:
+                                    raise ValueError(
+                                        "gas interval fraction outside its open domain"
+                                    )
+                                lo, hi = interval(candidate.dry_temperature_k)
+                                candidate = replace(
+                                    candidate, dry_y_hexane=lo + (hi - lo) * candidate.dry_y_hexane
+                                )
                             encoded = bi._encode_candidate(
                                 candidate, chart, seed.stefan_flux_scales_mol_m2_s
                             )
@@ -704,8 +893,12 @@ def advance_birth(
                             [chart.wet_temperature] * n
                             + [chart.wet_water] * n
                             + [
-                                chart.dry_temperature,
-                                (0.0, 1.0),
+                                (
+                                    (-math.inf, math.inf)
+                                    if trace_coordinates
+                                    else chart.dry_temperature
+                                ),
+                                (-math.inf, math.inf) if trace_coordinates else (0.0, 1.0),
                                 (-math.inf, math.inf),
                                 (-math.inf, math.inf),
                                 chart.front_z,
@@ -715,13 +908,26 @@ def advance_birth(
                                 (0.0, film_loading_hi),
                             ]
                         )
+
+                        def physical_residual(values, encoded):
+                            candidate, gradients = physical_trace_candidate(values)
+                            return fun(
+                                encoded, physical_candidate=candidate, trace_gradients=gradients
+                            )
+
                         return study.numerics.physical_chart_solve(
                             fun,
                             x0,
                             decode=decode,
                             encode=encode,
                             physical_bounds=tuple(zip(*pairs)),
-                            temperature_indices=[*range(n), 2 * n, 2 * n + 5, 2 * n + 6],
+                            temperature_indices=[
+                                *range(n),
+                                *([] if trace_coordinates else [2 * n]),
+                                2 * n + 5,
+                                2 * n + 6,
+                            ],
+                            physical_fun=physical_residual if trace_coordinates else None,
                             **{**kwargs, "gtol": controls.nonlinear_residual_tolerance},
                         )
 
@@ -762,7 +968,21 @@ def advance_birth(
                         xtol=controls.nonlinear_step_tolerance,
                         gtol=controls.nonlinear_step_tolerance,
                     )
-                    values = residual(solution.x) / row_weights
+                    trace_gradients = None
+                    if trace_coordinates:
+                        candidate, trace_gradients = physical_trace_candidate(
+                            solution.physical_coordinates
+                        )
+                        values = (
+                            residual(
+                                solution.x,
+                                physical_candidate=candidate,
+                                trace_gradients=trace_gradients,
+                            )
+                            / row_weights
+                        )
+                    else:
+                        values = residual(solution.x) / row_weights
                     last["nonlinear_solver"] = {
                         "success": bool(solution.success),
                         "message": str(solution.message),
@@ -772,10 +992,11 @@ def advance_birth(
                             solution, "physical_coordinates", np.array([])
                         ).tolist(),
                     }
-                    candidate = bi._decode_candidate(
-                        solution.x[:-3], layout, chart, seed.stefan_flux_scales_mol_m2_s
-                    )
-                    assembly = assemble(candidate)
+                    if not trace_coordinates:
+                        candidate = bi._decode_candidate(
+                            solution.x[:-3], layout, chart, seed.stefan_flux_scales_mol_m2_s
+                        )
+                    assembly = assemble(candidate, trace_gradients)
                     audit = assembly.dry_face_fluxes[-1].surface_film_audit
                     topology = bi._topology_diagnostics(assembly, chart)
                     bi._bounded_fractions(candidate, chart, topology)
@@ -784,6 +1005,52 @@ def advance_birth(
                         if gas_only_surface
                         else solution.jac
                     )
+                    if experimental_radius_birth_conditioning_audit is not None:
+                        from particle_solver_configuration import radius_normalized_birth_jacobian
+
+                        normalized_matrix = radius_normalized_birth_jacobian(
+                            solution.jac, layout.wet_piece_count, before.grid.R
+                        )
+                        original_condition = condition
+                        condition = core.ci._jacobian_condition_proxy(normalized_matrix)
+                        experimental_radius_birth_conditioning_audit.update(
+                            experimental_counterfactual=True,
+                            owner_adoption_required=True,
+                            physically_qualifying=False,
+                            definition="physical gradient-search Jacobian for g_T*R and g_y*R; other columns unchanged",
+                            original_condition=original_condition,
+                            original_gate_would_refuse=original_condition
+                            > controls.maximum_condition_proxy,
+                            radius_normalized_condition=condition,
+                            unchanged_condition_cap=controls.maximum_condition_proxy,
+                            original_physical_equations_and_residuals_retained=True,
+                        )
+                    # Ruling GT_PS2_OWNER_RULING_PAPER1_GATE_UNITS_2026-10-17
+                    # point 3: the certificate is the condition of the matrix
+                    # the search solves, the column-2-norm-scaled physical
+                    # joint Jacobian, for DT and Faner alike, against its own
+                    # cap; the former proxies are reported, not gated.
+                    birth_certificate = birth_condition_certificate(
+                        solution,
+                        condition,
+                        (
+                            "radius-normalized physical Jacobian (audit knob armed)"
+                            if experimental_radius_birth_conditioning_audit is not None
+                            else (
+                                "native pullback (gas-only surface)"
+                                if gas_only_surface and hasattr(solution, "native_jac")
+                                else (
+                                    "raw-column physical Jacobian (gas-only surface; no native "
+                                    "pullback for an unsuccessful search)"
+                                    if gas_only_surface
+                                    else "raw-column physical Jacobian"
+                                )
+                            )
+                        ),
+                        controls.maximum_condition_proxy,
+                        solver_policy,
+                    )
+                    last["birth_condition_certificate"] = birth_certificate
                     native_acceptance = max(
                         controls.nonlinear_residual_tolerance, bi.BIRTH_REGIONAL_RH_ACCEPTANCE
                     )
@@ -797,8 +1064,15 @@ def advance_birth(
                         )
                     if np.max(np.abs(values[-3:])) > controls.nonlinear_residual_tolerance:
                         raise RuntimeError("external-water node residual exceeds 1e-10 contract")
-                    if not math.isfinite(condition) or condition > controls.maximum_condition_proxy:
-                        raise RuntimeError(f"joint Jacobian condition not certified: {condition}")
+                    gated_condition = birth_certificate["gated_condition"]
+                    if (
+                        not math.isfinite(gated_condition)
+                        or gated_condition > MAXIMUM_BIRTH_CONDITION_PROXY
+                    ):
+                        raise RuntimeError(
+                            "joint Jacobian condition not certified on the searched "
+                            f"(column-2-norm-scaled) matrix: {gated_condition}"
+                        )
                     if abs(audit.beta) > boundary.accepted_beta_limit:
                         raise RuntimeError(
                             "surface root exceeds declared signed Ackermann study band"
@@ -821,7 +1095,7 @@ def advance_birth(
                         counter["attempts"],
                         counter["rejected"],
                         str(solution.message),
-                        condition,
+                        gated_condition,
                         chart,
                         topology,
                         None,
@@ -871,12 +1145,15 @@ def advance_birth(
                         "seed_newborn_thickness_m": thickness,
                         "surface_flux_coordinate": "exact native heat-beta inverse bounded to declared study band",
                         "native_birth_ledger": asdict(ledger),
+                        "birth_condition_certificate": birth_certificate,
                         "surface_water_node": asdict(audit),
                         "whole_particle_and_external_water": combined,
                         "signed_numerical_capacity_samples": capacity_journal,
                         "after_transport": asdict(step.after.transport),
                         "after_inventory": asdict(core.ci.inventory_snapshot(step.after.transport)),
                     }
+    except StepBudgetExceeded:
+        raise
     except Exception as exc:
         failure = bi.BirthIntegratorStepError(
             f"actual-feed joint birth refused with exact fully-wet rollback: {exc}",

@@ -1,3 +1,7 @@
+% Shared journal-agnostic preamble for the DTDC three-paper portfolio.
+% Each manuscript inputs this file from its own main.tex. At submission time
+% the relevant journal class replaces \documentclass in the paper's main.tex;
+% this preamble deliberately uses only widely available packages.
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -21,7 +25,16 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{microtype}
 
+% ---- Visible placeholder markers -----------------------------------------
+% Missing numerical evidence: use for every result that does not yet exist.
 \newcommand{\RESULTTODO}[1]{\textbf{[RESULT TO BE ADDED: #1]}}
+% Missing bibliographic anchor: use instead of inventing a citation.
 \newcommand{\CITETODO}[1]{\textbf{[CITATION TO BE RESOLVED: #1]}}
+% General editorial placeholder.
 \newcommand{\TODO}[1]{\textbf{[TODO: #1]}}
+% Placeholder for a companion manuscript that is not yet public.
+% Submission order ruled 2026-09-02: P2 (JVVUQ) -> P3 (JFE) -> P1 (JFPE).
+% Companion references render in the neutral submitted-separately form;
+% replace with real \citep entries as each companion acquires a citable
+% status (submitted/accepted) at the respective submission date.
 \newcommand{\COMPANION}[1]{\emph{(companion manuscript, submitted separately: #1)}}

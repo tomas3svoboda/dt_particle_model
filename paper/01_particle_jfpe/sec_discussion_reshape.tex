@@ -1,17 +1,21 @@
 \section{Discussion}\label{sec:discussion}\label{sec:discussion:scope}
 \label{sec:discussion:coefficients}\label{sec:discussion:refusal}\label{sec:discussion:envelope}
-The two prescribed-bath experiments show how a common particle
-formulation connects external-liquid evaporation, internal-core recession
-and residual-component transport. Their signed component and energy
-exchanges can supply a future tray calculation. Prescribing the bath
-isolates this particle response, while leaving countercurrent vapour,
-wall, residence and discharge balances to the equipment model. We first
-interpret the Faner comparison, then its meaning for DT practice and what
-is needed next.
-
-The calculated Faner particle dries faster than the measured charge.
-The setup uncertainties collected in Sec.~\ref*{S-sup:fanerinputs} prevent
-assigning that discrepancy to one mechanism. Larger particles can prolong
+The calculated Faner particle passes from 0.20 to 0.10 kg/kg in a shorter
+interval than the measured charge. The measured interval is a property of
+a charge, not of one particle: the source reports only summaries of a
+broad size distribution, and its holder carries a layer three to five
+particle diameters deep, in which some particles still hold a liquid-hexane
+core while others are already in the falling-rate period. Both effects
+spread the charge-average loading over a longer interval, and a single
+declared sphere carries neither. Because the calculated interval, 17.7~s,
+and the temperature at 235~s are converged
+(Section~\ref{sec:verification:convergence}), the gap to the measured
+25.4~s is attributed to this difference between one sphere and a dispersed
+charge, not to the numerics; the temperature gap carries
+the same dispersity together with the difference between a local holder
+thermocouple and a particle-mean temperature. The setup
+uncertainties collected in Sec.~\ref*{S-sup:fanerinputs} prevent a finer
+apportionment. Larger particles can prolong
 removal even when small particles heat earlier, but their contribution
 requires mass weighting and completed class histories
 (Sec.~\ref*{S-sup:fanersizes}). Likewise, a subcooled start requires a new
@@ -20,28 +24,17 @@ of the temperature curve. Simultaneous loading, spatial temperature and
 size-resolved observations would distinguish startup, heat exposure and
 internal transport effects.
 
-For DT practice, the three regimes divide the heat demand.
-Indirect heating in PD removes external free hexane before live-steam
-contact; steam condensation then supplies heat for rapid solvent removal,
-and the remaining retained hexane determines the later approach to the
-outlet residual. Industrial DT residence and heat supply must serve these
-successive needs \citep{kemper2013solvent}. At the same time, the moist heat
-treatment must reduce antinutritional activity while preserving useful
-protein quality \citep{witte_nd_soybeanmeal,mustakas1981critical}.
-The calculated temperature and moisture histories describe that exposure;
-a meal-quality kinetic model is outside the present scope.
-
-The moisture result also matters for energy design: water retained
-at DT exit contributes to the load on the downstream dryer, which takes
-meal towards its storage moisture \citep{witte_nd_soybeanmeal}.
-More condensation can accelerate heat supply and solvent removal, while
-more retained water can increase later drying duty. A steam-saving claim
-therefore requires the full balance of steam, indirect heat and drying
-energy, rather than outlet solvent or moisture alone. These prescribed-bath
-experiments expose that coupling without quantifying a plant steam saving.
+DT residence and heat supply must accommodate external-liquid removal,
+core recession and the retained-solvent tail \citep{kemper2013solvent}.
+Moist heat must also reduce antinutritional activity while preserving
+protein quality \citep{witte_nd_soybeanmeal,mustakas1981critical}; no
+quality kinetics are modelled here. Condensation supplies heat but retained
+water increases downstream drying duty \citep{witte_nd_soybeanmeal}.
+Quantifying steam savings therefore requires steam, indirect-heat and
+dryer balances beyond these prescribed-bath calculations.
 
 Two independent equilibrium checks give further context for DT practice.
-At literature-motivated last-tray compositions, the dry-shell hexane equilibrium floor is
+At gas compositions selected from last-tray literature, the dry-shell hexane equilibrium floor is
 4.5--66.0 ppm without the separate oil-solution sensitivity and
 8.1--112.4 ppm with it (Sec.~\ref*{S-sup:desolventizerfloor}). These
 equilibrium quantities do not set the residence needed to reach them.
@@ -51,11 +44,10 @@ For retained water, a separate ideal-vapour diagnostic defines $T^*$ by
 \label{eq:sorbedbp}
 \end{equation}
 Here $\Wret_{\mathrm w}$ is retained-water loading, excluding the external
-water film. The product on the left is its approximate equilibrium water
-vapour pressure. Equating it to total pressure is a water-only diagnostic;
-the actual binary particle calculation instead matches water fugacity
-to the water component of the gas. Equation~\eqref{eq:sorbedbp} neither
-pins the transient particle temperature nor establishes boiling in the DT.
+water film. This water-only diagnostic equates approximate equilibrium water-vapour
+pressure to total pressure; the binary calculation instead matches water
+fugacity to the gas water component. It neither fixes transient temperature
+nor establishes DT boiling.
 Applying the earlier supplied-moisture diagnostic under the assumption
 that this moisture is retained gives 100.5--\SI{107.6}{\celsius}.
 It combines observations from different sources; at the moisture of the
@@ -75,15 +67,9 @@ of free liquid in meal. Neither this diagnostic nor agreement with
 industrial outlet ranges validates the coupled transient particle or the
 industrial tower.
 
-Hexane leaves retained storage, enters the pore gas through local
-equilibrium and is carried outward by binary diffusion and total vapour
-motion. Retained hexane has no separate radial liquid flux; water also
-moves through the matrix (Section~\ref{sec:model:local}). These paths
-continue after core extinction without a fitted particle-mean tail law.
-For DT, the additional imbibition pathway and its material
-transfer assumptions are specified in Section~\ref{sec:model:liquidcontact}.
-Because the water film persists into regime C, its assumed transparency
-to hexane may materially affect solvent removal. Transient uptake
+The water film's assumed transparency to hexane may materially affect
+regime-C removal. The imbibition assumptions in
+Section~\ref{sec:model:liquidcontact} also require independent evidence. Transient uptake
 measurements on extracted meal, with external liquid quantified separately
 and several particle sizes, are needed to distinguish contact and interior
 resistances. An outlet moisture match alone cannot identify them.
@@ -97,21 +83,27 @@ These transport inputs remain to be identified from paired water--hexane
 measurements. Fixed geometry, an immobile connected core and the isobaric
 total-flux closure restrict the represented mechanisms
 (Sections~\ref{sec:physical:regimes}--\ref{sec:model:front}).
-The two-cell DT and four-cell Faner histories are complete discrete
-experiments; operator verification and selected timestep checks do not yet
-establish whole-history continuum convergence.
+On uniform meshes of up to 64 cells at three time levels, the reported
+Faner values and the DT outlet hexane and temperature are converged
+(Section~\ref{sec:verification:convergence}). The DT outlet moisture still
+changes by 0.066 percentage points over the last mesh refinement, at an
+order of about one half, because a thin diffusion layer under the
+film-free surface is not yet resolved; a radial mesh graded towards the
+surface is the next refinement. That remaining moisture uncertainty is small against the
+16--22\% industrial outlet range and smaller than the physical
+sensitivities: over the prescribed pore-diffusivity range the outlet
+moisture moves by 0.41 percentage points and the hexane by about
+$\pm2$\% (Section~\ref{sec:validation:dtmarch}), and over the published
+range of $W_{\mathrm{sat}}$ by 0.76 points and $-33$\% to $+11$\%
+(Section~\ref{sec:thermo:properties}).
 
 \section{Conclusions}\label{sec:conclusions}\label{sec:discussion:measurements}
-One conservative particle formulation completes both a 240-s
-water-bearing particle experiment in pure superheated hexane and a
-1766.5-s prescribed DT history. Component and energy balances
-continue through external-liquid depletion, internal-front recession and
-core extinction. External condensate is stored separately and exchanges
-water and energy with the particle and the prescribed gas.
-Both histories use temperature-dependent soybean-oil heat capacity with
-its consistent energy integral and a Fuller-shaped binary pore diffusivity.
-The oil correlation is measurement-based; the effective pore reference
-and its assumed fixed hindrance remain to be validated for solvent-wet meal.
+One conservative formulation completes a 240-s pure-hexane experiment
+and a 1766.5-s prescribed DT history through external-liquid depletion,
+core recession and extinction, with separately conserved condensate.
+Both use measurement-based soybean-oil heat capacity with its consistent
+energy integral and a Fuller-shaped pore diffusivity. The effective pore
+reference and fixed hindrance remain unvalidated for solvent-wet meal.
 
 The declared Faner particle falls from 0.20 to 0.10 kg hexane/kg dry meal
 in \SI{\FanerFallingInterval}{\second}, compared with 25.4 s measured. The DT calculation includes liquid-water imbibition
@@ -122,15 +114,26 @@ uptake and its internal mobility is estimated from the soybean-meal
 size and uptake timescale. These transferred estimates are not jointly
 identified from DT-meal measurements.
 
+Refinement of both complete histories to 64 radial cells and three time
+levels shows that these results belong to the model equations rather than
+to the discretization. The Faner history converges at second order in
+mesh and first order in time, and its falling interval is the same at
+every resolution. The DT outlet hexane and temperature converge within
+the declared 1\% and 0.1~K; the DT outlet moisture converges at order one
+half under a thin surface diffusion layer, to within about 0.2 percentage
+points, and a surface-graded mesh is the next refinement. The DT outlet
+hexane depends more on the declared saturated retained-water loading than
+on the numerics, which makes that loading a priority for measurement.
+
 \begin{samepage}
 The gas-phase transport mechanism differs between the two computed
 regime-C histories. In the pure-hexane experiment, total vapour motion
 carries hexane outward and binary diffusion contributes a small opposing
-flux. In the late steam-rich DT history, binary diffusion carries hexane
-outward against inward total vapour motion. The phase regime alone
-therefore does not determine which gas-phase contribution carries solvent
-removal. These findings identify the flux pathways; a dominant flux
-contribution does not by itself identify the rate-limiting resistance.
+flux. In the steam-rich DT history, while the particle takes up water,
+binary diffusion carries hexane outward against inward total vapour
+motion; once the particle begins to dry, outward vapour motion carries it.
+The same phase regime thus admits different flux pathways; their relative
+magnitudes do not identify the rate-limiting resistance.
 \par
 \end{samepage}
 

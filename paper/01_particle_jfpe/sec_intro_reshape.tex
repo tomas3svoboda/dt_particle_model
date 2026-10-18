@@ -8,20 +8,12 @@ quality \citep{epa1995ap42,kemper2013solvent,mustakas1981critical}.
 The engineering question is how to supply enough heat and residence time
 for solvent removal and toasting without excessive steam use, later
 drying duty or damage to meal quality \citep{kemper2013solvent,witte_nd_soybeanmeal}.
-A particle model must therefore connect solvent removal, moisture uptake
-and heat transfer throughout the transition from externally wetted meal
-to a particle containing only retained material and pore gas.
-
-These processes are coupled. Evaporation consumes energy at the particle
-surface or an internal liquid boundary. Incoming steam can condense, and
-both retained water and residual hexane contribute to storage and transport.
-Liquid-water imbibition also differs from vapour sorption. Experiments on soy
-protein isolates show that imbibition combines sorption, capillarity and
-interstitial retention, whereas vapour sorption describes a different
-hydration experiment \citep{jovanovich2003wateruptake}.
-Those measurements motivate treating liquid contact separately from vapour
-exposure; their capacities and rates cannot be transferred directly
-to hot, hexane-bearing extracted meal.
+A particle model must connect solvent removal, moisture uptake and heat
+transfer as external liquid disappears and an internal core recedes.
+Liquid-water imbibition requires separate treatment from vapour sorption:
+soy-protein-isolate experiments show contributions from sorption, capillarity
+and interstitial retention \citep{jovanovich2003wateruptake}. Their capacities
+and rates cannot be transferred directly to hot, solvent-wet meal.
 
 Published desolventization models emphasize different parts of this
 sequence. The superheated-hexane experiments and receding-front model of
@@ -35,37 +27,28 @@ matrix retention and a separately conserved external water film.
 After the core disappears, the same stored components and energy continue
 to evolve in a stationary radial particle.
 
-In the first of two prescribed baths, a water-bearing particle in pure
-superheated hexane is compared with the soybean experiment of
-\citet{faner2019kinetics}; pure supplied vapour does not imply a
-water-free meal. In the second, a particle is followed from feed
-through a prescribed steam-rich DT history. Prescribing the bath isolates
-the particle response, so the surrounding vapour composition and
-temperature need not be predicted. In a future coupled tray calculation,
-the signed water, hexane and energy fluxes would enter the gas and tray
-balances, which would determine the next local bath state.
+We exercise the formulation in two prescribed baths: Faner's pure
+superheated hexane with a water-bearing particle \citep{faner2019kinetics},
+and a steam-rich DT history from feed to exit. Prescribing the gas state
+isolates the particle response. Its signed component and energy exchanges
+can later supply coupled gas and tray balances.
 
 The two comparisons rest on different kinds of evidence. In the Faner
 experiment, the measured constant-rate duty informs external heat
 supply; later loading and temperature readings provide the comparisons.
-Faner reports preheating in the apparatus and particle-size summaries, but
-not the exact initial temperature, initial meal moisture or a mass-weighted
-size histogram. The DT history is an engineering scenario; published outlet
+Faner reports preheating and particle-size summaries, but not the exact
+initial temperature, initial meal moisture or a mass-weighted size
+histogram. The DT history is an engineering scenario; published outlet
 ranges provide process context rather than measurements of the same
 particle and operating point. Liquid-water imbibition is part of the particle
 formulation, and its transport coefficients are declared rather than
-measured. Numerical verification and complete time integration make
-these assumptions inspectable; independent measurements are needed to
-establish their predictive accuracy.
+measured. Verification and the refinement of both complete histories
+in mesh and time step separate the effects of these assumptions from
+discretization error; independent measurements are needed to establish their predictive
+accuracy.
 
-The paper has two goals: to state one conservative particle formulation
-and to exercise it in both baths.
-Section~\ref{sec:model} defines the particle equations and phase regimes,
-and Section~\ref{sec:numerics} their numerical integration, admissibility
-checks and verification. Section~\ref{sec:validation} presents the two
-experiments, Section~\ref{sec:discussion}
-discusses their meaning for DT practice and the measurements needed next,
-and Section~\ref{sec:conclusions} concludes. The
-Supplementary Material contains detailed source readings, parameters,
-numerical evidence and the separate scalar Fickian comparison with the
-earlier Faner measurements.
+Sections~\ref{sec:model}--\ref{sec:numerics} state the model and numerical
+checks; Sections~\ref{sec:validation}--\ref{sec:conclusions} present and
+interpret the two experiments. The supplement provides source readings,
+parameters, numerical evidence and the separate scalar Fickian comparison
+with earlier Faner measurements.

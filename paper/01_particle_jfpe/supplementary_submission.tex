@@ -1,3 +1,7 @@
+% Submitted scientific supplement. The old supplementary.tex is retained as
+% an internal archival appendix to supplementary_extended.tex, not submitted.
+% The equations and numerical results below are those of the unchanged sources;
+% this selection is not a claim of coupled water--hexane experimental validation.
 \documentclass[11pt]{article}
 \PassOptionsToPackage{round,authoryear,longnamesfirst,sort}{natbib}
 \usepackage[natbibapa]{apacite}
@@ -40,7 +44,7 @@ $^{*}$Corresponding author: \texttt{tomas3.svoboda@vscht.cz}}}
 \date{}
 \maketitle
 
-\noindent\textbf{Purpose and scope.} This Supplementary Material explains the parameter sources, balance formulation, comparison inputs and numerical checks behind the particle calculations. The numerical evidence combines operator verification, conservation checks and selected mesh and time-step sensitivities; complete-trajectory refinement remains the next step in assessing convergence.
+\noindent\textbf{Purpose and scope.} This Supplementary Material explains the parameter sources, balance formulation, comparison inputs and numerical checks behind the particle calculations. The numerical evidence combines operator verification, conservation checks and a refinement ladder of both complete histories in radial mesh and time step (Sec.~\ref{sup:ladder}).
 
 The two pure-hexane comparisons examine different transport descriptions: the 2008 falling-rate curves use a \emph{separate Fickian shell}, while the 2019 soybean run uses the water-bearing radial particle. Its volume-mean temperature is compared with the local holder thermocouple as a distinct observable. The DT experiment follows the particle through a prescribed steam-rich bath and uses published outlet ranges as industrial context. Experimental assessment of coupled water and hexane removal requires paired component histories; application to an operating DT also requires tray-scale gas and energy balances and independent process observations. The source release matched to these results is described in Sec.~\ref{sup:deposit}; a preservation archive with a persistent identifier is being prepared.
 
@@ -104,7 +108,8 @@ corresponding-states correlation of \citet{plyasunov2003crossvirial}, with
 central interaction $k_{\mathrm{wh}}=0.494$ and source interval
 0.477--0.511. Both completed main trajectories use the central value;
 listing the interval does not mean that the full coupled histories were
-recalculated at its endpoints. The upper water capacity is the modified
+recalculated at its endpoints. The upper water anchor $\Wcap$, above which
+main Eq.~(\ref*{M-eq:waterbridge}) continues the isotherm, is the modified
 Luikov value at source-domain activity 0.799, $0.235670904$ kg/kg dry; the
 main table shows it rounded to 0.236. The reference lower moisture anchor is
 0.0230 kg/kg dry, and the adopted positive-water continuation has no lower
@@ -154,7 +159,8 @@ state. Numerical recovery follows the declared controls of the relevant stage.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.98\textwidth]{figures/fig_particle_solver_flowchart.pdf}
-\caption{High-level algorithm for the prescribed-bath particle solver.}
+\caption{High-level algorithm for the prescribed-bath particle solver.
+Diagram prepared with AI-assisted drawing code.}
 \label{fig:sup:particlesolver}
 \end{figure}
 
@@ -179,7 +185,215 @@ Cumulative boundary hexane outflow & One-percent pair on nine of ten chains; wor
 \label{sup:moved:verification}\label{sup:moved:ladder}
 For the numerical reference tests, the scaled nonlinear residual and physically normalized conservation bounds are $10^{-10}$ per step and cumulatively. The activation subsystem keeps its separately declared $2.5\times10^{-10}$. At an exact grid face, the departure tangent admits an inward root under a declared $1.0\times10^{-10}$ bound, never an outward-moving front. When a feasible state or event cannot be found under these equations and balance criteria, the calculation retains the input state and reports the failure. The refinement ladder uses radial counts $12,24,48,96$ and steps $0.075,0.0375,0.01875$ seconds on the same \SI{0.225}{\second} stress schedule. Adjacent differences must decrease and the finest pair must agree within one percent (\SI{0.1}{\kelvin} in temperature). Front position and inventories pass this test on that schedule (Table~\ref{tab:sub:verification}).
 
-The 2008 dry-shell curves have a different numerical test: the \emph{surface-read} variable-coefficient march (Sec.~\ref{sup:surfaceloading}) is second order in shell mesh (observed $2.00$--$2.12$) and first order in step ($1.10$--$1.16$); the reported residuals are within one percentage point of their continuum extrapolations. The current water-bearing experiments continue on a stationary radial particle after a conservative projection removes the core. Their history-specific checks (Secs.~\ref{sup:journalmarch} and~\ref{sup:finitecontact}) quantify selected mesh and time-step sensitivities. Component and energy conservation are verified at each accepted step; establishing spatial and temporal convergence requires refinement of the complete histories.
+The 2008 dry-shell curves have a different numerical test: the \emph{surface-read} variable-coefficient march (Sec.~\ref{sup:surfaceloading}) is second order in shell mesh (observed $2.00$--$2.12$) and first order in step ($1.10$--$1.16$); the reported residuals are within one percentage point of their continuum extrapolations. The current water-bearing experiments continue on a stationary radial particle after a conservative projection removes the core. Their history-specific checks (Secs.~\ref{sup:journalmarch} and~\ref{sup:finitecontact}) quantify selected mesh and time-step sensitivities. Component and energy conservation are verified at each accepted step. Convergence of the complete histories is established by the refinement ladder of Sec.~\ref{sup:ladder}.
+
+\subsection{Whole-history convergence in radial mesh and time step}
+\label{sup:ladder}
+The manuscript reports two prescribed-bath experiments with one particle
+model: Faner's pure-hexane drying of a 0.885-mm soybean sphere at
+\SI{120}{\celsius} over 240~s, and the DT history of a 1.5-mm sphere from
+feed through pre-desolventizing and steam contact to exit at 1766.5~s.
+This section asks whether their reported outputs are properties of the
+model equations rather than of the chosen mesh and time step, and how
+large the remaining numerical error is compared with the physical
+effects discussed in the paper.
+
+\paragraph{Ladder and scoring.}
+Each experiment was recomputed from its original feed at 8, 16, 32 and
+64 uniform radial cells and at three time levels. The coarse level bounds
+the steps at \SI{0.1}{\second} in the DT front stage and \SI{5}{\second}
+in its regime C, and at \SI{0.4}{\second} and \SI{1}{\second} for Faner,
+with correspondingly scaled shell-birth and core-extinction steps; the
+middle and finest levels halve and quarter every bound. All cases ran on
+one frozen version of the code, which carries the retained-water
+continuation of main Eqs.~(\ref*{M-eq:waterbridge})
+and~(\ref*{M-eq:filmfreesurface}) and the solver gates of main
+Sec.~\ref*{M-sec:numerics:gates}. The former production resolutions, two
+cells for DT and four for Faner, were rerun at the middle time level on
+the same code. Of the 30 cases, 29 completed, and every completed history
+passes the independent whole-history audit, which reconstructs water,
+hexane and energy from the original feed and the exterior exchanges: the
+largest normalized defect is $1.0\times10^{-11}$ at 64 cells and, over
+all histories, $1.0\times10^{-10}$, just inside the gate, in the rerun of
+the former four-cell Faner resolution. The one missing case is the Faner 64-cell history at the
+finest time level, whose shell-birth search places the surface Ackermann
+argument at the edge of the declared study band $|\beta_{\mathrm A}|\le3$;
+the band is a declared assumption of the film law, not a solver gate, and
+was not widened.
+
+Each comparison uses the outlet values and the largest difference along
+the whole history, the latter for hexane relative to the history with a
+floor at the outlet scale. Accuracy goals were declared before the
+calculations (Table~\ref{tab:sub:ladderfaner}). An observed order is
+computed from three successive grids, $p=\log_2(e_{\mathrm{coarse}}/e_{\mathrm{fine}})$,
+with $e$ the difference between successive grids. Richardson extrapolation
+and the fine-grid GCI with safety factor 1.25 \citep{roache1998verification}
+are reported only where the differences have one sign, decrease and give
+consistent orders; otherwise the larger of the last two differences is
+reported as an observed envelope, not a bound. The goals are engineering
+targets chosen to keep numerical error well below the parameter effects
+interpreted in the paper; they are not uncertainty intervals.
+
+\paragraph{Faner.}
+Table~\ref{tab:sub:ladderfaner} shows the Faner result at the middle time
+level: the moisture and temperature differences fall by about a factor of
+four per halving, the second-order behaviour of the finite-volume
+operators; the whole-history hexane differences fall by about a factor of
+three; the outlet hexane differences are already below 0.01\%; and every
+goal is met. The coarse level (8 to 64 cells) and the finest level (8 to 32 cells)
+also meet every mesh goal. Time refinement is first order at every mesh (observed orders
+0.98 to 1.00 on the outlet values) and meets every goal except the
+time goal for outlet temperature, which is missed by about ten percent at
+every mesh: the two finest levels differ by 0.018~K against the declared
+0.02~K, but the GCI estimate including its safety factor is 0.022~K.
+The quantity compared with the measurements is resolved: the falling
+interval from 0.20 to 0.10 kg/kg is 17.74, 17.74, 17.72, 17.72 and
+17.71~s at 4, 8, 16, 32 and 64 cells and does not change under time
+refinement, so its distance from the measured 25.4~s is a property of the
+single-sphere model and the experiment, not of the discretization (main
+Sec.~\ref*{M-sec:discussion}). The former four-cell resolution is within
+0.011\% of the 64-cell outlet hexane, 0.006 percentage points of its
+moisture and 0.012~K of its temperature, but 7.4\% from its whole-history
+hexane, which exceeds the 2\% goal.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{Faner experiment: differences between successive grids, observed
+orders, fine-grid estimates and declared goals. Mesh refinement at the
+middle time level (4, 8, 16, 32, 64 cells); time refinement at 32 cells
+(coarse to middle, middle to finest).}\label{tab:sub:ladderfaner}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}p{0.27\textwidth}lll@{}}\toprule
+Observable & Differences & Orders & Estimate & Goal\\\midrule
+\multicolumn{5}{@{}l}{\emph{Radial mesh}}\\
+Outlet hexane, \% & 0.0085, 0.0016, 0.0007, 0.0002 & 2.4, 1.1, 1.8 & 0.0007$^{a}$ & 1\\
+Outlet moisture, points & 0.0043, 0.0010, 0.00025, 0.00006 & 2.06, 2.05, 2.10 & $2\times10^{-5}$ & 0.02\\
+Outlet temperature, K & 0.0093, 0.0021, 0.0006, 0.00015 & 2.15, 1.80, 2.00 & $6\times10^{-5}$ & 0.1\\
+History hexane, \% & 5.44, 1.70, 0.55, 0.20 & 1.68, 1.64, 1.42 & 0.15 & 2\\
+History moisture, points & 0.0049, 0.0011, 0.00027, 0.00008 & 2.09, 2.07, 1.78 & $4\times10^{-5}$ & 0.05\\
+\addlinespace
+\multicolumn{5}{@{}l}{\emph{Time step, 32 cells}}\\
+Outlet hexane, \% & 0.122, 0.061 & 1.00 & 0.076 & 0.2\\
+Outlet moisture, points & 0.00091, 0.00046 & 0.99 & 0.00058 & 0.005\\
+Outlet temperature, K & 0.036, 0.018 & 1.00 & 0.022 & 0.02$^{b}$\\
+History hexane, \% & 0.38, 0.20 & 0.90 & 0.29 & 0.5\\
+History moisture, points & 0.00092, 0.00046 & 0.99 & 0.00058 & 0.01\\
+\bottomrule\end{tabular}
+\par\smallskip\begin{minipage}{0.95\textwidth}\footnotesize
+Estimates are fine-grid GCI values except where marked. $^{a}$Differences
+at the arithmetic floor of the outlet measure give no consistent order;
+the larger of the last two differences is shown. $^{b}$Not met; missed by
+the same margin at 8 and 16 cells. Moisture in percentage points of wet
+basis; hexane relative.
+\end{minipage}
+\end{table}
+
+\paragraph{DT.}
+Table~\ref{tab:sub:ladderdt} gives the DT result. Time refinement is
+close to first order at every mesh from 8 to 64 cells (observed outlet
+orders 0.8 to 1.4) and meets every outlet goal;
+the whole-history maxima do not meet their time goals, with differences
+concentrated in the front stage. In the mesh, outlet hexane and outlet
+temperature converge at about first order and meet their goals at
+64 cells. The coarse and finest time levels repeat the middle level's mesh
+differences to three digits, so the mesh error does not depend on the time
+step. The time at which the external water film is depleted varies by
+less than 1~s across the meshes (553.4, 553.1, 553.2 and 552.6~s), with no
+consistent order.
+
+Outlet moisture converges at order one half and does not meet its goal.
+Two regions of retained water above $\Wcap$ form while the external
+water film is present.
+The deeper one reaches about \SI{200}{\micro\metre} below the surface by
+film depletion (239, 214, 205 and \SI{202}{\micro\metre} at 8 to 64 cells)
+and is resolved. Its depth grows as the interior warms to the surface
+temperature, far faster than retained-water diffusion could carry it, so it
+is a thermal effect. The second is a thin diffusion layer under the step
+between the surface loading, $W_{\mathrm{sat}}$ under the film and then
+the heat-set value of main Eq.~(\ref*{M-eq:filmfreesurface}), and the
+outer cell. Its thickness, inferred from pairs of meshes, is below the
+64-cell half-cell width of \SI{11.7}{\micro\metre} until about 600~s and is
+about 12 and \SI{21}{\micro\metre} at 700 and 900~s. On a uniform mesh the
+half-cell gradient at the surface doubles with each halving while the
+loading step shrinks by only 3 to 6\%, so the water taken up through
+this layer after film depletion increases with refinement (4.3, 6.8, 9.5
+and 11.4~g/kg dry from 560 to 1200~s at 8 to 64 cells). The GCI estimate
+of the 64-cell outlet moisture error is 0.19 percentage points; because the
+sequence is not yet clearly asymptotic, the extrapolated limit is weakly
+determined. This is a resolution property of the surface condition, not a
+defect of the discretization; no error was found in the discretization
+of the continuation itself.
+A radial mesh graded towards the surface, with a first cell of a few
+micrometres, is the refinement that resolves it; it requires no change to
+the conservative finite-volume operators, which use exact spherical
+volumes and areas for any face set.
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{DT experiment: differences between successive grids, observed
+orders, fine-grid estimates and declared goals. Mesh refinement at the
+middle time level (8, 16, 32, 64 cells); time refinement at 64 cells.
+The last block compares the former two-cell resolution with 64 cells.}\label{tab:sub:ladderdt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}p{0.22\textwidth}lll@{}}\toprule
+Observable & Differences & Orders & Estimate & Goal\\\midrule
+\multicolumn{5}{@{}l}{\emph{Radial mesh}}\\
+Outlet hexane, \% & 3.29, 1.42, 0.57 & 1.19, 1.31 & 0.48 & 1\\
+Outlet moisture, points & 0.112, 0.094, 0.066 & 0.25, 0.51 & 0.19 & 0.02$^{b}$\\
+Outlet temperature, K & 0.083, 0.059, 0.031 & 0.48, 0.93 & 0.043 & 0.1\\
+History hexane, \% & 23.6, 12.0, 5.3 & 0.98, 1.18 & 5.2 & 2$^{b}$\\
+History moisture, points & 0.178, 0.187, 0.153 & --, 0.29 & 0.19$^{a}$ & 0.05$^{b}$\\
+\addlinespace
+\multicolumn{5}{@{}l}{\emph{Time step, 64 cells}}\\
+Outlet hexane, \% & 0.118, 0.068 & 0.79 & 0.12 & 0.2\\
+Outlet moisture, points & 0.0020, 0.00075 & 1.40 & 0.00057 & 0.005\\
+Outlet temperature, K & 0.0014, 0.0007 & 0.98 & 0.0009 & 0.02\\
+History hexane, \% & 9.7, 4.5 & 1.11 & 4.9 & 0.5$^{b}$\\
+History moisture, points & 0.072, 0.037 & 0.98 & 0.047 & 0.01$^{b}$\\
+\addlinespace
+\multicolumn{5}{@{}l}{\emph{Two cells against 64 cells}}\\
+Outlet hexane, \% & 12.0 & & & 1$^{b}$\\
+Outlet moisture, points & 0.66 & & & 0.02$^{b}$\\
+Outlet temperature, K & 0.19 & & & 0.1$^{b}$\\
+\bottomrule\end{tabular}
+\par\smallskip\begin{minipage}{0.95\textwidth}\footnotesize
+Estimates are fine-grid GCI values except where marked. $^{a}$No
+consistent order; the larger of the last two differences is shown.
+$^{b}$Not met.
+\end{minipage}
+\end{table}
+
+\paragraph{What the ladder establishes.}
+The Faner model is converged in mesh at second order and in time at first
+order on every scored quantity, with the outlet-temperature time goal
+missed by 0.002~K in the estimate. The DT model is
+converged in time at every mesh and in the mesh for outlet hexane and
+temperature at 64 cells; its outlet moisture is resolved to about
+0.2 percentage points on a uniform mesh, pending a surface-graded mesh. The
+former two-cell DT resolution was not adequate: it differed from 64 cells
+by 12.0\% in outlet hexane and 0.66 percentage points in outlet moisture,
+which is why the manuscript now reports 64 cells at the middle time
+level. The DT numerical error is smaller than the effect of the declared
+saturated loading (Table~\ref{tab:sub:wsat}).
+
+\begin{table}[htbp]\centering\footnotesize
+\caption{DT sensitivity to the declared saturated retained loading
+$W_{\mathrm{sat}}$ of main Eq.~(\ref*{M-eq:waterbridge}), at 16 cells and
+the middle time level. The nominal value is 0.55 kg/kg dry.}\label{tab:sub:wsat}
+\begin{tabular}{@{}rrrrr@{}}\toprule
+$W_{\mathrm{sat}}$, kg/kg dry & Film depletion, s & Outlet hexane, ppm wet & Outlet moisture, \% wet & Outlet temperature, K\\\midrule
+0.25 & 564.9 & 84.0 & 18.43 & 378.05\\
+0.32 & 558.5 & 98.7 & 18.47 & 377.97\\
+0.55 & 553.1 & 125.4 & 18.82 & 377.95\\
+0.75 & 551.5 & 133.7 & 19.03 & 377.99\\
+0.97 & 550.6 & 139.4 & 19.19 & 378.03\\
+\bottomrule\end{tabular}
+\end{table}
+
+Over the swept range, the outlet hexane changes from $-33$\% to $+11$\% of
+its nominal value and the outlet moisture by 0.76 percentage points, while
+the core-extinction time, 502.47~s, is identical in every case: the
+continuation acts only after the liquid-hexane core has gone. The response
+flattens above the nominal value. This dependence is larger than the
+64-cell numerical error and than the 1\% hexane goal, so the reported DT
+outlet hexane holds at the declared $W_{\mathrm{sat}}$, which a measurement
+near unit water activity should replace.
 
 \input{supplementary_submission_controls.tex}
 
@@ -279,13 +493,17 @@ The complete experimental inputs and observable definitions are collected
 in Sec.~\ref{sup:fanerinputs}; the exposure construction is in
 Sec.~\ref{sup:fanermultiplier}. Constitutive assumptions are specified with
 the main equations, and numerical controls in Sec.~\ref{sup:numericalcontrols}.
-The nominal four-cell calculation retains the experimental clock and
-the constant-rate boundary calibration. Its event times and outlet
+The \FanerCells-cell calculation at the middle time level of the
+convergence ladder (Sec.~\ref{sup:ladder}) retains the experimental clock
+and the constant-rate boundary calibration. Its event times and outlet
 values are reported in main Sec.~\ref*{M-sec:validation:faner} and
 Table~\ref*{M-tab:journalmarch}. Water and core volume are shown in
-Fig.~\ref{fig:fanersupport}. The maximum Ackermann argument is
-\FanerMaxBeta, within the unit reference band and the declared $|\beta|\le3$
-study band. The loading discrepancy remains visible; no falling-rate or
+Fig.~\ref{fig:fanersupport}. The birth state's surface Ackermann argument
+is $|\beta_{\mathrm A}|=\FanerMaxBeta$ at \FanerCells\ cells. It rises
+with mesh refinement (0.65, 1.02, 1.63, 2.25 and 2.61 at 4, 8, 16, 32 and
+64 cells) and stays inside the declared study band $|\beta_{\mathrm A}|\le3$
+but outside the unit reference band; after birth it stays at or below
+\FanerMaxBetaAfterBirth, inside the unit band. The loading discrepancy remains visible; no falling-rate or
 temperature point is fitted.
 
 \paragraph{Earlier mesh and timestep sensitivity.}
@@ -370,8 +588,12 @@ trajectory in time.
 
 \subsection{Source-size and vapour-temperature sensitivities}
 \label{sup:fanerassumptions}
-This subsection reports complete two-cell sensitivity calculations with the
-same transport coefficients, initial loadings and experimental clock.
+This subsection reports complete two-cell sensitivity calculations of the
+earlier constant-property history ($D_b=6\times10^{-10}$ m$^2$/s, oil
+capacity 2000 J/(kg K)), made before the convergence ladder of
+Sec.~\ref{sup:ladder}, with the same transport coefficients, initial
+loadings and experimental clock. Their temperatures therefore differ
+slightly from the 64-cell values of the main text.
 Replacing the earlier 0.808-mm radius with the source-mean
 0.885-mm radius moves the 0.20-kg/kg crossing from 41.0 to 46.6 s and
 lengthens the 0.20--0.10-kg/kg interval from 15.5 to 17.7 s. At 240 s,
@@ -415,7 +637,8 @@ the falling-rate period.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.9\textwidth]{figures/fig_faner_supporting_states.pdf}
-\caption{Faner particle: retained water and liquid-hexane core volume fraction.}
+\caption{Faner particle: retained water and liquid-hexane core volume fraction.
+Rendered from archived records with AI-assisted plotting code.}
 \label{fig:fanersupport}
 \end{figure}
 
@@ -454,12 +677,12 @@ desolventizer-toaster-dryer-cooler).
 Comparison & Evidence & Further measurements\\\midrule
 Heat-fed surface period & Four measured duties under a declared mass basis and an independent packed-bed correlation & Source-specific exposed area and per-run state\\
 Slow Fickian shell & Two 2008 measured trajectories with one surface-read coefficient from uptake & Thesis particle shape, local-coefficient convergence, high-temperature transport\\
-2019 water-bearing particle & A four-cell radial particle with film from the constant rate; falling-rate loading is faster than the measured charge & Measured mass-weighted size histogram, wetness near the probe, its depth and gas flow through the holder\\
+2019 water-bearing particle & A 64-cell radial particle, converged in mesh and time, with film from the constant rate; falling-rate loading is faster than the measured charge & Measured mass-weighted size histogram, wetness near the probe, its depth and gas flow through the holder\\
 Binary water--hexane storage/transport & Conservation and limiting-case numerical identities for coupled transport & Water-isotherm and co-sorption data; coupled moisture and solvent profiles\\
 Industrial DT/DTDC & One radial particle on a declared bath; solvent, moisture and temperature lie within the published outlet ranges; Coletto et al.'s column integration is not the boundary, because its flashing zone uses eq.~A.17 and its toaster particle step has no water balance & Independent tray gas, steam, wall, residence and discharge observations\\
 \bottomrule\end{tabular}\end{table}
 
-With pressure and source-water-isotherm alternatives propagated, the ideal retained-water vapour-pressure diagnostic $a_{\mathrm w}(W_{\mathrm w})P_{\mathrm{sat}}^{\mathrm w}(T^*)=P$ gives $100.5$--$107.6$ degrees Celsius, a range spanning a published band of industrial discharge temperatures. The calculation assigns the supplied moisture to the retained-water inventory; resolving bound, interstitial and external water separately requires phase-partition measurements. The single point at the moisture of the temperature source itself lies 2.05 kelvin above that band. This cross-source, water-only equilibrium calculation describes retained-water activity. Boiling of a separate free-water droplet depends on that droplet's own liquid state, whereas the coupled particle temperature follows the transient component and energy balances. The binary particle calculation uses water-component fugacity and calculates its temperature independently of $T^*$. At declared last-tray hexane mole fractions $0.003$--$0.03$ and temperatures 100--110 degrees Celsius, a dry-particle equilibrium calculation gives $4.5$--$66.0$ ppm without and $8.1$--$112.4$ ppm with a residual-oil solution arm (Sec.~\ref{sup:evidence:outlet}); only the richest and coolest oil-arm corner reaches the published residual-hexane class. These values describe the equilibrium inventory at the supplied conditions; reaching it depends on the transient transport history. The total-meal GAB isotherm already includes reference oil, so assessing the oil-arm overlap requires independent mixture data.
+Including pressure and water-isotherm alternatives, the ideal retained-water vapour-pressure diagnostic $a_{\mathrm w}(W_{\mathrm w})P_{\mathrm{sat}}^{\mathrm w}(T^*)=P$ gives $100.5$--$107.6$ degrees Celsius, a range spanning a published band of industrial discharge temperatures. The calculation assigns the supplied moisture to the retained-water inventory; resolving bound, interstitial and external water separately requires phase-partition measurements. The single point at the moisture of the temperature source itself lies 2.05 kelvin above that band. This cross-source, water-only equilibrium calculation describes retained-water activity. Boiling of a separate free-water droplet depends on that droplet's own liquid state, whereas the coupled particle temperature follows the transient component and energy balances. The binary particle calculation uses water-component fugacity and calculates its temperature independently of $T^*$. At declared last-tray hexane mole fractions $0.003$--$0.03$ and temperatures 100--110 degrees Celsius, a dry-particle equilibrium calculation gives $4.5$--$66.0$ ppm without and $8.1$--$112.4$ ppm with a residual-oil solution arm (Sec.~\ref{sup:evidence:outlet}); only the richest and coolest oil-arm corner reaches the published residual-hexane class. These values describe the equilibrium inventory at the supplied conditions; reaching it depends on the transient transport history. The total-meal GAB isotherm already includes reference oil, so assessing the oil-arm overlap requires independent mixture data.
 
 Source-domain limits and constitutive extensions are stated with the main
 property equations (Sec.~\ref*{M-sec:thermo:properties}); the front and
@@ -490,33 +713,47 @@ and whole-tower residence distribution.
 \section{Reproduction inventory and accessibility}
 \label{sup:deposit}
 The release matching this submission is at
-\url{https://github.com/tomas3svoboda/dt_particle_model}, submission snapshot
-\texttt{submission-2026-10-15}, with a SHA-256 manifest of every file. It holds
-the particle-model source code; the scripts that produced the two particle
-histories and the sensitivity calculations of Sec.~\ref{sup:finitecontact};
-their run records, including the saved states from which each segment
-starts and the numerical-recovery records; the prescribed DT bath as a
-declared input file; the digitized readings of the 2019 article; the
-scripts that rebuild the three computed figures (two in the main text, one
-in this supplement) and check the printed numbers against their records;
-and the LaTeX sources and PDFs of both documents. Files keep their relative paths, and the release's
+\url{https://github.com/tomas3svoboda/dt_particle_model}, snapshot
+\texttt{v1.1.0-submission}, with a SHA-256 manifest of every file. It holds
+the particle-model source code and the case runner that produced every
+history reported here; the prescribed DT bath as a declared input file; the
+digitized readings of the 2019 article; the scripts that rebuild the three
+computed figures (two in the main text, one in this supplement) and check
+the printed numbers against their records; and the LaTeX sources of both
+documents. The histories of the main text and the 30 cases of the
+convergence ladder (Sec.~\ref{sup:ladder}) were computed with one frozen
+execution tree of the code (identifier 151). The released solver files are
+byte-identical to that tree, apart from six documented path and packaging
+patches, and its freeze manifest with the hash of every file is included.
+Three data archives of the release hold the runtime-151 records:
+\texttt{runtime151\_ladder\_records} the case records of every ladder and
+saturated-loading case, the independent original-feed audit of every
+history and the ladder report with its observed orders and GCI estimates;
+\texttt{runtime151\_adopted\_cases} the complete case trees of the two
+adopted 64-cell histories; and \texttt{runtime151\_reference} two 8-cell
+reference cases, which a release script reruns and compares, value by
+value, with the archived originals. The earlier constant-property and
+two-cell records cited in this supplement stay in the release's archive
+of the earlier snapshot \texttt{submission-2026-10-15}, whose
+configurations remain reproducible at that tag. Compiled PDFs accompany the
+journal submission rather than the lean GitHub tree. Files keep their relative paths, and the release's
 README gives the commands. The equipment
 model that computed the prescribed DT bath is not part of the release, so
 the bath cannot be regenerated from it. Some early steps of the Faner
 calculation and the $K_\ell=0.10$ case were run with earlier revisions of
 the calculation scripts; each step record stores the hashes of the
-scripts it used. The release holds the records behind the figures and the
-headline numbers of the main text, and the earlier records that the number
-check reads; the number check binds the printed numbers of both documents
-to the released records and names those that rest on records the release
-does not hold. Such records, among them the authors' working notes, the
-derivation records and the independent balance record of the DT feed
-history, are available from the corresponding author on request.
+scripts it used. The release thus holds the records behind the figures and
+the headline numbers of the main text, together with earlier verification
+and sensitivity records listed in its evidence manifests. The release
+scripts regenerate the headline-number macros and figures and rerun the
+two reference cases; they do not re-execute every historical study.
+Further working notes and derivation records are available from the
+corresponding author on request.
 Other digitized readings are not in the release; they are shared where the
 publishers' terms permit. The authors' code
 is under MIT terms, which do not cover the third-party publications or
 their digitizations. A preservation archive with a persistent identifier
-is being prepared.
+is being prepared; no preservation DOI has yet been issued.
 
 \clearpage
 \section*{Nomenclature of the supplement}

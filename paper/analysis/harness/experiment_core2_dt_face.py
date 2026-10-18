@@ -56,7 +56,18 @@ def advance_arrival(
     boundary_factory=None,
     gas_only_surface=False,
     difference_mode="forward",
+    search_tolerance=None,
 ):
+    working_tolerance = (
+        before.controls.nonlinear_residual_tolerance
+        if search_tolerance is None
+        else search_tolerance
+    )
+    if (
+        not math.isfinite(working_tolerance)
+        or not 0 < working_tolerance <= before.controls.nonlinear_residual_tolerance
+    ):
+        raise ValueError("face search must preserve or tighten native residual acceptance")
     layout = face.layout_for_arrival(before.transport)
     controls = fi.FaceEventControls((0.0, time_upper))
     chart = fi._coordinate_chart(before, controls)
@@ -223,7 +234,7 @@ def advance_arrival(
             ],
             bounds=(np.r_[lower, tl, -3.0, 0.0], np.r_[upper, tu, 3.0, pairs[-1][1]]),
             max_nfev=budget,
-            gtol=before.controls.nonlinear_residual_tolerance,
+            gtol=working_tolerance,
             **({"difference_mode": difference_mode} if gas_only_surface else {}),
         )
         values = residual(solution.x)
@@ -279,12 +290,16 @@ def advance_arrival(
 
 
 @contextmanager
-def resolved_water_boundary(config, radius, carry, surface, dt, boundary, time_supplier=None):
+def resolved_water_boundary(
+    config, radius, carry, surface, dt, boundary, time_supplier=None, *, search_tolerance=1e-11
+):
     """Eliminate the same three conservative surface rows inside native solves.
 
     This is a nested nonlinear solve, not a split time step. Old water mass
     and energy are immutable throughout all body trials and Jacobian probes.
     """
+    if not math.isfinite(search_tolerance) or not 0 < search_tolerance <= 1e-11:
+        raise ValueError("surface search tolerance must preserve or tighten the native 1e-11 goal")
     holder = {"x": np.array([surface.temperature_k, 0.0, surface.liquid_water_kg_m2])}
     guess = np.array([surface.temperature_k, surface.beta, surface.liquid_water_kg_m2])
     gas_only = carry["external_water_loading_kg_m2"] == 0.0
@@ -299,6 +314,7 @@ def resolved_water_boundary(config, radius, carry, surface, dt, boundary, time_s
         "maximum_accepted_surface_residual": 0.0,
         "old_film_mass_changed_during_trials": False,
         "surface_tolerance": 1e-11,
+        "surface_search_tolerance": search_tolerance,
     }
     mass_scale = max(carry["external_water_loading_kg_m2"] / dt, 0.05)
     heat_scale = max(abs(carry["external_water_energy_j"]) / (4 * math.pi * radius**2 * dt), 5000.0)
@@ -366,7 +382,7 @@ def resolved_water_boundary(config, radius, carry, surface, dt, boundary, time_s
                     ],
                 ),
                 max_nfev=160,
-                gtol=1e-11,
+                gtol=search_tolerance,
             )
             values = residual(solution.x)
             maximum = float(np.max(np.abs(values)))

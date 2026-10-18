@@ -59,6 +59,7 @@ from dtdc_simulator.core2.particle import cut_sparsity
 from dtdc_simulator.core2.particle import cut_transport as cut
 from dtdc_simulator.core2.particle import wet_core
 from dtdc_simulator.core2.props import hexane as hx
+from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 
 
 class FaceDepartureIntegratorStepError(RuntimeError):
@@ -273,6 +274,41 @@ class FaceDepartureIntegratorStep:
     seed: FaceDepartureSeed
     ledger: FaceDepartureIntegratorLedger
     physically_qualifying: bool = field(default=False, init=False)
+
+
+@dataclass(frozen=True)
+class FaceDepartureNumericalPolicy:
+    """Explicit search controls; native physical acceptance remains separate.
+
+    The feasible seed can initialize the finite-step numerical chart while
+    the exact tangent still supplies physical column, Stefan and swept-volume
+    scales. Its row-normalization reference is explicitly seed dependent.
+    A finite root found by this policy does not certify an admissible dt->0 limit.
+    """
+
+    feasible_seed_reference: bool = False
+    root_search_tolerance: float | None = None
+    cauchy_globalization: bool = False
+    powell_dogleg_rescue: bool = False
+    require_inward_phase_direction: bool = False
+
+    def __post_init__(self) -> None:
+        for value in (
+            self.feasible_seed_reference,
+            self.cauchy_globalization,
+            self.powell_dogleg_rescue,
+            self.require_inward_phase_direction,
+        ):
+            if not isinstance(value, bool):
+                raise TypeError("departure numerical-policy switches must be boolean")
+        if self.root_search_tolerance is not None and (
+            not math.isfinite(self.root_search_tolerance)
+            or self.root_search_tolerance <= 0
+        ):
+            raise ValueError("departure search tolerance must be positive and finite")
+
+
+DEFAULT_FACE_DEPARTURE_NUMERICAL_POLICY = FaceDepartureNumericalPolicy()
 
 
 @dataclass(frozen=True)
@@ -576,6 +612,8 @@ def _scaled_newton_correction(
             if scipy_sparse.issparse(scaled_jacobian)
             else np.linalg.solve(scaled_jacobian, -scaled_residual)
         )
+    except StepBudgetExceeded:
+        raise
     except (np.linalg.LinAlgError, RuntimeError) as exc:
         raise _DirectStageBasinError(
             "departure direct Newton Jacobian is singular"
@@ -740,6 +778,8 @@ def solve_face_departure(
     dt_s: float,
     boundary: ct.PoreBoundary,
     seed: FaceDepartureSeed,
+    *,
+    numerical_policy: FaceDepartureNumericalPolicy = DEFAULT_FACE_DEPARTURE_NUMERICAL_POLICY,
 ) -> FaceDepartureIntegratorStep:
     """Try the requested root directly, then use uncommitted fallback stages."""
 
@@ -774,6 +814,21 @@ def solve_face_departure(
             raise ValueError(
                 "face departure must preserve the exact arrival solver controls"
             )
+        if not isinstance(numerical_policy, FaceDepartureNumericalPolicy):
+            raise TypeError("departure requires an explicit numerical policy")
+        if (
+            numerical_policy.root_search_tolerance is not None
+            and numerical_policy.root_search_tolerance
+            > controls.nonlinear_residual_tolerance
+        ):
+            raise ValueError(
+                "departure search policy cannot relax the native root tolerance"
+            )
+        stage_options = (
+            {"numerical_policy": numerical_policy}
+            if numerical_policy != DEFAULT_FACE_DEPARTURE_NUMERICAL_POLICY
+            else {}
+        )
         ci.certify_explicit_wet_retained_water_applicability(
             controls,
             before.wet_retained_water_loadings,
@@ -789,6 +844,11 @@ def solve_face_departure(
             raise TypeError("seed must be FaceDepartureSeed")
         if not math.isfinite(dt_s) or dt_s <= 0.0:
             raise ValueError("departure dt must be positive and finite")
+        if numerical_policy.require_inward_phase_direction:
+            phase_tangent = face_tangent.assemble_face_tangent(
+                before, face_tangent.candidate_from_committed_face(before)
+            )
+            face_tangent.certify_face_tangent_phase_direction(phase_tangent)
         state = departure.adapt_face_arrival_committed_state(before)
         layout = departure.layout_for_departure(state)
         structural = (
@@ -827,6 +887,7 @@ def solve_face_departure(
                 direct_progress,
                 certify=True,
                 structural=structural,
+                **stage_options,
             )
         except (
             _EvaluationBudgetError,
@@ -924,7 +985,10 @@ def solve_face_departure(
                         progress,
                         certify=is_requested_stage,
                         structural=structural,
+                        **stage_options,
                     )
+                except StepBudgetExceeded:
+                    raise
                 except Exception:
                     evaluations += progress.evaluations
                     cauchy_globalization_accepted_steps += (
@@ -1108,7 +1172,11 @@ def solve_face_departure(
             step.after.transport.config.wet.luikov,
         )
         return step
+    except face_tangent.FaceTangentPhaseDirectionError:
+        raise
     except FaceDepartureIntegratorStepError:
+        raise
+    except StepBudgetExceeded:
         raise
     except Exception as exc:
         if not isinstance(before, face_solver.FaceArrivalCommittedState):
@@ -1421,7 +1489,19 @@ def _solve_direct_stage(
     structural: cut_sparsity.CutJacobianSparsity | None,
     diagnostic_scaled_cauchy_globalization: bool = False,
     diagnostic_powell_dogleg_rescue: bool = False,
+    numerical_policy: FaceDepartureNumericalPolicy = DEFAULT_FACE_DEPARTURE_NUMERICAL_POLICY,
 ) -> _DirectStageSolution:
+    search_tolerance = (
+        controls.nonlinear_residual_tolerance
+        if numerical_policy.root_search_tolerance is None
+        else numerical_policy.root_search_tolerance
+    )
+    diagnostic_scaled_cauchy_globalization = (
+        diagnostic_scaled_cauchy_globalization or numerical_policy.cauchy_globalization
+    )
+    diagnostic_powell_dogleg_rescue = (
+        diagnostic_powell_dogleg_rescue or numerical_policy.powell_dogleg_rescue
+    )
     if not isinstance(diagnostic_scaled_cauchy_globalization, bool):
         raise TypeError("diagnostic Cauchy switch must be boolean")
     if not isinstance(diagnostic_powell_dogleg_rescue, bool):
@@ -1432,7 +1512,13 @@ def _solve_direct_stage(
         )
     layout = departure.layout_for_departure(before)
     reference_decoded = _decode_physical_departure_vector(
-        _tangent_reference_physical_vector(layout, scale_reference),
+        (
+            _physical_departure_vector(
+                seed.candidate, _seed_trace_gradients(seed, before), before, dt_s
+            )
+            if numerical_policy.feasible_seed_reference
+            else _tangent_reference_physical_vector(layout, scale_reference)
+        ),
         before,
         layout,
         dt_s,
@@ -1559,7 +1645,7 @@ def _solve_direct_stage(
     decoded = initial
     raw_condition = math.inf
     for _iteration in range(20):
-        if float(np.max(np.abs(current))) <= controls.nonlinear_residual_tolerance:
+        if float(np.max(np.abs(current))) <= search_tolerance:
             break
         iteration_current_norm = float(np.linalg.norm(current))
         iteration_current_maximum = float(np.max(np.abs(current)))
@@ -1833,14 +1919,10 @@ def _solve_direct_stage(
     dogleg_trust_radius: float | None = None
     if (
         diagnostic_powell_dogleg_rescue
-        and float(np.max(np.abs(current)))
-        > controls.nonlinear_residual_tolerance
+        and float(np.max(np.abs(current))) > search_tolerance
     ):
         for dogleg_iteration in range(20):
-            if (
-                float(np.max(np.abs(current)))
-                <= controls.nonlinear_residual_tolerance
-            ):
+            if float(np.max(np.abs(current))) <= search_tolerance:
                 break
             iteration_current_norm = float(np.linalg.norm(current))
             iteration_current_maximum = float(np.max(np.abs(current)))
@@ -2063,10 +2145,10 @@ def _solve_direct_stage(
                     "phase-safe trust-region step"
                 )
     maximum = float(np.max(np.abs(current)))
-    if maximum > controls.nonlinear_residual_tolerance:
+    if maximum > search_tolerance:
         raise _DirectStageBasinError(
             "face-departure regional/RH residual contract failed: "
-            f"{maximum:.3e} > {controls.nonlinear_residual_tolerance:.3e}"
+            f"{maximum:.3e} > {search_tolerance:.3e}"
         )
     signed_scaled = tuple(float(value) for value in current)
     certificate = None

@@ -4,9 +4,8 @@ Faner experiment compares solvent loading and temperature with source
 readings; the DT experiment follows the coupled solvent, moisture and
 thermal response of a particle from feed to exit. Both use the same
 particle conservation laws, phase equilibrium, retention closures and
-reference transport coefficients; their gas histories, geometry and
-initial states differ. Liquid-water imbibition operates when an external
-water film contacts the dry shell.
+reference transport coefficients (Table~\ref{tab:parameters}), without
+refitting; their gas histories, geometry and initial states differ.
 
 \subsection{Falling-rate drying in Faner's superheated-hexane experiment}
 \label{sec:validation:journalmarch}\label{sec:validation:fanermarch}
@@ -53,18 +52,17 @@ is our retained-hexane reference evaluated at the pressure-feasible
 saturated activity $a^{*}$. Both have units kg hexane/kg dry meal, but
 they refer to different equilibrium specifications and are not
 interchangeable. Neither fixes the core-extinction loading in the present
-calculation, which solves the component and energy jumps;
-Eq.~\eqref{eq:faneroracle} is only the source's geometric comparator.
+calculation, which solves the component and energy jumps.
 
-Both experiments use the constitutive laws and inputs of
-Section~\ref{sec:thermo:properties} and Table~\ref{tab:parameters}, without
-refitting particle coefficients. The regime-A water-access assumption is
+The regime-A water-access assumption is
 stated in Section~\ref{sec:model:waterfilm}; water evolves through both
 transport paths after shell formation. Imbibition is inactive in this
 experiment because no external water film forms.
 
-Figure~\ref{fig:journalmarch} compares the four-cell calculation with
-Faner's readings on the reported experimental clock. Loading includes
+Figure~\ref{fig:journalmarch} compares the \FanerCells-cell calculation,
+the finest uniform mesh of the convergence ladder at its middle time level
+(Section~\ref{sec:verification:convergence}), with Faner's readings on the
+reported experimental clock. Loading includes
 all particle hexane per unit dry meal; temperature is the particle volume
 mean, while the thermocouple measures a local holder temperature.
 Markers show the measurements with their digitization half-widths. The dotted vapour line is the
@@ -75,7 +73,14 @@ are supporting results in Fig.~\ref*{S-fig:fanersupport}.
 \begin{figure}[htbp]\centering
 \includegraphics[width=\textwidth]{figures/fig_faner_particle_history_core2.pdf}
 \caption{Faner's pure-hexane experiment: (a) hexane loading and
-(b) particle temperature. Lines show calculations; markers show measurements.}
+(b) particle temperature. Lines show calculations; markers show measurements.
+The calculation follows the measured loading through the first 50~s and
+then falls below it from about 60~s: the computed falling
+interval is about \FanerFallingShortfall\% shorter than the measured one,
+and the calculated volume-mean temperature rises earlier and higher than
+the holder reading. The calculation uses \FanerCells\ radial cells at the
+middle time level of the convergence ladder.
+Rendered from archived records with AI-assisted plotting code.}
 \label{fig:journalmarch}
 \end{figure}
 
@@ -89,19 +94,22 @@ the digitized source. The calculated falling interval is about
 At 240 s, hexane is $\FanerExitHexane$ kg/kg dry, water is
 $\FanerExitWater$ kg/kg dry and mean temperature is
 \SI{\FanerExitTemperature}{\celsius}.
-This discrepancy cannot be assigned to one mechanism: the particle sizes
-are known only as summaries, the initial moisture is unknown, and the local
-exposure and the thermocouple sampling are uncertain.
+The computed interval is the same at every mesh and time step of the
+convergence ladder (Section~\ref{sec:verification:convergence}), so the
+discrepancy lies in comparing one declared sphere with a measured charge;
+Section~\ref{sec:discussion} attributes it to the size dispersity and
+non-uniform drying of the holder layer. The particle sizes are known only
+as summaries, the initial moisture is unknown, and the local exposure and
+the thermocouple sampling are uncertain.
 Table~\ref{tab:journalmarch} summarizes the comparison; loading crossings
-are interpolated between successive calculated states. Its temperature
-comparison retains the distinction between local holder and particle mean.
+are interpolated between successive calculated states.
 
 \paragraph{Regime-C hexane transport in the pure-hexane bath.}
 Decomposing the calculated hexane flux at the outer dry-shell face into
 total vapour motion and binary diffusion, as in Eq.~\eqref{eq:retflux},
 shows that hexane is carried outward by the moving pore gas. Binary
-diffusion contributes in the opposite direction throughout the recorded
-regime-C tail, offsetting 0.01--0.70\% of the net outward hexane flux.
+diffusion contributes in the opposite direction in all 310 recorded
+regime-C advances, offsetting 0.005--0.68\% of the net outward hexane flux.
 These contributions describe how hexane moves in this calculation;
 they do not by themselves identify the rate-limiting resistance.
 Their reconstruction is given in Sec.~\ref*{S-sup:fluxcontributions}.
@@ -118,40 +126,34 @@ Water at 240 s, kg/kg dry & Not reported & \FanerExitWater\\
 Temperature at 235.1 s, $^\circ$C & 100.8 & \FanerLastHolderClockTemperature\\
 \bottomrule\end{tabular}\end{table}
 
-Earlier calculations with constant $D_b=6\times10^{-10}$ m$^2$/s and
-oil capacity 2000 J/(kg K), using the reported mean diameter instead of the smaller sphere inherited
-from earlier calculations delays removal and warming: the external area per dry mass decreases and
-the internal transport distances increase. This improves the loading
-crossing while leaving a falling-rate discrepancy. At matched four-cell
-resolution, the 80--100$^\circ$C temperature milestones occur about
-12--17 s later than with the inherited smaller sphere. In a DT heat balance,
-that timing determines how long the heat supply goes mainly to evaporation
-before the meal warms, affecting residence requirements and product quality.
-The earlier source-mean two-cell march loses its core at 90.1 s; the earlier four-cell
-value is 88.1 s. Their positive-core step sequences
-also differ, so this comparison is a resolution sensitivity rather than
-a continuum limit.
+In earlier constant-property calculations ($D_b=6\times10^{-10}$ m$^2$/s,
+oil capacity 2000 J/(kg K)), adopting the source mean diameter delayed the
+80--100$^\circ$C milestones by 12--17 s at four cells relative to the
+inherited smaller sphere, improving the loading crossing while leaving a
+falling-rate discrepancy (Sec.~\ref*{S-sup:fanerassumptions}). The
+two- and four-cell marches of that calculation lost their cores at 90.1
+and 88.1 s. In the present convergence ladder the core disappears at 87.4, 86.1, 85.5, 85.2 and 85.2~s at 4, 8,
+16, 32 and 64 cells, so the earlier spread was a mesh effect that the
+refinement removes; the falling interval stays at 17.7~s throughout.
 
-The measured vapour varies from 117.8 to \SI{120.7}{\celsius}, rather than
-remaining exactly at its nominal value. An earlier constant-property two-cell sensitivity
-applies that trace after core depletion and gives \SI{113.0}{\celsius}
-at 240 s, compared with \SI{114.3}{\celsius} under constant vapour
-temperature. The small improvement supports treating heat-supply
-variation as an experimental uncertainty; it does not close the full
-temperature discrepancy. Before core depletion, this sensitivity still
-uses the nominal bath (Sec.~\ref*{S-sup:fanerassumptions}).
+The measured vapour varies from 117.8 to \SI{120.7}{\celsius}. An earlier
+constant-property two-cell sensitivity that applies this trace after core
+depletion gives \SI{113.0}{\celsius} at 240 s, compared with
+\SI{114.3}{\celsius} under constant vapour temperature
+(Sec.~\ref*{S-sup:fanerassumptions}). The small improvement supports treating
+heat-supply variation as an experimental uncertainty; it does not close the
+full temperature discrepancy.
 Startup calculations at higher initial moisture, 0.050 and 0.100 kg/kg,
 are not yet resolved (Sec.~\ref*{S-sup:journalmarch}).
 
-\subsection{Particle destiny in the prescribed DT bath}
+\subsection{Particle history in the prescribed DT bath}
 \label{sec:validation:dtmarch}\label{sec:validation:otherchecks}
 \label{sec:validation:uptake}\label{sec:validation:tail}\label{sec:validation:bp}
 \label{sec:validation:envelope}\label{sec:validation:rewetting}\label{sec:validation:derived}
 \paragraph{Bath and initial state.}
 The DT experiment uses an effective spherical radius $\Rp=\SI{1.5}{\milli\metre}$
 and follows the particle from feed to the prescribed exit at
-\SI{1766.5}{\second} (29.4 min). This radius is the coarse end of the
-previous size screening. It is consistent with the upper end of the
+\SI{1766.5}{\second} (29.4 min). This radius is consistent with the upper end of the
 0.5--1.5-mm equivalent-radius range containing 95.1\% of Faner's soybean
 particles \citep{faner2019kinetics}, but is not a measured DT mean.
 The longer heat path and smaller surface area per unit mass make this a
@@ -182,22 +184,25 @@ Liquid-water imbibition uses the contact and mobility estimates of
 Section~\ref{sec:model:liquidcontact}.
 
 \paragraph{Liquid depletion, condensation and imbibition.}
-At PD exit, about 0.169 kg external free hexane/kg dry remains. It disappears
+At PD exit, about \DTPDFreeHexane\ kg external free hexane/kg dry remains. It disappears
 approximately 2.1 s later while the external water film accumulates.
 The initial two-liquid surface equilibrium is near \SI{61.3}{\celsius};
 it differs from pure hexane's boiling point. The dry shell forms at
-492.3 s and core extinction occurs at 503.5 s, approximately 11.3 s after
-external free-hexane depletion. Retained hexane and pore gas then
+\DTDryShell~s, as the external free hexane is exhausted, and core
+extinction follows at \DTCoreExtinction~s, \DTShellToExtinction~s later. Retained hexane and pore gas then
 continue to evolve in regime C. Both the rapid surface evaporation and the
 core recession follow from the coupled balances.
 
-At core extinction, the particle contains 0.126 kg water/kg dry and the
-external water film contains a further 0.097 kg/kg dry. The film remains
-until 703.3 s, about three and a half minutes after dry-shell formation. Liquid-water
-imbibition and evaporation back to the bath compete for this inventory;
-condensation does not imply that all incoming water remains in the particle.
-The external water film supplies mass and energy for several minutes and
-persists into regime C.
+At core extinction, the particle holds \DTExtinctionWater\ kg water/kg dry
+and the external water film a further \DTExtinctionFilm\ kg/kg dry. With
+retained water admitted above the Luikov anchor
+(Section~\ref{sec:thermo:properties}, Eq.~\eqref{eq:waterbridge}), imbibition draws the film into the
+particle quickly. The film is gone at \DTFilmDepletion~s, about nine
+minutes after feed and one minute after dry-shell formation, well before
+the long regime-C stage that sets the outlet hexane; it persists into the
+first 50~s of regime C. Liquid-water imbibition and evaporation back to the
+bath compete for this inventory; condensation does not imply that all
+incoming water remains in the particle.
 
 Figure~\ref{fig:dtmarch} presents wet-basis hexane and moisture alongside
 the volume-mean particle temperature. Dashed curves use the right axes
@@ -207,43 +212,60 @@ lines mark A--B and B--C. The insets resolve the brief core recession
 and the external water film. Green markers at 30 min show published
 outlet ranges: 16--22\% moisture from Witte and 100--500 ppm solvent
 and 105--110$^\circ$C temperature from Kemper
-\citep{kemper2013solvent,witte_nd_soybeanmeal}. They provide industrial
-context rather than paired measurements of this prescribed bath.
-The calculated history ends at 29.4 min.
+\citep{kemper2013solvent,witte_nd_soybeanmeal}.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=\textwidth]{figures/fig_dt_particle_history_core2.pdf}
-\caption{DT particle destiny: (a) hexane, (b) moisture and (c) temperature.
+\caption{DT particle history: (a) hexane, (b) moisture and (c) temperature.
 Solid lines show the particle response; dashed lines show the bath.
-Green markers indicate published outlet ranges.}
+Green markers indicate published outlet ranges.
+Most of the hexane leaves within seconds of steam contact at about 8.2~min,
+and the moisture rises as the condensed water film is imbibed; the film
+inset shows that film gone at \DTFilmDepletion~s (9.2~min). The slow
+regime-C decline then brings hexane to \DTFiniteHexaneWet~ppm at exit,
+inside the published range, while the temperature follows the bath to
+just below its lower edge. The calculation uses \DTCells\ radial cells at
+the middle time level of the convergence ladder.
+Rendered from archived records with AI-assisted plotting code.}
 \label{fig:dtmarch}
 \end{figure}
 
 \begin{samepage}
 \paragraph{Regime-C hexane transport in the steam-rich bath.}
 The two gas-phase contributions change within regime C. At the first
-recorded advance, 508.5 s, outward total vapour motion supplies 97.33\%
-of the net outward hexane flux at the outer dry-shell face, and binary
-diffusion supplies 2.67\%. From about 778 s to exit, total vapour motion
-is inward while hexane continues to leave the particle: outward binary
-diffusion transports hexane against the incoming gas. Inward gas motion
-partly offsets this outward diffusive flux. Diffusion is
-therefore essential to the computed late DT removal pathway
-(Sec.~\ref*{S-sup:fluxcontributions}).
+recorded advance, 505.1 s, outward total vapour motion carries 77.6\%
+of the net outward hexane flux at the outer dry-shell face and binary
+diffusion 22.4\%. While the particle takes up water, from 512.6~s to the
+water peak at 1385.1~s, the total gas flux is inward, and hexane leaves
+only because binary diffusion carries it outward against the incoming gas.
+After the peak the particle begins to dry, the total gas flux turns
+outward, and in the \DTCells-cell calculation binary diffusion then opposes
+hexane removal: at exit it amounts to $-132$\% of the net flux, against
+$+232$\% from gas motion. Diffusion therefore sets hexane removal through
+the water-uptake period, and outward drying flow carries it afterwards
+(Sec.~\ref*{S-sup:fluxcontributions}). The split itself is not
+mesh-converged. The net exit flux is small beside its two opposing parts,
+and the diffusion share at exit is $+95$, $+50$, $-36$, $-87$ and
+$-132$\% at 2, 8, 16, 32 and 64 cells, changing sign between 8 and 16
+cells; the gas-motion share at the first advance likewise falls from
+98.5\% at 2 cells to 77.6\% at 64. These shares describe the calculation
+on its finest mesh, not a resolved partition of the transport.
 \par
 \end{samepage}
 
 \paragraph{Exit observables and numerical sensitivity.}
-Particle water at exit is 0.212 kg/kg dry meal, equivalent to \DTFiniteMoisture\%
-wet-basis moisture. Hexane is \DTFiniteHexaneDry\ mg/kg dry, or \DTFiniteHexaneWet\ ppm on a wet basis, and
+Particle water at exit is \DTExitWater\ kg/kg dry meal, equivalent to \DTFiniteMoisture\%
+wet-basis moisture, inside the 16--22\% range published for DT outlets. Hexane is \DTFiniteHexaneDry\ mg/kg dry, or \DTFiniteHexaneWet\ ppm on a wet basis, and
 volume-mean particle temperature is \SI{\DTFiniteTemperature}{\celsius}.
 The external water film is depleted. The particle-only basis conversion
 uses $1+X_{\mathrm w}+X_{\mathrm h}$; water in the external water film is reported
 separately while the film is present.
 Table~\ref{tab:dtmarch} compares the result with the published outlet
 ranges. Calculated ppm uses wet meal; the source solvent range does not
-specify its analytical mass basis. The calculation uses two radial cells
-and a 5-s maximum regime-C timestep.
+specify its analytical mass basis. The calculation uses \DTCells\ radial
+cells and a 2.5-s maximum regime-C timestep, the finest uniform mesh of the
+convergence ladder at its middle time level
+(Section~\ref{sec:verification:convergence}).
 
 \begin{table}[htbp]\centering\small
 \caption{DT exit results and published outlet ranges.}
@@ -258,32 +280,35 @@ External water film, kg/kg dry & 0 & Not measured\\
 \bottomrule\end{tabular}\end{table}
 
 The calculated moisture and hexane lie within the published ranges, and
-the temperature, 104.94$^\circ$C before rounding, is close to the lower edge of its
-range. These ranges are industrial context, not a validation: the agreement cannot identify the
+the volume-mean temperature sits 0.3~K below the \SI{105}{\celsius} lower edge. These ranges are industrial context, not a validation: the agreement cannot identify the
 imbibition coefficients or validate the prescribed bath.
-With the same temperature-dependent property laws, varying the prescribed
-reference pore diffusivity from $2$ to $6\times10^{-10}$ m$^2$/s changes
-exit moisture from 17.319 to 17.615\% wet basis and residual hexane from
-145.48 to 130.27 ppm wet basis. The moisture span is 0.296 percentage
-points and the hexane reduction is 10.45\%. This interval is a prescribed
-sensitivity range; it does not measure uncertainty in the material
-coefficient (Sec.~\ref*{S-sup:temperatureproperties}).
-With the nominal laws, factor 100 and unchanged $K_\ell=0.32$ mol/(m$^2$ s),
-halving the regime-C maximum timestep from 5 to 2.5 s changes moisture by
-$+0.012$ percentage points, hexane by $-0.29$\%, temperature by
-$-0.00063$ K and first recorded water-film depletion by $-1.08$ s.
-Both continuations start from the same accepted regime-B checkpoint and
-pass the independent component and energy audit. The prescribed
-diffusivity-range effect is larger than this regime-C timestep change;
-full-history mesh and time-step convergence is not yet established
-(Section~\ref{sec:discussion:limits}).
+The reference pore diffusivity $D_{b,\mathrm{ref}}$ of
+Eq.~\eqref{eq:porediffusivitytemperature} is an assumed value, so its
+effect on the outlet was computed with the same code at 16 radial cells
+and the middle time level. Varying it from $2$ through the nominal $4$ to
+$6\times10^{-10}$ m$^2$/s gives exit moisture of 18.58, 18.82 and 18.99\%
+wet basis, residual hexane of 128.3, 125.4 and 122.8 ppm wet basis and
+temperatures of 104.85, 104.80 and \SI{104.78}{\celsius}; all three
+histories pass the independent whole-history audit. The moisture span,
+0.41 percentage points, is larger than the estimated 64-cell numerical
+error of outlet moisture, 0.19 points, and about half the effect of
+$W_{\mathrm{sat}}$; the hexane changes by $+2.3$\% and $-2.1$\% of the
+nominal value, far less than under $W_{\mathrm{sat}}$. This interval is a
+prescribed sensitivity range; it does not measure uncertainty in the
+material coefficient (Sec.~\ref*{S-sup:temperatureproperties}).
 
-An independent reconstruction of every accepted advance from dry-shell
-formation to exit gives maximum normalized water, hexane and energy
-defects of $8.31\times10^{-12}$, $2.37\times10^{-12}$ and
-$2.34\times10^{-12}$, respectively.
-An independent exterior-rate reconstruction of the new feed history
-up to dry-shell activation stays below $3.76\times10^{-13}$.
+Section~\ref{sec:verification:convergence} shows the 64-cell outlet values
+of Table~\ref{tab:dtmarch} converged in time, and in the mesh for hexane and
+temperature. The outlet
+moisture still changes by 0.066 percentage points between 32 and 64 cells,
+at an observed order of about one half, under a thin diffusion layer at the
+film-free surface. That residual is far smaller than the 1.0-point shift
+produced by the retained-water continuation of Eq.~\eqref{eq:waterbridge}
+itself: at 32 cells the outlet moisture is 18.9\% with the continuation and
+17.9\% with retained water capped at $\Wcap$.
+
+In the independent whole-history audit of Section~\ref{sec:numerics},
+whose DT defects are at most $\DTAuditWater$ against $10^{-10}$, the feed
+history up to dry-shell activation stays below $1.6\times10^{-12}$.
 History-specific numerical controls and recoveries are collected in
-Sec.~\ref*{S-sup:numericalcontrols}. Conservation of this discrete result
-does not identify the material transport rates.
+Sec.~\ref*{S-sup:numericalcontrols}.

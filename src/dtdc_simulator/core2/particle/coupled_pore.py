@@ -44,7 +44,6 @@ from dtdc_simulator.core2.props import hexane as hx
 from dtdc_simulator.core2.props import sorption as sp
 from dtdc_simulator.core2.props import water as wa
 
-
 WATER_DIRECT_T_MIN_K = 323.15
 WATER_DIRECT_T_MAX_K = 343.15
 WATER_DIRECT_ACTIVITY_MIN = 0.109
@@ -223,6 +222,7 @@ class CoupledPoreParams:
     rho_dm_p: float = 1159.65
     cp_dry_meal: float = sp.CP_NATIVE_DRY_MEAL
     cp_oil: float = sp.CP_OIL
+    oil_heat_capacity_law: sp.OilHeatCapacityLaw = sp.OilHeatCapacityLaw.CONSTANT
     T_ref_solid: float = 298.15
     w_o: float = sp.W_O_REF
     gab: sp.GabParams = sp.GabParams()
@@ -1007,6 +1007,7 @@ def _evaluate_equilibrium_cached(
         params.w_o,
         params.cp_dry_meal,
         params.cp_oil,
+        oil_law=params.oil_heat_capacity_law,
     )
     retained_water_zero_volume = retained_water_concentration * liquid_water.h_mass
     retained_water_pv = retained_water_concentration * pressure_pa / liquid_water.rho_mass

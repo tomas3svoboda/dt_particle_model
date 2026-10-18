@@ -103,7 +103,20 @@ def primitive_row(current, config, carry, surface, kind):
     }
 
 
-def advance_partial(current, carry, surface, bath, dt, target=None):
+def advance_partial(
+    current,
+    carry,
+    surface,
+    bath,
+    dt,
+    target=None,
+    *,
+    search_tolerance=None,
+    initial_front_z=None,
+    boundary_factory=None,
+    gas_only_surface=False,
+    experimental_interface_area_chart_audit=None,
+):
     config = current.transport.config
     radius = current.transport.geometry.master_grid.R
     candidate = core.cut.candidate_from_state(
@@ -111,11 +124,14 @@ def advance_partial(current, carry, surface, bath, dt, target=None):
         dry_total_stefan_fluxes_mol_m2_s=current.last_total_stefan_fluxes_mol_m2_s,
         interface_temperature_k=current.last_interface_temperature_k,
     )
-    candidate = replace(candidate, front_z=target or candidate.front_z * 0.999)
+    candidate = replace(candidate, front_z=target or initial_front_z or candidate.front_z * 0.999)
     seed = core.backend._seed(candidate, "finite liquid contact; native moving-front candidate")
 
     def factory(duration):
-        return face.bath_boundary(bath, radius, current.transport.time_s + duration)
+        clock = current.transport.time_s + duration
+        return (
+            boundary_factory(clock) if boundary_factory else face.bath_boundary(bath, radius, clock)
+        )
 
     boundary = factory(dt)
 
@@ -129,7 +145,23 @@ def advance_partial(current, carry, surface, bath, dt, target=None):
         )
 
     def decode(ts, beta, actual=None):
+        if gas_only_surface:
+            # The node supplies the actual gas-only surface composition in
+            # this argument; target-time boundary replacement is separate.
+            return driver.film_at_beta(boundary, config, radius, ts, beta, surface_y_hexane=actual)[
+                0
+            ]
         return driver.film_at_beta(actual or boundary, config, radius, ts, beta)[0]
+
+    surface_third = surface.liquid_water_kg_m2
+    if gas_only_surface:
+        if carry["external_water_loading_kg_m2"] != 0.0:
+            raise ValueError("gas-only advance requires exactly absent incoming liquid")
+        pore = replace(config.dry.pore, w_o=current.transport.oil_fraction_labels[-1])
+        lo, hi = core.cp.gas_only_composition_interval(
+            surface.temperature_k, config.dry.pressure_pa, pore
+        ).y_hexane_bounds
+        surface_third = (surface.surface_y_hexane - lo) / (hi - lo)
 
     return driver.node.advance_water_node(
         current,
@@ -138,13 +170,16 @@ def advance_partial(current, carry, surface, bath, dt, target=None):
         seed,
         old_loading=carry["external_water_loading_kg_m2"],
         old_temperature=carry["external_water_temperature_k"],
-        surface_seed=[surface.temperature_k, surface.beta, surface.liquid_water_kg_m2],
+        surface_seed=[surface.temperature_k, surface.beta, surface_third],
         physical_solver=True,
         residual_budget=2400,
         beta_decoder=decode,
         energy_context=energy,
         target_z=target,
         boundary_factory=factory if target else None,
+        search_tolerance=search_tolerance,
+        gas_only_surface=gas_only_surface,
+        experimental_interface_area_chart_audit=experimental_interface_area_chart_audit,
     )
 
 

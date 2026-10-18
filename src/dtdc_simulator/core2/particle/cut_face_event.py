@@ -26,6 +26,7 @@ import math
 from dataclasses import dataclass, field
 from typing import Sequence
 
+from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 from dtdc_simulator.core2.particle import coupled_pore as cp
 from dtdc_simulator.core2.particle import coupled_transport as ct
 from dtdc_simulator.core2.particle import cut_geometry as cg
@@ -408,6 +409,8 @@ def assemble_face_arrival(
             surface_boundary,
             enforce_reduced_film_thresholds,
         )
+    except StepBudgetExceeded:
+        raise
     except FaceArrivalStepError:
         raise
     except Exception as exc:

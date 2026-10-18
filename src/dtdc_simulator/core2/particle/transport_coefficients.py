@@ -40,6 +40,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -47,6 +48,11 @@ if TYPE_CHECKING:
 
 
 _COMPOSITION_SUM_ABS_TOL = 1.0e-12
+
+
+class BinaryDiffusivityLaw(str, Enum):
+    CONSTANT = "constant"
+    FULLER_EFFECTIVE_REFERENCE = "fuller_T1p75_over_P_effective_reference"
 
 
 class PureComponentMobilityLimitError(ValueError):
@@ -87,9 +93,21 @@ class EffectiveBinaryDiffusivitySelection:
 
     interval: EffectiveBinaryDiffusivityInterval
     fraction: float
+    temperature_law: BinaryDiffusivityLaw = BinaryDiffusivityLaw.CONSTANT
+    reference_temperature_k: float = 378.15
+    reference_pressure_pa: float = 101325.0
     physically_qualifying: bool = field(default=False, init=False)
 
     def __post_init__(self) -> None:
+        if not isinstance(self.temperature_law, BinaryDiffusivityLaw):
+            raise TypeError("unsupported effective binary diffusivity law")
+        if not all(
+            math.isfinite(v) and v > 0
+            for v in (self.reference_temperature_k, self.reference_pressure_pa)
+        ):
+            raise ValueError(
+                "diffusivity reference T and P must be positive and finite"
+            )
         if not math.isfinite(self.fraction) or not 0.0 <= self.fraction <= 1.0:
             raise ValueError("effective binary diffusivity fraction must lie in [0, 1]")
 
@@ -99,6 +117,31 @@ class EffectiveBinaryDiffusivitySelection:
 
         return self.interval.lower_m2_s + self.fraction * (
             self.interval.upper_m2_s - self.interval.lower_m2_s
+        )
+
+    def interval_at(
+        self, temperature_k: float, pressure_pa: float
+    ) -> EffectiveBinaryDiffusivityInterval:
+        """Use one reference law in both finite faces and their tangent limit.
+
+        Fuller et al. (1966), Eq. 4, DOI 10.1021/ie50677a007 supplies
+        the T^1.75/P shape. Effective hindrance remains an explicit assumption;
+        the interval magnitude is not a measured binary pore diffusivity.
+        """
+        if not all(math.isfinite(v) and v > 0 for v in (temperature_k, pressure_pa)):
+            raise ValueError("diffusivity face T and P must be positive and finite")
+        if self.temperature_law is BinaryDiffusivityLaw.CONSTANT:
+            return self.interval
+        scale = (
+            (temperature_k / self.reference_temperature_k) ** 1.75
+            * self.reference_pressure_pa
+            / pressure_pa
+        )
+        return EffectiveBinaryDiffusivityInterval(
+            self.interval.lower_m2_s * scale,
+            self.interval.upper_m2_s * scale,
+            self.interval.provenance
+            + "; Fuller T^1.75/P shape; fixed effective hindrance; no extra porosity",
         )
 
 

@@ -49,6 +49,7 @@ class WetCoreParams:
     conductivity: float = 0.24
     cp_dry_meal: float = sp.CP_NATIVE_DRY_MEAL
     cp_oil: float = sp.CP_OIL
+    oil_heat_capacity_law: sp.OilHeatCapacityLaw = sp.OilHeatCapacityLaw.CONSTANT
     T_ref_solid: float = 298.15
     X_water: float = 0.10
     w_o: float = sp.W_O_REF
@@ -328,7 +329,14 @@ def specific_energy(T: float, X_h_a: float, p: WetCoreParams) -> float:
     u_h, _ = _hexane_liquid_u_du(T, p.pressure_pa)
     h_w_retained, _ = _water_retained_h_dh(T, p.pressure_pa)
     return (
-        sp.composite_dry_meal_sensible_energy(T, p.T_ref_solid, p.w_o, p.cp_dry_meal, p.cp_oil)
+        sp.composite_dry_meal_sensible_energy(
+            T,
+            p.T_ref_solid,
+            p.w_o,
+            p.cp_dry_meal,
+            p.cp_oil,
+            oil_law=p.oil_heat_capacity_law,
+        )
         + p.X_water * h_w_retained
         + X_h_a * u_h
         - saturated_binding_deficit(T, p)
@@ -341,7 +349,13 @@ def specific_heat_capacity(T: float, X_h_a: float, p: WetCoreParams) -> float:
     _, du_h = _hexane_liquid_u_du(T, p.pressure_pa)
     _, dh_w_retained = _water_retained_h_dh(T, p.pressure_pa)
     capacity = (
-        sp.composite_dry_meal_heat_capacity(p.w_o, p.cp_dry_meal, p.cp_oil)
+        sp.composite_dry_meal_heat_capacity(
+            p.w_o,
+            p.cp_dry_meal,
+            p.cp_oil,
+            temperature_k=T,
+            oil_law=p.oil_heat_capacity_law,
+        )
         + p.X_water * dh_w_retained
         + X_h_a * du_h
         - saturated_binding_deficit_dT(T, p)

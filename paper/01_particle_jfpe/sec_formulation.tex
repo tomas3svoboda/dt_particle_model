@@ -3,16 +3,17 @@
 \label{sec:model}
 \label{sec:thermo}
 
-This section states the particle model that the rest of the paper
-exercises: the phase regimes of one particle, the balances in each region,
-the conditions that close the moving front and the properties that enter
-them. Readers mainly interested in the process results can read
-Section~\ref{sec:physical:regimes} and then continue with
-Section~\ref{sec:validation}. Table~\ref{tab:model:equations} gives a compact
-map of the governing balances and closures. The supporting equation tables
-in Sec.~\ref*{S-sup:equations} distinguish literature correlations,
-relations derived here and diagnostic comparisons; numerical inputs remain
-in Table~\ref{tab:parameters}.
+% 2026-09-27, owner's strategic clarity pass (rule 13): an opening sentence
+% per section; the rows-above-373-K detail and the threshold-width numbers
+% moved to Secs. S6 and S18 with pointers.
+% 2026-09-27, condensation (CONDENSATION_PLAN_2026-09-27.md): every equation
+% kept; connecting prose tightened; the property-closure detail of Sec. 2.6
+% moved verbatim to Sec. S12.4.
+Table~\ref{tab:model:equations} maps the particle balances and closures;
+Table~\ref{tab:parameters} gives their inputs. Supporting equations and
+their literature or derivation sources are collected in
+Sec.~\ref*{S-sup:equations}. Readers seeking the process results can proceed
+from the phase-regime description to Section~\ref{sec:validation}.
 
 \input{table_governing_equations.tex}
 
@@ -38,10 +39,9 @@ We approximate the particle by a porous sphere of fixed radius $\Rp$.
 The liquid-hexane core has radius $\front(t)$, with $0\le\front\le\Rp$;
 the dry shell occupies $\front<r<\Rp$.
 This geometry resolves radial heat and mass transport with one length
-scale, as in the particle descriptions of \citet{faner2019kinetics} and
-\citet{cardarelli2002modeling}. Actual meal particles are irregular;
-the radius selected for each experiment is therefore stated with its
-source and interpretation. Fixed radius and porosity separate transport
+scale, as in \citet{faner2019kinetics} and \citet{cardarelli2002modeling}.
+Actual meal particles are irregular; each experiment's radius is stated
+with its source and interpretation. Fixed radius and porosity separate transport
 from swelling and shrinkage, for which no constitutive laws are supplied here.
 The particle's total n-hexane loading $\Xh$ (every loading here in
 \si{\kilogram} per \si{\kilogram} of dry, water- and solvent-free meal)
@@ -53,19 +53,12 @@ anchored to the transition measured by \citet{faner2019kinetics}
 (Table~\ref{tab:parameters}), not an equilibrium isotherm.
 The equilibrium hexane reference $\Xe^{*}(T,P)$ is the retained loading
 evaluated at the pressure-feasible saturated activity $a^{*}$ of
-Eq.~\eqref{eq:aceiling}. It does not prescribe the loading at core extinction.
-In regime~A, external free hexane wets the outer surface at unit hexane
-activity and evaporation is supplied through the external heat-transfer
-boundary. In regime~B ($0<\front<\Rp$), liquid remains behind a receding
-interface. The chosen total-vapour closure makes its recession heat-limited;
-binary molecular diffusion in the shell remains active, as explained below.
-This is a model assumption about the connected vapour path, not a general
-claim that molecular diffusion cannot limit industrial desolventization. In
-regime~C, no liquid-hexane core remains: $\front=0$. Retained material and
-pore gas continue to obey the same local component and energy balances.
-Core extinction is a geometric conservation event; a particle-mean loading
-is not used to prescribe it. The saturated equilibrium loading is a
-thermodynamic reference rather than a uniform-particle transition rule
+Eq.~\eqref{eq:aceiling}.
+The connected-vapour closure makes regime-B recession heat-limited while
+binary shell diffusion remains active. This assumption does not exclude
+diffusion-limited industrial desolventization. Core extinction is a
+geometric conservation event, not a threshold in particle-mean loading;
+the saturated equilibrium loading remains a thermodynamic reference
 (Figure~\ref{fig:schematic}).
 
 \begin{figure}[htbp]
@@ -91,22 +84,12 @@ The local balances below instead use molar $j_k$.
 All fluxes are outward-positive; subscripts p and g identify the particle
 and gas sides of the surface.
 
-The particle model is written so that it can later be coupled to a tray
-model. For prescribed gas and heat-transfer conditions, the particle balances return
-outward-positive surface fluxes $j_{\mathrm{w}}(\Rp)$,
-$j_{\mathrm{h}}(\Rp)$ and $\JE(\Rp)$ on one caloric datum. These are
-responses to the evolving interior, rather than imposed drying rates. For
-particle classes $c$ with total exposed areas $A_{\mathrm{ex},c}$, the rates
-delivered to a future tray gas balance would be
-$\sum_c A_{\mathrm{ex},c}j_{k,c}(R_{p,c})$ for component $k$ and
-$\sum_c A_{\mathrm{ex},c}J_{E,c}(R_{p,c})$ for total energy. Condensation has a
-negative water rate; each gas source has an equal and opposite entry in
-the particle balance. The tray would return its updated gas state to the particles.
-In this paper, the gas and bed conditions along the equipment trays are
-prescribed instead. This separates the particle response from countercurrent
-gas mixing and tray residence, which is useful for testing the particle equations before
-coupling them to DT design calculations; steam consumption itself requires
-those equipment balances \citep{kemper2013solvent}.
+The particle returns outward-positive component and energy fluxes on one
+caloric datum. For particle classes $c$ with exposed areas $A_{\mathrm{ex},c}$,
+a future tray balance would receive $\sum_c A_{\mathrm{ex},c}j_{k,c}(R_{p,c})$
+and $\sum_c A_{\mathrm{ex},c}J_{E,c}(R_{p,c})$, with equal and opposite
+particle entries; condensation gives a negative water rate. Here the gas
+and bed histories are prescribed.
 
 The equilibrium boundary is evaluated at the \emph{pressure-feasible} hexane
 activity
@@ -118,63 +101,39 @@ with $P$ the total pressure and $P_{\mathrm{sat}}^{\mathrm{h}}$ the n-hexane
 vapour pressure, both in pascals. Equation~\eqref{eq:aceiling} is an
 ideal-mixture diagnostic. The pore and interface equilibrium used in the
 calculations uses binary-virial gas fugacities and the pure-liquid equation-of-state
-fugacities on the same pressure and caloric datum. It does not omit those
-corrections when locating phase boundaries. Above the solvent's
+fugacities on the same pressure and caloric datum. Above the solvent's
 boiling point at the bed pressure, an equilibrium loading taken at unit
 activity is overstated. Evaluated with
 \eqref{eq:aceiling}, the two boundaries stay one to two orders of magnitude
 apart and separate further as the temperature rises; the paper uses only that
 \emph{ordering} (Sec.~\ref*{S-sup:regime}).
 
-The external free-hexane loading is $\Xf=m_{\mathrm{h,ext}}/m_{\mathrm{dm}}$:
-a finite mass of external free liquid hexane assigned to the particle,
-per unit dry meal mass. It is neither a liquid composition nor a gas
-concentration. It can decrease continuously while the remaining pure
-liquid still has unit hexane activity. Its mass and energy enter the
-regime-A balances, although its spatial thickness and liquid flow are not
-resolved. The partition between external and intraparticle hexane follows
-the critical-volume capacity at the current liquid density; their sum
-changes through the surface hexane flux.
-The A--B transition occurs when this inventory is exhausted.
-While $\Xf>0$, the front stays at $\front=\Rp$; once $\Xf=0$, it may recede
-and leave a dry shell. Hexane vapour can still be present around the
-particle when $\Xf=0$. This
-sequential-drainage condition is stated in Eq.~\eqref{eq:complementarity}.
+The external loading $\Xf=m_{\mathrm{h,ext}}/m_{\mathrm{dm}}$ is liquid mass
+per dry meal mass, not composition or gas concentration. Its mass and
+energy enter regime A without resolved film thickness or liquid flow.
+It can decrease at unit liquid activity; its partition from internal
+hexane follows the critical-volume capacity at the current liquid density.
+Its exhaustion permits front recession even with hexane vapour present
+(Eq.~\eqref{eq:complementarity}).
 The reference critical loading of
 \SI{0.20}{\kilogram\per\kilogram} measured by
 \citet{faner2019kinetics} sets the effective critical-volume capacity
 at the reference liquid density, 615 kg/m$^3$. At the particle's actual
 temperature, $\Xc(T)=\kappa_v\varepsilon_{\mathrm g}
 \rho_{\mathrm{h,l}}(T,P)/\Cdm$, with $\kappa_v=2.675$ fixed by that
-reference capacity. Here $\rho_{\mathrm{h,l}}(T,P)$ is the liquid n-hexane density from the
-technical Helmholtz equation of state of \citet{span2003eos1,span2003eos2},
-also used for its liquid energy and fugacity. Water uses IAPWS-95
-\citep{wagner2002iapws,iapws2018r695}; the binary pore gas uses a
-second-virial mixture with a water--hexane cross term
-\citep{plyasunov2003crossvirial} (Section~\ref{sec:thermo:properties}).
-The critical hexane loading therefore varies with liquid density, while the time at which
-it is reached follows from the regime-A inventory balance under the
-prescribed gas and heat history. The component and energy jumps then determine the recession speed
-and the dry-side hexane flux at the front. The shell balances and surface
-conditions determine the corresponding particle-surface exchanges. In the
-discrete model the front first departs over
-an accepted time step, giving a finite shell thickness without assigning the
-shell the width of one radial cell (Sec.~\ref*{S-sup:item27}). The A--B
-boundary is thus a surface-state constraint, with no fitted time or drying-rate
-selector. The stationary binary regime-C closure starts after the liquid-hexane core
-has vanished. In a calculation, the crossing \emph{loading} therefore
-reproduces a supplied value; the crossing \emph{time} is the tested
-prediction, conditional on the external history
-(Section~\ref{sec:validation:faner}).
+reference capacity. Here $\rho_{\mathrm{h,l}}(T,P)$ is the liquid n-hexane
+density from the equation of state of Section~\ref{sec:thermo:properties}.
+The A--B crossing loading thus follows a supplied capacity; its crossing
+time is predicted from the regime-A balance and prescribed boundary
+(Section~\ref{sec:validation:faner}). Component and energy jumps determine subsequent
+recession and front fluxes; shell and surface balances determine exterior
+exchange. No empirical drying-rate selector is applied.
 
 Heat crosses the gas film and dry shell in series. The external thermal
 resistance dominates until the core radius falls to about $0.28\Rp$;
 the shell dominates later (Sec.~\ref*{S-sup:closures}). The heat-fed front
 closure and its omitted total-vapour resistance are explained in
-Section~\ref{sec:model:front}. The 2019 and older Faner records motivate
-different transport descriptions; the older records use the separate
-Fickian comparison of Eq.~(\ref*{S-eq:ficklimit}), as discussed in
-Sec.~\ref*{S-sup:tworegimes}.
+Section~\ref{sec:model:front}.
 
 Temperature and composition also vary over different radial scales. The
 earlier constant-property dry-shell Lewis number of $223.25$ illustrates why their profiles must be
@@ -200,14 +159,9 @@ Radial fluxes are positive outward, and recession means $\dot{\front}<0$.
 The total radial energy flux is
 $\JE^{\alpha}=q^{\alpha}+\sum_k\bar h_k^{\alpha}j_k^{\alpha}$,
 with $q$ in W/m$^2$, component molar flux $j_k$ in mol/(m$^2$ s) and
-partial molar enthalpy $\bar h_k$ in J/mol. A partial molar enthalpy is the
-change in total enthalpy when a mole of that component is added at fixed
-temperature, pressure and amounts of the other components.
-For each transported stream it is evaluated at the local state, on the
-common datum of Section~\ref{sec:thermo:datum}. The balances below hold
-inside either region, away from the sharp front, where the fields are
-differentiable. The front itself requires the jump conditions of
-Section~\ref{sec:model:front}.
+partial molar enthalpy $\bar h_k$ in J/mol. Each stream uses its local partial molar enthalpy on the common datum
+of Section~\ref{sec:thermo:datum}. These smooth-region balances are joined
+by the front conditions of Section~\ref{sec:model:front}.
 \begin{align}
 \frac{\partial C_{k}^{\alpha}}{\partial t}
  + \frac{1}{r^{2}}\frac{\partial}{\partial r}\!\left(r^{2} j_{k}^{\alpha}\right)
@@ -235,8 +189,8 @@ including the dry meal. The immobile dry meal and residual oil have zero
 fluxes $j_{\mathrm{dm}}$ and $j_{L_{\mathrm{o}}}$.
 Retention,
 evaporation and condensation redistribute a component between local phases and
-are therefore \emph{not} sources in \eqref{eq:localcomp}: no phase-change term
-appears in the smooth-region equations (Sec.~\ref*{S-sup:ale}).
+are therefore \emph{not} sources in \eqref{eq:localcomp}
+(Sec.~\ref*{S-sup:ale}).
 
 Two statements close the liquid-hexane core. First, no relative n-hexane flux is carried inside
 the mobile-liquid region: at activation, every material shell stores the
@@ -312,7 +266,6 @@ G_{\mathrm{comp}}(\Xi)=\frac{1}{d}\int_0^1
 \end{equation}
 Here $d$ is the face separation and $f_i$ is the equation-of-state fugacity.
 Energy transport remains non-isothermal and includes component enthalpies.
-This is the declared nominal transport approximation in both prescribed-bath experiments.
 The pressure variation omitted by
 taking $\Nt$ from continuity is estimated from Darcy's law across the dry
 shell,
@@ -322,9 +275,8 @@ shell,
 \end{equation}
 with $\mu_{g}$ the pore-gas viscosity and $B$ the Darcy permeability.
 For an illustrative vapour-flux bound, take
-$|\Nt|=\SI{0.5}{\mole\per\square\metre\per\second}$; this is a supplied
-sensitivity scale, not the measured or calculated mean flux of the new DT
-history. With this flux bound,
+$|\Nt|=\SI{0.5}{\mole\per\square\metre\per\second}$, a supplied
+sensitivity scale, not a measured or calculated mean flux. With this bound,
 $\mu_{g}=10^{-5}\,\si{\pascal\second}$, $T$ at the heteroazeotrope and a
 shell \SI{1}{\milli\metre} thick, the estimate gives $\Delta P$ of about
 \SI{0.15}{\kilo\pascal}, \SI{1.5}{\kilo\pascal} and \SI{15}{\kilo\pascal}
@@ -382,21 +334,14 @@ continuity. Only when $\Nt=0$ does the total hexane flux equal the
 diffusive exchange flux; writing it as a gradient of hexane concentration
 also requires constant total gas concentration. At pure n-hexane,
 binary exchange vanishes but the outward flux can remain $\Nt$
-(Secs.~\ref*{S-sup:stefanrecovery} and~\ref*{S-sup:singlecomponent}).
-The scalar Fick description used for the older drying records is a
+(Sec.~\ref*{S-sup:stefanrecovery}).
+The scalar Fick description used for the older Faner drying records is a
 separate comparison with an effective transport coefficient, given in
-Eq.~(\ref*{S-eq:ficklimit}). In both prescribed baths, regime~C instead
+Eq.~(\ref*{S-eq:ficklimit}) and discussed in Sec.~\ref*{S-sup:tworegimes}. In both prescribed baths, regime~C instead
 integrates the stationary radial binary component and total-energy balances.
 Its initial inventories and temperatures come from the conservative
 core-extinction projection. The same particle equations therefore carry
 solvent removal through core disappearance and the remaining drying tail.
-
-Sharing the component and energy balances couples solvent removal to the
-heat carried out, particle temperature and water condensation or desorption.
-Retained water has its own transport path, and retained hexane contributes
-storage and binding energy. These effects are solved together rather than
-added to a hexane-only result. The separate historical Fickian comparison
-does not establish an additional branch of this binary particle law.
 
 \begin{samepage}
 \subsection{Front conditions}
@@ -472,10 +417,9 @@ total flux. Recession is therefore heat-fed, with no Darcy or Knudsen
 resistance on total vapour motion; shell P\'eclet numbers inside the
 reported band are of order $10^3$ (Sec.~\ref*{S-sup:regimegrid}).
 A transport-controlled front would require an additional total-flux law.
-The separate Fickian comparator is not applied here, and no empirical rate
-selector is used. After core extinction, regime C retains the same binary
-radial closure.
 
+% 2026-09-27, final polish (READER_CHECK headings, S1): descriptive heading
+% and a plain opening sentence; labels unchanged.
 \subsection{Admissible states and the removal of swept material}
 \label{sec:model:interface}
 \label{sec:model:regimeA}
@@ -518,19 +462,14 @@ times their discrete water residual,
 \label{eq:gauge}
 \end{equation}
 identically in the discrete state. Section~\ref{sec:verification} uses
-this identity as the acceptance test for the interface treatment. The same
-test is available to any moving-boundary phase-change discretization: if
-the energy residual does not move exactly with the component residual when
-that component's caloric zero is shifted, latent or binding heat is being
-counted twice, or the swept material is being debited from the wrong state.
+this identity as the acceptance test for the interface treatment. Failure of this identity exposes inconsistent component/energy bookkeeping,
+including double-counted latent or binding heat or an inconsistent donor.
 
 \subsection{The conserved external water film}
 \label{sec:model:waterfilm}
 
 When the bath supplies condensing water, the model stores it in an
-external water film, an inventory separate from retained water. Steam condensation supplies heat
-for desolventization while increasing the water that may require removal
-in the downstream dryer \citep{kemper2013solvent,witte_nd_soybeanmeal}.
+external water film, an inventory separate from retained water.
 Keeping the film separate lets the balances determine how much water enters
 the particle and how much evaporates back to the bath. We use one film
 temperature and inventory at the surface, rather than resolving its liquid
@@ -573,17 +512,25 @@ The component heat capacities are component partial-enthalpy secants between
 surface and bulk temperatures. Both component capacity fluxes enter
 $\beta$, including counter-diffusion. The same analytic Ackermann
 expression is used within a declared band $|\beta|\le3$. Its largest
-accepted value in the recorded calculations is 1.2063, above the previously
-assessed film band $|\beta|\le1$. This wider band is a declared assumption
+accepted value in the 64-cell calculations is \FanerMaxBeta, in the Faner
+shell-birth state, inside the declared band but above the previously
+assessed film band $|\beta|\le1$; after birth the Faner value stays at or
+below \FanerMaxBetaAfterBirth, and the DT feed stage reaches 1.21. The
+birth value rises with mesh refinement, which is why the finest Faner time
+level at 64 cells reaches the band edge
+(Section~\ref{sec:verification:convergence}). This wider band is a declared assumption
 about the film law, separate from the numerical root tolerances; it has not
 been demonstrated for this gas film.
 All advected partial enthalpies enter the two total-energy fluxes once.
 Positive external liquid selects unit surface water activity; with zero
 liquid, gas-side composition is solved from the same three balances and
-may remain undersaturated. Appearance and depletion are conservative
-events, not resets of the film mass or temperature. The interior retention
-capacity is a separate active set. The numerical unit-activity trace of the
-hexane-transparent film and its sensitivity are stated with the experiments.
+may remain undersaturated, and the retained water at the surface follows
+that gas through Eq.~\eqref{eq:filmfreesurface}. Appearance and depletion
+are conservative events, not resets of the film mass or temperature. The
+retained-water law that holds at the surface and in the cells, including its
+continuation above the measured isotherm, is given in
+Section~\ref{sec:thermo:properties}. While the film is present, the surface
+water activity is unity and the film is transparent to hexane.
 For the regime-A surface in the pure-hexane bath, the hexane-only surface
 active set sets the outward water flux to zero while external free hexane
 remains. The water in the particle stays stored and becomes exposed through
@@ -602,7 +549,8 @@ capacity of soy protein isolates exceeds their vapour-sorption capacity
 several-fold \citep{jovanovich2003wateruptake}. Those measurements concern
 isolates at \SI{20}{\celsius}, rather than hot extracted meal. We represent this path
 as an effective finite-conductance pathway into the existing
-capacity-bounded retained-water inventory. The closure does not identify
+retained-water inventory, whose law continues above the measured isotherm
+through Eq.~\eqref{eq:waterbridge}. The closure does not identify
 every absorbed molecule as strongly bound and adds no independently
 resolved pore-liquid domain. Vapour transport and retention remain active
 through the original component equations.
@@ -622,7 +570,7 @@ when the dry shell first forms, the surface conductance stays finite.
 Interior faces in the dry shell use $G_\ell=\mathcal L_\ell/d$.
 This added path is absent at the remaining wet-core interface and when
 external liquid is absent. Surface and cell activities follow their
-capacity-bounded retained states; the added force is not obtained by
+retained states through Eqs.~\eqref{eq:luikov} and~\eqref{eq:waterbridge}; the added force is not obtained by
 substituting unit pure-liquid activity for the retained surface trace.
 
 For available film stock $L_{\mathrm w,old}$, inward addition is limited by
@@ -640,8 +588,7 @@ its composition-force dissipation is proportional to
 $R G_\ell(\psi_{\mathrm s}-\psi_{\mathrm p})^2\ge0$.
 Liquid-water imbibition is an effective transport hypothesis, not a
 resolved capillary-pressure, hydraulic saturation or swelling model.
-Water displacement of pore hexane is neglected, and the film adds no
-resistance to hexane escape (Section~\ref{sec:model:waterfilm}).
+Water displacement of pore hexane is neglected.
 
 We estimate the total liquid-connected mobility as $100\Lwr$, so the
 added mobility is $\mathcal L_\ell=99\Lwr$. The anchor is the mean
@@ -676,9 +623,12 @@ residual partial molar terms follow the binary virial mixture.
 Pure-fluid property sources are given in Section~\ref{sec:thermo:properties}.
 The nominal retained-water energy uses liquid-water enthalpy on the same
 datum. Its temperature-independent Luikov activity law contributes no
-separate excess water-binding heat. Condensation and evaporation energy
-are already present through phase-state differences and component fluxes.
+separate excess water-binding heat.
 
+% 2026-09-27, final polish (READER_CHECK headings, S2, source item 8).
+% 2026-09-27, condensation: the closure detail (the clamp reasoning, the
+% omitted temperature dependence, the uncoupled evaluation, the capacity as
+% an active set, the equation-of-state detail) moved verbatim to Sec. S12.4.
 \subsection{Sorption isotherms, property equations and parameters}
 \label{sec:thermo:properties}
 \label{sec:thermo:gab}
@@ -707,8 +657,6 @@ W_{\mathrm{h}}=\alpha_o W_{\mathrm{h,native}}+\beta_o q_o(a_{\mathrm h}),
 q_o=0.9635a_{\mathrm h}^{2.7036}.
 \label{eq:oilanchorcorrection}
 \end{equation}
-The same weights give dry-composite heat capacity
-$\alpha_o c_{p,\mathrm{native}}+\beta_o c_{p,\mathrm{oil}}$.
 Thus $\beta_o$ vanishes at the reference anchor and is a signed correction
 below it, as in the declared DT oil fraction. It is not an extra oil arm
 added to the reference total-meal isotherm (Sec.~\ref*{S-sup:oilmap}). Retained
@@ -728,16 +676,81 @@ form is carried as a mandatory replacement-only caloric sensitivity case
 (Sec.~\ref*{S-sup:luikov}). The shared prescribed-bath case
 continues this same analytic expression below the evidence anchor
 $\Wret_{\mathrm w}=0.023$, for strictly positive water, retaining
-$A_1=0.88$, $A_2=12.184$ and the original upper capacity
-$0.236$~\si{\kilogram\per\kilogram}. This is a declared constitutive
+$A_1=0.88$, $A_2=12.184$ and the original upper anchor
+$\Wcap=0.236$~\si{\kilogram\per\kilogram}. This is a declared constitutive
 extrapolation, not new retention data. The analytic log activity is used
 directly when exponentiating it would underflow; water is neither floored
 nor held constant. Exactly absent water requires a separate component limit.
+
+Above the upper end of the measured isotherm, $\Wcap$, where
+Eq.~\eqref{eq:luikov} gives $a_{\mathrm{w,cap}}=0.799$, retained water is
+not bounded by a capacity. In a capillary-porous body, water held beyond
+the maximum hygroscopic loading is in equilibrium with nearly saturated
+vapour \citep{luikov1975systems,chen1989mathematical,schlunder2004drying,perre2023stateoftheart},
+and soybean materials wetted with liquid water hold more water than the
+vapour-sorption isotherm reaches
+\citep{pixton1975moisture,urbanski1983flow,mukherjee2019soaking}. We
+continue the retained-water law above $\Wcap$ with the finite-intercept
+form that \citet{horrobin2003understanding} (their Eq.~5) use near
+saturation,
+\begin{equation}
+W_{\mathrm{sat}}-\Wret_{\mathrm{w}}=c_{1}\,(1-\aw),
+\qquad
+c_{1}=\frac{W_{\mathrm{sat}}-\Wcap}{1-a_{\mathrm{w,cap}}},
+\qquad \Wcap<\Wret_{\mathrm{w}}<W_{\mathrm{sat}},
+\label{eq:waterbridge}
+\end{equation}
+with $\aw=1$ for $\Wret_{\mathrm{w}}\ge W_{\mathrm{sat}}$. The
+continuation joins Eq.~\eqref{eq:luikov} continuously at $\Wcap$; its slope
+changes there. Its one parameter, the saturated retained loading
+$W_{\mathrm{sat}}$ at unit water activity, is declared at
+\SI{0.55}{\kilogram\per\kilogram} dry: soya meal wetted with liquid water
+to 35.3\% wet basis, about 0.55 kg/kg dry, still showed an equilibrium
+relative humidity of 96\% at \SI{25}{\celsius}
+\citep[pp.~249 and~251]{pixton1975moisture}. Published high-activity
+sorption, liquid-wetting and soaking loadings of soybean materials place
+$W_{\mathrm{sat}}$ between about 0.25 and 0.97 kg/kg dry
+\citep{aviara2004sorption,pixton1975moisture,mukherjee2019soaking};
+this range is swept below. Isolated soybean constituents in excess liquid
+imbibe several kilograms of water per kilogram of solid
+\citep{urbanski1983flow}, a swelling regime that the fixed-geometry
+particle does not represent.
+One implementation of this law serves the dry-shell cells, the surface
+under an external water film and the liquid-water imbibition path of
+Section~\ref{sec:model:liquidcontact}. Under an external film the surface
+is at unit activity and therefore at $W_{\mathrm{sat}}$. After the film is
+depleted, the film-free surface is in equilibrium with the water in the
+adjacent gas at the surface temperature $T_{\mathrm s}$,
+\begin{equation}
+a_{\mathrm{w,s}}
+=\frac{f_{\mathrm{w}}^{\mathrm{g}}(T_{\mathrm s},P,\yw)}
+      {f_{\mathrm{w}}^{\mathrm{l}}(T_{\mathrm s},P)}
+\approx\frac{\yw P}{P_{\mathrm{sat}}^{\mathrm{w}}(T_{\mathrm s})},
+\label{eq:filmfreesurface}
+\end{equation}
+with $f_{\mathrm{w}}^{\mathrm{g}}$ and $f_{\mathrm{w}}^{\mathrm{l}}$ the
+equation-of-state fugacities of water in the gas and of pure liquid water.
+A surface heated above the boiling temperature of water at the bath
+pressure therefore falls below unit activity, as in the steaming of cereal
+grains \citep{stapley1999modelling,horrobin2003understanding}.
+
+$W_{\mathrm{sat}}$ is a declared material parameter, not a fitted one,
+and it matters for the DT outlet. At 16 radial cells, values of 0.25,
+0.32, 0.55, 0.75 and 0.97 kg/kg dry give DT outlet hexane of 84, 99, 125,
+134 and 139 ppm wet basis, that is $-33$\% to $+11$\% of the nominal
+case; the outlet moisture spans 0.76 percentage points, the
+external-film depletion time 14 s, and the core-extinction time is
+unchanged. The Faner bath forms no external water film, and its history
+does not depend on $W_{\mathrm{sat}}$. This sensitivity exceeds the
+numerical error of Section~\ref{sec:verification:convergence};
+$W_{\mathrm{sat}}$ should be pinned by an equilibrium measurement on
+desolventized meal near unit water activity at process temperature.
 Neither isotherm carries a cross-coupling term. The only
 direct co-sorption measurements support this at low water loading, but not beyond
 it \citep{cardarelli1998thesis}. Both isotherms are used outside their measured
-domains; these uses are marked as extrapolations in Section~\ref{sec:discussion:extrapolation} rather than
-smoothed (closure detail in Sec.~\ref*{S-sup:extrapolationflags}). Pure n-hexane follows the technical
+domains; these uses are flagged as extrapolations rather than smoothed
+(Sec.~\ref*{S-sup:extrapolationflags}). Pure n-hexane, for its density,
+liquid energy and fugacity, follows the technical
 Helmholtz equation of state of \citet{span2003eos1,span2003eos2}, water the
 IAPWS-95 reference formulation \citep{wagner2002iapws,iapws2018r695}, and the
 binary gas a second-virial mixture whose cross term carries a qualification
@@ -777,17 +790,13 @@ u_{\mathrm{dm}}(T)-u_{\mathrm{dm}}(T_s)
 Temperatures are in kelvin and $T_s$ is the common solid reference.
 Energy uses this integral, and its temperature derivative uses the same
 capacity. The reported experimental range is 299.15--433.15 K.
-At the native oil fraction, $\beta_o=0$ and the oil correction cancels
-exactly. At the lower DT oil fraction it remains a small signed correction,
-without adding a second oil inventory.
 
 The loading-dependent retained-water diffusivity is compared with oilseed-meal
 vapour-sorption and soaking measurements in Sec.~\ref*{S-sup:watermobility}.
 The liquid-connected coefficients are defined in
 Section~\ref{sec:model:liquidcontact}; their earlier constant-property
 sensitivity is reported in Sec.~\ref*{S-sup:contactsensitivity}.
-The separate older effective-diffusivity comparator is retained only in
-the supplement. The bed film follows
+The bed film follows
 the stated correlation convention of
 \citet{faner2008desolventizado} as transcribed by \citet{coletto2022modeling}
 (Sec.~\ref*{S-sup:filmconvention}).
@@ -796,6 +805,9 @@ separate sensitivities; the completed marches use the adopted values
 in its middle column. Section~\ref{sec:validation} gives the
 experiment-specific bath histories and initial loadings.
 
+% 2026-10-09 (REFEREE_AUDIT_8 part 9, 8.T): row gap 3.5pt -> 2.5pt so that the
+% full-page table fits the type block (it was 6.0 pt too high, and the
+% mobility row states the added 99 and the adopted total 100).
 \begin{table}[H]\centering\small
 \caption{Adopted property and transport inputs for the two particle experiments.}
 \label{tab:parameters}\label{tab:sub:parameters}
@@ -811,7 +823,7 @@ GAB $X_m$, kg/kg dry & $5.183\times10^{-3}$ & Published soybean sorption fit \ci
 GAB $C_0$, $K_0$ & $3.117\times10^{-3}$; $9.172\times10^{-2}$ & Same fit; neither coefficient is adjusted here\\\addlinespace[2.5pt]
 GAB $\Delta H_C/R$, $\Delta H_K/R$, K & 2262; 729.6 & Published temperature dependence \citep{cardarelli1996hexane}\\\addlinespace[2.5pt]
 Water isotherm $A_1$, kg/kg dry; $A_2$ & 0.880; 12.184 & Modified Luikov fit \citep{luz2006isotermas,pixton1975moisture}\\\addlinespace[2.5pt]
-Water capacity $\Wcap$, kg/kg dry & 0.236 & Upper source-domain anchor; positive-water continuation below 0.0230 is declared\\\addlinespace[2.5pt]
+Water anchor $\Wcap$; $W_{\mathrm{sat}}$, kg/kg dry & 0.236; 0.55 & Isotherm upper anchor; $W_{\mathrm{sat}}$ declared, swept 0.25--0.97, Eq.~\eqref{eq:waterbridge}\\\addlinespace[2.5pt]
 Meal and oil heat capacities, J/(kg K) & $2.32\times10^3$; $1024+3T$ & Meal prior \citep{coletto2022modeling}; oil: Eq.~\eqref{eq:oilheatcapacity}, $T$ in K\\\addlinespace[2.5pt]
 Wet/dry conductivity, W/(m K) & 0.24 & Porous-mixture prior \citep{coletto2022modeling}; 0.29 is a separate solid-property sensitivity\\\addlinespace[2.5pt]
 Binary pore $D_b$, m$^2$/s & $D_{b,\mathrm{ref}}=4.0\times10^{-10}$ & Assumed reference at 105$^\circ$C, 1 atm; source scale and local scaling: Eq.~\eqref{eq:porediffusivitytemperature} and text\\\addlinespace[2.5pt]

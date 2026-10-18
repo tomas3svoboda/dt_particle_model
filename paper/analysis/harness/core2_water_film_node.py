@@ -235,7 +235,24 @@ def advance_water_node(
     gas_only_surface=False,
     maximum_restart_trial_residual=1e-5,
     difference_mode="forward",
+    search_tolerance=None,
+    experimental_interface_area_chart_audit=None,
 ):
+    # Counterfactual chart experiment only. The F9 frozen proxy definition
+    # remains the default and requires owner approval before replacement.
+    if experimental_interface_area_chart_audit is not None and (
+        not isinstance(experimental_interface_area_chart_audit, dict) or target_z is None
+    ):
+        raise ValueError(
+            "experimental area chart requires a positive-core target and audit dictionary"
+        )
+    root_target = before.controls.nonlinear_residual_tolerance
+    if search_tolerance is not None:
+        if not math.isfinite(search_tolerance) or not 0 < search_tolerance <= root_target:
+            raise ValueError(
+                "search tolerance must be positive and no looser than native acceptance"
+            )
+        root_target = search_tolerance
     chart = core.ci._coordinate_chart(before)
     x_native = core.ci._encode_candidate_for_chart(
         seed.candidate, chart, seed.stefan_flux_scales_mol_m2_s
@@ -322,6 +339,18 @@ def advance_water_node(
                 5000.0,
             )
 
+            row_multiplier = np.ones(before.transport.layout.unknown_count + 3)
+            if experimental_interface_area_chart_audit is not None:
+                if not 0.0 < target_z < 1.0:
+                    raise ValueError(
+                        "per-area jump chart requires a finite positive interface area"
+                    )
+                first_rh_row = (
+                    2 * before.transport.layout.wet_piece_count
+                    + 3 * before.transport.layout.dry_piece_count
+                )
+                row_multiplier[first_rh_row : first_rh_row + 3] = target_z ** (-2.0 / 3.0)
+
             def residual(x):
                 nonlocal work, active_boundary
                 candidate = decode_candidate(x[:-3])
@@ -354,12 +383,15 @@ def advance_water_node(
                     np.asarray(core.ci._datum_covariant_residual_vector(assembly.residuals))
                     / scale_vector
                 )
-                return np.r_[
-                    native,
-                    a.water_node_residual_kg_m2_s / mass_scale,
-                    a.hexane_node_residual_kg_m2_s / mass_scale,
-                    a.energy_node_residual_w_m2 / heat_scale,
-                ]
+                return (
+                    row_multiplier
+                    * np.r_[
+                        native,
+                        a.water_node_residual_kg_m2_s / mass_scale,
+                        a.hexane_node_residual_kg_m2_s / mass_scale,
+                        a.energy_node_residual_w_m2 / heat_scale,
+                    ]
+                )
 
             lb, ub = core.ci._coordinate_solver_bounds_for_chart(
                 before.transport.layout, before.controls.maximum_logit_magnitude, chart
@@ -445,7 +477,7 @@ def advance_water_node(
                             **kwargs,
                             "max_nfev": residual_budget,
                             "difference_mode": difference_mode,
-                            "gtol": before.controls.nonlinear_residual_tolerance,
+                            "gtol": root_target,
                         },
                     )
 
@@ -492,7 +524,7 @@ def advance_water_node(
                                 **kwargs,
                                 "max_nfev": cycle_budget,
                                 "difference_mode": difference_mode,
-                                "gtol": before.controls.nonlinear_residual_tolerance,
+                                "gtol": root_target,
                             },
                         )
 
@@ -545,7 +577,8 @@ def advance_water_node(
                 start = trial.copy()
             solution.same_interval_restarts = restart_audit
             solution.nfev = total_calls
-            values = residual(solution.x)
+            search_values = residual(solution.x)
+            values = search_values / row_multiplier
             maximum = float(np.max(np.abs(values)))
             candidate = decode_candidate(solution.x[:-3])
             assembly = core.cut.assemble_backward_euler(
@@ -573,10 +606,43 @@ def advance_water_node(
             if abs(assembly.surface_film_audit.beta) > boundary.accepted_beta_limit:
                 raise RuntimeError("resolved water-node root exceeds explicit beta study band")
             condition = float(np.linalg.cond(getattr(solution, "native_jac", solution.jac)))
+            if experimental_interface_area_chart_audit is not None:
+                native_matrix = getattr(solution, "native_jac", solution.jac)
+                legacy_condition = float(np.linalg.cond(native_matrix / row_multiplier[:, None]))
+                experimental_interface_area_chart_audit.update(
+                    experimental_counterfactual=True,
+                    owner_adoption_required=True,
+                    physically_qualifying=False,
+                    chart="native dimensionless gas-barrier columns; RH rows multiplied by A_outer/A_Gamma",
+                    row_multipliers=row_multiplier.tolist(),
+                    original_integrated_row_condition=legacy_condition,
+                    original_condition_limit=before.controls.maximum_condition_proxy,
+                    original_condition_gate_would_refuse=legacy_condition
+                    > before.controls.maximum_condition_proxy,
+                    per_area_chart_condition=condition,
+                    maximum_original_scaled_residual=float(max(abs(values))),
+                    maximum_per_area_scaled_residual=float(max(abs(search_values))),
+                    physical_equations_unchanged=True,
+                )
             if condition > before.controls.maximum_condition_proxy:
-                raise RuntimeError(
+                error = RuntimeError(
                     f"water-node Jacobian condition exceeds native limit: {condition}"
                 )
+                error.optimizer_debug = {
+                    "native_jacobian": getattr(solution, "native_jac", solution.jac).tolist(),
+                    "physical_jacobian": solution.jac.tolist(),
+                    "physical_coordinates": getattr(
+                        solution, "physical_coordinates", solution.x
+                    ).tolist(),
+                    "native_coordinates": solution.x.tolist(),
+                    "scaled_residual": values.tolist(),
+                    "native_row_scales": list(scales.vector),
+                    "surface_row_scales": [mass_scale, mass_scale, heat_scale],
+                    "condition_proxy": condition,
+                    "original_condition_limit": before.controls.maximum_condition_proxy,
+                    "physical_acceptance_override": False,
+                }
+                raise error
             step = core.ci._accept_step(
                 before,
                 assembly,

@@ -25,7 +25,7 @@ from era_stamp import REPO_ROOT, era_stamp
 
 
 class FeedMarch:
-    def __init__(self, bath, radius, cells):
+    def __init__(self, bath, radius, cells, *, property_parameters=None):
         self.bath = bath
         feed = bath["particle"]
         self.wet = replace(
@@ -35,6 +35,8 @@ class FeedMarch:
             w_o=feed["feed_oil_kg_kg_dry"],
             conductivity=core.CONDUCTIVITY,
         )
+        if property_parameters is not None:
+            self.wet = property_parameters.wet_parameters(self.wet)
         self.params = core.sphere.SphereParams(
             particle_radius_m=radius, radial_cells=cells, wet_core=self.wet
         )
@@ -277,9 +279,13 @@ class FeedMarch:
             x0,
             bounds=(lower, upper),
             x_scale="jac",
-            xtol=1e-12,
-            ftol=1e-12,
-            gtol=1e-12,
+            xtol=1e-14,
+            ftol=1e-14,
+            # A newly appearing water film is close to its nonnegative bound.
+            # TRF's bound-weighted gradient can therefore be tiny while its
+            # component balance remains open. Use step/cost termination and
+            # retain the explicit physical residual gate below.
+            gtol=None,
             max_nfev=150,
             jac="3-point",
         )
@@ -371,7 +377,10 @@ class FeedMarch:
 def run(args):
     bath = json.loads(args.bath.read_text(encoding="utf-8"))
     entry_stamp = era_stamp([Path(__file__).resolve(), args.bath.resolve()])
-    march = FeedMarch(bath, args.radius_m, args.cells)
+    from particle_solver_configuration import ParticleModelParameters
+
+    parameters = ParticleModelParameters() if getattr(args, "paper_properties", False) else None
+    march = FeedMarch(bath, args.radius_m, args.cells, property_parameters=parameters)
     errors = []
     activation = None
     while march.time < args.max_time_s:
@@ -418,6 +427,7 @@ def run(args):
         "phase_branch": "native condensing free-film appearance / transparent two-liquid interface",
         "external_film_law": "native EFr mass-coordinate Stefan and full signed-component PHY053 Ackermann, shared with radial boundary",
         "dt_s": args.dt_s,
+        "property_parameters": asdict(parameters) if parameters else None,
         "radius_m": args.radius_m,
         "high_loading_thermal_cells": 1,
         "surface_to_bulk_conductance_w_m2_k": march.internal_conductance_w_m2_k,
@@ -454,6 +464,7 @@ if __name__ == "__main__":
     p.add_argument("--max-time-s", type=float, default=10)
     p.add_argument("--radius-m", type=float, default=0.000885)
     p.add_argument("--cells", type=int, default=2)
+    p.add_argument("--paper-properties", action="store_true")
     args = p.parse_args()
     if args.out.exists() or not args.out.resolve().is_relative_to(REPO_ROOT / "paper"):
         p.error("use a new output under paper")
