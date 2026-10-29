@@ -257,6 +257,54 @@ class CoreEndpointAdvance:
     native_step: object
     time_control: ConditionalCoreTime
     base_face_restoration: dict | None
+    # The residual-contract polish stamp (residual_contract_polish_seed); None when the first
+    # native solve was accepted, i.e. whenever the polish did not act.
+    residual_polish: dict | None = None
+
+
+# Class-A numerics repair, seeding only (record proposed at
+# docs/GT_PS2_PAPER1_EXTINCTION_PROJECTION_POLISH_2026-10-26.md). The native fixed-time projection
+# is a trust-region least-squares on forward-difference Jacobians whose residual assembly contains
+# the endpoint surface sub-solve, warm-started from that sub-solve's previous root. Its residual is
+# therefore a function of the evaluation history at the level of the sub-solve's own tolerance,
+# and on 80 cells (outer half cell 1.2 um, the outer cell's energy scale proportional to its
+# volume) that scatter reached the 1e-10 contract: the C3 80-cell projection stopped on its step
+# tolerance at 1.66e-10 and its re-assembly read 1.725e-10, while the same coordinates read
+# 8.2e-11 in a fresh surface context. After a refusal of exactly the frozen residual contract,
+# and only then, the native solve is re-entered ONCE from the refused solve's last candidate, in
+# a fresh surface context, with the first seed's Stefan scales: the same function, controls,
+# contract, logit guard, condition-proxy, ledger and retained-water gates; the two solves share
+# the native evaluation budget (controls.maximum_function_evaluations), refused typed when their
+# sum exceeds it. Any other refusal, and every accepted first solve, is untouched.
+RESIDUAL_CONTRACT_POLISH_RECORD = "docs/GT_PS2_PAPER1_EXTINCTION_PROJECTION_POLISH_2026-10-26.md"
+RESIDUAL_CONTRACT_REFUSAL = "fixed-time endpoint residual contract failed: "
+
+
+def residual_contract_polish_seed(refused, seed):
+    """The polish seed after a refusal of the frozen residual contract alone, else None.
+
+    Eligible only when the native solve raised ExtinctionProjectionStepError caused by its frozen
+    residual-contract clause (not the environment-conditioned bound, not success, logit guard,
+    condition proxy, ledger or the retained-water guard) and carries its last candidate. The seed
+    is that candidate (its event time is the supplied duration) with the first seed's Stefan
+    scales, so the polish works in the first solve's coordinate chart.
+    """
+    native = projection.projection
+    if not isinstance(refused, native.ExtinctionProjectionStepError):
+        return None
+    cause = refused.__cause__
+    if (
+        refused.last_candidate is None
+        or refused.retained_water_applicability_guard_failed
+        or not isinstance(cause, RuntimeError)
+        or not str(cause).startswith(RESIDUAL_CONTRACT_REFUSAL)
+    ):
+        return None
+    return native.ExtinctionProjectionSeed(
+        refused.last_candidate,
+        seed.stefan_flux_scales_mol_m2_s,
+        seed.label + "; residual-contract polish from the refused solve's last candidate",
+    )
 
 
 def project_core_endpoint(
@@ -295,9 +343,20 @@ def project_core_endpoint(
         if conservative_surface and carry["external_water_loading_kg_m2"] > 0
         else projection.water_surface_at_dry_endpoint
     )
+    polish = None
     with surface_context(before, carry, surface, dt, boundary):
-        step = projection.projection.solve_fixed_time_extinction_projection(
-            before, dt, boundary, seed
+        try:
+            step = projection.projection.solve_fixed_time_extinction_projection(
+                before, dt, boundary, seed
+            )
+        except projection.projection.ExtinctionProjectionStepError as refused:
+            polish_seed = residual_contract_polish_seed(refused, seed)
+            if polish_seed is None:
+                raise
+            step, first = None, refused
+    if step is None:
+        step, polish = _polish_projection(
+            before, carry, surface, dt, boundary, surface_context, polish_seed, first
         )
     new_surface = step.assembly.dry_face_fluxes[-1].surface_film_audit
     combined = projection.driver.combined_ledger(
@@ -315,4 +374,59 @@ def project_core_endpoint(
         "external_water_loading_kg_m2": new_surface.liquid_water_kg_m2,
         "core_endpoint_time_control": asdict(estimate),
     }
-    return CoreEndpointAdvance(after, new_surface, next_carry, step, estimate, restoration)
+    if polish is None:
+        return CoreEndpointAdvance(after, new_surface, next_carry, step, estimate, restoration)
+    return CoreEndpointAdvance(
+        after, new_surface, next_carry, step, estimate, restoration, residual_polish=polish
+    )
+
+
+def _polish_projection(before, carry, surface, dt, boundary, surface_context, polish_seed, first):
+    """Re-enter the unchanged native solve once from ``polish_seed`` in a fresh surface context.
+
+    The polish refused, or the two solves' evaluations above the native budget, is a typed
+    ExtinctionProjectionStepError with the exact rollback state, naming both solves.
+    """
+    native = projection.projection
+    budget = before.controls.maximum_function_evaluations
+    try:
+        with surface_context(before, carry, surface, dt, boundary):
+            step = native.solve_fixed_time_extinction_projection(before, dt, boundary, polish_seed)
+    except native.ExtinctionProjectionStepError as second:
+        raise native.ExtinctionProjectionStepError(
+            f"{second} [after the residual-contract polish; the first solve "
+            f"{first.maximum_scaled_residual:.3e} at {first.nonlinear_evaluations} evaluations]",
+            before,
+            nonlinear_evaluations=first.nonlinear_evaluations + second.nonlinear_evaluations,
+            maximum_scaled_residual=second.maximum_scaled_residual,
+            condition_proxy=second.condition_proxy,
+            last_candidate=second.last_candidate,
+            retained_water_applicability_guard_failed=(
+                second.retained_water_applicability_guard_failed
+            ),
+            retained_water_applicability_audit=second.retained_water_applicability_audit,
+        ) from second
+    total = first.nonlinear_evaluations + step.ledger.nonlinear_evaluations
+    if total > budget:
+        raise native.ExtinctionProjectionStepError(
+            "fixed-time extinction projection rejected with exact rollback: the residual-contract "
+            f"polish exceeded the shared native evaluation budget ({total} > {budget})",
+            before,
+            nonlinear_evaluations=total,
+            maximum_scaled_residual=step.ledger.maximum_scaled_residual,
+            condition_proxy=step.ledger.condition_proxy,
+        )
+    return step, {
+        "record": RESIDUAL_CONTRACT_POLISH_RECORD,
+        "rule": "one re-entry of the native solve from the refused solve's last candidate after "
+        "a refusal of the frozen residual contract alone; fresh endpoint surface context; the "
+        "first seed's Stefan scales; contract, controls and gates unchanged",
+        "first_solve_refusal": str(first.__cause__),
+        "first_solve_maximum_scaled_residual": first.maximum_scaled_residual,
+        "first_solve_nonlinear_evaluations": first.nonlinear_evaluations,
+        "polish_maximum_scaled_residual": step.ledger.maximum_scaled_residual,
+        "polish_nonlinear_evaluations": step.ledger.nonlinear_evaluations,
+        "shared_native_evaluation_budget": budget,
+        "residual_contract": before.controls.nonlinear_residual_tolerance,
+        "physically_qualifying": False,
+    }

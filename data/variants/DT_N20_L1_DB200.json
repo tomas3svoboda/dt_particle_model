@@ -1,0 +1,19 @@
+{
+  "case": "DT_N20_L1_DB200",
+  "summary": "ParticleModelParameters.binary_reference_m2_s 4e-10 -> 2.0e-10 in paper/analysis/harness/particle_solver_configuration.py",
+  "rule": "exact text replacements on the file's text with line endings normalized to LF; each must occur exactly 'count' times; the file's own line endings are restored after (scripts/reproduce_final_reference.py applies them to a scratch copy of the tree under reruns/, never to the tree itself)",
+  "producer_records": [
+    "C:/Users/z004d8nt/AppData/Local/Temp/claude/c--Users-z004d8nt-Documents-DTDC-Simulator/964cefed-03b6-48b7-b6f9-19461913b2b5/scratchpad/schedule_build/records/variant_Db200.diff"
+  ],
+  "replacements": [
+    {
+      "path": "paper/analysis/harness/particle_solver_configuration.py",
+      "old": "    binary_reference_m2_s: float = 4e-10\n",
+      "new": "    binary_reference_m2_s: float = 2.0e-10\n",
+      "count": 1,
+      "note": "the binary-diffusivity reference 4e-10 -> 2.0e-10 m2/s (sensitivity)",
+      "file_sha256_shipped": "b59046a57665ee67104c4188bc13e954684beb8c50fa1f93d6d5fcc44876cacc",
+      "file_sha256_with_variant": "b59cf6584357852e1cff51d841c237def81d1aab238a3d8242d374e8a85ea8f9"
+    }
+  ]
+}

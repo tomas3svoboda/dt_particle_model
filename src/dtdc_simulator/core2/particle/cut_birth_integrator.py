@@ -1168,6 +1168,9 @@ def _accept_birth(
 ) -> BirthIntegratorStep:
     candidate = assembly.candidate
     config = assembly.config
+    # The fully-wet state's own configuration (differs from ``config`` only for a
+    # birth assembled at a pressure-only target configuration).
+    before_config = config if assembly.before_config is None else assembly.before_config
     dt_s = assembly.dt_s
     after_transport = cut.CutTransportState(
         geometry=assembly.candidate_geometry,
@@ -1180,11 +1183,11 @@ def _accept_birth(
         historical_hexane_loadings=before.historical_hexane_loadings,
         oil_fraction_labels=before.oil_fraction_labels,
     )
-    reference = _fully_wet_reference_inventory(before, config)
-    reference_capacity = _fully_wet_reference_capacity(before, config)
+    reference = _fully_wet_reference_inventory(before, before_config)
+    reference_capacity = _fully_wet_reference_capacity(before, before_config)
     current = ci.inventory_snapshot(after_transport)
     event_changes = _material_event_changes(assembly)
-    prior_changes = _fully_wet_prior_changes(before, config, reference)
+    prior_changes = _fully_wet_prior_changes(before, before_config, reference)
     cumulative_water, water_comp = ci._compensated_add_vectors(  # noqa: SLF001
         prior_changes.water_cell_mol,
         (0.0,) * before.grid.n,
@@ -1225,7 +1228,7 @@ def _accept_birth(
     energy_step = math.fsum((*event_changes.energy_cell_j, energy_out))
     after_capacity = ci.capacity_energy_scale(after_transport)
     water_step_scale = max(
-        _fully_wet_current_inventory(before, config).total_water_mol,
+        _fully_wet_current_inventory(before, before_config).total_water_mol,
         current.total_water_mol,
         abs(water_out),
         1.0e-300,

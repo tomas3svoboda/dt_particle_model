@@ -24,6 +24,8 @@ from scipy.optimize import brentq, least_squares
 import core2_water_film_node as node
 import finite_film_core2_study as study
 import native_water_path_bounds as path_bounds
+import particle_kernel_envelope as envelope
+import particle_surface_graded_mesh as graded_mesh
 from dtdc_simulator.core2.particle import cut_birth_event as birth
 from dtdc_simulator.core2.particle import cut_birth_integrator as bi
 from dtdc_simulator.core2.particle import wet_water as ww
@@ -55,6 +57,74 @@ PROOF_WALL_CLOCK_CLAUSE = False
 # the face solve and the extinction projection keep on their own matrices.
 GATE_UNITS_RULING = "GT_PS2_OWNER_RULING_PAPER1_GATE_UNITS_2026-10-17"
 MAXIMUM_BIRTH_CONDITION_PROXY = 1.0e8
+# Kernel-envelope BIRTH_SEED_BOUNDED_TO_OUTER_CELL (armed only; the three-knob build of
+# 2026-10-28/29, record docs/GT_PS2_PAPER1_THREE_HARNESS_KNOBS_BUILD_2026-10-29.md, on the
+# measurement GT_PS2_PAPER1_FANER_ON_THE_GRADED_MESH_LADDER_2026-10-28 sections 18 to 23): the
+# declared fraction of the outer cell that bounds the energy-based newborn-shell seed;
+# DTDC_KERNEL_ENVELOPE_BIRTH_SEED_OUTER_CELL_FRACTION overrides it.
+BIRTH_SEED_OUTER_CELL_FRACTION = 0.5  # WAS absent until 2026-10-28 (the energy seed unbounded)
+
+
+def bounded_birth_seed_thickness(thickness, outer_cell_width_m):
+    """BIRTH_SEED_BOUNDED_TO_OUTER_CELL (armed only): the seed and its stamp, else (seed, None).
+
+    Armed: min(seed, f x outer cell width), f the companion's value when set, else the declared
+    BIRTH_SEED_OUTER_CELL_FRACTION. A search seed only; the fit test that follows is unchanged.
+    """
+    if not envelope.armed(envelope.BIRTH_SEED_BOUNDED_TO_OUTER_CELL):
+        return thickness, None
+    override = envelope.birth_seed_outer_cell_fraction_override()
+    fraction = BIRTH_SEED_OUTER_CELL_FRACTION if override is None else override
+    bounded = min(thickness, fraction * outer_cell_width_m)
+    return bounded, {
+        "knob": envelope.PREFIX + envelope.BIRTH_SEED_BOUNDED_TO_OUTER_CELL,
+        "fraction": fraction,
+        "fraction_source": "declared" if override is None else "companion override",
+        "outer_cell_width_m": outer_cell_width_m,
+        "unbounded_seed_thickness_m": thickness,
+        "bounded_seed_thickness_m": bounded,
+        "bound_active": bounded != thickness,
+        "physically_qualifying": False,
+    }
+
+
+def subcooled_birth_seed_thickness(
+    thickness, *, gas_heat_w_m2, wet_release_w_m2, dt_s, storage_kg_m3, phase_energy_j_kg
+):
+    """Replace a nonpositive net-heat guess by the incoming-gas-heat guess.
+
+    A cold fully wet core can absorb more conductive heat than the seed's
+    incoming sensible heat. That estimate is not a proof that the coupled
+    birth has no receding root: the solved film also exchanges water and its
+    enthalpy. Use a positive starting point for that unchanged solve, keeping
+    the actual old core temperatures, inventories and all acceptance checks.
+    Positive former guesses pass through bit for bit.
+    """
+    if not (
+        math.isfinite(thickness)
+        and thickness <= 0.0
+        and math.isfinite(gas_heat_w_m2)
+        and gas_heat_w_m2 > 0.0
+        and math.isfinite(wet_release_w_m2)
+        and wet_release_w_m2 < 0.0
+        and dt_s > 0.0
+        and storage_kg_m3 > 0.0
+        and phase_energy_j_kg > 0.0
+    ):
+        return thickness, None
+    positive = gas_heat_w_m2 * dt_s / (storage_kg_m3 * phase_energy_j_kg)
+    if not math.isfinite(positive) or positive <= 0.0:
+        return thickness, None
+    return positive, {
+        "method": "incoming-gas-heat seed for a subcooled liquid-active birth",
+        "former_net_heat_thickness_m": thickness,
+        "gas_heat_thickness_m": positive,
+        "gas_heat_w_m2": gas_heat_w_m2,
+        "wet_release_w_m2": wet_release_w_m2,
+        "old_wet_state_changed": False,
+        "equations_or_acceptance_checks_changed": False,
+        "physically_qualifying": False,
+    }
 
 
 def birth_condition_certificate(
@@ -171,13 +241,19 @@ def physical_advance_proof_budget(point_budget, wall_s, *, memoize_identical_poi
     """
     active = []
 
-    def begin_advance():
+    def begin_advance(point_budget_form=None):
+        # point_budget_form (default None: the declared point_budget) maps the declared allowance
+        # to this advance's (ruling packet 6 item 3, GT_PS2_PAPER1_BUDGETS_PER_UNKNOWN_BUILD_2026-10-24.md)
         if active:
             active.pop().__exit__(None, None, None)
         context = bounded_path_proof(
-            point_budget, wall_s, memoize_identical_points=memoize_identical_points
+            point_budget if point_budget_form is None else point_budget_form(point_budget),
+            wall_s,
+            memoize_identical_points=memoize_identical_points,
         )
         audit = context.__enter__()
+        if point_budget_form is not None:
+            audit["present_point_budget"] = point_budget
         active.append(context)
         return audit
 
@@ -189,11 +265,16 @@ def physical_advance_proof_budget(point_budget, wall_s, *, memoize_identical_poi
 
 
 @contextmanager
-def liquid_internal_energy_node(holder, dt, old_loading, old_temperature, pressure):
+def liquid_internal_energy_node(
+    holder, dt, old_loading, old_temperature, pressure, *, new_pressure=None
+):
     """Reuse all node fluxes, replacing only its stored h by the chosen u.
 
     The caller already carries incoming u at old_temperature. This scoped
     substitution removes a caloric handoff change; it adds no latent source.
+    new_pressure (default None: the old pressure) is the new-time liquid's
+    pressure under a prescribed pressure schedule, a float or a callable of no
+    argument; the incoming liquid keeps the pressure it was carried at.
     """
     original = node.node_balances
 
@@ -211,7 +292,15 @@ def liquid_internal_energy_node(holder, dt, old_loading, old_temperature, pressu
         film_energy,
     ):
         temperature = float(holder["x"][0])
-        liquid_u = core.wa.state_Tp(temperature, pressure, "liquid").u_mass
+        liquid_u = core.wa.state_Tp(
+            temperature,
+            (
+                pressure
+                if new_pressure is None
+                else new_pressure() if callable(new_pressure) else new_pressure
+            ),
+            "liquid",
+        ).u_mass
         old_u = core.wa.state_Tp(old_temperature, pressure, "liquid").u_mass
         return original(
             step_dt,
@@ -243,7 +332,11 @@ def initialize_from_feed(
     continued_water=False,
     property_parameters=None,
     dry_local_residual_tolerance=None,
+    pressure_pa=None,
 ):
+    # pressure_pa (default None: core.PRESSURE_PA, the former constant) is the feed
+    # stage's pressure under the kernel-envelope pressure schedule; the wet and dry
+    # configurations are its pressure-only target of the former configuration.
     if feed_result["status"] != "ACTUAL_FEED_TO_RADIAL_ACTIVATION":
         raise ValueError("birth requires an actual accepted feed activation")
     event = feed_result["activation"]
@@ -253,7 +346,13 @@ def initialize_from_feed(
     temperature = radial["temperature_k"]
     if radial["coordinate"]["z"] != 1.0 or radial["attached_hexane_mass_kg"] != 0.0:
         raise ValueError("incoming radial endpoint must be exactly fully wet, zero attached H")
-    for name in ("temperatures_k", "retained_water_loadings", "oil_fraction_labels"):
+    # FEED_CELLS (particle_feed_shells): a shell-resolved activation carries a temperature and
+    # historical-loading profile, remapped below; water and oil stay uniform. Absent: as before.
+    feed_shells = feed_result.get("kernel_envelope_feed_cells")
+    uniform_fields = ("temperatures_k", "retained_water_loadings", "oil_fraction_labels")
+    if feed_shells is not None:
+        uniform_fields = ("retained_water_loadings", "oil_fraction_labels")
+    for name in uniform_fields:
         if len(set(radial[name])) != 1:
             raise ValueError("this feed-event importer requires uniform native activation")
     if event["ledger"]["max_normalized_residual"] > 1e-10:
@@ -297,16 +396,33 @@ def initialize_from_feed(
             config,
             dry=replace(config.dry, nonlinear_residual_tolerance=dry_local_residual_tolerance),
         )
+    import_pressure = core.PRESSURE_PA
+    if pressure_pa is not None and pressure_pa != core.PRESSURE_PA:
+        config = core.cut.pressure_only_target_config(config, pressure_pa)
+        import_pressure = pressure_pa
     wet_model = config.wet
-    grid = core.backend.uniform_grid(count, radius)
+    # Kernel-envelope SURFACE_GRADED_MESH (the runner installs a declared face set only when
+    # the knob is armed): the surface-graded master grid; otherwise the uniform grid.
+    grid = graded_mesh.master_grid_or_none(count, radius)
+    if grid is None:
+        grid = core.backend.uniform_grid(count, radius)
     # Uniform activation permits lossless grid refinement; these are the
     # actual event labels, never recalculated from a later temperature.
     historical = radial["wet_inventory"]["loadings"][0]
+    remap_report = None
+    if feed_shells is None:
+        cell_temperatures, cell_historical = (temperature,) * count, (historical,) * count
+    else:
+        import particle_feed_shells as shells_module
+
+        cell_temperatures, cell_historical, remap_report = shells_module.remap_to_master_grid(
+            radial, grid, wet_model, water, oil, ww.evaluate_cell
+        )
     before = ww.initialize(
         grid,
-        (temperature,) * count,
+        cell_temperatures,
         (water,) * count,
-        (historical,) * count,
+        cell_historical,
         wet_model,
         oil_fraction_labels=(oil,) * count,
     )
@@ -314,7 +430,7 @@ def initialize_from_feed(
     water_mass = event["external_water_mass_kg_carried_separately"]
     old_film_energy = event["external_water_energy_j_carried_separately"]
     predicted_film_energy = (
-        water_mass * core.wa.state_Tp(temperature, core.PRESSURE_PA, "liquid").u_mass
+        water_mass * core.wa.state_Tp(temperature, import_pressure, "liquid").u_mass
     )
     input_energy_residual = math.fsum(
         (
@@ -341,6 +457,8 @@ def initialize_from_feed(
         "incoming_film_beta": feed_result["rows"][-1]["beta"],
         "incoming_two_liquid_interface_temperature_k": feed_result["interface_temperature_k"],
     }
+    if remap_report is not None:
+        carry["kernel_envelope_feed_cells_hand_over"] = remap_report
     original_controls = core.backend.CONTROLS
     # The historic 334.5 K solver bracket lies 0.0196 K above the native
     # binary two-liquid endpoint. Admit its already-defined cap branch in
@@ -349,6 +467,12 @@ def initialize_from_feed(
         original_controls.interface_temperature_bounds_k[0],
         feed_result["interface_temperature_k"] + 1e-6,
     )
+    if import_pressure != core.PRESSURE_PA:
+        # Kernel-envelope pressure schedule: the same declared chart, the native
+        # two-liquid temperature +1e-6 K, at the feed pressure (at 101,325 Pa the
+        # min above is exactly this value; above it the historic 334.5 K bracket
+        # lies below the two-liquid root and is not admissible).
+        lower = feed_result["interface_temperature_k"] + 1e-6
     controls = replace(
         original_controls,
         interface_temperature_bounds_k=(lower, original_controls.interface_temperature_bounds_k[1]),
@@ -472,7 +596,24 @@ def advance_birth(
     leading_profile_seed=None,
     trace_coordinates=False,
     experimental_radius_birth_conditioning_audit=None,
+    target_config=None,
+    surface_temperature_upper_k=None,
+    budget_per_unknown=False,
 ):
+    # Kernel-envelope options (default None: the former path). target_config is the
+    # native pressure-only target configuration of the birth's end;
+    # surface_temperature_upper_k replaces the bath temperature as the surface bound.
+    surface_config = config if target_config is None else target_config
+    surface_upper = (
+        boundary.temperature_k
+        if surface_temperature_upper_k is None
+        else float(surface_temperature_upper_k)
+    )
+    if surface_temperature_upper_k is None and envelope.armed(envelope.BIRTH_SURFACE_BOUND):
+        surface_upper = envelope.surface_temperature_upper_k(
+            boundary.temperature_k, before.temperatures_k
+        )
+        surface_temperature_upper_k = surface_upper
     if trace_coordinates and solver_policy != "physical":
         raise ValueError("birth trace coordinates require the physical primitive solver")
     if experimental_radius_birth_conditioning_audit is not None and not trace_coordinates:
@@ -502,14 +643,14 @@ def advance_birth(
             raise ValueError("declared beta seed override is limited to the gas-only study")
         seed_beta = float(film_beta_seed)
     gamma_interval = (
-        core.cp.gas_only_composition_interval(gamma + 1e-4, config.dry.pressure_pa, pore)
+        core.cp.gas_only_composition_interval(gamma + 1e-4, surface_config.dry.pressure_pa, pore)
         if gas_only_surface
         else None
     )
     seed_surface_y = sum(gamma_interval.y_hexane_bounds) / 2 if gas_only_surface else None
     _, components, ack, film = film_at_beta(
         boundary,
-        config,
+        surface_config,
         before.grid.R,
         gamma + (1e-4 if gas_only_surface else 0.0),
         seed_beta,
@@ -521,7 +662,7 @@ def advance_birth(
     )
     phase_energy = (
         interface.dry.hexane_gas_partial_enthalpy_j_mol / core.hx.M
-        - core.hx.state_Tp(gamma, config.dry.pressure_pa, "liquid").u_mass
+        - core.hx.state_Tp(gamma, surface_config.dry.pressure_pa, "liquid").u_mass
     )
     storage = config.wet.wet.rho_dm_p * before.historical_hexane_loadings[-1]
     wet_release = (
@@ -530,10 +671,27 @@ def advance_birth(
         / (before.grid.R - before.grid.centers[-1])
     )
     thickness = (gas_heat + wet_release) * dt / (storage * phase_energy)
+    subcooled_seed_stamp = None
     if leading_profile_seed is not None:
         if not gas_only_surface:
             raise ValueError("limiting pore-profile seed is limited to the gas-only study")
         thickness = leading_profile_seed["speed_m_s"] * dt
+    elif not gas_only_surface:
+        # Numerical seed recovery, 2026-10-29: the 0.3x PD-exposure activation
+        # is colder than the interface. A negative net-heat estimate formerly
+        # refused before Newton, although the unchanged coupled birth has a root.
+        thickness, subcooled_seed_stamp = subcooled_birth_seed_thickness(
+            thickness,
+            gas_heat_w_m2=gas_heat,
+            wet_release_w_m2=wet_release,
+            dt_s=dt,
+            storage_kg_m3=storage,
+            phase_energy_j_kg=phase_energy,
+        )
+    # Kernel-envelope BIRTH_SEED_BOUNDED_TO_OUTER_CELL (armed only; off: the seed passes unchanged).
+    thickness, seed_bound_stamp = bounded_birth_seed_thickness(
+        thickness, before.grid.R - before.grid.faces[-2]
+    )
     if not 0 < thickness < before.grid.R - before.grid.faces[-2]:
         raise ValueError("energy-based birth seed did not fit the outer material cell")
     if front_z is None:
@@ -545,7 +703,9 @@ def advance_birth(
         dry_temperature = gamma + leading_profile_seed["temperature_gradient_k_m"] * thickness / 2
     if not chart.dry_temperature[0] < dry_temperature < chart.dry_temperature[1]:
         raise ValueError("native water-trace seed does not admit a dry thermal state")
-    interval = core.cp.gas_only_composition_interval(dry_temperature, config.dry.pressure_pa, pore)
+    interval = core.cp.gas_only_composition_interval(
+        dry_temperature, surface_config.dry.pressure_pa, pore
+    )
     dry_y = 0.5 * (interval.lower_y_hexane + interval.upper_y_hexane)
     if leading_profile_seed is not None:
         dry_y = (
@@ -577,7 +737,9 @@ def advance_birth(
     if leading_profile_seed is not None:
         surface_temperature = gamma + leading_profile_seed["temperature_gradient_k_m"] * thickness
     surface_interval = (
-        core.cp.gas_only_composition_interval(surface_temperature, config.dry.pressure_pa, pore)
+        core.cp.gas_only_composition_interval(
+            surface_temperature, surface_config.dry.pressure_pa, pore
+        )
         if gas_only_surface
         else None
     )
@@ -588,7 +750,7 @@ def advance_birth(
         )
     initial_mass, components, _, _ = film_at_beta(
         boundary,
-        config,
+        surface_config,
         before.grid.R,
         surface_temperature,
         seed_beta,
@@ -638,15 +800,15 @@ def advance_birth(
                     (
                         surface_data["surface_y_hexane"]
                         - core.cp.gas_only_composition_interval(
-                            surface_data["temperature_k"], config.dry.pressure_pa, pore
+                            surface_data["temperature_k"], surface_config.dry.pressure_pa, pore
                         ).lower_y_hexane
                     )
                     / (
                         core.cp.gas_only_composition_interval(
-                            surface_data["temperature_k"], config.dry.pressure_pa, pore
+                            surface_data["temperature_k"], surface_config.dry.pressure_pa, pore
                         ).upper_y_hexane
                         - core.cp.gas_only_composition_interval(
-                            surface_data["temperature_k"], config.dry.pressure_pa, pore
+                            surface_data["temperature_k"], surface_config.dry.pressure_pa, pore
                         ).lower_y_hexane
                     )
                     if gas_only_surface
@@ -658,7 +820,7 @@ def advance_birth(
             holder["y_hexane"] = surface_data["surface_y_hexane"]
         seed_mass = film_at_beta(
             boundary,
-            config,
+            surface_config,
             before.grid.R,
             solver_surface_seed[0],
             solver_surface_seed[1],
@@ -668,6 +830,15 @@ def advance_birth(
             [solver_surface_seed[0], seed_mass, 0.0 if gas_only_surface else solver_surface_seed[2]]
         )
         dry_temperature = previous.dry_temperature_k
+    budget_stamp = None
+    if budget_per_unknown:
+        # Ruling packet 6 item 2 (DTDC_KERNEL_ENVELOPE_BUDGETS_PER_UNKNOWN, armed by the caller;
+        # GT_PS2_PAPER1_BUDGETS_PER_UNKNOWN_BUILD_2026-10-24.md): max(budget, 10 (n + 1)), n the
+        # search vector's size.
+        unknowns = int(native_x.size + solver_surface_seed.size)
+        budget_stamp = {"unknowns": unknowns, "present_budget": budget}
+        budget = envelope.birth_residual_budget(budget, unknowns)
+        budget_stamp["budget"] = budget
     counter = {"attempts": 0, "rejected": 0}
     last = {
         "encoded_initial_candidate": native_x.tolist(),
@@ -694,6 +865,7 @@ def advance_birth(
                 newborn_composition_gradient_m_inv=(
                     None if trace_gradients is None else trace_gradients[1]
                 ),
+                **({} if target_config is None else {"target_config": target_config}),
             )
         except Exception:
             counter["rejected"] += 1
@@ -708,6 +880,11 @@ def advance_birth(
                     old_loading,
                     carry["external_water_temperature_k"],
                     config.dry.pressure_pa,
+                    **(
+                        {}
+                        if target_config is None
+                        else {"new_pressure": target_config.dry.pressure_pa}
+                    ),
                 ):
                     initial = assemble(seed.candidate)
                     scales = bi._residual_scales(initial)
@@ -715,7 +892,7 @@ def advance_birth(
                     reference = core.ct.prepare_reduced_film_surface_state(
                         boundary.film_boundary,
                         cell_temperature_k=dry_temperature,
-                        pressure_pa=config.dry.pressure_pa,
+                        pressure_pa=surface_config.dry.pressure_pa,
                         particle_radius_m=before.grid.R,
                         outer_half_cell_distance_m=(
                             before.grid.R
@@ -741,7 +918,7 @@ def advance_birth(
                         old_loading
                         * abs(
                             core.wa.state_Tp(
-                                dry_temperature, config.dry.pressure_pa, "liquid"
+                                dry_temperature, surface_config.dry.pressure_pa, "liquid"
                             ).u_mass
                         )
                         / dt,
@@ -767,9 +944,10 @@ def advance_birth(
                             core.cut._dry_piece_center(geometry.cells[-1], geometry.front.radius_m)
                             - geometry.front.radius_m
                         )
+                        # Repair A1, GT_PS2_UNIVERSAL_KERNEL_BIRTH_PRESSURE_REPAIR_BUILD_2026-10-22
                         interface = core.cut.evaluate_interface_state(
                             candidate.interface_temperature_k,
-                            config,
+                            surface_config,
                             before.historical_hexane_loadings[-1],
                             before.oil_fraction_labels[-1],
                         )
@@ -795,12 +973,12 @@ def advance_birth(
                                     "birth surface left its native open gas-only interval"
                                 )
                             lo, hi = core.cp.gas_only_composition_interval(
-                                float(x[-3]), config.dry.pressure_pa, pore
+                                float(x[-3]), surface_config.dry.pressure_pa, pore
                             ).y_hexane_bounds
                             holder["y_hexane"] = lo + (hi - lo) * float(x[-1])
                         total_mass, _, _, _ = film_at_beta(
                             boundary,
-                            config,
+                            surface_config,
                             before.grid.R,
                             float(x[-3]),
                             float(x[-2]),
@@ -844,7 +1022,9 @@ def advance_birth(
                     def physical_solver(fun, x0, **kwargs):
                         def interval(temperature):
                             return core.cp.gas_only_composition_interval(
-                                temperature, config.dry.pressure_pa, chart.newborn_surface_pore
+                                temperature,
+                                surface_config.dry.pressure_pa,
+                                chart.newborn_surface_pore,
                             ).y_hexane_bounds
 
                         def decode(values):
@@ -903,7 +1083,7 @@ def advance_birth(
                                 (-math.inf, math.inf),
                                 chart.front_z,
                                 chart.interface_temperature,
-                                (temperature_lo, min(temperature_hi, boundary.temperature_k)),
+                                (temperature_lo, min(temperature_hi, surface_upper)),
                                 (-boundary.accepted_beta_limit, boundary.accepted_beta_limit),
                                 (0.0, film_loading_hi),
                             ]
@@ -954,7 +1134,7 @@ def advance_birth(
                             np.r_[lower, temperature_lo, -boundary.accepted_beta_limit, 0.0],
                             np.r_[
                                 upper,
-                                min(temperature_hi, boundary.temperature_k),
+                                min(temperature_hi, surface_upper),
                                 boundary.accepted_beta_limit,
                                 film_loading_hi,
                             ],
@@ -1130,7 +1310,18 @@ def advance_birth(
                         core.ci.certify_explicit_wet_retained_water_applicability(
                             controls, water, dual, config.wet.luikov
                         )
-                    combined = combined_ledger(before, config, carry, step, audit)
+                    combined = combined_ledger(
+                        before,
+                        config,
+                        carry,
+                        step,
+                        audit,
+                        **(
+                            {}
+                            if target_config is None
+                            else {"film_pressure_pa": target_config.dry.pressure_pa}
+                        ),
+                    )
                     if combined["maximum_normalized_residual"] > controls.ledger_tolerance:
                         raise RuntimeError(
                             "combined body/surface film conservation exceeded contract"
@@ -1139,6 +1330,11 @@ def advance_birth(
                         "accepted": True,
                         "gas_only_surface": gas_only_surface,
                         "total_residual_assembly_attempts": counter["attempts"],
+                        **(
+                            {}
+                            if budget_stamp is None
+                            else {"kernel_envelope_budgets_per_unknown": budget_stamp}
+                        ),
                         "seed_interface_water_root_temperature_k": gamma_water_root,
                         "seed_interface_water_root_loading_residual": seed_water_error,
                         "seed_interface_temperature_k": gamma,
@@ -1151,6 +1347,34 @@ def advance_birth(
                         "signed_numerical_capacity_samples": capacity_journal,
                         "after_transport": asdict(step.after.transport),
                         "after_inventory": asdict(core.ci.inventory_snapshot(step.after.transport)),
+                        **(
+                            {}
+                            if target_config is None and surface_temperature_upper_k is None
+                            else {
+                                "kernel_envelope": {
+                                    "target_pressure_pa": (
+                                        None
+                                        if target_config is None
+                                        else target_config.dry.pressure_pa
+                                    ),
+                                    "configuration_pressure_pa": config.dry.pressure_pa,
+                                    "surface_temperature_upper_k": surface_upper,
+                                    "bath_temperature_k": boundary.temperature_k,
+                                    "surface_minus_bath_k": audit.temperature_k
+                                    - boundary.temperature_k,
+                                }
+                            }
+                        ),
+                        **(
+                            {}
+                            if seed_bound_stamp is None
+                            else {"kernel_envelope_birth_seed_bound": seed_bound_stamp}
+                        ),
+                        **(
+                            {}
+                            if subcooled_seed_stamp is None
+                            else {"subcooled_birth_seed": subcooled_seed_stamp}
+                        ),
                     }
     except StepBudgetExceeded:
         raise
@@ -1172,12 +1396,24 @@ def advance_birth(
             "seed_native_water_trace_root_temperature_k": gamma_water_root,
             "surface_flux_coordinate": "exact native heat-beta inverse bounded to declared study band",
             "optimizer_debug": getattr(exc, "optimizer_debug", None),
+            **(
+                {}
+                if seed_bound_stamp is None
+                else {"kernel_envelope_birth_seed_bound": seed_bound_stamp}
+            ),
+            **(
+                {}
+                if subcooled_seed_stamp is None
+                else {"subcooled_birth_seed": subcooled_seed_stamp}
+            ),
         }
         failure.total_residual_assembly_attempts = counter["attempts"]
         raise failure from exc
 
 
-def combined_ledger(before, config, carry, step, audit):
+def combined_ledger(before, config, carry, step, audit, *, film_pressure_pa=None):
+    # film_pressure_pa (default None: config's pressure) is the new-time film's
+    # pressure under a prescribed pressure schedule.
     if isinstance(before, ww.WetWaterState):
         area = before.grid.areas[-1]
         old = bi._fully_wet_current_inventory(before, config)
@@ -1210,7 +1446,12 @@ def combined_ledger(before, config, carry, step, audit):
         )
     water_mass = area * audit.liquid_water_kg_m2
     water_energy = (
-        water_mass * core.wa.state_Tp(audit.temperature_k, config.dry.pressure_pa, "liquid").u_mass
+        water_mass
+        * core.wa.state_Tp(
+            audit.temperature_k,
+            config.dry.pressure_pa if film_pressure_pa is None else film_pressure_pa,
+            "liquid",
+        ).u_mass
     )
     water_out = dt * area * audit.external_water_flux_kg_m2_s
     hexane_out = dt * area * audit.external_hexane_flux_kg_m2_s

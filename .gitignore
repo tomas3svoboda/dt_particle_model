@@ -7,7 +7,6 @@ docs/evidence/
 paper/analysis/results_*/
 paper/analysis/submission_*/
 paper/analysis/temperature_property_runs/
-paper/analysis/datasets/
 paper/01_particle_jfpe/*.aux
 paper/01_particle_jfpe/*.bbl
 paper/01_particle_jfpe/*.blg
@@ -19,3 +18,6 @@ paper/01_particle_jfpe/figures/*.png
 paper/01_particle_jfpe/collaterals/*.png
 paper/01_particle_jfpe/collaterals/*.tif
 paper/01_particle_jfpe/collaterals/*_text.txt
+
+# Bulk histories are versioned release downloads.
+/data/*.tar.xz

@@ -22,6 +22,7 @@ import experiment_core2_dt_birth as driver
 import experiment_core2_dt_face as face
 import experiment_core2_dt_projection as projection
 import experiment_core2_radial_fast_wetting as wetting
+import particle_kernel_envelope as kernel_envelope
 import positive_water_continuation as continued
 
 core, study = driver.core, driver.study
@@ -46,10 +47,57 @@ def per_step_path_budget():
             active.pop().__exit__(None, None, None)
 
 
+# The callables finite_shell_path wraps, innermost scope last (kernel-envelope item 1:
+# after a front-stage film depletion the film-free surface scope restores them).
+_SHELL_ORIGINALS = []
+_SHELL_LIMITERS = []
+
+
+def active_shell_transfer_audit():
+    """The innermost finite_shell_path limiter's last D9 transfer audit (or None)."""
+    return _SHELL_LIMITERS[-1].last_audit if _SHELL_LIMITERS else None
+
+
+@contextmanager
+def film_free_surface_scope():
+    """No exterior liquid: the surface node and dry faces without the film's fast path.
+
+    Inside finite_shell_path the exterior-liquid-connected shell path and the
+    film-to-shell transfer act only while a film exists (the dry stage's
+    exterior_liquid_present=wet). After the film's exact-zero event this scope
+    restores the callables the innermost finite_shell_path wrapped; outside any
+    such path it changes nothing.
+    """
+    if not _SHELL_ORIGINALS:
+        yield False
+        return
+    surface, flux = _SHELL_ORIGINALS[-1]
+    saved = driver.node.evaluate_water_surface, core.cut._dry_flux
+    driver.node.evaluate_water_surface, core.cut._dry_flux = surface, flux
+    try:
+        yield True
+    finally:
+        driver.node.evaluate_water_surface, core.cut._dry_flux = saved
+
+
 @contextmanager
 def finite_shell_path(factor, conductance):
     """Thread the surface transfer through all existing native event charts."""
     original = driver.node.evaluate_water_surface
+    _SHELL_ORIGINALS.append((original, core.cut._dry_flux))
+    try:
+        with _finite_shell_path(original, factor, conductance) as limiter:
+            _SHELL_LIMITERS.append(limiter)
+            try:
+                yield limiter
+            finally:
+                _SHELL_LIMITERS.pop()
+    finally:
+        _SHELL_ORIGINALS.pop()
+
+
+@contextmanager
+def _finite_shell_path(original, factor, conductance):
     with wetting.liquid_connected_fast_path(
         factor,
         exterior_liquid_present=True,
@@ -116,7 +164,32 @@ def advance_partial(
     boundary_factory=None,
     gas_only_surface=False,
     experimental_interface_area_chart_audit=None,
+    film_depletion_event=False,
+    scaled_condition_cap=None,
+    surface_temperature_upper_k=None,
+    target_config_factory=None,
+    envelope_audit=None,
+    stalled_front=False,
 ):
+    # Kernel-envelope options (all default off; off passes nothing new to the node).
+    envelope = {
+        k: v
+        for k, v in (
+            ("film_depletion_event", film_depletion_event),
+            ("stalled_front", stalled_front),
+            ("scaled_condition_cap", scaled_condition_cap),
+            ("surface_temperature_upper_k", surface_temperature_upper_k),
+            ("target_config_factory", target_config_factory),
+            ("envelope_audit", envelope_audit),
+            # Ruling packet 6 item 1 (GT_PS2_PAPER1_BUDGETS_PER_UNKNOWN_BUILD_2026-10-24.md):
+            # the search budget below declared per unknown when the valued knob is armed.
+            (
+                "residual_budget_per_unknown",
+                kernel_envelope.budgets_per_unknown() is not None,
+            ),
+        )
+        if v is not None and v is not False
+    }
     config = current.transport.config
     radius = current.transport.geometry.master_grid.R
     candidate = core.cut.candidate_from_state(
@@ -142,6 +215,15 @@ def advance_partial(
             carry["external_water_loading_kg_m2"],
             carry["external_water_temperature_k"],
             config.dry.pressure_pa,
+            **(
+                {}
+                if target_config_factory is None
+                else {
+                    "new_pressure": lambda: (
+                        target_config_factory(holder["dt"]) or config
+                    ).dry.pressure_pa
+                }
+            ),
         )
 
     def decode(ts, beta, actual=None):
@@ -176,10 +258,11 @@ def advance_partial(
         beta_decoder=decode,
         energy_context=energy,
         target_z=target,
-        boundary_factory=factory if target else None,
+        boundary_factory=factory if target or film_depletion_event else None,
         search_tolerance=search_tolerance,
         gas_only_surface=gas_only_surface,
         experimental_interface_area_chart_audit=experimental_interface_area_chart_audit,
+        **envelope,
     )
 
 

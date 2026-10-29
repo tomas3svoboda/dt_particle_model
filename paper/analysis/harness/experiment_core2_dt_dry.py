@@ -15,6 +15,7 @@ import pickle
 import traceback
 import numpy as np
 import experiment_core2_dt_face as boundary_driver
+import particle_kernel_envelope as envelope
 from dtdc_simulator.core2.particle import cut_extinction_event as extinction
 from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 
@@ -147,6 +148,7 @@ def advance(
     event_duration_seed=None,
     stop_at_nonpositive_liquid=False,
     event_initial_profile=None,
+    target_pressure_pa=None,
 ):
     # The five trailing options are declared numerical search strategies only
     # (2026-10-17 film-depletion event-first build). With all of them at their
@@ -163,6 +165,15 @@ def advance(
         raise ValueError("positive finite water/hexane per-advance error budgets required")
     grid = before.grid
     n = grid.n
+    # Kernel-envelope pressure schedule (default None: one configuration): the
+    # native pressure-only target configuration of the advance's end; old states
+    # keep their own configuration, every new-time state, flux and the film node
+    # take the target, and the native ledger stamps the transition.
+    old_pressure = config.dry.pressure_pa
+    target_dry = before.config
+    if target_pressure_pa is not None and target_pressure_pa != before.config.pressure_pa:
+        target_dry = ct.pressure_only_target_config(before.config, target_pressure_pa)
+        config = core.cut.pressure_only_target_config(config, target_pressure_pa)
     pressure = config.dry.pressure_pa
     pore = config.dry.pore
     old = ct._inventories(
@@ -281,6 +292,14 @@ def advance(
             counter = physical_advance_assembly_budget
             if counter["used"] >= counter["limit"]:
                 raise StepBudgetExceeded("dry physical-advance residual assembly budget exhausted")
+            abandon_at = counter.get(envelope.HALF_STEP_ABANDON_KEY)
+            if abandon_at is not None and counter["used"] >= abandon_at:
+                raise envelope.DryFullStepAbandoned(
+                    "kernel-envelope half step first: the film-bearing full step reached the "
+                    "declared assembly threshold",
+                    used=counter["used"],
+                    threshold=abandon_at,
+                )
             counter["used"] += 1
         ts = values[:n]
         q = values[n : 2 * n]
@@ -291,7 +310,7 @@ def advance(
         for t, v in zip(ts, q):
             lo, hi = cp.gas_only_composition_interval(t, pressure, pore).y_hexane_bounds
             ys.append(lo + (hi - lo) * v)
-        cells = ct._equilibrium_states(ts, ys, before.config)
+        cells = ct._equilibrium_states(ts, ys, target_dry)
         new = ct._inventories(grid, cells)
         fluxes = [extinction._zero_center_flux()]
         for k in range(1, n):
@@ -330,6 +349,10 @@ def advance(
                     -dt * components.water_kg_m2_s,
                 )
             )
+            deposition = getattr(boundary, "dew_deposition_kg_m2_s", 0.0)
+            if deposition != 0.0:
+                # kernel-envelope dew-line condensate onto the film (armed only)
+                liquid = math.fsum((liquid, dt * deposition))
             if stop_at_nonpositive_liquid and not liquid > 0:
                 raise FilmDepletionBracketed(
                     "positive-film trial returned a nonpositive exterior film; "
@@ -356,6 +379,19 @@ def advance(
             if not 0 < dt <= 100.0:
                 raise ValueError("event duration coordinate outside its declared bound")
             boundary = boundary_factory(dt)
+            event_deposition = getattr(boundary, "dew_deposition_kg_m2_s", 0.0)
+            if event_deposition != 0.0 and not envelope.armed(
+                envelope.DEPLETION_CARRIES_CONDENSATE
+            ):
+                raise driver.node.pd_boundary.DewLineCondensateOnFilmFreeSurface(
+                    "the eliminated depletion event does not carry the dew-line condensate"
+                )
+            # Kernel-envelope DEPLETION_CARRIES_CONDENSATE (armed only): the projection's
+            # booked condensate enters the event's exact-zero water closure, as the film
+            # node's water row already books it; zero deposition is the former closure.
+            deposition_option = (
+                {} if event_deposition == 0.0 else {"deposition_kg_m2_s": event_deposition}
+            )
             area = grid.areas[-1]
             outer = cells[-1]
             hexane_target = (
@@ -387,6 +423,7 @@ def advance(
                     surface.temperature_k,
                     low,
                     high,
+                    **deposition_option,
                 )
             )
             # The saturated surface trace carries the native decode's
@@ -415,13 +452,15 @@ def advance(
                         surf_t,
                         hexane_loss / duration,
                     )
-                    value = math.fsum(
-                        (
-                            carry["external_water_loading_kg_m2"],
-                            -water_gain,
-                            -duration * parts[1].water_kg_m2_s,
-                        )
+                    terms = (
+                        carry["external_water_loading_kg_m2"],
+                        -water_gain,
+                        -duration * parts[1].water_kg_m2_s,
                     )
+                    trial_deposition = getattr(trial_boundary, "dew_deposition_kg_m2_s", 0.0)
+                    if deposition_option and trial_deposition != 0.0:
+                        terms = (*terms, duration * trial_deposition)
+                    value = math.fsum(terms)
                     return value, trial_boundary, parts
 
                 probe = dt * 1e-7
@@ -563,7 +602,8 @@ def advance(
         dt,
         carry["external_water_loading_kg_m2"],
         carry["external_water_temperature_k"],
-        pressure,
+        old_pressure,
+        **({} if target_dry is before.config else {"new_pressure": pressure}),
     ):
         raw = evaluate(initial)
         capacities = [
@@ -610,11 +650,14 @@ def advance(
 
         energy_rows = slice(2 * n, 3 * n)
         acceptance = NoiseAwareEnergyRowAcceptance(root_target, energy_rows, origins)
+        # Kernel-envelope item 7 (armed only): the solve's allowance per unknown, 3 (4 u + 6)
+        # with u its search vector's size; knob off the former 1,400.
+        solve_allowance = envelope.dry_assembly_allowance(np.asarray(initial).size)
         result = study.numerics.domain_aware_newton(
             residual,
             initial - origins,
             bounds=(np.asarray(bounds[0]) - origins, np.asarray(bounds[1]) - origins),
-            max_nfev=1400,
+            max_nfev=solve_allowance,
             gtol=root_target,
             acceptance=acceptance,
         )
@@ -732,6 +775,19 @@ def advance(
         energy_gate_stamp["native_ledger_energy_scale_factors"] = (
             native_energy_gate_factors.tolist()
         )
+        # Kernel-envelope item 7 (armed only): the factor is accepted as stamped; above the
+        # declared reporting ceiling a typed report-only stamp, never a refusal.
+        ceiling_stamp = envelope.native_ledger_factor_stamp(
+            native_energy_gate_factors, time_s=before.time_s + dt
+        )
+        if ceiling_stamp is not None:
+            energy_gate_stamp["kernel_envelope_native_ledger_factor_ceiling"] = ceiling_stamp
+        if envelope.armed(envelope.DRY_ALLOWANCE_PER_UNKNOWN):
+            energy_gate_stamp["kernel_envelope_dry_solve_allowance"] = {
+                "unknowns": int(np.asarray(initial).size),
+                "allowance": solve_allowance,
+                "residual_calls": int(result.nfev),
+            }
         step = ct._accept_step(
             before,
             core.ct.DirichletPoreBoundary(
@@ -747,7 +803,7 @@ def advance(
             work,
             result.message,
             False,
-            before.config,
+            target_dry,
         )
         if (
             global_component_mass_error_budgets_kg is not None or reduced

@@ -3900,6 +3900,33 @@ def _exact_float_dataclass_payload(
     return {name: _exact_float(value[name], f"{label}.{name}") for name in expected}
 
 
+#: The non-float scalar fields of ``CoupledPoreParams`` and the enum each one
+#: must name.  Runtime 151 / the S1 parity landing (2026-10-19) added the
+#: defaulted ``oil_heat_capacity_law`` (``props/sorption.py``
+#: ``OilHeatCapacityLaw``, a ``str`` enum the A20 serializer writes as its
+#: exact ``value``).  It is decoded as a supported member and nothing else:
+#: a JSON string equal to one member's value.  Every other scalar field stays
+#: an exact finite JSON float, the field set stays exact and the
+#: reconstruction round trip below still has to reproduce the payload.
+_A20_PORE_ENUM_FIELDS: Mapping[str, type[Enum]] = {
+    "oil_heat_capacity_law": sp.OilHeatCapacityLaw,
+}
+
+
+def _exact_enum_value(value: object, enum_type: type[Enum], label: str) -> Enum:
+    """Require a JSON string naming one supported member by its exact value."""
+
+    if type(value) is not str:
+        raise ValueError(f"{label} must be a JSON string naming a supported {enum_type.__name__}")
+    supported = {member.value: member for member in enum_type}
+    if value not in supported:
+        raise ValueError(
+            f"{label} names no supported {enum_type.__name__} value: {value!r} "
+            f"(supported: {sorted(supported)})"
+        )
+    return supported[value]
+
+
 def _coupled_pore_params_from_evidence(value: object) -> cp.CoupledPoreParams:
     """Rebuild the exact pore authority serialized with one A20 replay."""
 
@@ -3933,10 +3960,15 @@ def _coupled_pore_params_from_evidence(value: object) -> cp.CoupledPoreParams:
     if not isinstance(temperature_bounds, list) or len(temperature_bounds) != 2:
         raise ValueError("A20 pore temperature bounds must be a two-value JSON array")
     scalar_names = expected - {"gab", "oil", "luikov", "temperature_bounds_k"}
+    scalar_names -= set(_A20_PORE_ENUM_FIELDS)
     rebuilt = cp.CoupledPoreParams(
         **{
             name: _exact_float(value[name], f"A20 pore.{name}")
             for name in scalar_names
+        },
+        **{
+            name: _exact_enum_value(value[name], enum_type, f"A20 pore.{name}")
+            for name, enum_type in _A20_PORE_ENUM_FIELDS.items()
         },
         gab=gab,
         oil=oil,

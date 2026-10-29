@@ -167,6 +167,16 @@ PD_TAG3_FREEZE_CALL_KINDS = ("in_force", "thermal_guard")
 #: ``PD_EXPLORATION_HOOK`` clause below is unreachable and the step is the pre-edit step.
 PD_EXPLORATION_HOOK = None
 
+#: C2 DUPLICATE-STATE REUSE OF THE PD BOILING ROOT (Class A, the lead's brief S1 of
+#: 2026-10-14, record ``docs/GT_PS2_APPEND_WRITER_AND_PD_LEVERS_BUILD_RECORD_2026-10-14.md``).
+#: ``None`` on disk; ``study_lane/append_writer_and_pd_levers.py`` binds a reuse table when
+#: ``DTDC_PD_DUPLICATE_STATE_REUSE=1``.  While it is None every saturated state below is
+#: computed by the verbatim call and the step is the pre-edit step byte for byte.  Bound, a
+#: saturated state whose inputs (payload bytes, codec, the binary64 bits of the hexane total,
+#: the saturation temperature and the external free water, the level-0 flag) were already
+#: computed is reused: ``_packet_at_saturation`` is a pure function of exactly those inputs.
+PD_SATURATION_STATE_REUSE = None
+
 #: PD INTER-K CROSSING CAPACITY, THE UNIFORM-LAYER FORM (study-lane knob, ON by default:
 #: the owner's ruling 2 of 2026-09-29, ``GT_PS2_OWNER_RULINGS_2026-09-29_CAMPAIGN_DAY3.md``).
 #:
@@ -4758,13 +4768,25 @@ def _advance_one_packet(
                 f"packet {packet.packet_id} cannot evaporate hexane without positive packet "
                 "energy input"
             )
-        saturated_zero = _packet_at_saturation(
-            before,
-            total_hexane_mass_kg=total_hexane_after_condensation,
-            saturation_temperature_k=saturation_temperature_k,
-            codec=codec,
-            external_free_water_mass_kg=external_water_after_condensation_kg,
-        )
+        saturation_reuse = PD_SATURATION_STATE_REUSE
+        if saturation_reuse is None:
+            saturated_zero = _packet_at_saturation(
+                before,
+                total_hexane_mass_kg=total_hexane_after_condensation,
+                saturation_temperature_k=saturation_temperature_k,
+                codec=codec,
+                external_free_water_mass_kg=external_water_after_condensation_kg,
+            )
+        else:
+            # C2 (DTDC_PD_DUPLICATE_STATE_REUSE): the same call through the reuse table.
+            saturated_zero = saturation_reuse.packet_at_saturation(
+                _packet_at_saturation,
+                before,
+                total_hexane_mass_kg=total_hexane_after_condensation,
+                saturation_temperature_k=saturation_temperature_k,
+                codec=codec,
+                external_free_water_mass_kg=external_water_after_condensation_kg,
+            )
         # F4 (2026-09-02): the vapour that leaves is the CERTIFIED co-boiling
         # mixture, not pure n-hexane.  ``vapour_enthalpy`` is therefore the
         # common-datum enthalpy carried per mole of DEPARTING n-HEXANE - the
@@ -4799,15 +4821,27 @@ def _advance_one_packet(
                     f"{external_water_after_condensation_kg!r} kg of external free water; "
                     "refuse, do not clamp"
                 )
-            candidate = _packet_at_saturation(
-                before,
-                total_hexane_mass_kg=(
-                    total_hexane_after_condensation - removed_hexane_kg
-                ),
-                saturation_temperature_k=saturation_temperature_k,
-                codec=codec,
-                external_free_water_mass_kg=water_after,
-            )
+            if saturation_reuse is None:
+                candidate = _packet_at_saturation(
+                    before,
+                    total_hexane_mass_kg=(
+                        total_hexane_after_condensation - removed_hexane_kg
+                    ),
+                    saturation_temperature_k=saturation_temperature_k,
+                    codec=codec,
+                    external_free_water_mass_kg=water_after,
+                )
+            else:
+                # C2 (DTDC_PD_DUPLICATE_STATE_REUSE): the same call through the reuse
+                # table; the residual value below is computed from it as before.
+                candidate = saturation_reuse.packet_at_saturation(
+                    _packet_at_saturation,
+                    before,
+                    total_hexane_mass_kg=(total_hexane_after_condensation - removed_hexane_kg),
+                    saturation_temperature_k=saturation_temperature_k,
+                    codec=codec,
+                    external_free_water_mass_kg=water_after,
+                )
             value = math.fsum(
                 (
                     candidate.inventory.common_datum_energy_j,

@@ -28,6 +28,7 @@ from particle_solver_configuration import ParticleModelParameters, PAPER_CHECKPO
 from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 
 from faner_initialization import active_binary_controls
+import faner_measured_trace as measured_trace
 from bulk_endpoint import (  # noqa: E402
     INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER,
     declared_faner_film_multiplier,
@@ -325,6 +326,11 @@ class FanerAttachedMarch:
             oil_fraction=args.oil,
         )
         self.time = 0.0
+        # Kernel-envelope FANER_MEASURED_VAPOUR_TRACE (armed only): the feed rates read the
+        # measured trace at the end of the attempted interval (trace_clock); off, the
+        # constant boundary as before.
+        self.measured_trace = measured_trace.armed()
+        self.trace_clock = 0.0
         self.cumulative = np.zeros(3)
         self.initial = np.array(
             [
@@ -340,6 +346,8 @@ class FanerAttachedMarch:
 
     def rates(self, body_t, total_mass):
         ts, boundary = self.interface_temperature, self.boundary
+        if self.measured_trace:
+            boundary = measured_trace.boundary_at(self.boundary, self.trace_clock)
         reference = core.ct.prepare_reduced_film_surface_state(
             boundary.film_boundary,
             cell_temperature_k=body_t,
@@ -393,6 +401,10 @@ class FanerAttachedMarch:
             t = old.temperature_k + float(x[0])
             attached = 0.0 if event else float(x[1])
             dt = float(x[1]) if event else requested_dt
+            if self.measured_trace:
+                # the backward-Euler residual's clock: the attempted interval's end (an
+                # event's own duration included)
+                self.trace_clock = self.time + dt
             rates = self.rates(t, float(x[2]))
             state = core.sphere.initialize_qualified_feed(
                 self.params,
@@ -663,6 +675,8 @@ def run(args):
     def hashes():
         return {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
 
+    if measured_trace.armed():
+        sources.append(Path(__file__).with_name("faner_measured_trace.py"))
     entry = hashes()
     record = {
         "experiment": "native Faner attached-film to active-water birth",
@@ -680,9 +694,17 @@ def run(args):
     record["inputs"]["out"] = str(args.out)
     record["inputs"]["root_seed"] = str(args.root_seed) if args.root_seed else None
     record["inputs"]["resume"] = str(args.resume) if args.resume else None
+    if measured_trace.armed():
+        record["faner_measured_vapour_trace"] = measured_trace.declared_row()
     started = time.perf_counter()
     if args.resume:
         try:
+            if measured_trace.armed():
+                raise ValueError(
+                    "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE is not threaded through "
+                    "this study's own resume and radial continuation (the runner's front "
+                    "and dry stages carry it); refused"
+                )
             parent_path = args.resume.with_name(args.resume.name.replace(".accepted.pkl", ".json"))
             parent = json.loads(parent_path.read_text(encoding="utf-8"))
             if parent.get("checkpoint_codec") != PAPER_CHECKPOINT_CODEC:
@@ -778,6 +800,12 @@ def run(args):
         return record
     try:
         with declared_faner_film_multiplier(args.film_multiplier), pure_bulk_domain_adapter():
+            if measured_trace.armed() and args.steps:
+                raise ValueError(
+                    "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE is not threaded through "
+                    "this study's own radial continuation (--steps); the runner's front and "
+                    "dry stages carry it; refused"
+                )
             feed = FanerAttachedMarch(args)
             record["initial_native_pure_hexane_phase_temperature_k"] = feed.interface_temperature
             while feed.time < args.horizon:
@@ -852,14 +880,19 @@ def run(args):
                 "reason": "native gas-only barrier can exceed 30 in admissible low-moisture newborn states",
             }
             seed_options = {}
+            # Kernel-envelope FANER_MEASURED_VAPOUR_TRACE (armed only): the birth and its two
+            # seeds at the trace's activation + birth dt; off, feed.boundary itself.
+            birth_boundary = measured_trace.bath_boundary(
+                feed.boundary, before.time_s + args.birth_dt
+            )
             if args.leading_seed or getattr(args, "auto_leading_seed", False):
-                leading = leading_birth_seed(before, config, controls, feed.boundary)
+                leading = leading_birth_seed(before, config, controls, birth_boundary)
                 record["leading_birth_seed"] = leading
                 automatic = getattr(args, "auto_leading_seed", False)
                 if not leading["success"] and not automatic:
                     raise RuntimeError("native leading-balance seed root did not close")
                 if leading["success"]:
-                    profile = leading_pore_profile(before, config, feed.boundary, leading)
+                    profile = leading_pore_profile(before, config, birth_boundary, leading)
                     record["leading_pore_profile"] = profile
                     if not profile["success"] and not automatic:
                         raise RuntimeError("native leading pore-profile shooting did not close")
@@ -911,7 +944,7 @@ def run(args):
                     config,
                     controls,
                     carry,
-                    feed.boundary,
+                    birth_boundary,
                     args.birth_dt,
                     args.budget,
                     solver_policy="physical",

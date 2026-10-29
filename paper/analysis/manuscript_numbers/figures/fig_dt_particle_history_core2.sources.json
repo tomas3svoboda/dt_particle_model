@@ -1,0 +1,90 @@
+{
+ "source_sha256": {
+  "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\schedule_build\\results\\P_N80\\case.json": "6eb48eceae9d5a9c6f12fb1f634b3eb0b54f66a31e1035b86047c7f4002372ee",
+  "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\schedule_build\\results\\P_N80\\feed.json": "32d58a755230630424a94e6e9b794629fdd083ce8d71fa4493f22ebb4cd000db",
+  "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\schedule_build\\results\\P_N80\\front.history.jsonl": "b55c8f11abd68f2e822a68cc535cac1dd5057b38156c0521d25b8878e151cc7b",
+  "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\schedule_build\\results\\P_N80\\endpoint.json": "0150fa7b2f6ae91df6c0fc6aca4ca5f6f18a2a04b9c221d47d88d7fbc5dbc231",
+  "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\schedule_build\\results\\P_N80\\dry.history.jsonl": "adad4ead1cf1568838bc355306789aaf380dc7b453ef5c0e06f3b7518a8ad35f",
+  "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\refill\\A\\numbers_audit.json": "0def72f49c7ea39e305b64d06d3d063f86b60a87da23f4f4bbe0ab71bd92e48f",
+  "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-01\\dtdc_particle_destiny\\destiny_v3_exit105.json": "2b30f5ec955621f888052d3805effe9785666adf0258f50123e474408dcf88d9",
+  "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\refill\\A\\fig_dt_from_case.py": "4f97be542b302adddde97d34b64f57c29a238cc1cc0f0d17c926e7a154f92442",
+  "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\refill\\A\\numbers_from_cases.py": "6083d07acef1fa6a2284f47aa61672a0a29266ca5cd8e999d51eea0f161e3189",
+  "cases_final.json": "3fe8c4d39a9ddc7ebd6310cb6522bcc922349f287e0fb6e0986c669e47036262"
+ },
+ "reported_role": "P_N80",
+ "case_spec": {
+  "folder": "C:/Users/z004d8nt/AppData/Local/Temp/claude/c--Users-z004d8nt-Documents-DTDC-Simulator/964cefed-03b6-48b7-b6f9-19461913b2b5/scratchpad/schedule_build/results/P_N80",
+  "audit": "C:/Users/z004d8nt/AppData/Local/Temp/claude/c--Users-z004d8nt-Documents-DTDC-Simulator/964cefed-03b6-48b7-b6f9-19461913b2b5/scratchpad/schedule_build/results/P_N80.independent_audit.json",
+  "audit_required": false
+ },
+ "stitch": {
+  "kind": "plain",
+  "files": [
+   "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\schedule_build\\results\\P_N80\\dry.history.jsonl"
+  ]
+ },
+ "dt_radial_cells": 80,
+ "graded": {
+  "interior_cells": 56,
+  "band_cells": 24,
+  "band_ratio": 1.1,
+  "cells": 80
+ },
+ "time_level": 1,
+ "physically_qualifying": false,
+ "dt_prescribed_bath": {
+  "archived_feed_boundaries_checked": 10011,
+  "maximum_temperature_difference_k": 0.0,
+  "maximum_hexane_mole_fraction_difference": 0.0,
+  "pd_temperature_k": 345.15,
+  "pd_hexane_mole_fraction": 0.6644429974143522,
+  "post_pd_interpolation": "piecewise linear through original bath knots",
+  "water_mole_fraction": "1 - hexane mole fraction (binary bath)"
+ },
+ "inset_windows": {
+  "film_inset_xlim_min": [
+   7.8,
+   12.0
+  ],
+  "film_inset_xticks": [
+   8,
+   10,
+   12
+  ],
+  "film_inset_ylim": [
+   0,
+   0.12
+  ],
+  "core_inset_xlim_s_after_pd": [
+   0,
+   15.0
+  ],
+  "core_inset_rows": [
+   490.00224190324826,
+   505.20224190324825
+  ]
+ },
+ "dt_events_s": {
+  "pd_exit": 490.20224190324825,
+  "dry_shell_regime_a_to_b": 492.25725091342946,
+  "core_extinction_regime_b_to_c": 502.66359685638747,
+  "film_depletion": 658.7777183359428,
+  "computed_exit": 1766.5355008060146
+ },
+ "outlet_context": {
+  "hexane_ppm_wet_basis": [
+   100,
+   500
+  ],
+  "moisture_percent_wet_basis": [
+   16,
+   22
+  ],
+  "temperature_c": [
+   105,
+   110
+  ]
+ },
+ "outlet_reference_position_min": 30.0,
+ "faner_figures": "not redrawn (the Faner histories under the final code are row-for-row the former ones)"
+}

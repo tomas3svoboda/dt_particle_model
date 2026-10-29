@@ -1,0 +1,24 @@
+{
+  "reference_case": "Faner_R15_N20_L1",
+  "complete": true,
+  "exact_comparison_returncode": 0,
+  "physical_field_differences": 0,
+  "separate_metadata_classes": [
+    "source identities",
+    "option registry/stamps",
+    "paths",
+    "execution times"
+  ],
+  "independent_audit_passed": true,
+  "physical_rows_audited": 976,
+  "maximum_independent_normalized_W_H_U": [
+    1.5919091725226792e-12,
+    2.466633633794849e-13,
+    3.1872369548193886e-14
+  ],
+  "portable_40_cell_loading_and_temperature_SSE_differences": {
+    "solvent_loading": 0.0,
+    "particle_temperature": 0.0
+  },
+  "source": "Public particle import closure, including the committed subcooled-birth seed recovery; declared radius/exposure variants and gate options."
+}

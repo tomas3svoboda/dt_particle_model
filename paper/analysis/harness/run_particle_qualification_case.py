@@ -13,7 +13,8 @@ from pathlib import Path
 INVOCATION_CWD = Path.cwd()
 
 import argparse
-from dataclasses import asdict
+from contextlib import nullcontext
+from dataclasses import asdict, replace
 import hashlib
 import json
 import math
@@ -24,15 +25,36 @@ from types import SimpleNamespace
 
 import experiment_core2_dt_feed as feed_driver
 import experiment_core2_faner as faner
+import faner_measured_trace as faner_trace
 import experiment_core2_finite_wetting_b as engine
 import experiment_core2_radial_fast_wetting as liquid
+import particle_kernel_envelope as envelope
+import particle_surface_graded_mesh as graded_mesh
 import qualify_sliding_front_history as front
 from particle_core_extinction import project_core_endpoint
+from particle_history_time_control import HistoryTimeControl, depletion_advance_allowance_factor
 from particle_postcore_solver import advance_dry_phases, DryPhaseAdvanceError
 from particle_solver_configuration import ParticleModelParameters, PAPER_CHECKPOINT_CODEC
 from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 
 ROOT = faner.REPO_ROOT
+# The dry stage's declared maximum physical advances: the runner's ceiling, and the count that divides
+# the per-advance original-feed component budgets. 1,500 is the declared default (the ladder of
+# GT_PS2_PAPER1_FINAL_LADDER_AND_SENSITIVITY_2026-10-27); --dry-advance-ceiling N states another value
+# for a declared run (owner ruling of 2026-10-28, "Ok, raise the ceiling, run half step tests": 4,000
+# for the DT half-step pair). The record carries the value in force.
+DECLARED_DRY_ADVANCE_CEILING = 1500
+
+
+def declared_dry_advance_ceiling(args):
+    """The dry stage's maximum physical advances: the declared default unless the run states
+    --dry-advance-ceiling N, a positive integer; an absent attribute is the default."""
+    value = getattr(args, "dry_advance_ceiling", None)
+    if value is None:
+        return DECLARED_DRY_ADVANCE_CEILING
+    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+        raise ValueError("--dry-advance-ceiling must be a positive integer")
+    return value
 
 
 def hashes():
@@ -108,6 +130,7 @@ def fresh_dt_birth(args, multiplier, pinned):
     )
     feed = feed_driver.run(controls)
     write_json(feed_path, feed)
+    pressure_schedule = envelope.armed(envelope.PRESSURE_SCHEDULE)
     before, config, native_controls, carry = engine.driver.initialize_from_feed(
         feed,
         cells=args.cells,
@@ -115,12 +138,42 @@ def fresh_dt_birth(args, multiplier, pinned):
         continued_water=True,
         property_parameters=ParticleModelParameters(),
         dry_local_residual_tolerance=args.dry_local_tolerance,
+        **({"pressure_pa": feed["kernel_envelope_feed_pressure_pa"]} if pressure_schedule else {}),
     )
     bath = json.loads(args.bath.read_text())
     dt = 0.01 / multiplier
     boundary = engine.face.bath_boundary(bath, before.grid.R, before.time_s + dt)
+    birth_target = {}
+    if pressure_schedule:
+        birth_pressure = envelope.bath_pressure_pa(bath, before.time_s + dt)
+        if birth_pressure != config.dry.pressure_pa:
+            birth_target = {
+                "target_config": engine.core.cut.pressure_only_target_config(config, birth_pressure)
+            }
+            # The newborn interface seed and the interface chart's lower end are the
+            # declared native two-liquid temperature (+1e-6 K for the chart) at the
+            # birth's own pressure, as the feed stage takes them at its own.
+            root = envelope.two_liquid_root_k(birth_pressure)
+            carry = {
+                **carry,
+                "feed_two_liquid_interface_temperature_k": carry[
+                    "incoming_two_liquid_interface_temperature_k"
+                ],
+                "incoming_two_liquid_interface_temperature_k": root,
+            }
+            native_controls = replace(
+                native_controls,
+                interface_temperature_bounds_k=(
+                    root + 1e-6,
+                    native_controls.interface_temperature_bounds_k[1],
+                ),
+            )
+            carry["birth_interface_solver_chart_k"] = native_controls.interface_temperature_bounds_k
+    engine.wetting.surface_contact_reset()
     with (
-        engine.finite_shell_path(100, 0.32),
+        # The adopted film-covered surface law at the declared contact conductance (the one
+        # constant particle_kernel_envelope.K_L_MOL_M2_S).
+        engine.finite_shell_path(100, envelope.surface_contact_conductance()),
         engine.driver.bounded_path_proof(3000000, 120) as proof,
         engine.driver.path_bounds.monotone_water_path_enclosure([]),
         engine.driver.path_bounds.monotone_hexane_path_enclosure([]),
@@ -135,12 +188,17 @@ def fresh_dt_birth(args, multiplier, pinned):
             2400,
             solver_policy="physical",
             trace_coordinates=True,
+            **birth_target,
+            # Ruling packet 6 item 2 (GT_PS2_PAPER1_BUDGETS_PER_UNKNOWN_BUILD_2026-10-24.md)
+            **({"budget_per_unknown": True} if envelope.budgets_per_unknown() is not None else {}),
         )
     surface = step.assembly.dry_face_fluxes[-1].surface_film_audit
+    birth_contact = dict(engine.wetting.FINITE_CONTACT_LAST)
     checkpoint = {
         "checkpoint_codec": PAPER_CHECKPOINT_CODEC,
         "current": step.after,
-        "config": config,
+        # Repair A2, GT_PS2_UNIVERSAL_KERNEL_BIRTH_PRESSURE_REPAIR_BUILD_2026-10-22
+        "config": step.after.transport.config,
         "carry": {
             **carry,
             **audit["whole_particle_and_external_water"],
@@ -163,6 +221,13 @@ def fresh_dt_birth(args, multiplier, pinned):
             "audit": audit,
             "proof": proof,
             "dt_s": dt,
+            # The adopted film-covered surface law (report only): its declared row and the last
+            # surface-face evaluation of the birth's scope, with the conductance it used.
+            "surface_contact_law": {
+                "declared_row": envelope.surface_contact_law_declared_row(),
+                "K_l_mol_m2_s": birth_contact.get("K_l_mol_m2_s"),
+                "last_surface_face": birth_contact or None,
+            },
         },
     )
     return birth_path
@@ -352,15 +417,57 @@ def update_noise_aware_gate_summary(record, report):
     )
 
 
+def dry_physical_advance_assembly_budget(current):
+    """One dry physical advance's shared residual-assembly allowance.
+
+    Knob off: the former fixed 1,400 (the state is not read). Kernel-envelope item 7 armed:
+    3 (4 u + 6) with u = 3 N + 1, N the dry grid's cells.
+    """
+    if not envelope.armed(envelope.DRY_ALLOWANCE_PER_UNKNOWN):
+        return {"limit": 1400, "used": 0}
+    unknowns = envelope.dry_physical_advance_unknowns(current.grid.n)
+    return {"limit": envelope.dry_assembly_allowance(unknowns), "used": 0}
+
+
+def update_native_factor_ceiling_summary(record, report):
+    """Kernel-envelope item 7 (armed only): count the report-only ceiling stamps."""
+    if not envelope.armed(envelope.NATIVE_LEDGER_FACTOR_CEILING):
+        return
+    summary = record.setdefault(
+        "kernel_envelope_native_ledger_factor_ceiling",
+        {
+            "ceiling": envelope.NATIVE_LEDGER_FACTOR_REPORTING_CEILING,
+            "report_only": True,
+            "accepted_advances": 0,
+            "advances_above_ceiling": 0,
+            "maximum_factor": 0.0,
+            "first_above_time_s": None,
+        },
+    )
+    stamp = (report or {}).get("noise_aware_energy_row_gate") or {}
+    factors = stamp.get("native_ledger_energy_scale_factors") or []
+    summary["accepted_advances"] += 1
+    if factors:
+        summary["maximum_factor"] = max(summary["maximum_factor"], max(factors))
+    if stamp.get("kernel_envelope_native_ledger_factor_ceiling") is not None:
+        summary["advances_above_ceiling"] += 1
+        if summary["first_above_time_s"] is None:
+            summary["first_above_time_s"] = report.get("time_s")
+
+
 def run(args):
+    time_control = HistoryTimeControl(
+        args.study, args.time_level, getattr(args, "dry_time_schedule", "uniform")
+    )
     args.out.mkdir(parents=True)
     pinned = hashes()
-    multiplier = 2**args.time_level
+    multiplier = time_control.multiplier
     record = {
         "status": "RUNNING",
         "study": args.study,
         "base_cells": args.cells,
         "time_level": args.time_level,
+        "history_time_control": time_control.describe(),
         "native_dry_local_residual_tolerance": args.dry_local_tolerance,
         "conservative_original_feed_components": args.conservative_components,
         "source_sha256_at_entry": pinned,
@@ -379,7 +486,20 @@ def run(args):
         "complete_history": False,
         "C_accepted_steps": 0,
         "numerical_gate_ruling_settings": apply_ruling_options(args),
+        # The adopted film-covered surface law and its one declared contact conductance.
+        "surface_contact_law": envelope.surface_contact_law_declared_row(),
     }
+    if envelope.armed_items():
+        record["kernel_envelope_hygiene"] = {
+            "record": envelope.RECORD,
+            "armed": list(envelope.armed_items()),
+            "declared_rows": envelope.declared_rows(),
+            "physically_qualifying": False,
+        }
+    if args.study == "Faner" and faner_trace.armed():
+        # Kernel-envelope FANER_MEASURED_VAPOUR_TRACE (armed only): the trace file by path,
+        # its sha256, the points and the rule.
+        record["faner_measured_vapour_trace"] = faner_trace.declared_row()
     if getattr(args, "grouped_birth_search", False):
         record["declared_birth_search_option"] = "--grouped-birth-search"
     memo_option = (
@@ -393,15 +513,28 @@ def run(args):
         record["declared_core_endpoint_option"] = "--conservative-core-endpoint"
     if args.bath:
         record["bath_sha256"] = hashlib.sha256(args.bath.read_bytes()).hexdigest()
+        # Kernel-envelope INSTRUMENT_SHARED_LAW (armed only): the bath gas's water activity on
+        # the shared law beside the ideal Raoult-Dalton reading, report only.
+        instrument = envelope.bath_instrument(json.loads(args.bath.read_text()))
+        if instrument is not None:
+            record["kernel_envelope_instrument_shared_law"] = instrument
     started = time.perf_counter()
     result_path = args.out / "case.json"
     write_json(result_path, record)
-    try:
-        birth = (
-            fresh_dt_birth(args, multiplier, pinned)
-            if args.study == "DT"
-            else fresh_faner_birth(args, multiplier)
+    # Kernel-envelope SURFACE_GRADED_MESH (armed only): the declared face set, stamped.
+    face_set = getattr(args, "surface_graded_face_set", None)
+    if face_set is not None:
+        record["surface_graded_mesh"] = face_set.describe(
+            0.0015 if args.study == "DT" else 0.000885
         )
+        write_json(result_path, record)
+    try:
+        with graded_mesh.installed(face_set) if face_set is not None else nullcontext():
+            birth = (
+                fresh_dt_birth(args, multiplier, pinned)
+                if args.study == "DT"
+                else fresh_faner_birth(args, multiplier)
+            )
         record["birth_result"] = str(birth)
         write_json(result_path, record)
         horizon = 1766.5355008060146 if args.study == "DT" else 240.0
@@ -449,7 +582,9 @@ def run(args):
         else:
 
             def boundary_factory(clock):
-                return checkpoint["boundary"]
+                # Kernel-envelope FANER_MEASURED_VAPOUR_TRACE (armed only): the trace at the
+                # clock; off, the constant boundary itself.
+                return faner_trace.bath_boundary(checkpoint["boundary"], clock)
 
         from contextlib import ExitStack
 
@@ -469,7 +604,12 @@ def run(args):
             scope.enter_context(engine.driver.path_bounds.monotone_hexane_path_enclosure([]))
             if args.study == "DT":
                 with (
-                    engine.finite_shell_path(100, 0.32),
+                    engine.finite_shell_path(100, envelope.surface_contact_conductance()),
+                    (
+                        engine.film_free_surface_scope()
+                        if checkpoint.get("kernel_envelope_film_free", False)
+                        else nullcontext()
+                    ),
                     engine.driver.bounded_path_proof(3000000, 120, **memo_option) as proof,
                 ):
                     endpoint = project_core_endpoint(
@@ -511,6 +651,12 @@ def run(args):
                     "time_control": asdict(endpoint.time_control),
                     "proof": proof,
                     "base_face_restoration": endpoint.base_face_restoration,
+                    # the residual-contract polish's stamp, only where it acted
+                    **(
+                        {"core_endpoint_residual_polish": endpoint.residual_polish}
+                        if endpoint.residual_polish is not None
+                        else {}
+                    ),
                     "after_transport": asdict(current),
                     "surface": asdict(surface),
                 },
@@ -556,13 +702,35 @@ def run(args):
                     record["declared_film_depletion_search_options"] = dict(declared_options)
                 if getattr(args, "curvature_corrected_depletion_prediction", False):
                     record["declared_depletion_prediction"] = "curvature_corrected_three_point"
-                maximum_dt = (5.0 if args.study == "DT" else 1.0) / multiplier
                 component_budgets = None
+                # The declared maximum dry physical advances. Kernel-envelope BUDGETS_PER_UNKNOWN
+                # (ruling packet 6 item 5, GT_PS2_PAPER1_BUDGETS_PER_UNKNOWN_BUILD_2026-10-24.md;
+                # armed only): max(1,500, 2 P), P the planned requests from this clock to the
+                # horizon; the same count divides the per-advance component budgets.
+                maximum_advances = declared_dry_advance_ceiling(args)
+                if maximum_advances != DECLARED_DRY_ADVANCE_CEILING:
+                    record["history_time_control"]["dry_physical_advance_limit"] = maximum_advances
+                    record["declared_dry_advance_ceiling"] = {
+                        "value": maximum_advances,
+                        "was": DECLARED_DRY_ADVANCE_CEILING,
+                        "ruling": "owner, 2026-10-28: raise the ceiling, run the half-step pair",
+                        "physically_qualifying": False,
+                    }
+                budgets_rule = envelope.budgets_per_unknown()
+                if budgets_rule is not None:
+                    maximum_advances, ceiling_stamp = envelope.dry_advance_ceiling(
+                        time_control, current.time_s, horizon, maximum_advances
+                    )
+                    record["kernel_envelope_budgets_per_unknown"] = {
+                        "declared_row": envelope.budgets_per_unknown_declared_row(budgets_rule),
+                        "dry_advance_ceiling": ceiling_stamp,
+                    }
+                    record["history_time_control"]["dry_physical_advance_limit"] = maximum_advances
                 if original_balance is not None:
                     from particle_original_feed_balance import component_error_budgets_per_advance
 
                     component_budgets = component_error_budgets_per_advance(
-                        original_balance, origin, 1500
+                        original_balance, origin, maximum_advances
                     )
                     record["global_component_error_budgets_kg_per_advance"] = component_budgets
                 stream.write(
@@ -575,13 +743,19 @@ def run(args):
                 begin_advance = scope.enter_context(
                     engine.driver.physical_advance_proof_budget(3000000, 120, **memo_option)
                 )
-                for index in range(1500):
+                for index in range(maximum_advances):
                     if current.time_s >= horizon:
                         record["complete_history"] = True
                         break
                     proof = begin_advance()
-                    assembly_budget = {"limit": 1400, "used": 0}
-                    requested = min(maximum_dt, horizon - current.time_s)
+                    assembly_budget = dry_physical_advance_assembly_budget(current)
+                    request_start_clock = current.time_s
+                    # Film-aware last band (ruling packet 7, 2026-10-27): the caller states the film.
+                    requested = time_control.dry_request(
+                        current.time_s,
+                        horizon,
+                        film_present=carry["external_water_loading_kg_m2"] > 0,
+                    )
                     advance_options = dict(declared_options)
                     if getattr(args, "event_first_film_depletion", False):
                         advance_options["predicted_depletion_duration_s"] = (
@@ -590,7 +764,41 @@ def run(args):
                             else predicted_film_depletion_duration(film_points)
                         )
                         advance_options["previous_accepted_profile"] = previous_profile
+                    # The depletion advance's allowance doubled (ruling packet 7, 2026-10-27).
+                    assembly_budget["limit"] *= depletion_advance_allowance_factor(
+                        carry["external_water_loading_kg_m2"],
+                        advance_options.get("predicted_depletion_duration_s"),
+                        requested,
+                    )
+                    # Kernel-envelope DRY_HALF_STEP_FIRST (armed only): a film-bearing advance
+                    # abandons its full step at the declared assembly threshold.
+                    half_step_first = (
+                        envelope.armed(envelope.DRY_HALF_STEP_FIRST)
+                        and carry["external_water_loading_kg_m2"] > 0
+                    )
+                    half_step_stamp = None
+                    # The adopted film-covered surface law: report-only stamp of every advance.
+                    liquid.surface_contact_reset()
+                    # LIQUID_MOBILITY_RULE (study knob, armed only): report-only stamp.
+                    mobility_rule = envelope.liquid_mobility_rule()
+                    if mobility_rule is not None:
+                        liquid.surface_rules_reset()
                     for halving in range(13):
+                        if half_step_first:
+                            if halving == 0:
+                                # BUDGETS_PER_UNKNOWN (ruling packet 6 item 4): max(1,200,
+                                # floor(5 A / 12)), A this advance's allowance in force.
+                                assembly_budget[envelope.HALF_STEP_ABANDON_KEY] = (
+                                    envelope.DRY_HALF_STEP_FIRST_ASSEMBLY_THRESHOLD
+                                    if budgets_rule is None
+                                    else envelope.dry_half_step_threshold(assembly_budget["limit"])
+                                )
+                            else:
+                                assembly_budget.pop(envelope.HALF_STEP_ABANDON_KEY, None)
+                        if args.study == "DT" and envelope.armed(envelope.PRESSURE_SCHEDULE):
+                            advance_options["target_pressure_pa"] = envelope.bath_pressure_pa(
+                                bath, current.time_s + requested / (2**halving)
+                            )
                         try:
                             candidate = advance_dry_phases(
                                 current,
@@ -606,6 +814,38 @@ def run(args):
                                 conservative_liquid_elimination=args.conservative_components,
                                 **advance_options,
                             )
+                        except envelope.DryFullStepAbandoned as abandoned:
+                            if not (half_step_first and halving == 0):
+                                raise
+                            assembly_budget.pop(envelope.HALF_STEP_ABANDON_KEY, None)
+                            half_step_stamp = {
+                                "abandoned_full_step_s": requested,
+                                "assemblies_at_abandonment": abandoned.used,
+                                "declared_numerics_threshold": abandoned.threshold,
+                                "allowance": assembly_budget["limit"],
+                                "film_kg_m2_at_start": carry["external_water_loading_kg_m2"],
+                                "record": envelope.QUEUE_RECORD,
+                                "physically_qualifying": False,
+                            }
+                            stream.write(
+                                json.dumps(
+                                    {
+                                        "kind": "refusal",
+                                        "time_s": current.time_s,
+                                        "halving": halving,
+                                        "trials": [],
+                                        "kernel_envelope_dry_half_step_first": half_step_stamp,
+                                    },
+                                    default=front.json_default,
+                                )
+                                + "\n"
+                            )
+                            stream.flush()
+                            record["kernel_envelope_dry_half_step_first_abandonments"] = (
+                                record.get("kernel_envelope_dry_half_step_first_abandonments", 0)
+                                + 1
+                            )
+                            continue
                         except StepBudgetExceeded:
                             raise
                         except DryPhaseAdvanceError as error:
@@ -625,6 +865,8 @@ def run(args):
                             if halving == 12:
                                 raise
                             continue
+                        if half_step_first:
+                            assembly_budget.pop(envelope.HALF_STEP_ABANDON_KEY, None)
                         row = liquid.row(candidate.after, candidate.surface, candidate.carry)
                         elapsed = candidate.after.time_s - current.time_s
                         histories = [history.copy() for history in integrated]
@@ -671,10 +913,23 @@ def run(args):
                             candidate.carry,
                             candidate.surface,
                         )
+                        if current.config.pressure_pa != config.dry.pressure_pa:
+                            # Kernel-envelope pressure schedule: the cut configuration
+                            # follows the accepted state's pressure-only target.
+                            config = engine.core.cut.pressure_only_target_config(
+                                config, current.config.pressure_pa
+                            )
                         integrated, previous_phase = histories, candidate.phase
                         film_points.append((current.time_s, carry["external_water_loading_kg_m2"]))
                         row.update(
                             kind="depletion" if candidate.depletion_event else candidate.phase,
+                            time_control_request={
+                                "start_clock_s": request_start_clock,
+                                "requested_dt_s": requested,
+                                "accepted_halving": halving,
+                                "native_attempt_dt_s": requested / (2**halving),
+                                "schedule": time_control.dry_schedule,
+                            },
                             after_transport=asdict(current),
                             native_report=candidate.native_report,
                             independent_normalized_residuals=normalized,
@@ -687,10 +942,31 @@ def run(args):
                                 else None
                             ),
                         )
+                        if half_step_stamp is not None:
+                            row["kernel_envelope_dry_half_step_first"] = {
+                                **half_step_stamp,
+                                "accepted_halving": halving,
+                            }
+                        row["kernel_envelope_finite_contact"] = (
+                            liquid.surface_contact_advance_stamp(
+                                candidate.native_report,
+                                candidate.liquid_supply_audit,
+                            )
+                        )
+                        if mobility_rule is not None:
+                            row["kernel_envelope_surface_rules"] = (
+                                liquid.surface_rules_advance_stamp(
+                                    mobility_rule,
+                                    candidate.native_report,
+                                    current,
+                                    config,
+                                )
+                            )
                         stream.write(json.dumps(row, default=front.json_default) + "\n")
                         stream.flush()
                         record["C_accepted_steps"] += 1
                         update_noise_aware_gate_summary(record, candidate.native_report)
+                        update_native_factor_ceiling_summary(record, candidate.native_report)
                         record["last_accepted"] = {
                             k: v
                             for k, v in row.items()
@@ -779,6 +1055,22 @@ def main():
     parser.add_argument("--study", choices=("DT", "Faner"), required=True)
     parser.add_argument("--cells", type=int, required=True)
     parser.add_argument("--time-level", type=int, choices=(0, 1, 2), required=True)
+    parser.add_argument(
+        "--dry-advance-ceiling",
+        type=int,
+        default=DECLARED_DRY_ADVANCE_CEILING,
+        help="the dry stage's declared maximum physical advances (default 1,500, a positive "
+        "integer; the same count divides the per-advance component budgets); 4,000 for the DT "
+        "half-step pair under the owner's ruling of 2026-10-28",
+    )
+    parser.add_argument(
+        "--dry-time-schedule",
+        choices=("uniform", "dt-film-resolved"),
+        default="uniform",
+        help="explicit DT qualification family: caps 0.3125 s before 515 s, "
+        "0.625 s to 570 s, then 5 s, all divided by 2**time-level; "
+        "uniform preserves the existing controls",
+    )
     parser.add_argument("--bath", type=Path)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--experimental-per-area", action="store_true")
@@ -855,7 +1147,56 @@ def main():
         help="declared search option (Faner): grouped-colour Newton search directions for "
         "the joint birth; dense final certificate, budget and cap unchanged",
     )
+    parser.add_argument(
+        "--graded-interior-cells",
+        type=int,
+        help="kernel-envelope SURFACE_GRADED_MESH only: the uniform interior cell count m",
+    )
+    parser.add_argument(
+        "--graded-band-cells",
+        type=int,
+        help="kernel-envelope SURFACE_GRADED_MESH only: the surface band's cell count n",
+    )
+    parser.add_argument(
+        "--graded-band-ratio",
+        type=float,
+        help="kernel-envelope SURFACE_GRADED_MESH only: the band's geometric ratio q > 1",
+    )
     args = parser.parse_args()
+    try:
+        HistoryTimeControl(args.study, args.time_level, args.dry_time_schedule)
+    except ValueError as error:
+        parser.error(str(error))
+    try:
+        envelope.validate_environment()
+    except envelope.EnvelopeKnobRefused as error:
+        parser.error(str(error))
+    if faner_trace.armed() and args.study != "Faner":
+        parser.error(
+            "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE is declared for the Faner study "
+            "only (the DT bath is the --bath file)"
+        )
+    graded_values = (args.graded_interior_cells, args.graded_band_cells, args.graded_band_ratio)
+    args.surface_graded_face_set = None
+    if envelope.armed(envelope.SURFACE_GRADED_MESH):
+        if any(value is None for value in graded_values):
+            parser.error(
+                "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH needs --graded-interior-cells, "
+                "--graded-band-cells and --graded-band-ratio"
+            )
+        try:
+            args.surface_graded_face_set = graded_mesh.parse(*graded_values)
+            graded_mesh.native_grid(
+                args.surface_graded_face_set, 0.0015 if args.study == "DT" else 0.000885
+            )
+        except graded_mesh.SurfaceGradedMeshRefused as error:
+            parser.error(str(error))
+        if args.surface_graded_face_set.cells != args.cells:
+            parser.error("--cells must equal the graded total m + n")
+    elif any(value is not None for value in graded_values):
+        parser.error(
+            "the --graded-* options are refused without DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH"
+        )
     if args.grouped_birth_search and args.study != "Faner":
         parser.error("--grouped-birth-search is declared for the Faner birth only")
     if args.eliminate_event_absent_components and not args.conservative_components:

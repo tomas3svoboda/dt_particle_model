@@ -1,0 +1,37 @@
+{
+  "case": "Faner_PHI_0p25000",
+  "summary": "radius 1.5 mm; common external-transfer factor 0.25; measured vapour trace",
+  "rule": "exact text replacements on the file's text with line endings normalized to LF; each must occur exactly 'count' times; the file's own line endings are restored after (scripts/reproduce_final_reference.py applies them to a scratch copy of the tree under reruns/, never to the tree itself)",
+  "producer_records": [
+    "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+  ],
+  "replacements": [
+    {
+      "path": "paper/analysis/harness/run_particle_qualification_case.py",
+      "old": "                    \"--radius\",\n                    0.000885,\n",
+      "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+      "count": 1,
+      "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+      "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+      "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+    },
+    {
+      "path": "paper/analysis/harness/run_particle_qualification_case.py",
+      "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+      "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+      "count": 2,
+      "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+      "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+      "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+    },
+    {
+      "path": "paper/analysis/harness/bulk_endpoint.py",
+      "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+      "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.25\n",
+      "count": 1,
+      "note": "declared profile candidate or initial-slope baseline",
+      "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+      "file_sha256_with_variant": "7667b1de078384731f76670ebcf7f7d2f6412e568c52ae3fb60105c38b181ff7"
+    }
+  ]
+}

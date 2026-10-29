@@ -10,6 +10,7 @@ import math
 
 import experiment_core2_dt_dry as dry
 import experiment_core2_radial_fast_wetting as liquid
+import particle_kernel_envelope as envelope
 from dtdc_simulator.core2.particle.numerical_work import StepBudgetExceeded
 
 
@@ -44,7 +45,7 @@ def advance_dry_phases(
     water_inventory_scale_kg,
     assembly_budget,
     liquid_mobility_factor=100.0,
-    contact_conductance=0.32,
+    contact_conductance=None,
     search_tolerance=None,
     global_component_mass_error_budgets_kg=None,
     use_native_conduction_predictor=False,
@@ -55,6 +56,7 @@ def advance_dry_phases(
     conservative_event_elimination=False,
     conservative_absent_elimination=False,
     previous_accepted_profile=None,
+    target_pressure_pa=None,
 ):
     """Try the repository's liquid/contact/absent active sets on one old state.
 
@@ -72,9 +74,30 @@ def advance_dry_phases(
     tolerance or allowance changes. previous_accepted_profile, a tuple
     (time_s, temperatures_k, y_hexane) of the accepted state before this one,
     seeds an event's cells by linear extrapolation to its seed duration.
+
+    contact_conductance (default None): the liquid contact conductance K_l of the adopted
+    film-covered surface law, read at call time from the one declared constant
+    particle_kernel_envelope.K_L_MOL_M2_S when not given.
     """
     if not math.isfinite(duration) or duration <= 0:
         raise ValueError("positive finite dry advance required")
+    if contact_conductance is None:
+        contact_conductance = envelope.surface_contact_conductance()
+    # Kernel-envelope pressure schedule (default None: nothing passed): the
+    # pressure of the attempted interval's end, for every active set.
+    pressure_option = {} if target_pressure_pa is None else {"target_pressure_pa": target_pressure_pa}
+    # LIQUID_MOBILITY_RULE (study knob, default unset: nothing passed): the interior liquid-path
+    # rule, every active set.
+    contact_option = {}
+    mobility_rule = envelope.liquid_mobility_rule()
+    if mobility_rule is not None:
+        contact_option = {**contact_option, "liquid_mobility_rule": mobility_rule}
+    if mobility_rule == envelope.LIQUID_MOBILITY_LOCAL_STATE_LAGGED:
+        # local_state_lagged reads the rule on this advance's accepted start state.
+        contact_option = {
+            **contact_option,
+            "liquid_mobility_start_state": (before.temperatures_k, before.y_hexane, before.config),
+        }
     if not math.isfinite(water_inventory_scale_kg) or water_inventory_scale_kg <= 0:
         raise ValueError("positive finite water ledger scale required")
     if not isinstance(assembly_budget, dict):
@@ -88,10 +111,39 @@ def advance_dry_phases(
     present = carry["external_water_loading_kg_m2"] > 0
     absent_guess = surface
     following_wet_contact = previous_phase in ("liquid", "contact")
+    film_free_seed = None
+    gas_fallback_guess = None
     if not present and following_wet_contact:
-        absent_guess = replace(
-            surface, temperature_k=boundary.temperature_k, surface_y_hexane=boundary.y_hexane
-        )
+        if previous_phase == "liquid" and envelope.armed(envelope.FILM_FREE_SEED_STORED_SURFACE):
+            # Kernel-envelope film-free seed (the lead's record of 2026-10-20 on the 378 K
+            # dry wall, section 3 item 1): the first film-free advance after the exterior
+            # film depletes is seeded at the stored surface of the last accepted row, not at
+            # the bath gas state. A seed only; the path proof and every gate are unchanged.
+            film_free_seed = {
+                "seed": "stored_surface",
+                "seed_temperature_k": surface.temperature_k,
+                "seed_y_hexane": surface.surface_y_hexane,
+                "gas_state_temperature_k": boundary.temperature_k,
+                "gas_state_y_hexane": boundary.y_hexane,
+                "previous_phase": previous_phase,
+                "record": envelope.SEED_RECORD,
+                "physically_qualifying": False,
+            }
+            if envelope.armed(envelope.FILM_FREE_SEED_GAS_FALLBACK):
+                # Kernel-envelope seed order (the lead's numerics queue of 2026-10-20): on the
+                # conservative absent elimination's typed chart refusal of the stored seed, the
+                # absent set is tried once more from the former bath gas state seed.
+                gas_fallback_guess = replace(
+                    surface,
+                    temperature_k=boundary.temperature_k,
+                    surface_y_hexane=boundary.y_hexane,
+                )
+                film_free_seed["order"] = "stored_surface_then_gas_state"
+                film_free_seed["order_record"] = envelope.QUEUE_RECORD
+        else:
+            absent_guess = replace(
+                surface, temperature_k=boundary.temperature_k, surface_y_hexane=boundary.y_hexane
+            )
     phases = (
         ("liquid",)
         if present
@@ -140,6 +192,7 @@ def advance_dry_phases(
             liquid_mobility_factor,
             exterior_liquid_present=True,
             contact_conductance=contact_conductance,
+            **contact_option,
         ) as limiter:
             try:
                 result = dry.advance(
@@ -158,6 +211,7 @@ def advance_dry_phases(
                     event_duration_seed=predicted_depletion_duration_s,
                     **event_options,
                     **event_profile(predicted_depletion_duration_s),
+                    **pressure_option,
                 )
             except StepBudgetExceeded:
                 raise
@@ -206,6 +260,7 @@ def advance_dry_phases(
             liquid_mobility_factor,
             exterior_liquid_present=wet,
             contact_conductance=contact_conductance,
+            **contact_option,
         ) as limiter:
             try:
                 result = dry.advance(
@@ -224,6 +279,7 @@ def advance_dry_phases(
                     conservative_liquid_elimination=conservative_liquid_elimination and present,
                     **(liquid_options if present else {}),
                     **(absent_options if phase == "absent" and not present else {}),
+                    **pressure_option,
                 )
                 if phase == "contact":
                     audit = limiter.last_audit
@@ -249,6 +305,11 @@ def advance_dry_phases(
                         "phase": phase,
                         "error": str(error),
                         "optimizer_debug": getattr(error, "optimizer_debug", None),
+                        **(
+                            {"kernel_envelope_film_free_seed": film_free_seed}
+                            if film_free_seed is not None and phase == "absent"
+                            else {}
+                        ),
                     }
                 )
                 if present:
@@ -268,6 +329,7 @@ def advance_dry_phases(
                             use_native_conduction_predictor=use_native_conduction_predictor,
                             **event_options,
                             **event_profile(duration),
+                            **pressure_option,
                         )
                         event = True
                     except StepBudgetExceeded:
@@ -279,6 +341,45 @@ def advance_dry_phases(
                                 "phase": "depletion event",
                                 "error": str(event_error),
                                 "optimizer_debug": getattr(event_error, "optimizer_debug", None),
+                            }
+                        )
+                elif (
+                    phase == "absent"
+                    and gas_fallback_guess is not None
+                    and str(error) == envelope.ABSENT_FILM_CHART_REFUSAL
+                ):
+                    try:
+                        result = dry.advance(
+                            before,
+                            config,
+                            gas_fallback_guess,
+                            carry,
+                            duration,
+                            boundary,
+                            surface_phase_override=phase,
+                            surface_liquid_transfer_adapter=None,
+                            search_tolerance=search_tolerance,
+                            physical_advance_assembly_budget=assembly_budget,
+                            global_component_mass_error_budgets_kg=global_component_mass_error_budgets_kg,
+                            use_native_conduction_predictor=use_native_conduction_predictor,
+                            conservative_liquid_elimination=False,
+                            **absent_options,
+                            **pressure_option,
+                        )
+                        film_free_seed = {
+                            **film_free_seed,
+                            "accepted_seed": "gas_state_fallback",
+                            "first_seed_refusal": str(error),
+                        }
+                    except StepBudgetExceeded:
+                        raise
+                    except Exception as fallback_error:
+                        result = None
+                        rejected.append(
+                            {
+                                "phase": "absent (gas-state seed after the stored seed)",
+                                "error": str(fallback_error),
+                                "optimizer_debug": getattr(fallback_error, "optimizer_debug", None),
                             }
                         )
             if result is None:
@@ -300,6 +401,13 @@ def advance_dry_phases(
                 **next_carry,
                 "external_water_mass_kg": after.grid.areas[-1] * audit.liquid_water_kg_m2,
             }
+            if film_free_seed is not None:
+                seed_stamp = {**film_free_seed, "accepted_phase": phase}
+                if "order" in seed_stamp and "accepted_seed" not in seed_stamp:
+                    seed_stamp["accepted_seed"] = (
+                        "stored_surface" if phase == "absent" else "not_seeded_wet_set"
+                    )
+                report = {**report, "kernel_envelope_film_free_seed": seed_stamp}
             return DryPhaseAdvance(
                 after, audit, next_carry, report, phase, event, limiter.last_audit, tuple(rejected)
             )

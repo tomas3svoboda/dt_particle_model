@@ -221,7 +221,14 @@ def absent_film_surface_for_component_targets(
 
 
 def depletion_event_surface_temperature(
-    old_liquid, particle_water_gain, duration, film_target, seed, lower, upper
+    old_liquid,
+    particle_water_gain,
+    duration,
+    film_target,
+    seed,
+    lower,
+    upper,
+    deposition_kg_m2_s=None,
 ):
     """Exact-zero film over a given duration: the water closure fixes T_s.
 
@@ -234,7 +241,15 @@ def depletion_event_surface_temperature(
     bracket is taken, so the closure is a pure function of the trial state.
     Returns (T, total, components, beta, y, inverse_calls, g(T), quantum), where
     quantum = |g(next float above T) - g(T)| is the closure's representable step.
+
+    deposition_kg_m2_s (kernel-envelope DEPLETION_CARRIES_CONDENSATE, default None: the former
+    closure) is the dew-line projection's booked condensate onto the film over the event;
+    the closure is then g(T) = L_old - water_gain - d j_w(T) + d deposition.
     """
+    if deposition_kg_m2_s is not None and not (
+        math.isfinite(deposition_kg_m2_s) and deposition_kg_m2_s > 0
+    ):
+        raise ValueError("a booked dew-line deposition must be positive and finite")
     if not all(math.isfinite(x) for x in (old_liquid, particle_water_gain, duration, seed)):
         raise ValueError("finite depletion-event inventories required")
     if not old_liquid > 0 or not duration > 0 or not lower < seed < upper:
@@ -247,9 +262,10 @@ def depletion_event_surface_temperature(
         if temperature not in cache:
             total, components, beta, y, inverse = film_target(temperature)
             calls += inverse
-            value = math.fsum(
-                (old_liquid, -particle_water_gain, -duration * components.water_kg_m2_s)
-            )
+            terms = (old_liquid, -particle_water_gain, -duration * components.water_kg_m2_s)
+            if deposition_kg_m2_s is not None:
+                terms = (*terms, duration * deposition_kg_m2_s)
+            value = math.fsum(terms)
             cache[temperature] = (value, total, components, beta, y)
         return cache[temperature][0]
 

@@ -302,6 +302,10 @@ class BirthAssembly:
     surface_boundary: ct.PoreBoundary
     dt_s: float
     physically_qualifying: bool = field(default=False, init=False)
+    # The fully-wet state's own configuration when the birth was assembled at a
+    # prescribed pressure-only target configuration (``config`` is then the target);
+    # None when the birth carries one configuration (the former behaviour).
+    before_config: cut.CutTransportConfig | None = None
 
     def __post_init__(self) -> None:
         if not self.layout.is_square:
@@ -461,8 +465,16 @@ def assemble_birth_backward_euler(
     enforce_reduced_film_thresholds: bool = True,
     newborn_temperature_gradient_k_m: float | None = None,
     newborn_composition_gradient_m_inv: float | None = None,
+    target_config: cut.CutTransportConfig | None = None,
 ) -> BirthAssembly:
-    """Assemble one exact zero-old-dry-volume birth residual or roll back."""
+    """Assemble one exact zero-old-dry-volume birth residual or roll back.
+
+    ``target_config`` (default None: one configuration, the former behaviour) is a
+    prescribed pressure-only target configuration of ``config``
+    (``cut.pressure_only_target_config``): the old fully-wet cells keep ``config``,
+    every new-time state, flux and residual takes the target, as the cut and
+    fully-dry assemblies do with their own ``target_config``.
+    """
 
     try:
         return _assemble_birth_backward_euler(
@@ -474,6 +486,7 @@ def assemble_birth_backward_euler(
             enforce_reduced_film_thresholds,
             newborn_temperature_gradient_k_m,
             newborn_composition_gradient_m_inv,
+            **({} if target_config is None else {"target_config": target_config}),
         )
     except StepBudgetExceeded:
         raise
@@ -497,6 +510,7 @@ def _assemble_birth_backward_euler(
     enforce_reduced_film_thresholds: bool,
     newborn_temperature_gradient_k_m: float | None = None,
     newborn_composition_gradient_m_inv: float | None = None,
+    target_config: cut.CutTransportConfig | None = None,
 ) -> BirthAssembly:
     if not isinstance(before, ww.WetWaterState):
         raise TypeError("before must be a WetWaterState")
@@ -504,6 +518,10 @@ def _assemble_birth_backward_euler(
         raise TypeError("birth requires a CutTransportConfig")
     if before.model != config.wet:
         raise ValueError("fully-wet state and birth chart must share one wet authority")
+    before_config = None
+    if target_config is not None:
+        cut.validate_pressure_only_target_config(config, target_config)
+        before_config, config = config, target_config
     if not isinstance(candidate, BirthUnknowns):
         raise TypeError("candidate must be BirthUnknowns")
     if not isinstance(
@@ -555,8 +573,9 @@ def _assemble_birth_backward_euler(
             "first birth must be a strict partial cut in the outermost material cell"
         )
     swept = cg.swept_cut_geometry(before_geometry, candidate_geometry, dt_s)
+    old_config = config if before_config is None else before_config
     old_wet = tuple(
-        ww.evaluate_cell(T, W, Xh, wo, config.wet)
+        ww.evaluate_cell(T, W, Xh, wo, old_config.wet)
         for T, W, Xh, wo in zip(
             before.temperatures_k,
             before.retained_water_loadings,
@@ -680,6 +699,7 @@ def _assemble_birth_backward_euler(
         ledger=ledger,
         surface_boundary=surface_boundary,
         dt_s=dt_s,
+        **({} if before_config is None else {"before_config": before_config}),
     )
 
 

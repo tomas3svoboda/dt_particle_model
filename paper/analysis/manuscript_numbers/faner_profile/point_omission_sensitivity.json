@@ -1,0 +1,2343 @@
+{
+  "scope": "calibration-window influence; all_25_point_SSE always includes every observation",
+  "source_sha256": {
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-29\\faner_multiplier_profile\\final_profile\\analysis.json": "35dfaa0c78d610637d97c0fa2a80d6d614dc6022dbaa2fe8495d32f9fdc91ed9",
+    "C:\\Users\\z004d8nt\\Documents\\DTDC_Simulator\\paper\\analysis\\results_2026-10-29\\faner_multiplier_profile\\point_omission_sensitivity.py": "e7532285a1ebbfa33a6a2ffbf41361e7e285b28e118d2d39c7afa9d033bad99c"
+  },
+  "windows": [
+    {
+      "name": "all_25",
+      "excluded": [],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013500902257553392,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07102744516326238,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.02176074756543766,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.01398655032052893,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013634718539734313,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013500902257553392,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.01392433829896203,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021882233607456086,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030286323790846018,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.037885814012874136,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_t0",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-000",
+          "t_s": 0.0,
+          "value": 0.492364,
+          "half_width": 0.006,
+          "flag": "merged"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013199393761553388,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07072593666726239,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.021459239069437655,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013685041824528926,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013333210043734311,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013199393761553388,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013622829802962028,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021580725111456082,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.029984815294846014,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03758430551687413,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_29p961_s",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-003",
+          "t_s": 29.961,
+          "value": 0.278064,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.285,
+      "best": {
+        "phi": 0.285,
+        "calibration_SSE": 0.012363525389345549,
+        "all_25_point_SSE": 0.013634718539734313,
+        "core_end_s": 99.70150996994103
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.06401246041485438,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.01868489356903087,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.012505585318867446,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.012363525389345549,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.012423468678108127,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013186387020379872,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021861720318731317,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030193810134734052,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03746390928178215,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_t0_and_29p961_s",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-000",
+          "t_s": 0.0,
+          "value": 0.492364,
+          "half_width": 0.006,
+          "flag": "merged"
+        },
+        {
+          "point_id": "f2-soy-X-003",
+          "t_s": 29.961,
+          "value": 0.278064,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.285,
+      "best": {
+        "phi": 0.285,
+        "calibration_SSE": 0.012062016893345547,
+        "all_25_point_SSE": 0.013634718539734313,
+        "core_end_s": 99.70150996994103
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.06371095191885437,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.018383385073030865,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.012204076822867444,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.012062016893345547,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.012121960182108123,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.012884878524379868,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021560211822731313,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.029892301638734048,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.037162400785782146,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_40p154_s",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-004",
+          "t_s": 40.154,
+          "value": 0.225,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.285,
+      "best": {
+        "phi": 0.285,
+        "calibration_SSE": 0.012557689384405525,
+        "all_25_point_SSE": 0.013634718539734313,
+        "core_end_s": 99.70150996994103
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.06150331212189656,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.01822173731576679,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.012644915707662773,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.012557689384405525,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.012659443183979852,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013466913261517612,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021799529682842496,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.02943116407079663,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.035912988862051534,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_29p961_and_40p154_s",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-003",
+          "t_s": 29.961,
+          "value": 0.278064,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        },
+        {
+          "point_id": "f2-soy-X-004",
+          "t_s": 40.154,
+          "value": 0.225,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.28,
+      "best": {
+        "phi": 0.28,
+        "calibration_SSE": 0.01116395070600129,
+        "all_25_point_SSE": 0.01398655032052893,
+        "core_end_s": 101.2773498979192
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.05448832737348855,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.015145883319359997,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.01116395070600129,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.01128649623401676,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.011582009604534586,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.012728961982935454,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021779016394117726,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.029338650414684666,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.035491084130959555,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    }
+  ],
+  "leave_one_out": [
+    {
+      "name": "omit_f2-soy-X-000",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-000",
+          "t_s": 0.0,
+          "value": 0.492364,
+          "half_width": 0.006,
+          "flag": "merged"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013199393761553388,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07072593666726239,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.021459239069437655,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013685041824528926,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013333210043734311,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013199393761553388,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013622829802962028,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021580725111456082,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.029984815294846014,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03758430551687413,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-001",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-001",
+          "t_s": 9.884,
+          "value": 0.4209,
+          "half_width": 0.0062,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013500465386374928,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07073003819481011,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.021696236725083994,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013980281868179678,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013632214787229903,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013500465386374928,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.01392294173487825,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021809085530990768,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030113151917274237,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.037606391410825044,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-002",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-002",
+          "t_s": 20.077,
+          "value": 0.337384,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.012706897435526882,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.06716586918373137,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.019888197187357067,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.012965632019914004,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.012730817220945803,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.012706897435526882,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013328765015244305,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021795567074144467,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.03028630821174099,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03783093409980433,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-003",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-003",
+          "t_s": 29.961,
+          "value": 0.278064,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.285,
+      "best": {
+        "phi": 0.285,
+        "calibration_SSE": 0.012363525389345549,
+        "all_25_point_SSE": 0.013634718539734313,
+        "core_end_s": 99.70150996994103
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.06401246041485438,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.01868489356903087,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.012505585318867446,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.012363525389345549,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.012423468678108127,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013186387020379872,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021861720318731317,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030193810134734052,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03746390928178215,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-004",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-004",
+          "t_s": 40.154,
+          "value": 0.225,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.285,
+      "best": {
+        "phi": 0.285,
+        "calibration_SSE": 0.012557689384405525,
+        "all_25_point_SSE": 0.013634718539734313,
+        "core_end_s": 99.70150996994103
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.06150331212189656,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.01822173731576679,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.012644915707662773,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.012557689384405525,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.012659443183979852,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013466913261517612,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021799529682842496,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.02943116407079663,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.035912988862051534,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-005",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-005",
+          "t_s": 50.039,
+          "value": 0.181719,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.285,
+      "best": {
+        "phi": 0.285,
+        "calibration_SSE": 0.013166530360332728,
+        "all_25_point_SSE": 0.013634718539734313,
+        "core_end_s": 99.70150996994103
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.060489582499128086,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.018736037368702243,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013289414527355471,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013166530360332728,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013234979809512864,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.01389409343462092,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.020949941444724517,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.02762620742329823,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03339287921368376,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-006",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-006",
+          "t_s": 59.923,
+          "value": 0.135942,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013436000189341444,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.058876486411374496,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.019159365241849646,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013647366339684011,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013460358754527127,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013436000189341444,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.01392000243571476,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.020251177027930802,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.026458664613719766,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.031983242642319054,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-007",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-007",
+          "t_s": 70.116,
+          "value": 0.10265,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013442627372675242,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.0601532652087465,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.02030031289772131,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013975675338603014,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013629820774729363,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013442627372675242,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013591041993267534,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.018824386758778587,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.024935767628553686,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.030909344126434635,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-008",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-008",
+          "t_s": 80.0,
+          "value": 0.0788,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.3,
+      "best": {
+        "phi": 0.3,
+        "calibration_SSE": 0.012702649122194425,
+        "all_25_point_SSE": 0.01392433829896203,
+        "core_end_s": 95.19089791331663
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.06316855385089425,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.02132926522023717,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.01376752672571456,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.01323038706110107,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.01286053806731291,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.012702649122194425,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.017922336101282157,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.02541006710650817,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.032783748512899814,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-009",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-009",
+          "t_s": 89.884,
+          "value": 0.06299,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.3,
+      "best": {
+        "phi": 0.3,
+        "calibration_SSE": 0.01171546548097902,
+        "all_25_point_SSE": 0.01392433829896203,
+        "core_end_s": 95.19089791331663
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.06613743422625763,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.02176011452589922,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.012910202915973733,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.012265938714527752,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.011839933407003123,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.01171546548097902,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.01879888483314015,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.027025467186518538,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03452855574277509,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-010",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-010",
+          "t_s": 100.077,
+          "value": 0.05383,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.01149361351952845,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.06899971589821755,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.021218205289268145,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.012120275509081829,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.011687808723168961,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.01149361351952845,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.011816041993713132,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.01952188342881394,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.027834952605248715,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03538297898820991,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-011",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-011",
+          "t_s": 109.961,
+          "value": 0.04901,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.011683666744136274,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.0706681548439244,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.020382091666154525,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.012237426757759948,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.011849783863252573,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.011683666744136274,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.01205123925156506,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.019861470355098106,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.028209505619590396,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03577672781987757,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-012",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-012",
+          "t_s": 120.154,
+          "value": 0.0391,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.012328346562247657,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07102690609357587,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.020781763403721547,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.012848987695061992,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.0124788619636972,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.012328346562247657,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.012722460956093013,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.020600248558259572,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.028973021116487807,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.0365542661924549,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-013",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-013",
+          "t_s": 130.039,
+          "value": 0.03514,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.012527238564530814,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.0707686040010752,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.02090784186407213,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013035317583690685,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.012671791481359884,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.012527238564530814,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.012931685351283695,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.02083687821450135,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.02922004904490938,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.036807276135781365,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-014",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-014",
+          "t_s": 139.923,
+          "value": 0.02587,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.012992549537727296,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07078515274571617,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.021315551537187713,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.01349017677545547,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013132113335622838,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.012992549537727296,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013405758721444167,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.0213348811169353,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.029727393613473155,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03732005659315987,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-015",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-015",
+          "t_s": 150.116,
+          "value": 0.02344,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013078518634488489,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07078139017321979,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.02138182203222323,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013572482547702013,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013216328784858839,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013078518634488489,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013494830878240731,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021432555369973027,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.029828479272148618,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03742314254317056,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-016",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-016",
+          "t_s": 160.0,
+          "value": 0.01612,
+          "half_width": 0.003,
+          "flag": "clear"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013317617391246523,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07092935325319562,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.02159968499010489,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.01380757322268357,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013453505861761283,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013317617391246523,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013737342129431994,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.02168462898550148,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030084384519797596,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.037681304348364086,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-017",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-017",
+          "t_s": 169.884,
+          "value": 0.017302,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013277496646047583,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07088040425985918,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.0215571129640554,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.01376697416000195,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.0134131549333315,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013277496646047583,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013697633848489443,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.02164610538120471,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030046350479432684,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03764356412684536,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-018",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-018",
+          "t_s": 180.077,
+          "value": 0.012358,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.01339735657352156,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07096442107214466,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.021668050751805515,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013885124023267402,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013532193313570449,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.01339735657352156,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013818960637747197,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021771592849711415,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030173526487950453,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.037771739239601,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-019",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-019",
+          "t_s": 189.961,
+          "value": 0.011123,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.01341865766351778,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07097496226094278,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.021686519872229342,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.01390587470583666,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013553229550528387,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.01341865766351778,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013840736496834882,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021794731222469773,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030197225117832082,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03779577172633676,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-020",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-020",
+          "t_s": 200.154,
+          "value": 0.010393,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.01342964465601416,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07097931470602718,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.02169572749207414,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.01391651393193979,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013564049044039026,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.01342964465601416,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013852024534236208,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021806887861804302,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030209741166618828,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.0378085024193697,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-021",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-021",
+          "t_s": 210.039,
+          "value": 0.010393,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013428321805620407,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07097480223552831,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.021693521252601315,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.01391501659739442,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013562642057868963,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013428321805620407,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013850853397871045,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.0218061593059103,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030209198135118444,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03780807109948689,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-022",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-022",
+          "t_s": 219.923,
+          "value": 0.009775,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013437475972006632,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.0709799724389363,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.021701607920121914,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013923961651594489,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013571695495540027,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013437475972006632,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013860188636843284,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021816017376607155,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.03021927195077041,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03781827322150147,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-023",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-023",
+          "t_s": 230.116,
+          "value": 0.009175,
+          "half_width": 0.006,
+          "flag": "near-overlap"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013445919815903694,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07098522504567752,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.021709194114677397,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013932237333911414,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013580058315031,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013445919815903694,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013868778264352056,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021825027952820077,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.03022845606556454,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.037827560350335916,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    },
+    {
+      "name": "omit_f2-soy-X-024",
+      "excluded": [
+        {
+          "point_id": "f2-soy-X-024",
+          "t_s": 240.0,
+          "value": 0.008,
+          "half_width": 0.006,
+          "flag": "merged"
+        }
+      ],
+      "best_sampled_phi": 0.29,
+      "best": {
+        "phi": 0.29,
+        "calibration_SSE": 0.013461482803355336,
+        "all_25_point_SSE": 0.013500902257553392,
+        "core_end_s": 98.14637248547207
+      },
+      "cases": [
+        {
+          "phi": 0.2,
+          "calibration_SSE": 0.07099736611130099,
+          "all_25_point_SSE": 0.07102744516326238,
+          "core_end_s": 137.5926394939255
+        },
+        {
+          "phi": 0.25,
+          "calibration_SSE": 0.02172384729912062,
+          "all_25_point_SSE": 0.02176074756543766,
+          "core_end_s": 112.2419201601843
+        },
+        {
+          "phi": 0.28,
+          "calibration_SSE": 0.013947622610829057,
+          "all_25_point_SSE": 0.01398655032052893,
+          "core_end_s": 101.2773498979192
+        },
+        {
+          "phi": 0.285,
+          "calibration_SSE": 0.013595535739113469,
+          "all_25_point_SSE": 0.013634718539734313,
+          "core_end_s": 99.70150996994103
+        },
+        {
+          "phi": 0.29,
+          "calibration_SSE": 0.013461482803355336,
+          "all_25_point_SSE": 0.013500902257553392,
+          "core_end_s": 98.14637248547207
+        },
+        {
+          "phi": 0.3,
+          "calibration_SSE": 0.013884494775184103,
+          "all_25_point_SSE": 0.01392433829896203,
+          "core_end_s": 95.19089791331663
+        },
+        {
+          "phi": 0.34,
+          "calibration_SSE": 0.021841184715314238,
+          "all_25_point_SSE": 0.021882233607456086,
+          "core_end_s": 85.14480500912084
+        },
+        {
+          "phi": 0.365,
+          "calibration_SSE": 0.030244792197370984,
+          "all_25_point_SSE": 0.030286323790846018,
+          "core_end_s": 80.00909097566296
+        },
+        {
+          "phi": 0.3843,
+          "calibration_SSE": 0.03784400209503435,
+          "all_25_point_SSE": 0.037885814012874136,
+          "core_end_s": 76.48164052359854
+        }
+      ]
+    }
+  ],
+  "not_claimed": "deletion justified by improved fit, independent experimental errors, or statistical confidence interval"
+}

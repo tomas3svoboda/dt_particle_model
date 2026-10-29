@@ -19,6 +19,8 @@ from dtdc_simulator.core2.particle import cut_face_event as face
 from dtdc_simulator.core2.particle import cut_face_event_integrator as fi
 from dtdc_simulator.core2.particle import cut_face_departure_integrator as di
 from dtdc_simulator.core2.particle import cut_face_tangent as tangent
+import particle_kernel_envelope as envelope
+import particle_kernel_pd_boundary as pd_boundary
 
 core = driver.core
 study = driver.study
@@ -33,7 +35,7 @@ def bath_boundary(bath, radius, clock):
         forcing_timescale_s=0.075,
         label=f"same prescribed DT bath at exact event t={clock}",
     )
-    return study.FiniteFilmStudyBoundary(
+    boundary = study.FiniteFilmStudyBoundary(
         temperature,
         y,
         "native exact-face water-node event",
@@ -42,6 +44,24 @@ def bath_boundary(bath, radius, clock):
         actual_surface_path=True,
         numerical_cap_seam=True,
     )
+    conduction = envelope.armed(envelope.CONDUCTION_BOUNDARY)
+    projection = envelope.armed(envelope.GAS_DEW_LINE_PROJECTION)
+    if not (conduction or projection):
+        return boundary
+    # Kernel-envelope pre-desolventizer items (particle_kernel_pd_boundary): the
+    # interval's jacket field, the bath gas projected onto the kernel's dew line.
+    jacket = pd_boundary.bath_jacket(bath, clock) if conduction else None
+    dew = None
+    if projection:
+        pressure = (
+            envelope.bath_pressure_pa(bath, clock)
+            if envelope.armed(envelope.PRESSURE_SCHEDULE)
+            else envelope.DEFAULT_PRESSURE_PA
+        )
+        dew = pd_boundary.dew_projection(temperature, y, pressure, native)
+    if jacket is None and dew is None:
+        return boundary
+    return pd_boundary.envelope_boundary(boundary, jacket=jacket, projection=dew)
 
 
 def advance_arrival(
@@ -57,6 +77,7 @@ def advance_arrival(
     gas_only_surface=False,
     difference_mode="forward",
     search_tolerance=None,
+    budget_per_unknown=False,
 ):
     working_tolerance = (
         before.controls.nonlinear_residual_tolerance
@@ -197,6 +218,10 @@ def advance_arrival(
     x = np.r_[
         fi._encode_candidate(candidate, chart, seed.stefan_flux_scales_mol_m2_s), surface_initial
     ]
+    if budget_per_unknown:
+        # Ruling packet 6 item 1 (DTDC_KERNEL_ENVELOPE_BUDGETS_PER_UNKNOWN, armed by the caller;
+        # GT_PS2_PAPER1_BUDGETS_PER_UNKNOWN_BUILD_2026-10-24.md): max(budget, 12 (n + 1)).
+        budget = envelope.front_search_total_budget(budget, x.size)
     with (
         study.installed_boundary_adapter(numerical_cap_seam=True),
         driver.liquid_internal_energy_node(

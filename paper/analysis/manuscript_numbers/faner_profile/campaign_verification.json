@@ -1,0 +1,129 @@
+{
+    "checked_utc":  "2026-10-29T12:28:39.6659381Z",
+    "calibration_state":  "ALL_EIGHT_FRESH_HISTORIES_COMPLETE_AND_INDEPENDENTLY_AUDITED",
+    "calibration_cases":  [
+                              {
+                                  "name":  "phi_0p20000",
+                                  "complete":  true,
+                                  "sources_unchanged":  true,
+                                  "audit_passed":  true,
+                                  "audit_rows":  1175,
+                                  "maximum_W_H_U":  [
+                                                        3.6635458467367807E-12,
+                                                        9.9297704075777433E-12,
+                                                        8.2862626097037254E-13
+                                                    ],
+                                  "wall_seconds":  1460.5053465999954,
+                                  "case_sha256":  "2fb902adac4e4f897088543c9dcdbabe962c25b5f8a7a42bb392a00409a6dde0",
+                                  "audit_sha256":  "6a812999380d5ff3b51765f0ae7798cc433d28afe1d5a2bad77cbd39b189f5f4"
+                              },
+                              {
+                                  "name":  "phi_0p25000",
+                                  "complete":  true,
+                                  "sources_unchanged":  true,
+                                  "audit_passed":  true,
+                                  "audit_rows":  1050,
+                                  "maximum_W_H_U":  [
+                                                        6.99079746164751E-13,
+                                                        1.7237450456205926E-11,
+                                                        1.361563765077281E-12
+                                                    ],
+                                  "wall_seconds":  1382.91114869999,
+                                  "case_sha256":  "70cec8839ab55593f0692b2e53ec9640433088e71f024a680afda200e457b4f6",
+                                  "audit_sha256":  "941dc4634ae79ade43488fc1ae62ae6c2c77517c6fff22e394196f4d962d99a2"
+                              },
+                              {
+                                  "name":  "phi_0p28000",
+                                  "complete":  true,
+                                  "sources_unchanged":  true,
+                                  "audit_passed":  true,
+                                  "audit_rows":  996,
+                                  "maximum_W_H_U":  [
+                                                        1.2716871876397489E-12,
+                                                        3.1765062633226952E-13,
+                                                        8.0671291422939507E-14
+                                                    ],
+                                  "wall_seconds":  1266.1189156000037,
+                                  "case_sha256":  "dde3de5cb94195a5262cffca4b337dde32c9254aad64352f9bf095a77f9f5b1f",
+                                  "audit_sha256":  "c9f747a057aac8972eed53f602c4c11f80d2f8f3045cd6b31023d455146ee836"
+                              },
+                              {
+                                  "name":  "phi_0p28500",
+                                  "complete":  true,
+                                  "sources_unchanged":  true,
+                                  "audit_passed":  true,
+                                  "audit_rows":  997,
+                                  "maximum_W_H_U":  [
+                                                        1.0686032198540252E-12,
+                                                        2.5342340384283514E-13,
+                                                        7.8813628482691906E-14
+                                                    ],
+                                  "wall_seconds":  1258.058194399986,
+                                  "case_sha256":  "b8faf79ee41ba2cf42b6d0e1239ce78aeb85dc30407c048109442d8e39bbdd74",
+                                  "audit_sha256":  "60d3c935271bf0686badd865aaaf132e1397b0e3d0fe135bd40a9e332bac1365"
+                              },
+                              {
+                                  "name":  "phi_0p29000",
+                                  "complete":  true,
+                                  "sources_unchanged":  true,
+                                  "audit_passed":  true,
+                                  "audit_rows":  976,
+                                  "maximum_W_H_U":  [
+                                                        1.5919091725226792E-12,
+                                                        2.466633633794849E-13,
+                                                        3.1872369548193886E-14
+                                                    ],
+                                  "wall_seconds":  1257.9771853999991,
+                                  "case_sha256":  "9159e9a18d20821888c7fd8163ae5e4fa45307dc89632ade5653c623202b4784",
+                                  "audit_sha256":  "ca1da4b3c37a391d44d6a157b652db20f2b9122ad8a1a5f7c592714846f16abd"
+                              },
+                              {
+                                  "name":  "phi_0p30000",
+                                  "complete":  true,
+                                  "sources_unchanged":  true,
+                                  "audit_passed":  true,
+                                  "audit_rows":  969,
+                                  "maximum_W_H_U":  [
+                                                        1.0429611530370601E-12,
+                                                        2.2242993893026731E-14,
+                                                        2.1818447446472289E-14
+                                                    ],
+                                  "wall_seconds":  1280.8665516000183,
+                                  "case_sha256":  "16416c5e18dc2ad9aab0e67c942867a542eebc7c1a573e8466b819cf191f68a0",
+                                  "audit_sha256":  "956cfd9620614e503d21f89629ae8ef5a98622433a1ece19738d1a885e524054"
+                              },
+                              {
+                                  "name":  "phi_0p34000",
+                                  "complete":  true,
+                                  "sources_unchanged":  true,
+                                  "audit_passed":  true,
+                                  "audit_rows":  924,
+                                  "maximum_W_H_U":  [
+                                                        2.4796926140335773E-12,
+                                                        3.7054999239259133E-14,
+                                                        2.8490941466256466E-14
+                                                    ],
+                                  "wall_seconds":  1289.6485188000079,
+                                  "case_sha256":  "8fc78cddcb69686798df513192cea3b60a9d229aaa0170d37ba913e67f4c20a8",
+                                  "audit_sha256":  "82937759c2a380b6b5f0852b82a4bbd74219d770212095aaaa7fc8f7ad9a7151"
+                              },
+                              {
+                                  "name":  "phi_0p36500",
+                                  "complete":  true,
+                                  "sources_unchanged":  true,
+                                  "audit_passed":  true,
+                                  "audit_rows":  906,
+                                  "maximum_W_H_U":  [
+                                                        2.2141294186132868E-13,
+                                                        1.3675106347778062E-14,
+                                                        3.5605743929309065E-14
+                                                    ],
+                                  "wall_seconds":  1234.456866099994,
+                                  "case_sha256":  "d97ec516398df643fd9eab8a9561c21743b03ad1ccda10e19448ab0e005d1d0a",
+                                  "audit_sha256":  "3cdd8b2cc63be846ebc6939f1aa665eeca85398ec7a6c44351df849629cf3ca4"
+                              }
+                          ],
+    "primary_selection":  "ordinary SSE on all 25 loading points; user-confirmed loading fit with temperature excluded",
+    "qualification_state":  "40-cell checks at 0.28, 0.285, 0.29 and half-step at 0.29 running; publication adoption pending these checks",
+    "no_new_value_adopted":  true
+}

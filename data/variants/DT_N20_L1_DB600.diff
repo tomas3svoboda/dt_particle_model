@@ -1,0 +1,11 @@
+--- a/paper/analysis/harness/particle_solver_configuration.py
++++ b/paper/analysis/harness/particle_solver_configuration.py
+@@ -37,7 +37,7 @@
+ 
+ @dataclass(frozen=True)
+ class ParticleModelParameters:
+-    binary_reference_m2_s: float = 4e-10
++    binary_reference_m2_s: float = 6.0e-10
+     oil_law: sp.OilHeatCapacityLaw = sp.OilHeatCapacityLaw.GARCIA_ROJAS_2013
+     binary_law: tc.BinaryDiffusivityLaw = tc.BinaryDiffusivityLaw.FULLER_EFFECTIVE_REFERENCE
+ 

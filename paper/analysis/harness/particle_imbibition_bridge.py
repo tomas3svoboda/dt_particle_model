@@ -99,7 +99,6 @@ def install(mode="ruled", w_sat=W_SAT_NOMINAL):
         "cut._solve_interface_composition_with_audit": cut._solve_interface_composition_with_audit,
     }
     cap = law.BRIDGE_ANCHOR_LOADING_KG_KG
-    native_cap_activity = originals["sp.water_activity"](cap, sp.LuikovParams())
     slope = (1.0 - law.BRIDGE_ANCHOR_ACTIVITY) / (w_sat - cap)
 
     def water_activity(W_w, p):
@@ -110,7 +109,7 @@ def install(mode="ruled", w_sat=W_SAT_NOMINAL):
         return originals["sp.water_activity"](W_w, p)
 
     def water_retained(a_w, p):
-        if math.isfinite(a_w) and a_w >= native_cap_activity and a_w <= 1.0:
+        if math.isfinite(a_w) and a_w >= law.BRIDGE_ANCHOR_ACTIVITY and a_w <= 1.0:
             return law.bridged_water_retained(a_w, w_sat)
         return originals["sp.water_retained"](a_w, p)
 
@@ -133,6 +132,12 @@ def install(mode="ruled", w_sat=W_SAT_NOMINAL):
         if _Installed.native_depth:
             return state
         if state.retained_water_active_set is not cp.RetainedWaterActiveSet.RETAINED_CAP:
+            return state
+        # The published anchor 0.799 exceeds Luikov(W_cap) by the already
+        # recorded 1e-11 join discrepancy. The native capacity graph owns
+        # that interval; its activity and state remain unchanged. Calling
+        # the bridge inverse there would leave its declared domain.
+        if state.water_activity < law.BRIDGE_ANCHOR_ACTIVITY:
             return state
         # Above the cap the retained water follows the gas activity along the
         # shared law; every derived field is rebuilt from the native state's own

@@ -8,6 +8,7 @@ from types import SimpleNamespace
 
 import audit_particle_qualification_case as shared
 import experiment_core2_faner as faner
+import faner_measured_trace as faner_trace
 
 core = shared.core
 
@@ -46,6 +47,15 @@ def prepare_prefix(folder, study, bath_path, live_source_hashes):
     ):
         march = faner.FanerAttachedMarch(settings)
         area = march.area
+        # Kernel-envelope FANER_MEASURED_VAPOUR_TRACE: a birth stamped with the trace is
+        # reconstructed at each feed row's own clock, only under the same armed knob.
+        traced = "faner_measured_vapour_trace" in birth
+        if traced != march.measured_trace:
+            raise ValueError(
+                "the birth's measured-vapour-trace stamp and this process's knob differ"
+            )
+        if traced and birth["faner_measured_vapour_trace"] != faner_trace.declared_row():
+            raise ValueError("the birth's measured vapour trace differs from the declared trace")
 
         def storage(row):
             critical = core.sphere.critical_loading(row["temperature_k"], march.params)
@@ -79,6 +89,9 @@ def prepare_prefix(folder, study, bath_path, live_source_hashes):
         for row in birth["feed_rows"][1:]:
             ts = march.interface_temperature
             boundary = march.boundary
+            if traced:
+                march.trace_clock = row["t_s"]
+                boundary = faner_trace.boundary_at(march.boundary, row["t_s"])
             ref = core.ct.prepare_reduced_film_surface_state(
                 boundary.film_boundary,
                 cell_temperature_k=row["temperature_k"],

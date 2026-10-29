@@ -1,0 +1,54 @@
+{
+ "reported": "phi_0p29000_N40_L1",
+ "macros": {
+  "FanerDryTime": "97.8",
+  "FanerCrossTwenty": "49.8",
+  "FanerFallingInterval": "19.2",
+  "FanerExitHexane": "0.00172",
+  "FanerExitWater": "0.0161",
+  "FanerExitTemperature": "112.2",
+  "FanerFreeEnd": "49.9",
+  "FanerFallingShortfall": "24",
+  "FanerMaxBeta": "1.807",
+  "FanerLastHolderClockTemperature": "111.9",
+  "FanerMaxBetaAfterBirth": "0.46",
+  "FanerCells": "40",
+  "FanerAuditMax": "5.0\\times10^{-13}"
+ },
+ "full_precision": {
+  "FanerFreeEnd_s": 49.9053012030892,
+  "FanerDryTime_s": 97.80565234635596,
+  "FanerCrossTwenty_s": 49.78768848737936,
+  "FanerCrossTen_s": 69.02082371805601,
+  "FanerFallingInterval_s": 19.233135230676645,
+  "FanerFallingShortfall_pct": 24.130966752862115,
+  "FanerExitHexane_kg_kg_dry": 0.0017215142674093414,
+  "FanerExitWater_kg_kg_dry": 0.016081130040914493,
+  "FanerExitTemperature_C": 112.18055308988835,
+  "FanerLastHolderClockTemperature_C": 111.86691482224421,
+  "outlet_moisture_pct_wb": 1.5799850914951072,
+  "outlet_hexane_ppm_wb": 1691.402824541927,
+  "FanerMaxBeta": 1.8067861135706276,
+  "max_abs_beta_after_birth": 0.458739449599811,
+  "regime_C_advances": 285,
+  "advances_with_diffusion_opposing": 285,
+  "diffusion_percent_range": [
+   -0.8055051972697468,
+   -0.008521450249257772
+  ]
+ },
+ "audit_max_W_H_U": [
+  5.014865857878713e-13,
+  2.4254327617897766e-13,
+  3.245892405382244e-14
+ ],
+ "input_sha256": {
+  "case.json": "f18b7881a2bc2e313e457a9080444c80653cbc1cae70c67f439c67a95a8ab315",
+  "birth.json": "489b54343f05c63a223c42770c65589b405f18340d0391561b89d29a82c5d3fd",
+  "front.history.jsonl": "9e1af31381766f970002a3700de5083e326d1c8175b0a7dabbcd47910ea7556c",
+  "dry.history.jsonl": "6b000679599954e3744ea7d5aaae320c4666a51333649f30f28a641adc9bb5c1",
+  "phi_0p29000_N40_L1.independent_audit.json": "ea367a105022a81ab8ce1ba1c830c82c4c7ef5b25fa474ca742c3d1efc1f28d8"
+ },
+ "script_sha256": "7dc62c5c88a7c987e447ca998f59f320b8dbf9e5831f37c00983f70794ed344d",
+ "physically_qualifying": false
+}

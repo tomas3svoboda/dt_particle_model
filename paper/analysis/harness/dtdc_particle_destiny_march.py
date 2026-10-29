@@ -522,6 +522,22 @@ def load_destiny() -> dict:
     return json.loads(DESTINY_PATH.read_text(encoding="utf-8"))
 
 
+def _shared_law_activity_stamp(temperature_k, y_hexane):
+    """INSTRUMENT_SHARED_LAW (particle_kernel_envelope, armed only): the report-only gas
+    water activity on the shared law in place of the ideal reading, both stamped. Knob off:
+    an empty dict (the former record)."""
+    import particle_kernel_envelope as envelope
+
+    if not envelope.armed(envelope.INSTRUMENT_SHARED_LAW):
+        return {}
+    reading = envelope.instrument_water_activity(temperature_k, PRESSURE_PA, y_hexane)
+    return {
+        "a_w": reading["water_activity"],
+        "a_w_ideal_raoult_dalton": reading["water_activity_ideal_raoult_dalton"],
+        "a_w_reading": reading["reading"],
+    }
+
+
 def interpolate_bath(waypoints: list[dict], t_s: float) -> tuple[float, float]:
     """Linear T_bath, y_h on the declared destiny table. y_h stays in (0, 1)."""
 
@@ -1518,6 +1534,9 @@ def march_one(args: argparse.Namespace) -> dict:
                     "dry_gas_activities_at_dry_t": {
                         "a_w": (1.0 - dry_y) * PRESSURE_PA / wa.saturation_pressure(dry_t),
                         "a_h": dry_y * PRESSURE_PA / hx.saturation_pressure(dry_t),
+                        # Kernel-envelope INSTRUMENT_SHARED_LAW (armed only, report only):
+                        # a_w on the shared law, the ideal reading kept beside it.
+                        **_shared_law_activity_stamp(dry_t, dry_y),
                     },
                 }
                 bridge["resolved_start_temperatures_k"] = {

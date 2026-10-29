@@ -49,9 +49,15 @@ __all__ = [
 PACK_RECORD_ID = "GT-PS-2-STUDY-SURROGATE-PACK-2026-09-03B-01"
 
 #: Location relative to the repository root.
+#: Re-pointed 2026-10-19 by the universal-kernel parity refreeze (record
+#: ``docs/GT_PS2_RS2_REFREEZE_UNIVERSAL_KERNEL_PARITY_2026-10-19.md``): ``props/sorption.py``
+#: moved to the runtime-151 bytes, the era binding fired, and the pack was rebuilt with
+#: ``scripts/build_study_surrogates.py``; every surrogate's degree, coefficients, measured
+#: errors and adoption verdict are identical to the 2026-10-09 pack, which stays on disk.
+#: previous value 2026-10-09: "docs/evidence/GT_PS2_STUDY_SURROGATE_PACK_2026-10-09.json"
 #: previous value 2026-09-03 (D2 era): "docs/evidence/GT_PS2_STUDY_SURROGATE_PACK_2026-09-03.json"
 #: previous value 2026-09-02: "docs/evidence/GT_PS2_STUDY_SURROGATE_PACK_2026-09-02.json"
-DEFAULT_PACK_PATH = "docs/evidence/GT_PS2_STUDY_SURROGATE_PACK_2026-10-09.json"
+DEFAULT_PACK_PATH = "docs/evidence/GT_PS2_STUDY_SURROGATE_PACK_2026-10-19.json"
 
 
 class PackEraMismatch(RuntimeError):

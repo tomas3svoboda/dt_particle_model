@@ -32,7 +32,7 @@ from dataclasses import dataclass
 from typing import Sequence
 
 from dtdc_simulator.core2.particle._exact_memo import exact_memo
-from dtdc_simulator.core2.particle.grid import SphericalGrid
+from dtdc_simulator.core2.particle.grid import SphericalGrid, spherical_volume_difference
 from dtdc_simulator.core2.props import critical_volume as cv
 from dtdc_simulator.core2.props import hexane as hx
 from dtdc_simulator.core2.props import sorption as sp
@@ -443,8 +443,7 @@ def isothermal_temperature(
 # ---------------------------------------------------------------------------
 def _swept_volume_rates(old: SphericalGrid, new: SphericalGrid, dt: float) -> list[float]:
     return [
-        4.0 / 3.0 * math.pi * (r_new**3 - r_old**3) / dt
-        for r_old, r_new in zip(old.faces, new.faces)
+        spherical_volume_difference(r_old, r_new) / dt for r_old, r_new in zip(old.faces, new.faces)
     ]
 
 

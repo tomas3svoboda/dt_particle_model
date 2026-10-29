@@ -1,0 +1,248 @@
+{
+  "all_five_histories_complete_and_independently_audited": true,
+  "core_observed_spatial_order": 1.3346709110410457,
+  "observables": {
+    "N10_L1": {
+      "FanerFreeEnd_s": 49.9053012030892,
+      "FanerDryTime_s": 99.00572981004932,
+      "FanerCrossTwenty_s": 49.78768848737936,
+      "FanerCrossTen_s": 69.04528715672085,
+      "FanerFallingInterval_s": 19.257598669341483,
+      "FanerFallingShortfall_pct": 24.034465718623988,
+      "FanerExitHexane_kg_kg_dry": 0.0017215072270085358,
+      "FanerExitWater_kg_kg_dry": 0.016097444542386073,
+      "FanerExitTemperature_C": 112.17818331424002,
+      "FanerLastHolderClockTemperature_C": 111.86450814500893,
+      "outlet_moisture_pct_wb": 1.5815626653838573,
+      "outlet_hexane_ppm_wb": 1691.3688077981228,
+      "FanerMaxBeta": 1.462654854397305,
+      "max_abs_beta_after_birth": 0.44284316103613064,
+      "regime_C_advances": 282,
+      "advances_with_diffusion_opposing": 282,
+      "diffusion_percent_range": [
+        -0.8107391778210232,
+        -0.009842972409648676
+      ]
+    },
+    "N20_L1": {
+      "FanerFreeEnd_s": 49.9053012030892,
+      "FanerDryTime_s": 98.14637248547207,
+      "FanerCrossTwenty_s": 49.78768848737936,
+      "FanerCrossTen_s": 69.02359961234939,
+      "FanerFallingInterval_s": 19.235911124970023,
+      "FanerFallingShortfall_pct": 24.12001667041799,
+      "FanerExitHexane_kg_kg_dry": 0.001721508604922978,
+      "FanerExitWater_kg_kg_dry": 0.016084333579731432,
+      "FanerExitTemperature_C": 112.1801566396831,
+      "FanerLastHolderClockTemperature_C": 111.86652102676732,
+      "outlet_moisture_pct_wb": 1.580294876791771,
+      "outlet_hexane_ppm_wb": 1691.3919468450597,
+      "FanerMaxBeta": 1.725657613946759,
+      "max_abs_beta_after_birth": 0.4446107635054215,
+      "regime_C_advances": 284,
+      "advances_with_diffusion_opposing": 284,
+      "diffusion_percent_range": [
+        -0.8068791911152682,
+        -0.008899038357862637
+      ]
+    },
+    "N40_L1": {
+      "FanerFreeEnd_s": 49.9053012030892,
+      "FanerDryTime_s": 97.80565234635596,
+      "FanerCrossTwenty_s": 49.78768848737936,
+      "FanerCrossTen_s": 69.02082371805601,
+      "FanerFallingInterval_s": 19.233135230676645,
+      "FanerFallingShortfall_pct": 24.130966752862115,
+      "FanerExitHexane_kg_kg_dry": 0.0017215142674093414,
+      "FanerExitWater_kg_kg_dry": 0.016081130040914493,
+      "FanerExitTemperature_C": 112.18055308988835,
+      "FanerLastHolderClockTemperature_C": 111.86691482224421,
+      "outlet_moisture_pct_wb": 1.5799850914951072,
+      "outlet_hexane_ppm_wb": 1691.402824541927,
+      "FanerMaxBeta": 1.8067861135706276,
+      "max_abs_beta_after_birth": 0.458739449599811,
+      "regime_C_advances": 285,
+      "advances_with_diffusion_opposing": 285,
+      "diffusion_percent_range": [
+        -0.8055051972697468,
+        -0.008521450249257772
+      ]
+    },
+    "N20_L2": {
+      "FanerFreeEnd_s": 49.906789318609675,
+      "FanerDryTime_s": 98.05080303002617,
+      "FanerCrossTwenty_s": 49.78917657584915,
+      "FanerCrossTen_s": 69.02306478604363,
+      "FanerFallingInterval_s": 19.233888210194486,
+      "FanerFallingShortfall_pct": 24.127996471241964,
+      "FanerExitHexane_kg_kg_dry": 0.001720231607577713,
+      "FanerExitWater_kg_kg_dry": 0.01608176852997011,
+      "FanerExitTemperature_C": 112.20052494579261,
+      "FanerLastHolderClockTemperature_C": 111.88805464043315,
+      "outlet_moisture_pct_wb": 1.5800488236215673,
+      "outlet_hexane_ppm_wb": 1690.1436697365866,
+      "FanerMaxBeta": 2.278692918526607,
+      "max_abs_beta_after_birth": 0.533612427955424,
+      "regime_C_advances": 568,
+      "advances_with_diffusion_opposing": 568,
+      "diffusion_percent_range": [
+        -0.8124147488090051,
+        -0.008636447170999468
+      ]
+    },
+    "N40_L2": {
+      "FanerFreeEnd_s": 49.906789318609675,
+      "FanerDryTime_s": 97.72274876447885,
+      "FanerCrossTwenty_s": 49.78917657584915,
+      "FanerCrossTen_s": 69.02009826323889,
+      "FanerFallingInterval_s": 19.230921687389746,
+      "FanerFallingShortfall_pct": 24.139698526814378,
+      "FanerExitHexane_kg_kg_dry": 0.001720240982470992,
+      "FanerExitWater_kg_kg_dry": 0.016078565168164263,
+      "FanerExitTemperature_C": 112.2008639573034,
+      "FanerLastHolderClockTemperature_C": 111.88839765811247,
+      "outlet_moisture_pct_wb": 1.5797390477371633,
+      "outlet_hexane_ppm_wb": 1690.1581845797475,
+      "FanerMaxBeta": 2.4578583886342256,
+      "max_abs_beta_after_birth": 0.5333688689121934,
+      "regime_C_advances": 570,
+      "advances_with_diffusion_opposing": 570,
+      "diffusion_percent_range": [
+        -0.8110269022854103,
+        -0.008266079298476453
+      ]
+    }
+  },
+  "comparisons": {
+    "N10_L1_to_N20_L1": {
+      "scalar_changes": {
+        "FanerFreeEnd_s": 0.0,
+        "FanerDryTime_s": -0.8593573245772461,
+        "FanerCrossTwenty_s": 0.0,
+        "FanerCrossTen_s": -0.02168754437145992,
+        "FanerFallingInterval_s": -0.02168754437145992,
+        "FanerFallingShortfall_pct": 0.0855509517940014,
+        "FanerExitHexane_kg_kg_dry": 1.3779144422687573e-09,
+        "FanerExitWater_kg_kg_dry": -1.3110962654640235e-05,
+        "FanerExitTemperature_C": 0.0019733254430889247,
+        "FanerLastHolderClockTemperature_C": 0.0020128817583895398,
+        "outlet_moisture_pct_wb": -0.0012677885920862053,
+        "outlet_hexane_ppm_wb": 0.023139046936876184,
+        "FanerMaxBeta": 0.26300275954945396,
+        "max_abs_beta_after_birth": 0.0017676024692908632,
+        "regime_C_advances": 2,
+        "advances_with_diffusion_opposing": 2
+      },
+      "whole_history_max_abs": {
+        "H": 0.00029555423849960544,
+        "W": 1.3110962654640235e-05,
+        "T": 0.041725905118028095
+      }
+    },
+    "N20_L1_to_N40_L1": {
+      "scalar_changes": {
+        "FanerFreeEnd_s": 0.0,
+        "FanerDryTime_s": -0.3407201391161152,
+        "FanerCrossTwenty_s": 0.0,
+        "FanerCrossTen_s": -0.0027758942933786557,
+        "FanerFallingInterval_s": -0.0027758942933786557,
+        "FanerFallingShortfall_pct": 0.010950082444125542,
+        "FanerExitHexane_kg_kg_dry": 5.662486363263927e-09,
+        "FanerExitWater_kg_kg_dry": -3.2035388169392165e-06,
+        "FanerExitTemperature_C": 0.0003964502052440366,
+        "FanerLastHolderClockTemperature_C": 0.0003937954768957752,
+        "outlet_moisture_pct_wb": -0.0003097852966638115,
+        "outlet_hexane_ppm_wb": 0.010877696867282793,
+        "FanerMaxBeta": 0.08112849962386859,
+        "max_abs_beta_after_birth": 0.014128686094389498,
+        "regime_C_advances": 1,
+        "advances_with_diffusion_opposing": 1
+      },
+      "whole_history_max_abs": {
+        "H": 7.680394385695122e-05,
+        "W": 3.2062164373770907e-06,
+        "T": 0.009953567622233095
+      }
+    },
+    "N20_L1_to_N20_L2": {
+      "scalar_changes": {
+        "FanerFreeEnd_s": 0.0014881155204733432,
+        "FanerDryTime_s": -0.09556945544589723,
+        "FanerCrossTwenty_s": 0.0014880884697845431,
+        "FanerCrossTen_s": -0.0005348263057527447,
+        "FanerFallingInterval_s": -0.002022914775537288,
+        "FanerFallingShortfall_pct": 0.00797980082397487,
+        "FanerExitHexane_kg_kg_dry": -1.2769973452651101e-06,
+        "FanerExitWater_kg_kg_dry": -2.565049761323046e-06,
+        "FanerExitTemperature_C": 0.020368306109503465,
+        "FanerLastHolderClockTemperature_C": 0.021533613665837947,
+        "outlet_moisture_pct_wb": -0.0002460531702037638,
+        "outlet_hexane_ppm_wb": -1.2482771084730757,
+        "FanerMaxBeta": 0.5530353045798482,
+        "max_abs_beta_after_birth": 0.08900166445000246,
+        "regime_C_advances": 284,
+        "advances_with_diffusion_opposing": 284
+      },
+      "whole_history_max_abs": {
+        "H": 0.00019873595083796936,
+        "W": 2.5666059214612957e-06,
+        "T": 0.033636170693398526
+      }
+    },
+    "N40_L1_to_N40_L2": {
+      "scalar_changes": {
+        "FanerFreeEnd_s": 0.0014881155204733432,
+        "FanerDryTime_s": -0.08290358187710467,
+        "FanerCrossTwenty_s": 0.0014880884697845431,
+        "FanerCrossTen_s": -0.0007254548171147235,
+        "FanerFallingInterval_s": -0.0022135432868992666,
+        "FanerFallingShortfall_pct": 0.008731773952263211,
+        "FanerExitHexane_kg_kg_dry": -1.2732849383493769e-06,
+        "FanerExitWater_kg_kg_dry": -2.564872750229763e-06,
+        "FanerExitTemperature_C": 0.020310867415048506,
+        "FanerLastHolderClockTemperature_C": 0.02148283586825528,
+        "outlet_moisture_pct_wb": -0.00024604375794390343,
+        "outlet_hexane_ppm_wb": -1.2446399621794626,
+        "FanerMaxBeta": 0.651072275063598,
+        "max_abs_beta_after_birth": 0.07462941931238237,
+        "regime_C_advances": 285,
+        "advances_with_diffusion_opposing": 285
+      },
+      "whole_history_max_abs": {
+        "H": 0.0001625110815158537,
+        "W": 2.568845635372158e-06,
+        "T": 0.033478944413047884
+      }
+    }
+  },
+  "macros": {
+    "FGOrderCore": "1.33",
+    "FGMeshInterval": "0.003",
+    "FGIntTen": "19.258",
+    "FGCoreTen": "99.01",
+    "FGHexTen": "0.0017215072",
+    "FGWaterTen": "0.01609744",
+    "FGTempTen": "112.1782",
+    "FGIntTwenty": "19.236",
+    "FGShiftIntTwenty": "-0.00202",
+    "FGCoreTwenty": "98.15",
+    "FGShiftCoreTwenty": "-0.0956",
+    "FGHexTwenty": "0.0017215086",
+    "FGShiftHexTwenty": "\\ensuremath{-1.28\\times10^{-6}}",
+    "FGWaterTwenty": "0.01608433",
+    "FGShiftWaterTwenty": "\\ensuremath{-2.57\\times10^{-6}}",
+    "FGTempTwenty": "112.1802",
+    "FGShiftTempTwenty": "+0.0204",
+    "FGIntForty": "19.233",
+    "FGShiftIntForty": "-0.00221",
+    "FGCoreForty": "97.81",
+    "FGShiftCoreForty": "-0.0829",
+    "FGHexForty": "0.0017215143",
+    "FGShiftHexForty": "\\ensuremath{-1.27\\times10^{-6}}",
+    "FGWaterForty": "0.01608113",
+    "FGShiftWaterForty": "\\ensuremath{-2.56\\times10^{-6}}",
+    "FGTempForty": "112.1806",
+    "FGShiftTempForty": "+0.0203",
+    "FGAuditMax": "\\ensuremath{2.8\\times10^{-11}}"
+  }
+}

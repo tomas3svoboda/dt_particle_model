@@ -13,8 +13,66 @@ import numpy as np
 from scipy.optimize import least_squares
 
 import finite_film_core2_study as study
+import particle_kernel_envelope as envelope
+import particle_kernel_pd_boundary as pd_boundary
 
 core = study.core
+
+# Kernel-envelope FRONT_STAGE_NOISE_AWARE_ENERGY_GATE (armed only; Class B, off by default, NOT
+# adopted: open decision 1 of GT_PS2_UNIVERSAL_KERNEL_RULING_PACKET_8_FRONT_STAGE_NUMERICS_AND_
+# STALLED_TRANSIENT_2026-10-28; the three-knob build of 2026-10-28/29, record
+# docs/GT_PS2_PAPER1_THREE_HARNESS_KNOBS_BUILD_2026-10-29.md, built from variant (A) of
+# docs/GT_PS2_UNIVERSAL_KERNEL_THIN_BIRTH_FIRST_STEP_MECHANISM_2026-10-28.md section 12). The owner's
+# ruling GT_PS2_OWNER_RULING_PAPER1_GATE_UNITS_2026-10-17 point 2 (the dry stage's noise-aware
+# energy-row gate, experiment_core2_dt_dry.NoiseAwareEnergyRowAcceptance) ported to the front-stage
+# film-node search: the declared multiple of the row's representation floor.
+FRONT_STAGE_ENERGY_GATE_MULTIPLE = 2.0  # WAS absent until 2026-10-28 (every row at its target)
+
+
+def front_energy_rows(nw, nd, n_rows, stall_row):
+    """The front search's energy rows: the dry-piece (shell) energy rows, the Rankine-Hugoniot
+    (jump) energy row and the surface node's energy row, in the full row layout of n_rows rows
+    (the native rows plus the three node rows); with a stalled front, renumbered for the searched
+    rows (the consistency row removed)."""
+    rows = [2 * nw + 2 * nd + i for i in range(nd)] + [2 * nw + 3 * nd + 2, n_rows - 1]
+    if stall_row is None:
+        return rows
+    return [r - (1 if r > stall_row else 0) for r in rows if r != stall_row]
+
+
+class FrontNoiseAwareEnergyRowAcceptance:
+    """FRONT_STAGE_NOISE_AWARE_ENERGY_GATE's per-row acceptance clause for the domain-aware Newton.
+
+    Every searched row passes at the target, except the energy rows, which pass at
+    max(target, m x floor_i), floor_i = sum_j |J_ij| numpy.spacing(|x_j|), J the search's physical
+    Jacobian at the iterate, x = the iterate plus the temperature origins (the physical
+    coordinates). The interface of experiment_core2_dt_dry.NoiseAwareEnergyRowAcceptance.
+    """
+
+    def __init__(self, target, energy_rows, origins, multiple=FRONT_STAGE_ENERGY_GATE_MULTIPLE):
+        if not math.isfinite(multiple) or not multiple > 0:
+            raise ValueError("positive finite declared gate multiple required")
+        self.target = float(target)
+        self.energy_rows = list(energy_rows)
+        self.origins = np.asarray(origins, dtype=float)
+        self.multiple = float(multiple)
+
+    def gates(self, x, jac):
+        jac = np.asarray(jac, dtype=float)
+        physical = np.asarray(x, dtype=float) + self.origins
+        floor = np.abs(jac[self.energy_rows]) @ np.spacing(np.abs(physical))
+        gates = np.full(jac.shape[0], self.target)
+        gates[self.energy_rows] = np.maximum(self.target, self.multiple * floor)
+        return gates, floor
+
+    def candidate(self, residual):
+        fixed = np.ones(np.asarray(residual).size, dtype=bool)
+        fixed[self.energy_rows] = False
+        return bool(np.all(np.abs(np.asarray(residual)[fixed]) <= self.target))
+
+    def accepts(self, x, residual, jac):
+        gates, _ = self.gates(x, jac)
+        return bool(np.all(np.abs(np.asarray(residual)) <= gates))
 
 
 def node_balances(
@@ -123,6 +181,18 @@ def evaluate_water_surface(
         enforce_production_domain=False,
     )
     q_out = film.heat_transfer_w_m2_k * ack.factor * (ts - boundary.temperature_k)
+    deposition = 0.0
+    if isinstance(boundary, pd_boundary.KernelEnvelopeBoundary):
+        # Kernel-envelope pre-desolventizer items (armed only): the jacket's conduction
+        # in place of the sensible gas term; the dew-line condensate onto the film.
+        q_out = pd_boundary.surface_gas_heat_w_m2(boundary, q_out, ts)
+        deposition = boundary.dew_deposition_kg_m2_s
+        if deposition != 0.0 and liquid == 0.0 and old_loading == 0.0:
+            raise pd_boundary.DewLineCondensateOnFilmFreeSurface(
+                "the dew-line projection books condensate onto the external film, but the "
+                f"surface carries none ({deposition!r} kg/m2/s); a film's re-appearance on a "
+                "film-free surface is not carried"
+            )
     external_energy = math.fsum(
         (
             q_out,
@@ -130,6 +200,12 @@ def evaluate_water_surface(
             components.hexane_kg_m2_s * thermo.hexane_gas_partial_enthalpy_j_mol / core.hx.M,
         )
     )
+    external_water = components.water_kg_m2_s
+    if deposition != 0.0:
+        external_water = components.water_kg_m2_s - deposition
+        external_energy = math.fsum(
+            (external_energy, -deposition * boundary.dew_water_vapour_enthalpy_j_kg)
+        )
     liquid_h = core.wa.state_Tp(ts, config.dry.pressure_pa, "liquid").h_mass
     old_h = core.wa.state_Tp(old_temperature, config.dry.pressure_pa, "liquid").h_mass
     if surface_liquid_transfer_adapter is not None:
@@ -151,7 +227,7 @@ def evaluate_water_surface(
         pore_water,
         pore_hexane,
         exterior.energy.total_energy_flux_w_m2,
-        components.water_kg_m2_s,
+        external_water,
         components.hexane_kg_m2_s,
         external_energy,
     )
@@ -159,7 +235,7 @@ def evaluate_water_surface(
         ts,
         ys,
         liquid,
-        components.water_kg_m2_s,
+        external_water,
         components.hexane_kg_m2_s,
         external_energy,
         r_water,
@@ -198,6 +274,15 @@ def node_adapter(holder, dt, old_loading=0.0, old_temperature=343.0):
             geometry.master_grid.R,
             boundary,
             surface_y_hexane=holder.get("y_hexane"),
+            **(
+                {}
+                if "surface_liquid_transfer_fraction" not in holder
+                else {
+                    "surface_liquid_transfer_fraction": holder[
+                        "surface_liquid_transfer_fraction"
+                    ]
+                }
+            ),
         )
         resolved = core.ct.DirichletPoreBoundary(
             cells[-1].temperature_k,
@@ -237,6 +322,13 @@ def advance_water_node(
     difference_mode="forward",
     search_tolerance=None,
     experimental_interface_area_chart_audit=None,
+    film_depletion_event=False,
+    scaled_condition_cap=None,
+    surface_temperature_upper_k=None,
+    target_config_factory=None,
+    envelope_audit=None,
+    stalled_front=False,
+    residual_budget_per_unknown=False,
 ):
     # Counterfactual chart experiment only. The F9 frozen proxy definition
     # remains the default and requires owner approval before replacement.
@@ -246,7 +338,57 @@ def advance_water_node(
         raise ValueError(
             "experimental area chart requires a positive-core target and audit dictionary"
         )
+    # Kernel-envelope options (particle_kernel_envelope; all default off, the former
+    # path executes unchanged): film_depletion_event replaces the film unknown by the
+    # event duration with the film fixed at exactly zero and the front free;
+    # scaled_condition_cap gates the searched (column-scaled physical) matrix;
+    # surface_temperature_upper_k replaces the bath as the surface bound;
+    # target_config_factory(duration) gives the native pressure-only target config.
+    if film_depletion_event and (
+        target_z is not None
+        or gas_only_surface
+        or not physical_solver
+        or boundary_factory is None
+        or not old_loading > 0.0
+    ):
+        raise ValueError(
+            "a front-stage film depletion event needs a positive incoming film, a free "
+            "front, the physical solver and a duration-dependent boundary"
+        )
+    if (
+        isinstance(boundary, pd_boundary.KernelEnvelopeBoundary)
+        and boundary.dew_deposition_kg_m2_s != 0.0
+        and old_loading == 0.0
+    ):
+        raise pd_boundary.DewLineCondensateOnFilmFreeSurface(
+            "the dew-line projection books condensate onto the external film, but the "
+            f"surface carries none ({boundary.dew_deposition_kg_m2_s!r} kg/m2/s at "
+            f"bath y {boundary.dew_bath_y_hexane!r}); a film's re-appearance on a film-free "
+            "surface is not carried"
+        )
+    if surface_temperature_upper_k is not None and not math.isfinite(surface_temperature_upper_k):
+        raise ValueError("declared surface temperature bound must be finite")
+
+    def target_kwargs(duration):
+        if target_config_factory is None:
+            return {}
+        target = target_config_factory(duration)
+        return {} if target is None else {"target_config": target}
+
+    surface_upper = (
+        boundary.temperature_k
+        if surface_temperature_upper_k is None
+        else surface_temperature_upper_k
+    )
+    if surface_temperature_upper_k is None and envelope.armed(envelope.BIRTH_SURFACE_BOUND):
+        surface_upper = envelope.surface_temperature_upper_k(
+            boundary.temperature_k,
+            (*before.transport.wet_temperatures_k, *before.transport.dry_temperatures_k),
+        )
     root_target = before.controls.nonlinear_residual_tolerance
+    # Kernel-envelope FRONT_STAGE_NOISE_AWARE_ENERGY_GATE (armed only; Class B, not adopted): the
+    # physical search's energy rows accepted at max(target, 2 x floor); off, the former gates.
+    front_gate = envelope.armed(envelope.FRONT_STAGE_NOISE_AWARE_ENERGY_GATE)
     if search_tolerance is not None:
         if not math.isfinite(search_tolerance) or not 0 < search_tolerance <= root_target:
             raise ValueError(
@@ -258,6 +400,12 @@ def advance_water_node(
         seed.candidate, chart, seed.stefan_flux_scales_mol_m2_s
     )
     tc = seed.candidate.dry_temperatures_k[-1]
+    seed_target = target_kwargs(dt).get("target_config")
+    chart_pressure = (
+        before.transport.config.dry.pressure_pa
+        if seed_target is None
+        else seed_target.dry.pressure_pa
+    )
     holder = {
         "x": np.array([tc + 0.6, 0.03, 1e-5] if surface_seed is None else surface_seed),
         "dt": dt,
@@ -276,12 +424,27 @@ def advance_water_node(
             if not 0 < q < 1:
                 raise ValueError("surface composition fraction outside open gas phase chart")
             lo, hi = core.cp.gas_only_composition_interval(
-                ts, before.transport.config.dry.pressure_pa, pore
+                ts, chart_pressure, pore
             ).y_hexane_bounds
             holder["y_hexane"] = lo + (hi - lo) * q
             holder["x"] = np.array([ts, flux_or_beta, 0.0])
 
         configure_gas_surface(surface_seed)
+    if film_depletion_event:
+        if surface_seed is None:
+            raise ValueError("a film depletion event requires a declared surface seed")
+        lo_d, hi_d = duration_bounds
+        if not lo_d < dt < hi_d:
+            raise ValueError("depletion event duration seed outside its declared bounds")
+        holder["x"] = np.array([float(surface_seed[0]), float(surface_seed[1]), 0.0])
+        holder["dt"] = dt
+        # The exact-zero film event is the instant the D9 film-to-shell drain
+        # min(film, capacity) changes branch: the film supplies exactly the
+        # opened capacity (transfer share 1) and is gone. Past it the drain
+        # takes whatever film remains and the zero is no longer an event of
+        # the duration (the degenerate full-drain branch). Without a surface
+        # transfer law the share is not read.
+        holder["surface_liquid_transfer_fraction"] = 1.0
     fixed_front_coordinate = float(x_native[-2])
     if target_z is not None:
         if (
@@ -290,6 +453,86 @@ def advance_water_node(
         ):
             raise ValueError("positive target must match seed and recede from accepted state")
         x_native[-2] = core.ci._encode_open(dt, duration_bounds)
+    # Kernel-envelope stalled front (default off): the native interior-stall
+    # construction (cut_interior_stall.py, items 1-5, ratified 2026-08-21) at the harness
+    # film node. The front is a literal at the accepted position (never encoded, zero
+    # sweep); its search slot leaves the unknowns and the Rankine-Hugoniot water row
+    # (at q = 0 the interface water-flux continuity) leaves the searched rows; the
+    # hexane row (zero net hexane release: no driving force for the front) and the
+    # energy row stay solved; afterwards every row, the water row included, is judged
+    # at the unchanged acceptance gate.
+    stall_slot = stall_row = stall_z = None
+    # Kernel-envelope STALL_FILM_DEPLETION_EVENT (armed only, with STALLED_FRONT): the
+    # film-depletion event of a held front, the stalled construction above with the film
+    # unknown replaced by the event duration exactly as film_depletion_event does it (the film
+    # fixed at exactly zero, the drain on its capacity branch, transfer share 1); the water
+    # jump row stays the q = 0 consistency row judged at the unchanged gate.
+    stalled_event = (
+        stalled_front
+        and film_depletion_event
+        and envelope.armed(envelope.STALL_FILM_DEPLETION_EVENT)
+    )
+    if stalled_front:
+        if (
+            target_z is not None
+            or (film_depletion_event and not stalled_event)
+            or not physical_solver
+        ):
+            raise ValueError(
+                "a stalled-front step needs a free duration, no depletion event and the "
+                "physical solver"
+            )
+        stall_slot = x_native.size - 2
+        stall_row = (
+            2 * before.transport.layout.wet_piece_count
+            + 3 * before.transport.layout.dry_piece_count
+        )
+        stall_z = before.transport.geometry.front.z
+
+    def expand(values):
+        values = np.asarray(values, dtype=float)
+        return np.insert(values, stall_slot, fixed_front_coordinate)
+
+    def stall_diagnostic_chart():
+        # the native interior stall's own accept chart (cut_interior_stall.py
+        # _stall_diagnostic_chart): the pinned front judged against its host cell's
+        # geometric span, never a solve chart (the stall has no front coordinate)
+        geometry = before.transport.geometry
+        grid = geometry.master_grid
+        cut_index = before.transport.layout.cut_cell_index
+        inner_z = (grid.faces[cut_index] / grid.R) ** 3
+        outer_z = (grid.faces[cut_index + 1] / grid.R) ** 3
+        if not inner_z < stall_z < outer_z:
+            raise RuntimeError("the pinned front is not strictly inside its own host cell")
+        return replace(chart, front_z=(inner_z, outer_z))
+
+    def stall_stamp(assembly, values):
+        if stalled_event:
+            # the held-front event: its located duration and the consistency row in its own
+            # units (mol/s of water through the pinned interface, unbalanced at q = 0)
+            return {
+                **stall_stamp_common(assembly, values),
+                "stalled_film_depletion_event": True,
+                "event_duration_s": holder["dt"],
+                "consistency_row_mol_s": assembly.residuals.rh_water_mol_s,
+                "film_after_kg_m2": assembly.surface_film_audit.liquid_water_kg_m2,
+            }
+        return stall_stamp_common(assembly, values)
+
+    def stall_stamp_common(assembly, values):
+        return {
+            "front_z": stall_z,
+            "swept_volume_rate_m3_s": assembly.swept_geometry.interface_swept_volume_rate_m3_s,
+            "interface_temperature_k": assembly.interface.temperature_k,
+            "interface_hexane_flux_mol_m2_s": (
+                assembly.dry_face_fluxes[0].component.conserved_hexane_flux_mol_m2_s
+            ),
+            "consistency_row": "rh_water at q = 0 (interface water-flux continuity)",
+            "consistency_scaled_residual": float(values[stall_row]),
+            "jump_rows_scaled": [float(v) for v in values[stall_row : stall_row + 3]],
+            "gate": before.controls.nonlinear_residual_tolerance,
+        }
+
     active_boundary = boundary
     if beta_decoder is not None and surface_seed is not None:
         holder["x"][1] = (
@@ -304,12 +547,16 @@ def advance_water_node(
 
     def decode_candidate(values):
         encoded = np.array(values, copy=True)
+        if stall_slot is not None and encoded.size == x_native.size - 1:
+            encoded = expand(encoded)
         if target_z is not None:
             holder["dt"] = core.ci._decode_open(encoded[-2], duration_bounds)
             encoded[-2] = fixed_front_coordinate
         c = core.ci._decode_candidate_for_chart(
             encoded, before.transport.layout, chart, seed.stefan_flux_scales_mol_m2_s
         )
+        if stall_z is not None:
+            return replace(c, front_z=stall_z)
         return c if target_z is None else replace(c, front_z=target_z)
 
     work = 0
@@ -320,10 +567,11 @@ def advance_water_node(
         with node_adapter(holder, lambda: holder["dt"], old_loading, old_temperature):
             initial = core.cut.assemble_backward_euler(
                 before.transport,
-                seed.candidate,
+                seed.candidate if stall_z is None else replace(seed.candidate, front_z=stall_z),
                 dt,
                 boundary,
                 enforce_reduced_film_thresholds=False,
+                **target_kwargs(dt),
             )
             scales = core.ci._residual_scales(before.transport, initial, dt)
             scale_vector = np.asarray(scales.vector)
@@ -353,11 +601,15 @@ def advance_water_node(
 
             def residual(x):
                 nonlocal work, active_boundary
+                if film_depletion_event:
+                    holder["dt"] = float(x[-1])
                 candidate = decode_candidate(x[:-3])
                 if boundary_factory is not None:
                     active_boundary = boundary_factory(holder["dt"])
                 if gas_only_surface:
                     configure_gas_surface(x[-3:])
+                elif film_depletion_event:
+                    holder["x"] = np.array([x[-3], x[-2], 0.0])
                 else:
                     holder["x"] = np.array(x[-3:], copy=True)
                 if beta_decoder is not None:
@@ -376,6 +628,7 @@ def advance_water_node(
                     holder["dt"],
                     active_boundary,
                     enforce_reduced_film_thresholds=False,
+                    **target_kwargs(holder["dt"]),
                 )
                 work += 1
                 a = assembly.surface_film_audit
@@ -383,15 +636,16 @@ def advance_water_node(
                     np.asarray(core.ci._datum_covariant_residual_vector(assembly.residuals))
                     / scale_vector
                 )
-                return (
-                    row_multiplier
-                    * np.r_[
-                        native,
-                        a.water_node_residual_kg_m2_s / mass_scale,
-                        a.hexane_node_residual_kg_m2_s / mass_scale,
-                        a.energy_node_residual_w_m2 / heat_scale,
-                    ]
-                )
+                rows = row_multiplier * np.r_[
+                    native,
+                    a.water_node_residual_kg_m2_s / mass_scale,
+                    a.hexane_node_residual_kg_m2_s / mass_scale,
+                    a.energy_node_residual_w_m2 / heat_scale,
+                ]
+                if stall_row is None:
+                    return rows
+                holder["stall_full_rows"] = rows
+                return np.delete(rows, stall_row)
 
             lb, ub = core.ci._coordinate_solver_bounds_for_chart(
                 before.transport.layout, before.controls.maximum_logit_magnitude, chart
@@ -403,12 +657,14 @@ def advance_water_node(
                 surface_initial = np.asarray(surface_seed, dtype=float).copy()
             if beta_decoder is not None:
                 surface_initial[1] = initial.surface_film_audit.beta
+            if film_depletion_event:
+                surface_initial[2] = dt
             liquid_hi = 1.0 if gas_only_surface else max(0.05, 4 * old_loading)
             coordinate_limit = boundary.accepted_beta_limit if beta_decoder is not None else 1.0
             if physical_solver:
                 layout = before.transport.layout
                 nw, nd, nf = layout.wet_piece_count, layout.dry_piece_count, layout.dry_face_count
-                pressure = before.transport.config.dry.pressure_pa
+                pressure = chart_pressure
 
                 def interval(t, p):
                     return core.cp.gas_only_composition_interval(t, pressure, p).y_hexane_bounds
@@ -454,11 +710,26 @@ def advance_water_node(
                         chart.interface_temperature,
                     ]
                     + [
-                        (tl, min(tu, boundary.temperature_k)),
+                        (tl, min(tu, surface_upper)),
                         (-coordinate_limit, coordinate_limit),
-                        (0.0, liquid_hi),
+                        duration_bounds if film_depletion_event else (0.0, liquid_hi),
                     ]
                 )
+                if stall_slot is not None:
+                    # The stalled front's slot leaves the physical chart as well; the
+                    # placeholder front handed to the full encoder is the seed's own
+                    # (encodable) prediction and leaves with its slot.
+                    full_decode, full_encode = decode, encode
+                    placeholder_z = seed.candidate.front_z
+
+                    def decode(v):
+                        return np.delete(full_decode(expand(v)), stall_slot)
+
+                    def encode(v):
+                        trial = np.insert(np.asarray(v, dtype=float), stall_slot, placeholder_z)
+                        return np.delete(full_encode(trial), stall_slot)
+
+                    pairs = pairs[:stall_slot] + pairs[stall_slot + 1 :]
 
                 def solver(fun, x0, **kwargs):
                     return study.numerics.physical_chart_solve(
@@ -484,7 +755,7 @@ def advance_water_node(
             solve_kwargs = dict(
                 bounds=(
                     np.r_[lb, tl, -coordinate_limit, 0.0],
-                    np.r_[ub, min(tu, boundary.temperature_k), coordinate_limit, liquid_hi],
+                    np.r_[ub, min(tu, surface_upper), coordinate_limit, liquid_hi],
                 ),
                 x_scale="jac",
                 jac="3-point",
@@ -494,20 +765,60 @@ def advance_water_node(
                 ftol=1e-11,
                 gtol=1e-11,
             )
+            if stalled_event:
+                # the event duration's native box is its declared duration bounds, as its
+                # physical chart already states (the liquid-loading box does not apply to a
+                # duration; a held front's film runs out over tenths of a second)
+                lo_box, hi_box = (np.asarray(b, dtype=float).copy() for b in solve_kwargs["bounds"])
+                lo_box[-1], hi_box[-1] = duration_bounds
+                solve_kwargs["bounds"] = (lo_box, hi_box)
             restart_audit = []
             start = np.r_[x_native, surface_initial]
+            if stall_slot is not None:
+                start = np.delete(start, stall_slot)
+                solve_kwargs["bounds"] = tuple(
+                    np.delete(np.asarray(b, dtype=float), stall_slot)
+                    for b in solve_kwargs["bounds"]
+                )
             total_calls = 0
+            # Ruling packet 6 item 1 (DTDC_KERNEL_ENVELOPE_BUDGETS_PER_UNKNOWN, armed by the caller;
+            # GT_PS2_PAPER1_BUDGETS_PER_UNKNOWN_BUILD_2026-10-24.md): the physical search's total
+            # max(residual_budget, 12 (n + 1)) and its first two cycles max(present, 4 (n + 1) + 1),
+            # n the search unknowns. Off: the caller's residual_budget and the present split.
+            search_budget = residual_budget
+            if residual_budget_per_unknown and physical_solver:
+                search_budget = envelope.front_search_total_budget(residual_budget, start.size)
             # A restart is another search for the SAME backward-Euler root.
             # It imports no accepted state or elapsed physical time. Native
             # normalization is rebuilt from this interval's trial assembly.
             for cycle in range(3 if physical_solver else 1):
-                remaining = residual_budget - total_calls
+                remaining = search_budget - total_calls
                 if physical_solver:
-                    cycle_budget = (
-                        min(remaining, max(200, residual_budget // 3)) if cycle < 2 else remaining
-                    )
+                    split = max(200, residual_budget // 3)
+                    if residual_budget_per_unknown:
+                        split = envelope.front_search_cycle_budget(split, start.size)
+                    cycle_budget = min(remaining, split) if cycle < 2 else remaining
 
                     def cycle_solver(fun, x0, **kwargs):
+                        if front_gate:
+                            # FRONT_STAGE_NOISE_AWARE_ENERGY_GATE (armed only): the per-row
+                            # acceptance clause, its origins those physical_chart_solve takes
+                            gate_initial = np.asarray(decode(x0), dtype=float)
+                            gate_indices = [
+                                *range(nw),
+                                *range(2 * nw, 2 * nw + nd),
+                                len(pairs) - 4,
+                                len(pairs) - 3,
+                            ]
+                            gate_origin = np.zeros(gate_initial.size)
+                            gate_origin[gate_indices] = gate_initial[gate_indices]
+                            gate_rows = front_energy_rows(
+                                nw, nd, before.transport.layout.unknown_count + 3, stall_row
+                            )
+                            holder["front_gate_rows"] = gate_rows
+                            kwargs["acceptance"] = FrontNoiseAwareEnergyRowAcceptance(
+                                root_target, gate_rows, gate_origin
+                            )
                         return study.numerics.physical_chart_solve(
                             fun,
                             x0,
@@ -546,10 +857,10 @@ def advance_water_node(
                     total_calls += debug["residual_calls"]
                     trial = np.asarray(debug["best_native_coordinates"])
                     maximum = debug["best_maximum_scaled_residual"]
-                    if cycle == 2 or total_calls >= residual_budget:
+                    if cycle == 2 or total_calls >= search_budget:
                         debug["same_interval_restarts"] = restart_audit
                         raise
-                if not physical_solver or cycle == 2 or total_calls >= residual_budget:
+                if not physical_solver or cycle == 2 or total_calls >= search_budget:
                     break
                 if maximum > maximum_restart_trial_residual:
                     raise RuntimeError(f"same-interval restart refused far from root: {maximum}")
@@ -561,6 +872,7 @@ def advance_water_node(
                     holder["dt"],
                     active_boundary,
                     enforce_reduced_film_thresholds=False,
+                    **target_kwargs(holder["dt"]),
                 )
                 scales = core.ci._residual_scales(before.transport, trial_assembly, holder["dt"])
                 scale_vector = np.asarray(scales.vector)
@@ -576,8 +888,19 @@ def advance_water_node(
                 )
                 start = trial.copy()
             solution.same_interval_restarts = restart_audit
+            if residual_budget_per_unknown and physical_solver:
+                solution.kernel_envelope_search_budget = {
+                    "unknowns": int(start.size),
+                    "total": search_budget,
+                    "first_two_cycles": envelope.front_search_cycle_budget(
+                        max(200, residual_budget // 3), start.size
+                    ),
+                }
             solution.nfev = total_calls
             search_values = residual(solution.x)
+            if stall_row is not None:
+                # every row, the water consistency row included, is judged at the gate
+                search_values = holder["stall_full_rows"]
             values = search_values / row_multiplier
             maximum = float(np.max(np.abs(values)))
             candidate = decode_candidate(solution.x[:-3])
@@ -587,14 +910,70 @@ def advance_water_node(
                 holder["dt"],
                 active_boundary,
                 enforce_reduced_film_thresholds=False,
+                **target_kwargs(holder["dt"]),
             )
-            if (
-                not solution.success
-                or np.max(np.abs(values)) > before.controls.nonlinear_residual_tolerance
-            ):
+            gate_stamp = None
+            if front_gate:
+                # FRONT_STAGE_NOISE_AWARE_ENERGY_GATE (armed only): the post-search check at the
+                # per-row gates, the energy rows' lower bound the native tolerance, every other
+                # row at the unchanged native tolerance.
+                check_gates = np.full(values.size, before.controls.nonlinear_residual_tolerance)
+                if physical_solver and "front_gate_rows" in holder and solution.success:
+                    full_rows = front_energy_rows(
+                        nw, nd, before.transport.layout.unknown_count + 3, None
+                    )
+                    search_rows = holder["front_gate_rows"]
+                    physical = np.asarray(getattr(solution, "physical_coordinates", solution.x))
+                    jac_rows = np.asarray(solution.jac, dtype=float)
+                    floor = np.abs(jac_rows[search_rows]) @ np.spacing(np.abs(physical))
+                    value_rows = (
+                        full_rows if stall_row is None else [r for r in full_rows if r != stall_row]
+                    )
+                    gate_values = np.maximum(
+                        before.controls.nonlinear_residual_tolerance,
+                        FRONT_STAGE_ENERGY_GATE_MULTIPLE * floor,
+                    )
+                    check_gates[value_rows] = gate_values
+                    gate_stamp = {
+                        "knob": envelope.PREFIX + envelope.FRONT_STAGE_NOISE_AWARE_ENERGY_GATE,
+                        "declared_multiple": FRONT_STAGE_ENERGY_GATE_MULTIPLE,
+                        "dt_s": float(holder["dt"]),
+                        "stalled_front": stall_row is not None,
+                        "film_depletion_event": bool(film_depletion_event),
+                        "energy_rows": list(map(int, value_rows)),
+                        "energy_row_residuals": [float(values[r]) for r in value_rows],
+                        "energy_row_floors": floor.tolist(),
+                        "energy_row_gates": gate_values.tolist(),
+                        "absorbed_by_floor": [
+                            bool(abs(values[r]) > before.controls.nonlinear_residual_tolerance)
+                            for r in value_rows
+                        ],
+                        "non_energy_max_abs": float(np.max(np.abs(np.delete(values, value_rows)))),
+                        "all_residuals": values.tolist(),
+                        "target": float(root_target),
+                        "native_tolerance": float(before.controls.nonlinear_residual_tolerance),
+                        "front_z": float(candidate.front_z),
+                        "solver_message": str(solution.message),
+                        "search_calls": int(total_calls),
+                        "physically_qualifying": False,
+                    }
+                refused = not solution.success or bool(np.any(np.abs(values) > check_gates))
+            else:
+                refused = (
+                    not solution.success
+                    or np.max(np.abs(values)) > before.controls.nonlinear_residual_tolerance
+                )
+            if refused:
                 error = RuntimeError(
                     f"water-node study not converged: residual={np.max(np.abs(values))}; work={work}"
+                    if stall_row is None
+                    else "stalled-front step refused: searched rows "
+                    f"{'converged' if solution.success else 'not converged'}, water consistency "
+                    f"row {float(values[stall_row])!r} against the gate "
+                    f"{before.controls.nonlinear_residual_tolerance!r}; work={work}"
                 )
+                if stall_row is not None:
+                    error.stall_stamp = stall_stamp(assembly, values)
                 error.study_debug = {
                     "candidate": asdict(candidate),
                     "surface": asdict(assembly.surface_film_audit),
@@ -602,9 +981,13 @@ def advance_water_node(
                     "work": work,
                     "same_interval_restarts": restart_audit,
                 }
+                if front_gate:
+                    error.study_debug["front_stage_noise_aware_energy_gate"] = gate_stamp
                 raise error
             if abs(assembly.surface_film_audit.beta) > boundary.accepted_beta_limit:
                 raise RuntimeError("resolved water-node root exceeds explicit beta study band")
+            if gate_stamp is not None and envelope_audit is not None:
+                envelope_audit["front_stage_noise_aware_energy_gate"] = gate_stamp
             condition = float(np.linalg.cond(getattr(solution, "native_jac", solution.jac)))
             if experimental_interface_area_chart_audit is not None:
                 native_matrix = getattr(solution, "native_jac", solution.jac)
@@ -624,9 +1007,42 @@ def advance_water_node(
                     maximum_per_area_scaled_residual=float(max(abs(search_values))),
                     physical_equations_unchanged=True,
                 )
-            if condition > before.controls.maximum_condition_proxy:
+            gated_condition, gated_cap = condition, before.controls.maximum_condition_proxy
+            if scaled_condition_cap is not None:
+                gated_condition = study.numerics.searched_matrix_condition(solution.jac)
+                gated_cap = scaled_condition_cap
+            if envelope_audit is not None:
+                envelope_audit.update(
+                    film_node_certificate={
+                        "gated_matrix": (
+                            "native pullback (former)"
+                            if scaled_condition_cap is None
+                            else "column-2-norm-scaled physical film-node Jacobian"
+                        ),
+                        "gated_condition": gated_condition,
+                        "cap": gated_cap,
+                        "native_pullback_condition": condition,
+                        "native_pullback_cap_reported": before.controls.maximum_condition_proxy,
+                        "scaled_physical_condition": study.numerics.searched_matrix_condition(
+                            solution.jac
+                        ),
+                    },
+                    surface_temperature_upper_k=surface_upper,
+                    film_depletion_event=film_depletion_event,
+                    event_duration_s=holder["dt"] if film_depletion_event else None,
+                    target_pressure_pa=assembly.target_config.dry.pressure_pa,
+                )
+                if stall_z is not None:
+                    envelope_audit["stalled_front"] = stall_stamp(assembly, values)
+            if gated_condition > gated_cap or (
+                scaled_condition_cap is not None and not math.isfinite(gated_condition)
+            ):
                 error = RuntimeError(
                     f"water-node Jacobian condition exceeds native limit: {condition}"
+                    if scaled_condition_cap is None
+                    else "water-node condition not certified on the searched "
+                    f"(column-2-norm-scaled) matrix: {gated_condition} "
+                    f"(native pullback {condition})"
                 )
                 error.optimizer_debug = {
                     "native_jacobian": getattr(solution, "native_jac", solution.jac).tolist(),
@@ -656,7 +1072,7 @@ def advance_water_node(
                 0,
                 str(solution.message),
                 condition,
-                chart,
+                chart if stall_z is None else stall_diagnostic_chart(),
                 None,
                 "joint native radial / conservative external water node study",
                 "trf",
@@ -693,4 +1109,9 @@ def advance_water_node(
                     state.effective_wet_retained_water_capacity_duals_over_rt,
                     state.config.wet.luikov,
                 )
+            if stall_z is not None and (
+                step.after.transport.geometry.front.z != stall_z
+                or assembly.swept_geometry.interface_swept_volume_rate_m3_s != 0.0
+            ):
+                raise RuntimeError("stalled-front step moved the front")
             return step

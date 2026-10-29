@@ -1,0 +1,2255 @@
+{
+  "release": "v1.4.0-submission",
+  "source_commit": "f1cd537a4baf381017581611ab85621c962fe4dd",
+  "stand_in": false,
+  "archives": {
+    "reference": {
+      "archive": "data/final_reference.tar.xz",
+      "sha256": "2d34197950daed5ff6cb0e7bc1c83058af903c91dffa9a59aab080ff3d509c17",
+      "members": 8,
+      "uncompressed_bytes": 19719430,
+      "compressed_bytes": 2166412,
+      "download_url": "https://github.com/tomas3svoboda/dt_particle_model/releases/download/v1.4.0-submission/final_reference.tar.xz"
+    },
+    "ladder_records": {
+      "archive": "data/final_ladder_records.tar.xz",
+      "sha256": "8ce690c37135cc45ed81e550cb9659018c1045125ecdb85047dd05684309109e",
+      "members": 196,
+      "uncompressed_bytes": 276123764,
+      "compressed_bytes": 28499576,
+      "download_url": "https://github.com/tomas3svoboda/dt_particle_model/releases/download/v1.4.0-submission/final_ladder_records.tar.xz"
+    },
+    "adopted_dt": {
+      "archive": "data/final_adopted_dt.tar.xz",
+      "sha256": "d05940172878e958d26e06d4b0d9df824562a30bf0b419b1fd79c684979c7278",
+      "members": 99,
+      "uncompressed_bytes": 623143792,
+      "compressed_bytes": 86646608,
+      "cases": [
+        "DT_N10_L1",
+        "DT_N20_L1",
+        "DT_N40_L1",
+        "DT_N80_L1",
+        "DT_N20_L1_WSAT025",
+        "DT_N20_L1_WSAT032",
+        "DT_N20_L1_WSAT075",
+        "DT_N20_L1_WSAT097",
+        "DT_N20_L1_DB190",
+        "DT_N20_L1_DB200",
+        "DT_N20_L1_DB600"
+      ],
+      "download_url": "https://github.com/tomas3svoboda/dt_particle_model/releases/download/v1.4.0-submission/final_adopted_dt.tar.xz"
+    },
+    "adopted_dt_time_pair": {
+      "archive": "data/final_adopted_dt_time_pair.tar.xz",
+      "sha256": "a0ede0b9a12c4ad38a8754554b5fe239941adf7005d1c9d07f77d32e5c334373",
+      "members": 18,
+      "uncompressed_bytes": 231522701,
+      "compressed_bytes": 34488736,
+      "cases": [
+        "DT_N20_L2",
+        "DT_N40_L2"
+      ],
+      "download_url": "https://github.com/tomas3svoboda/dt_particle_model/releases/download/v1.4.0-submission/final_adopted_dt_time_pair.tar.xz"
+    },
+    "adopted_faner": {
+      "archive": "data/final_adopted_faner.tar.xz",
+      "sha256": "120b7115cae275a6c7dd07bed0d604fd1293747fc2fc8fe10e3187d8e26a76e2",
+      "members": 40,
+      "uncompressed_bytes": 162436017,
+      "compressed_bytes": 18171756,
+      "cases": [
+        "Faner_R15_N10_L1",
+        "Faner_R15_N20_L1",
+        "Faner_R15_N40_L1",
+        "Faner_R15_N20_L2",
+        "Faner_R15_N40_L2"
+      ],
+      "download_url": "https://github.com/tomas3svoboda/dt_particle_model/releases/download/v1.4.0-submission/final_adopted_faner.tar.xz"
+    },
+    "faner_profile": {
+      "archive": "data/final_faner_profile.tar.xz",
+      "sha256": "a0e3c9761dcbc6dd70ec3b6f200732c2bbf32ec0160aab60ef2897408f3c8fd4",
+      "members": 80,
+      "uncompressed_bytes": 226062117,
+      "compressed_bytes": 24631204,
+      "cases": [
+        "Faner_PHI_0p28000_N40_L1",
+        "Faner_PHI_0p28500_N40_L1",
+        "Faner_InitialSlope_N20_L1",
+        "Faner_PHI_0p20000",
+        "Faner_PHI_0p25000",
+        "Faner_PHI_0p28000",
+        "Faner_PHI_0p28500",
+        "Faner_PHI_0p30000",
+        "Faner_PHI_0p34000",
+        "Faner_PHI_0p36500"
+      ],
+      "download_url": "https://github.com/tomas3svoboda/dt_particle_model/releases/download/v1.4.0-submission/final_faner_profile.tar.xz"
+    },
+    "pd_exposure": {
+      "archive": "data/final_pd_exposure.tar.xz",
+      "sha256": "eff22ed6191b17e3f8872f585cce83ffaf6dbbe3025b841d156c117c6bd63ab2",
+      "members": 18,
+      "uncompressed_bytes": 98897307,
+      "compressed_bytes": 13295928,
+      "cases": [
+        "DT_N20_L1_PD_x0p3",
+        "DT_N20_L1_PD_x3p0"
+      ],
+      "download_url": "https://github.com/tomas3svoboda/dt_particle_model/releases/download/v1.4.0-submission/final_pd_exposure.tar.xz"
+    },
+    "supporting_records": {
+      "archive": "data/supporting_records.tar.xz",
+      "sha256": "2077f2734dd1aec7634ca1eae40749e91faa05309112af83b93d7ddba9e27b28",
+      "members": 179,
+      "uncompressed_bytes": 17925575,
+      "compressed_bytes": 1133136,
+      "cases": [],
+      "scope": "Supporting size-ensemble, feed-refinement, datum and calibration-generation records.",
+      "download_url": "https://github.com/tomas3svoboda/dt_particle_model/releases/download/v1.4.0-submission/supporting_records.tar.xz"
+    }
+  },
+  "reference_case": "Faner_R15_N20_L1",
+  "cases": [
+    {
+      "name": "DT_N10_L1",
+      "roles": [
+        "dt_ladder",
+        "reference"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N10_L1",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "10",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "7",
+        "--graded-band-cells",
+        "3",
+        "--graded-band-ratio",
+        "2.143588810000001"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 2411.8754275
+    },
+    {
+      "name": "DT_N20_L1",
+      "roles": [
+        "dt_ladder",
+        "sensitivity_control"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L1",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 3999.3179864
+    },
+    {
+      "name": "DT_N40_L1",
+      "roles": [
+        "dt_ladder"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N40_L1",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "40",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "28",
+        "--graded-band-cells",
+        "12",
+        "--graded-band-ratio",
+        "1.2100000000000002"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 8664.781095400002
+    },
+    {
+      "name": "DT_N80_L1",
+      "roles": [
+        "dt_ladder",
+        "reported"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N80_L1",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "80",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "56",
+        "--graded-band-cells",
+        "24",
+        "--graded-band-ratio",
+        "1.1"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 27040.1795849
+    },
+    {
+      "name": "DT_N20_L1_WSAT025",
+      "roles": [
+        "sensitivity"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L1_WSAT025",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004",
+        "--saturated-loading",
+        "0.25"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 3624.756273000001
+    },
+    {
+      "name": "DT_N20_L1_WSAT032",
+      "roles": [
+        "sensitivity"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L1_WSAT032",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004",
+        "--saturated-loading",
+        "0.32"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 3529.5778967000006
+    },
+    {
+      "name": "DT_N20_L1_WSAT075",
+      "roles": [
+        "sensitivity"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L1_WSAT075",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004",
+        "--saturated-loading",
+        "0.75"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 3866.147020100001
+    },
+    {
+      "name": "DT_N20_L1_WSAT097",
+      "roles": [
+        "sensitivity"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L1_WSAT097",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004",
+        "--saturated-loading",
+        "0.97"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 3746.9846832000003
+    },
+    {
+      "name": "DT_N20_L1_DB190",
+      "roles": [
+        "sensitivity"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L1_DB190",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": {
+        "spec": "DT_N20_L1_DB190.json",
+        "diff": "DT_N20_L1_DB190.diff",
+        "summary": "ParticleModelParameters.binary_reference_m2_s 4e-10 -> 1.9e-10 in paper/analysis/harness/particle_solver_configuration.py",
+        "producer_variant_records": [
+          "C:/Users/z004d8nt/AppData/Local/Temp/claude/c--Users-z004d8nt-Documents-DTDC-Simulator/964cefed-03b6-48b7-b6f9-19461913b2b5/scratchpad/schedule_build/records/variant_Db190.diff"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/particle_solver_configuration.py",
+            "old": "    binary_reference_m2_s: float = 4e-10\n",
+            "new": "    binary_reference_m2_s: float = 1.9e-10\n",
+            "count": 1,
+            "note": "the binary-diffusivity reference 4e-10 -> 1.9e-10 m2/s (sensitivity)",
+            "file_sha256_shipped": "b59046a57665ee67104c4188bc13e954684beb8c50fa1f93d6d5fcc44876cacc",
+            "file_sha256_with_variant": "2a62c6a321db13e655c9167f54655ef14e9e18df0aae9fe6d094e2e7ee99fdd8"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 3581.0494851000003
+    },
+    {
+      "name": "DT_N20_L1_DB200",
+      "roles": [
+        "sensitivity"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L1_DB200",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": {
+        "spec": "DT_N20_L1_DB200.json",
+        "diff": "DT_N20_L1_DB200.diff",
+        "summary": "ParticleModelParameters.binary_reference_m2_s 4e-10 -> 2.0e-10 in paper/analysis/harness/particle_solver_configuration.py",
+        "producer_variant_records": [
+          "C:/Users/z004d8nt/AppData/Local/Temp/claude/c--Users-z004d8nt-Documents-DTDC-Simulator/964cefed-03b6-48b7-b6f9-19461913b2b5/scratchpad/schedule_build/records/variant_Db200.diff"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/particle_solver_configuration.py",
+            "old": "    binary_reference_m2_s: float = 4e-10\n",
+            "new": "    binary_reference_m2_s: float = 2.0e-10\n",
+            "count": 1,
+            "note": "the binary-diffusivity reference 4e-10 -> 2.0e-10 m2/s (sensitivity)",
+            "file_sha256_shipped": "b59046a57665ee67104c4188bc13e954684beb8c50fa1f93d6d5fcc44876cacc",
+            "file_sha256_with_variant": "b59cf6584357852e1cff51d841c237def81d1aab238a3d8242d374e8a85ea8f9"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 3579.3314726999997
+    },
+    {
+      "name": "DT_N20_L1_DB600",
+      "roles": [
+        "sensitivity"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L1_DB600",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": {
+        "spec": "DT_N20_L1_DB600.json",
+        "diff": "DT_N20_L1_DB600.diff",
+        "summary": "ParticleModelParameters.binary_reference_m2_s 4e-10 -> 6.0e-10 in paper/analysis/harness/particle_solver_configuration.py",
+        "producer_variant_records": [
+          "C:/Users/z004d8nt/AppData/Local/Temp/claude/c--Users-z004d8nt-Documents-DTDC-Simulator/964cefed-03b6-48b7-b6f9-19461913b2b5/scratchpad/schedule_build/records/variant_Db600.diff"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/particle_solver_configuration.py",
+            "old": "    binary_reference_m2_s: float = 4e-10\n",
+            "new": "    binary_reference_m2_s: float = 6.0e-10\n",
+            "count": 1,
+            "note": "the binary-diffusivity reference 4e-10 -> 6.0e-10 m2/s (sensitivity)",
+            "file_sha256_shipped": "b59046a57665ee67104c4188bc13e954684beb8c50fa1f93d6d5fcc44876cacc",
+            "file_sha256_with_variant": "9a0913e73a5fed1ad438634769a11ea677ed8e075eed68b0cad4751db55a9455"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 3626.4248131999993
+    },
+    {
+      "name": "DT_N20_L2",
+      "roles": [
+        "dt_time_pair"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L2",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "2",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004",
+        "--dry-advance-ceiling",
+        "4000"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": {
+        "arguments": [
+          "--dry-advance-ceiling",
+          "4000"
+        ],
+        "note": "the producing mirror raised the runner's dry-advance ceiling 1500 -> 4000 as a two-literal variant on the owner's ruling of 2026-10-28; this tree has it as the runner option --dry-advance-ceiling (docs/GT_PS2_PAPER1_DT_HALF_STEP_PAIR_COMPLETE_AT_RAISED_CEILING_2026-10-28.md)"
+      },
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": "the time-level-2 (half time step) twin of DT_N20_L1, marched to the outlet at the raised ceiling",
+      "producer_wall_seconds": 6697.502554699997
+    },
+    {
+      "name": "DT_N40_L2",
+      "roles": [
+        "dt_time_pair"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N40_L2",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "40",
+        "--time-level",
+        "2",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "28",
+        "--graded-band-cells",
+        "12",
+        "--graded-band-ratio",
+        "1.2100000000000002",
+        "--dry-advance-ceiling",
+        "4000"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": {
+        "arguments": [
+          "--dry-advance-ceiling",
+          "4000"
+        ],
+        "note": "the producing mirror raised the runner's dry-advance ceiling 1500 -> 4000 as a two-literal variant on the owner's ruling of 2026-10-28; this tree has it as the runner option --dry-advance-ceiling (docs/GT_PS2_PAPER1_DT_HALF_STEP_PAIR_COMPLETE_AT_RAISED_CEILING_2026-10-28.md)"
+      },
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": "the time-level-2 (half time step) twin of DT_N40_L1, marched to the outlet at the raised ceiling",
+      "producer_wall_seconds": 14281.355209900008
+    },
+    {
+      "name": "Faner_R15_N10_L1",
+      "roles": [
+        "faner_ladder"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_R15_N10_L1",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "10",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "7",
+        "--graded-band-cells",
+        "3",
+        "--graded-band-ratio",
+        "2.143588810000001"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_R15_N10_L1.json",
+        "diff": "Faner_R15_N10_L1.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.29; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.29\n",
+            "count": 1,
+            "note": "nominal loading estimate",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "a1250ee2583073a0f2857eb50dbe752a0972fadf6685bfdd9de06f57a596edc2"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 489.7240764000162
+    },
+    {
+      "name": "Faner_R15_N20_L1",
+      "roles": [
+        "reference",
+        "faner_ladder",
+        "faner_control",
+        "faner_fit_profile"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_R15_N20_L1",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_R15_N20_L1.json",
+        "diff": "Faner_R15_N20_L1.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.29; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.29\n",
+            "count": 1,
+            "note": "nominal loading estimate",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "a1250ee2583073a0f2857eb50dbe752a0972fadf6685bfdd9de06f57a596edc2"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 1257.9771853999991
+    },
+    {
+      "name": "Faner_R15_N40_L1",
+      "roles": [
+        "reported",
+        "faner_ladder"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_R15_N40_L1",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "40",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "28",
+        "--graded-band-cells",
+        "12",
+        "--graded-band-ratio",
+        "1.2100000000000002"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_R15_N40_L1.json",
+        "diff": "Faner_R15_N40_L1.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.29; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.29\n",
+            "count": 1,
+            "note": "nominal loading estimate",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "a1250ee2583073a0f2857eb50dbe752a0972fadf6685bfdd9de06f57a596edc2"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 4274.660226000007
+    },
+    {
+      "name": "Faner_R15_N20_L2",
+      "roles": [
+        "faner_time_pair"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_R15_N20_L2",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "20",
+        "--time-level",
+        "2",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_R15_N20_L2.json",
+        "diff": "Faner_R15_N20_L2.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.29; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.29\n",
+            "count": 1,
+            "note": "nominal loading estimate",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "a1250ee2583073a0f2857eb50dbe752a0972fadf6685bfdd9de06f57a596edc2"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 2266.095197399991
+    },
+    {
+      "name": "Faner_R15_N40_L2",
+      "roles": [
+        "faner_time_pair"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_R15_N40_L2",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "40",
+        "--time-level",
+        "2",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "28",
+        "--graded-band-cells",
+        "12",
+        "--graded-band-ratio",
+        "1.2100000000000002"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_OUTER_CELL_FRACTION": "0.1"
+      },
+      "source_variant": {
+        "spec": "Faner_R15_N40_L2.json",
+        "diff": "Faner_R15_N40_L2.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.29; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.29\n",
+            "count": 1,
+            "note": "nominal loading estimate",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "a1250ee2583073a0f2857eb50dbe752a0972fadf6685bfdd9de06f57a596edc2"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 5444.318806800002
+    },
+    {
+      "name": "Faner_PHI_0p28000_N40_L1",
+      "roles": [
+        "faner_fit_profile",
+        "profile_resolution"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_PHI_0p28000_N40_L1",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "40",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "28",
+        "--graded-band-cells",
+        "12",
+        "--graded-band-ratio",
+        "1.2100000000000002"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_PHI_0p28000_N40_L1.json",
+        "diff": "Faner_PHI_0p28000_N40_L1.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.28; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.28\n",
+            "count": 1,
+            "note": "declared profile candidate or initial-slope baseline",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "b6b93041e2faae44b1a3d355bb4407fae7582343cab51295763ee47e3f09a773"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 4245.031684599991
+    },
+    {
+      "name": "Faner_PHI_0p28500_N40_L1",
+      "roles": [
+        "faner_fit_profile",
+        "profile_resolution"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_PHI_0p28500_N40_L1",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "40",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "28",
+        "--graded-band-cells",
+        "12",
+        "--graded-band-ratio",
+        "1.2100000000000002"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_PHI_0p28500_N40_L1.json",
+        "diff": "Faner_PHI_0p28500_N40_L1.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.285; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.285\n",
+            "count": 1,
+            "note": "declared profile candidate or initial-slope baseline",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "9602935748725a797ef22e80375eaf1215630eea8fa33703ea761d59d85e146e"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 5864.905961399985
+    },
+    {
+      "name": "Faner_InitialSlope_N20_L1",
+      "roles": [
+        "faner_fit_profile",
+        "initial_slope_baseline"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_InitialSlope_N20_L1",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "PYTHONPATH": "C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\fanergraded_b\\mirror_r15fg\\src;C:\\Users\\z004d8nt\\AppData\\Local\\Temp\\claude\\c--Users-z004d8nt-Documents-DTDC-Simulator\\964cefed-03b6-48b7-b6f9-19461913b2b5\\scratchpad\\fanergraded_b\\mirror_r15fg\\paper\\analysis\\harness",
+        "PYTHONHASHSEED": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_InitialSlope_N20_L1.json",
+        "diff": "Faner_InitialSlope_N20_L1.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.3843; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.3843\n",
+            "count": 1,
+            "note": "declared profile candidate or initial-slope baseline",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "a112a702d67d0f5679223561c63d82286d87e25ce58c83744a4193e7fa05fb39"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 1124.3270469000272
+    },
+    {
+      "name": "Faner_PHI_0p20000",
+      "roles": [
+        "faner_fit_profile"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_PHI_0p20000",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_PHI_0p20000.json",
+        "diff": "Faner_PHI_0p20000.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.2; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.2\n",
+            "count": 1,
+            "note": "declared profile candidate or initial-slope baseline",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "3abf82d1946a728b18c032b737b6696c05ca575e997ae04d8bbe6d9bbfe545a3"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 1460.5053465999954
+    },
+    {
+      "name": "Faner_PHI_0p25000",
+      "roles": [
+        "faner_fit_profile"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_PHI_0p25000",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_PHI_0p25000.json",
+        "diff": "Faner_PHI_0p25000.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.25; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.25\n",
+            "count": 1,
+            "note": "declared profile candidate or initial-slope baseline",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "7667b1de078384731f76670ebcf7f7d2f6412e568c52ae3fb60105c38b181ff7"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 1382.91114869999
+    },
+    {
+      "name": "Faner_PHI_0p28000",
+      "roles": [
+        "faner_fit_profile"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_PHI_0p28000",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_PHI_0p28000.json",
+        "diff": "Faner_PHI_0p28000.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.28; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.28\n",
+            "count": 1,
+            "note": "declared profile candidate or initial-slope baseline",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "b6b93041e2faae44b1a3d355bb4407fae7582343cab51295763ee47e3f09a773"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 1266.1189156000037
+    },
+    {
+      "name": "Faner_PHI_0p28500",
+      "roles": [
+        "faner_fit_profile"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_PHI_0p28500",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_PHI_0p28500.json",
+        "diff": "Faner_PHI_0p28500.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.285; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.285\n",
+            "count": 1,
+            "note": "declared profile candidate or initial-slope baseline",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "9602935748725a797ef22e80375eaf1215630eea8fa33703ea761d59d85e146e"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 1258.058194399986
+    },
+    {
+      "name": "Faner_PHI_0p30000",
+      "roles": [
+        "faner_fit_profile"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_PHI_0p30000",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_PHI_0p30000.json",
+        "diff": "Faner_PHI_0p30000.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.3; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.3\n",
+            "count": 1,
+            "note": "declared profile candidate or initial-slope baseline",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "9525dcbd8c9688906b6b63cc1cb3dfbb109c49c64226cb5f33503c2ba8bf6382"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 1280.8665516000183
+    },
+    {
+      "name": "Faner_PHI_0p34000",
+      "roles": [
+        "faner_fit_profile"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_PHI_0p34000",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_PHI_0p34000.json",
+        "diff": "Faner_PHI_0p34000.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.34; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.34\n",
+            "count": 1,
+            "note": "declared profile candidate or initial-slope baseline",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "faeedbc964e9aaba60bb6c6662ebd249238fff3adf54c4dc640d94229223e8f9"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 1289.6485188000079
+    },
+    {
+      "name": "Faner_PHI_0p36500",
+      "roles": [
+        "faner_fit_profile"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/Faner_PHI_0p36500",
+      "argv": [
+        "--study",
+        "Faner",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1",
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_BIRTH_SEED_BOUNDED_TO_OUTER_CELL": "1",
+        "DTDC_KERNEL_ENVELOPE_FANER_MEASURED_VAPOUR_TRACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FRONT_STAGE_NOISE_AWARE_ENERGY_GATE": "1"
+      },
+      "source_variant": {
+        "spec": "Faner_PHI_0p36500.json",
+        "diff": "Faner_PHI_0p36500.diff",
+        "summary": "radius 1.5 mm; common external-transfer factor 0.365; measured vapour trace",
+        "producer_variant_records": [
+          "GT_PS2_PAPER1_FANER_MULTIPLIER_SSE_PROFILE_2026-10-29"
+        ],
+        "replacements": [
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "                    \"--radius\",\n                    0.000885,\n",
+            "new": "                    \"--radius\",\n                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)\n",
+            "count": 1,
+            "note": "the Faner particle radius 0.885 mm -> 1.5 mm (the runner's Faner argument list)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/run_particle_qualification_case.py",
+            "old": "0.0015 if args.study == \"DT\" else 0.000885\n",
+            "new": "0.0015 if args.study == \"DT\" else 0.0015  # WAS 0.000885 (r15 variant)\n",
+            "count": 2,
+            "note": "the same radius in the two graded-mesh constructions (the stamp and the grid check)",
+            "file_sha256_shipped": "56444faea4cefb432a93e1ca84eb8156c3867711dbe6af95ae96bd73ac6110d7",
+            "file_sha256_with_variant": "6c8468f4adfca7d1a5f8a278767bc090d0cf29fd2dbb227b90a87efc5a553598"
+          },
+          {
+            "path": "paper/analysis/harness/bulk_endpoint.py",
+            "old": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787\n",
+            "new": "INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.365\n",
+            "count": 1,
+            "note": "declared profile candidate or initial-slope baseline",
+            "file_sha256_shipped": "aef3ac5057b4e3f5aaa8f5e18694a02c46b4b81e4f034ff52d249c1e1337c2fa",
+            "file_sha256_with_variant": "65eb486c181d8fb35848de56cb2e6398922e6d5256ac70e8d0ed236957d0540c"
+          }
+        ]
+      },
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 1234.456866099994
+    },
+    {
+      "name": "DT_N20_L1_PD_x0p3",
+      "roles": [
+        "sensitivity",
+        "pd_exposure_sensitivity"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L1_PD_x0p3",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 4160.894897500024
+    },
+    {
+      "name": "DT_N20_L1_PD_x3p0",
+      "roles": [
+        "sensitivity",
+        "pd_exposure_sensitivity"
+      ],
+      "archived_path": "paper/analysis/results_v1.4.0/DT_N20_L1_PD_x3p0",
+      "argv": [
+        "--study",
+        "DT",
+        "--cells",
+        "20",
+        "--time-level",
+        "1",
+        "--per-area-qualification",
+        "--dry-local-tolerance",
+        "1e-10",
+        "--conservative-components",
+        "--event-first-film-depletion",
+        "--eliminate-event-absent-components",
+        "--curvature-corrected-depletion-prediction",
+        "--memoize-proof-points",
+        "--bath",
+        "paper/analysis/inputs/qualification_DT_bath.json",
+        "--dry-time-schedule",
+        "dt-film-resolved",
+        "--graded-interior-cells",
+        "14",
+        "--graded-band-cells",
+        "6",
+        "--graded-band-ratio",
+        "1.4641000000000004"
+      ],
+      "environment": {
+        "DTDC_KERNEL_ENVELOPE_SURFACE_GRADED_MESH": "1",
+        "DTDC_KERNEL_ENVELOPE_DRY_ALLOWANCE_PER_UNKNOWN": "1",
+        "DTDC_KERNEL_ENVELOPE_NATIVE_LEDGER_FACTOR_CEILING": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_STORED_SURFACE": "1",
+        "DTDC_KERNEL_ENVELOPE_FILM_FREE_SEED_GAS_FALLBACK": "1",
+        "DTDC_KERNEL_ENVELOPE_CORE_TARGET_SEED": "history_power_law",
+        "DTDC_KERNEL_ENVELOPE_FRONT_RELEASE_SOLVE_MEMORY": "1"
+      },
+      "source_variant": null,
+      "environment_add": null,
+      "argv_append": null,
+      "complete_history": true,
+      "status": "COMPLETE_CANDIDATE_PENDING_CONVERGENCE_AND_INDEPENDENT_WHOLE_HISTORY_AUDIT",
+      "not_rerunnable": null,
+      "producer_argv": null,
+      "note": null,
+      "producer_wall_seconds": 4097.942121
+    }
+  ]
+}

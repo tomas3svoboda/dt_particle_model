@@ -26,8 +26,7 @@ import operator
 from dataclasses import dataclass, field
 from enum import Enum
 
-from dtdc_simulator.core2.particle.grid import SphericalGrid
-
+from dtdc_simulator.core2.particle.grid import SphericalGrid, spherical_volume_difference
 
 DEFAULT_FACE_SNAP_ULPS = 8
 
@@ -226,8 +225,7 @@ class SweptCutGeometry:
         if len(self.cell_wet_to_dry_volumes_m3) != self.previous.master_grid.n:
             raise CutGeometryError("one swept volume is required for every material cell")
         if not all(
-            math.isfinite(value) and value >= 0.0
-            for value in self.cell_wet_to_dry_volumes_m3
+            math.isfinite(value) and value >= 0.0 for value in self.cell_wet_to_dry_volumes_m3
         ):
             raise CutGeometryError("cell swept volumes must be finite and non-negative")
 
@@ -265,12 +263,8 @@ class SweptCutGeometry:
             self.current.cells,
             self.cell_wet_to_dry_volumes_m3,
         ):
-            residuals.append(
-                abs(math.fsum((new.wet_volume_m3, -old.wet_volume_m3, swept)))
-            )
-            residuals.append(
-                abs(math.fsum((new.dry_volume_m3, -old.dry_volume_m3, -swept)))
-            )
+            residuals.append(abs(math.fsum((new.wet_volume_m3, -old.wet_volume_m3, swept))))
+            residuals.append(abs(math.fsum((new.dry_volume_m3, -old.dry_volume_m3, -swept))))
         return max(residuals, default=0.0)
 
 
@@ -623,9 +617,7 @@ def _canonical_front(
 
 def _near_face_index(faces: tuple[float, ...], radius_m: float, snap_ulps: int) -> int | None:
     insertion = bisect.bisect_left(faces, radius_m)
-    candidates = {
-        index for index in (insertion - 1, insertion) if 0 <= index < len(faces)
-    }
+    candidates = {index for index in (insertion - 1, insertion) if 0 <= index < len(faces)}
     near: list[tuple[float, int]] = []
     for index in candidates:
         face = faces[index]
@@ -682,9 +674,7 @@ def _validate_master_grid(master_grid: SphericalGrid) -> None:
         right <= left for left, right in zip(master_grid.faces, master_grid.faces[1:])
     ):
         raise CutGeometryError("master-grid faces must be strictly increasing")
-    if any(
-        not math.isfinite(volume) or volume <= 0.0 for volume in master_grid.volumes
-    ):
+    if any(not math.isfinite(volume) or volume <= 0.0 for volume in master_grid.volumes):
         raise CutGeometryError("master material cells must have positive finite volume")
     if not all(math.isfinite(center) for center in master_grid.centers):
         raise CutGeometryError("master-grid centers must be finite")
@@ -706,9 +696,7 @@ def _validate_master_grid(master_grid: SphericalGrid) -> None:
         )
     ):
         if not metric_matches(center, 0.5 * (inner + outer)):
-            raise CutGeometryError(
-                f"master-grid center {index} is inconsistent with its faces"
-            )
+            raise CutGeometryError(f"master-grid center {index} is inconsistent with its faces")
         if not metric_matches(volume, _shell_volume(inner, outer)):
             raise CutGeometryError(
                 f"master-grid volume {index} is inconsistent with its spherical faces"
@@ -749,7 +737,7 @@ def _validate_geometry_pair(previous: CutGeometry, current: CutGeometry) -> None
 
 
 def _sphere_volume(radius_m: float) -> float:
-    return 4.0 / 3.0 * math.pi * radius_m**3
+    return spherical_volume_difference(0.0, radius_m)
 
 
 def _shell_volume(inner_radius_m: float, outer_radius_m: float) -> float:
@@ -757,19 +745,7 @@ def _shell_volume(inner_radius_m: float, outer_radius_m: float) -> float:
         raise CutGeometryError("spherical shell radii must be ordered")
     if outer_radius_m == inner_radius_m:
         return 0.0
-    return (
-        4.0
-        / 3.0
-        * math.pi
-        * (outer_radius_m - inner_radius_m)
-        * math.fsum(
-            (
-                outer_radius_m * outer_radius_m,
-                outer_radius_m * inner_radius_m,
-                inner_radius_m * inner_radius_m,
-            )
-        )
-    )
+    return spherical_volume_difference(inner_radius_m, outer_radius_m)
 
 
 def _interval_shell_volume(inner_radius_m: float, outer_radius_m: float) -> float:

@@ -20,13 +20,44 @@ from dataclasses import dataclass
 from typing import Sequence
 
 
+def spherical_volume_difference(inner_radius: float, outer_radius: float) -> float:
+    """Signed difference of enclosed sphere volumes without cube subtraction.
+
+    The factored identity (b-a)(b*b+b*a+a*a) avoids cancellation for thin
+    material shells and small face sweeps. Negative differences represent
+    inward face motion. The full-sphere cases retain their former evaluation.
+    This changes no geometric measure, topology criterion or tolerance.
+    """
+    if not all(math.isfinite(r) and r >= 0.0 for r in (inner_radius, outer_radius)):
+        raise ValueError("sphere-volume radii must be finite and non-negative")
+    if inner_radius == outer_radius:
+        return 0.0
+    if inner_radius == 0.0:
+        return 4.0 / 3.0 * math.pi * outer_radius**3
+    if outer_radius == 0.0:
+        return -(4.0 / 3.0 * math.pi * inner_radius**3)
+    return (
+        4.0
+        / 3.0
+        * math.pi
+        * (outer_radius - inner_radius)
+        * math.fsum(
+            (
+                outer_radius * outer_radius,
+                outer_radius * inner_radius,
+                inner_radius * inner_radius,
+            )
+        )
+    )
+
+
 @dataclass(frozen=True)
 class SphericalGrid:
     R: float
-    faces: tuple[float, ...]     # N+1 face radii, faces[0]>=0, faces[-1]=R
-    centers: tuple[float, ...]   # N cell centers (face midpoints)
-    volumes: tuple[float, ...]   # N cell volumes (4/3 pi (rR^3 - rL^3))
-    areas: tuple[float, ...]     # N+1 face areas (4 pi r^2)
+    faces: tuple[float, ...]  # N+1 face radii, faces[0]>=0, faces[-1]=R
+    centers: tuple[float, ...]  # N cell centers (face midpoints)
+    volumes: tuple[float, ...]  # N cell volumes (4/3 pi (rR^3 - rL^3))
+    areas: tuple[float, ...]  # N+1 face areas (4 pi r^2)
 
     @property
     def n(self) -> int:
@@ -42,7 +73,7 @@ class SphericalGrid:
 
     @property
     def total_volume(self) -> float:
-        return 4.0 / 3.0 * math.pi * (self.R**3 - self.inner_radius**3)
+        return spherical_volume_difference(self.inner_radius, self.R)
 
 
 def uniform_grid(n: int, R: float) -> SphericalGrid:
@@ -90,8 +121,7 @@ def _from_faces(faces: tuple[float, ...], R: float) -> SphericalGrid:
         raise ValueError("outer face must equal the declared particle radius")
     centers = tuple(0.5 * (faces[i] + faces[i + 1]) for i in range(len(faces) - 1))
     volumes = tuple(
-        4.0 / 3.0 * math.pi * (faces[i + 1] ** 3 - faces[i] ** 3)
-        for i in range(len(faces) - 1)
+        spherical_volume_difference(faces[i], faces[i + 1]) for i in range(len(faces) - 1)
     )
     areas = tuple(4.0 * math.pi * rf * rf for rf in faces)
     return SphericalGrid(R=R, faces=faces, centers=centers, volumes=volumes, areas=areas)

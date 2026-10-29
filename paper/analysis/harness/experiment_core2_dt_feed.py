@@ -25,12 +25,15 @@ from era_stamp import REPO_ROOT, era_stamp
 
 
 class FeedMarch:
-    def __init__(self, bath, radius, cells, *, property_parameters=None):
+    def __init__(self, bath, radius, cells, *, property_parameters=None, pressure_pa=None):
+        # pressure_pa (default None: core.PRESSURE_PA, the former constant) is the
+        # bath's first pressure under the kernel-envelope pressure schedule.
+        self.pressure = core.PRESSURE_PA if pressure_pa is None else pressure_pa
         self.bath = bath
         feed = bath["particle"]
         self.wet = replace(
             core.wet_core.WetCoreParams(),
-            pressure_pa=core.PRESSURE_PA,
+            pressure_pa=self.pressure,
             X_water=feed["feed_water_kg_kg_dry"],
             w_o=feed["feed_oil_kg_kg_dry"],
             conductivity=core.CONDUCTIVITY,
@@ -58,7 +61,7 @@ class FeedMarch:
         self.pd_end = 490.20224190324825
         self.pd_contact_fraction = 4.081e-3 * radius / 0.0015
         self.ti, self.yi = kernel._transparent_phase_root(
-            pressure_pa=core.PRESSURE_PA, continuation=(334.5, 0.8)
+            pressure_pa=self.pressure, continuation=(334.5, 0.8)
         )
         self.codec_view = SimpleNamespace(
             component_datum_adapter=SimpleNamespace(
@@ -87,7 +90,7 @@ class FeedMarch:
         contact = self.pd_contact_fraction if in_pd else 1.0
         active_area = self.area * contact
         pair = self.pair
-        kappa = core.PRESSURE_PA / (core.bg.R * tb) * pair.binary_mass_transfer_m_s
+        kappa = self.pressure / (core.bg.R * tb) * pair.binary_mass_transfer_m_s
         coefficients = kernel.NativeFilmCoefficients(
             3.9,
             pair.state.gas_density_kg_m3,
@@ -105,7 +108,7 @@ class FeedMarch:
         basis = SimpleNamespace(
             request=SimpleNamespace(hexane_access_oracle=HexaneAccessOracle.TRANSPARENT_INTERFACE),
             complete=SimpleNamespace(state=SimpleNamespace(temperature_k=float(temperature))),
-            packets=(SimpleNamespace(pressure_pa=core.PRESSURE_PA),),
+            packets=(SimpleNamespace(pressure_pa=self.pressure),),
             active_area_m2=active_area,
             dry_mass_fraction=contact,
         )
@@ -115,7 +118,7 @@ class FeedMarch:
             coefficients=coefficients,
             bulk_temperature_k=tb,
             bulk_hexane_mole_fraction=yb,
-            local_hydraulic_pressure_pa=core.PRESSURE_PA,
+            local_hydraulic_pressure_pa=self.pressure,
             shared_wall_temperature_k=self.ti,
             interface_temperature_k=self.ti,
             interface_hexane_mole_fraction=self.yi,
@@ -132,7 +135,7 @@ class FeedMarch:
         ref = core.ct.prepare_reduced_film_surface_state(
             boundary,
             cell_temperature_k=float(temperature),
-            pressure_pa=core.PRESSURE_PA,
+            pressure_pa=self.pressure,
             particle_radius_m=self.radius,
             outer_half_cell_distance_m=0.5 * self.radius,
             particle_thermal_conductivity_w_m_k=core.CONDUCTIVITY,
@@ -142,7 +145,7 @@ class FeedMarch:
         capacities = core.efr.phy053_partial_enthalpy_secant_heat_capacities(
             surface_temperature_k=self.ti,
             bulk_temperature_k=tb,
-            pressure_pa=core.PRESSURE_PA,
+            pressure_pa=self.pressure,
             y_hexane=self.yi,
         )
         fluxes = core.efr.component_fluxes_for_supplied_total_mass_flux(
@@ -226,7 +229,7 @@ class FeedMarch:
                 state.total_internal_energy_j
                 + self.dry
                 * free_w
-                * core.wa.state_Tp(temperature, core.PRESSURE_PA, "liquid").u_mass
+                * core.wa.state_Tp(temperature, self.pressure, "liquid").u_mass
             )
             native, ack, interface_e, energy_out, tb, yb, active_area = self.interface(
                 temperature, total_flux, self.time + dt
@@ -380,7 +383,33 @@ def run(args):
     from particle_solver_configuration import ParticleModelParameters
 
     parameters = ParticleModelParameters() if getattr(args, "paper_properties", False) else None
-    march = FeedMarch(bath, args.radius_m, args.cells, property_parameters=parameters)
+    import particle_kernel_envelope as envelope
+
+    feed_pressure = None
+    if envelope.armed(envelope.PRESSURE_SCHEDULE):
+        # Kernel-envelope item 3: the bath's first pressure (101,325 Pa when the
+        # bath carries none).
+        feed_pressure = envelope.bath_pressure_pa(bath, bath["waypoints"][0]["t_s"])
+    feed_shells = envelope.feed_cells()  # FEED_CELLS (absent: None, the one-cell body below)
+    if feed_shells is not None:
+        import particle_feed_shells as shells_module
+
+        march = shells_module.MultiShellFeedMarch(
+            bath,
+            args.radius_m,
+            args.cells,
+            shells=feed_shells,
+            property_parameters=parameters,
+            **({} if feed_pressure is None else {"pressure_pa": feed_pressure}),
+        )
+    else:
+        march = FeedMarch(
+            bath,
+            args.radius_m,
+            args.cells,
+            property_parameters=parameters,
+            **({} if feed_pressure is None else {"pressure_pa": feed_pressure}),
+        )
     errors = []
     activation = None
     while march.time < args.max_time_s:
@@ -400,6 +429,9 @@ def run(args):
             )
             try:
                 march.solve(dt, event=True)
+                if feed_shells is not None:
+                    activation = march.activate()
+                    break
                 radial, ledger = core.sphere.activate_radially(march.state, march.params)
                 activation = {
                     "radial": asdict(radial),
@@ -437,6 +469,16 @@ def run(args):
         "rows": march.rows,
         "activation": activation,
         "errors": errors,
+        **({} if feed_pressure is None else {"kernel_envelope_feed_pressure_pa": feed_pressure}),
+        **(
+            {}
+            if feed_shells is None
+            else {
+                "high_loading_thermal_cells": feed_shells,
+                "kernel_envelope_feed_cells": feed_shells,
+                "kernel_envelope_feed_cells_row": envelope.feed_cells_declared_row(feed_shells),
+            }
+        ),
         "entry_source_stamp": entry_stamp,
         "stamp": era_stamp(
             [

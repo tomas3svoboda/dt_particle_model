@@ -17,14 +17,34 @@ WHAT IS PORTED, BY THE PAPER'S EQUATION LABELS (``paper/01_particle_jfpe/sec_for
   potential ``psi = ln a_w = (1 - A1/W)/A2`` for ``0 < W <= W_cap``, evaluated by the pinned
   ``props.sorption.water_log_activity`` on ``ContinuedPositiveLuikovParams`` (never
   re-derived here);
-* ``eq:finitecontact``: ``G_l = (d/L_l + 1/K_l)**-1``, ``N_l = -G_l (psi_s - psi_p)`` with
-  ``K_l = 0.32 mol/(m2 s)`` and ``L_l = (1000 - 1) L_wr``, ``L_wr`` the paper run's exact
-  reference retained-water mobility; ``psi_s`` from the capacity-bounded retained surface
-  state (``a_w = 0.799`` at ``W_cap``), never unit liquid activity; absent with no open dry
-  shell and with no external liquid;
+* ``eq:finitecontact`` in its corrected form (the surface law the Paper-1 harness adopted on
+  2026-10-26, see below): ``N_w = N_ex - F / (d/L_s + 1/K_l)``, ``F = psi_s - psi_p``, with
+  ``K_l = 0.062 mol/(m2 s)`` (the harness's one declared constant, mirrored here) and
+  ``L_l = (1000 - 1) L_wr``, ``L_wr`` the paper run's exact reference retained-water mobility;
+  on the lumped carrier ``L_s = L_wr + L_l`` (the native retained path and the added liquid
+  path behind the one contact) and ``psi_s = 0`` (the film-covered surface at unit activity,
+  the reading that gives ``K_l``); absent with no open dry shell and with no external liquid;
 * ``eq:liquidstocksupply``: the inward transfer bounded by the film stock after the step's
   own gas exchange;
 * the capacity ``W_cap = 0.235670904 kg/kg dry`` as an active set (a film above it).
+
+THE ADOPTED SURFACE LAW (2026-10-26; ``docs/GT_PS2_PAPER1_SURFACE_LAW_FINAL_ADOPTION_2026-10-25.md``
+and its equations page ``docs/GT_PS2_PAPER1_SURFACE_LAW_EQUATIONS_FOR_MANUSCRIPT_2026-10-25.md``;
+this port follows it by ``docs/GT_PS2_UNIVERSAL_KERNEL_PORT_FOLLOWS_ADOPTED_LAW_2026-10-26.md``).
+(A) The liquid-contact conductance in series on ALL film-to-particle water exchange (the native
+retained path on the face force, the added liquid path and the pore-gas water flux behind one
+series factor ``s = K_l F / (K_l F - R)``), with the OUTWARD Stefan water vapour exempt
+(``N_ex = max(0, y_w,adv N_t)``: water carried out of the pores by the leaving gas condenses into
+the film without crossing the wetting contact); a trial point outside the law's domain is
+refused (:class:`FiniteContactUndefined`), never clamped.  (B) The path-face rules: no
+zero-force RETAINED_CAP booking on an actual-path face (the bridged potential above the Luikov
+cap at every face, the moving wet front and the film-free surface included; the film-covered
+surface face's native evaluation keeps the native classification), and the added liquid path's
+interior-face force at the common face temperature.  (C) ``K_l`` the harness's one constant
+``particle_kernel_envelope.K_L_MOL_M2_S``.  WAS (the former law, until 2026-10-26): ``K_l = 0.32``
+read with the surface at the cap activity (``psi_s = ln 0.799``), the added liquid path alone in
+series with the contact, the native retained path unresisted on the zero-force cap rule, and the
+added path's interior force at each cell's own temperature.
 
 TWO LAYERS, ONE LAW.
 
@@ -34,7 +54,8 @@ TWO LAYERS, ONE LAW.
    (``sp1_k2_law2_tray_integration._packet_entries_after``), the drained mass ``m`` solves the
    backward-Euler balance
 
-       m = dt M_w G_l A_p (psi_s - psi(W + m/dry)),   A_p = 3 dry/(rho_dm R),   d = R/5,
+       m = dt M_w G A_p (psi_s - psi(W + m/dry)),   G = (d/L_s + 1/K_l)**-1,
+       A_p = 3 dry/(rho_dm R),   d = R/5,   L_s = L_wr + L_l,   psi_s = 0,
 
    by bisection over the binary64 bit patterns of ``[0, bound]`` (no tolerance knob; the
    function is monotone and has one root), bounded by ``eq:liquidstocksupply`` (the film
@@ -42,21 +63,33 @@ TWO LAYERS, ONE LAW.
    ``m = 0`` exactly at ``f = 1`` and at a zero film.  The stocks move through the shipped
    ``through_bed_sorbed_water_law.drain_split_kg``, so the D9-a drain function is never
    called for a packet this law serves (the merge packet's measurement 3.5: never both).
-   ``psi`` is taken as zero force at and above ``W_cap`` (the capacity active set).
+   ``psi`` is taken as zero force above ``W_cap`` (the capacity active set; at ``W_cap`` the
+   open band's force, so a step that fills the shell to its capacity is capacity-limited).
+   The carrier has no pore gas: the gas route's share of the series and the outward Stefan
+   exemption act on the radial face law only (the tower's own gas exchange is not routed
+   through the carrier).  WAS (until 2026-10-26): ``G = (d/L_l + 1/0.32)**-1``,
+   ``psi_s = ln 0.799`` and zero force AT and above ``W_cap``.
 2. THE PAPER'S RADIAL FACE LAW (decision 1A, reusable under option B).
-   :func:`liquid_contact_face_flux` and :func:`supply_limited_surface_transfer` are the paper
-   harness's flux and limiter bodies (``paper/analysis/harness/
-   experiment_core2_radial_fast_wetting.py``) as library functions, with the same arithmetic,
-   and :func:`liquid_connected_path` installs them on an explicitly passed cut-transport
-   module for the paper's own particle.  No tower path calls them; ``cut_transport.py`` is
-   not edited.
+   :func:`liquid_contact_face_flux` (with :func:`surface_contact_face`,
+   :func:`common_temperature_activities` and the bridged cap rule) and
+   :func:`supply_limited_surface_transfer` are the paper harness's flux and limiter bodies
+   (``paper/analysis/harness/experiment_core2_radial_fast_wetting.py``) as library functions,
+   with the same arithmetic, and :func:`liquid_connected_path` installs them on an explicitly
+   passed cut-transport module for the paper's own particle.  No tower path calls them;
+   ``cut_transport.py`` and ``actual_composition_force_path.py`` are not edited (the bridged
+   cap rule is installed in memory for the evaluation and restored).  The harness's report-only
+   holders and counters, its LIQUID_MOBILITY_RULE study knob, its labelled historical switch
+   and its one-line reverts are not ported.
 
-THE CONVENTION CONVERSION (documentary only; the law carries 0.32 in the paper's
-convention).  Hemmingsen's contact-only construction gives ``K = rho R I / (3 M_w t)`` with
+THE CONVENTION CONVERSION (documentary only; the former printed reading).  Hemmingsen's
+contact-only construction gives ``K = rho R I / (3 M_w t)`` with
 ``I = integral_{W0}^{W_end} dW / (psi_s - psi(W))``, hence ``K_tower = K_paper I_T/I_P`` with
 ``I_P = 1.485197`` and ``I_T = 0.356052`` (ratio 0.239734): paper 0.253170 at 80 C, 0.317809
 at 100 C, adopted 0.32; tower 0.060693 and 0.076190; the conversion of the adopted 0.32 is
-0.076715.  Construction-bound (it moves with the endpoint), not an invariant.
+0.076715.  Construction-bound (it moves with the endpoint), not an invariant.  Since
+2026-10-26 the paper itself reads the anchor with ``psi_s = 0`` (``I = 0.28889``, ``K_l``
+0.0492 at 80 C and 0.0619 at 100 C, declared 0.062), so the law carries 0.062 and this
+conversion of the former 0.32 is kept as a record only.
 
 WHAT IT IS NOT.  Not the paper's radial particle in the tower (option B, the owner's); not a
 fit (no coefficient here was adjusted to any tower or outlet number); not a change to any
@@ -76,6 +109,7 @@ from dataclasses import dataclass, replace
 from types import MappingProxyType
 
 from dtdc_simulator.core2 import through_bed_sorbed_water_law as sorbed_water
+from dtdc_simulator.core2.particle import actual_composition_force_path as acfp
 from dtdc_simulator.core2.particle import coupled_pore as cp
 from dtdc_simulator.core2.props import binary_gas as bg
 from dtdc_simulator.core2.props import sorption as sp
@@ -83,7 +117,9 @@ from dtdc_simulator.core2.props import water as wa
 
 PAPER1_PARTICLE_PORT_ENVIRONMENT_VARIABLE = "DTDC_PARTICLE_PAPER1_IMBIBITION"
 PAPER1_PARTICLE_PORT_DEFAULT = False
-PAPER1_PARTICLE_PORT_LAW_ID = "paper1-particle-port-finite-contact-imbibition-lumped-carrier-v1"
+#: v2 since 2026-10-26 (the adopted surface law).  WAS
+#: "paper1-particle-port-finite-contact-imbibition-lumped-carrier-v1" (the former law).
+PAPER1_PARTICLE_PORT_LAW_ID = "paper1-particle-port-finite-contact-imbibition-lumped-carrier-v2"
 RULING_ID = "GT-PS-2-OWNER-RULINGS-2026-10-12-OPEN-ITEMS-BATCH-01"
 RULING_RECORD = "docs/GT_PS2_OWNER_RULINGS_2026-10-12_OPEN_ITEMS_BATCH.md"
 STANDING_INTENTION_ID = "GT-PS-2-OWNER-RULINGS-2026-10-10-REAUDIT-BATCH-01"
@@ -92,8 +128,31 @@ PAPER_EQUATION_LABELS = ("eq:luikov", "eq:finitecontact", "eq:liquidstocksupply"
 SIDECAR_FILE_NAME = "GT_PS2_PAPER1_PARTICLE_PORT_ROWS.jsonl"
 
 #: The paper's three transport/capacity inputs (``tab:parameters``) and nothing else.
-LIQUID_CONTACT_CONDUCTANCE_MOL_M2_S = 0.32
+#: The liquid contact conductance K_l, mol/(m2 s) per unit ln a_w,ret: the MIRROR of the Paper-1
+#: harness's one point of definition ``paper/analysis/harness/particle_kernel_envelope.py``
+#: ``K_L_MOL_M2_S`` (src does not import the harness; the port's test asserts the two are equal).
+#: Provenance (the harness's): the supplement's contact-scale anchor (Hemmingsen et al. 2008,
+#: the 1.43-mm meal's 90-s hot-water uptake, a lumped sphere filled from W0 = 0.134 to
+#: W_cap - 0.01) read with the film-covered surface at unit activity, psi_s = 0: anchor integral
+#: 0.28889, K_l = 0.0492 at 80 C and 0.0619 at 100 C by inverse water viscosity, declared 0.062
+#: (docs/GT_PS2_PAPER1_SURFACE_LAW_FINAL_ADOPTION_2026-10-25.md section 1.5).  WAS 0.32 (the
+#: printed anchor with the surface at W_cap, psi_s = ln 0.799), until 2026-10-26.
+LIQUID_CONTACT_CONDUCTANCE_MOL_M2_S = 0.062
 LIQUID_MOBILITY_TOTAL_FACTOR = 1000.0
+#: The adopted law's and path-face rules' names and records: mirrors of the harness's
+#: ``particle_kernel_envelope.SURFACE_LAW``, ``PATH_FORCES`` and ``SURFACE_LAW_FINAL_RECORD``
+#: (equality tested).
+SURFACE_LAW = "whole_uptake_all_paths_outward_stefan_exempt"
+PATH_FORCES = "bridged_cap_rule_common_temperature_liquid_force"
+SURFACE_LAW_FINAL_RECORD = "docs/GT_PS2_PAPER1_SURFACE_LAW_FINAL_ADOPTION_2026-10-25.md"
+SURFACE_LAW_EQUATIONS_RECORD = (
+    "docs/GT_PS2_PAPER1_SURFACE_LAW_EQUATIONS_FOR_MANUSCRIPT_2026-10-25.md"
+)
+PORT_FOLLOWS_RECORD = "docs/GT_PS2_UNIVERSAL_KERNEL_PORT_FOLLOWS_ADOPTED_LAW_2026-10-26.md"
+#: The film-covered surface's retained potential on the lumped carrier: unit activity, the
+#: reading of the anchor that gives K_l (the radial harness's film-saturated surface trace is
+#: unit to within 2e-6).  WAS ln a_w(W_cap) = ln 0.799 (the printed reading), until 2026-10-26.
+FILM_COVERED_SURFACE_POTENTIAL = 0.0
 #: The paper run's exact reference retained-water mobility (printed rounded as 8.47e-7):
 #: ``config.dry.retained_water_mobility.value_mol_m_s`` of every archived checkpoint of
 #: ``paper/analysis/results_2026-10-08/dt_contact_0p32`` (r3_b_01, c_dt5).
@@ -123,7 +182,11 @@ CONVERSION = MappingProxyType(
         "K_tower_of_adopted_0p32_mol_m2_s": 0.07671473080276023,
         "paper_convention": "psi_s = ln a(W_cap) = ln 0.799, W_end = W_cap - 0.01",
         "tower_convention": "psi_s = 0 at x_bf = 0.250 with the bridge 0.799 to 1, W_end = x_bf - 0.01",
-        "carried_value": "0.32 in the paper's convention; the tower number is documentary only",
+        "carried_value": (
+            "WAS 0.32 in the paper's former convention, until 2026-10-26; the law now carries "
+            "K_l = 0.062 read with psi_s = 0 (no conversion carried); this block is the former "
+            "reading's conversion, documentary only"
+        ),
     }
 )
 
@@ -145,6 +208,16 @@ class Paper1PortArmingRefusal(Paper1PortError):
 
 class Paper1PortFloorRefusal(sorbed_water.SorbedWaterFloorRefusal):
     """The tripwire at ``W_ref`` (decision 3): the tower's floors stay typed refusals."""
+
+
+class FiniteContactUndefined(Paper1PortError):
+    """The film-covered surface law is undefined at this trial point (the harness's type).
+
+    :func:`surface_contact_face` divides by ``K_l F`` minus the resisted outward flux; the law
+    is defined only where that denominator has the sign of the force and the force is nonzero.
+    A trial point outside is refused as a ``ValueError`` (as the dry assembly refuses every
+    other point outside its chart; the domain-aware Newton backtracks); never clamped.
+    """
 
 
 PAPER1_PARTICLE_PORT_DECLARED_ASSUMPTIONS = MappingProxyType(
@@ -178,16 +251,43 @@ PAPER1_PARTICLE_PORT_DECLARED_ASSUMPTIONS = MappingProxyType(
                     "W_cap_kg_kg_dry": W_CAP_KG_KG,
                     "luikov_A1_A2": (CONTINUED_LUIKOV.A1, CONTINUED_LUIKOV.A2),
                 },
+                "surface_law": SURFACE_LAW,
+                "path_forces": PATH_FORCES,
+                "surface_law_records": (
+                    SURFACE_LAW_FINAL_RECORD,
+                    SURFACE_LAW_EQUATIONS_RECORD,
+                    PORT_FOLLOWS_RECORD,
+                ),
+                "adopted_law": (
+                    "since 2026-10-26 the Paper-1 harness's adopted surface law: K_l in series "
+                    "on all film-to-particle water exchange (native retained path on the face "
+                    "force, added liquid path, pore-gas water) with the outward Stefan water "
+                    "vapour exempt, refused outside its domain; no zero-force cap booking on an "
+                    "actual-path face; the added liquid path's interior force at the common face "
+                    "temperature; K_l the harness's one constant K_L_MOL_M2_S = 0.062 (mirrored)"
+                ),
+                "was": (
+                    "until 2026-10-26: law id ...-v1, K_l 0.32 with psi_s = ln 0.799 (the "
+                    "printed anchor reading), the added liquid path alone in series (carrier "
+                    "G = (d/L_l + 1/K_l)**-1), the native retained path unresisted on the "
+                    "zero-force cap rule, the interior liquid force at each cell's own "
+                    "temperature, the carrier's zero force AT and above W_cap"
+                ),
                 "carrier": (
                     "lumped packet, uniform retained loading (row d9a_uniform_loading kept), "
                     "backward Euler per layer macro step, bisection over binary64 bit patterns, "
                     "bounded by the post-advance film (eq:liquidstocksupply) and the open-shell "
-                    "capacity max(0, W_cap dry - retained)(1 - f**3); d = R/5"
+                    "capacity max(0, W_cap dry - retained)(1 - f**3); d = R/5; "
+                    "G = (d/(L_wr + L_l) + 1/K_l)**-1 on F = psi_s - psi(W), psi_s = 0 (the "
+                    "film-covered surface at unit activity); no pore gas on the carrier (the "
+                    "gas route's share and the outward Stefan exemption act on the radial face "
+                    "law only)"
                 ),
                 "convention": (
                     "the paper's: capacity W_cap with the Luikov activity up to and including "
-                    "W_cap (a_w = 0.799 there), a film above it; the declared arm must carry "
-                    "x_bf == W_cap exactly and the destination 'sorbed'"
+                    "W_cap (a_w = 0.799 there), a film above it; the film-covered surface at "
+                    "unit activity; the declared arm must carry x_bf == W_cap exactly and the "
+                    "destination 'sorbed'"
                 ),
                 "conversion": dict(CONVERSION),
                 "replaces": (
@@ -197,7 +297,10 @@ PAPER1_PARTICLE_PORT_DECLARED_ASSUMPTIONS = MappingProxyType(
                 "not_ported": (
                     "the paper's radial discretisation and regime A/B/C event topology "
                     "(option B, the owner's), the |beta| <= 3 band, the RULE-2 numerical "
-                    "allowances, the prescribed legacy bath, the Faner multiplier 0.146"
+                    "allowances, the prescribed legacy bath, the Faner multiplier 0.146; the "
+                    "harness's report-only surface-law holders and counters, its "
+                    "LIQUID_MOBILITY_RULE study knob, its labelled historical switch and its "
+                    "one-line reverts"
                 ),
                 "tripwires_kept": (
                     "the tower's W_ref = 0.023 kg/kg dry floors (sphere._material_wet_params, "
@@ -255,9 +358,13 @@ def retained_potential(loading_kg_kg_dry: float) -> float:
 
 
 def surface_potential() -> float:
-    """``psi_s``: the capacity-bounded retained surface trace, ``ln a_w(W_cap)``."""
+    """``psi_s``: the film-covered surface at unit activity (the adopted reading, 2026-10-26).
 
-    return retained_potential(W_CAP_KG_KG)
+    WAS ``ln a_w(W_cap) = ln 0.799``, the capacity-bounded retained surface trace of the printed
+    anchor reading, until 2026-10-26.
+    """
+
+    return FILM_COVERED_SURFACE_POTENTIAL
 
 
 def retained_surface_activity(
@@ -300,13 +407,23 @@ def added_liquid_mobility_mol_m_s() -> float:
     return (LIQUID_MOBILITY_TOTAL_FACTOR - 1) * REFERENCE_RETAINED_WATER_MOBILITY_MOL_M_S
 
 
+def series_path_mobility_mol_m_s() -> float:
+    """``L_s = L_wr + L_l``: the native retained path and the added liquid path, both on the
+    face force and both behind the one contact (the adopted law; the carrier has no pore gas)."""
+
+    return math.fsum((REFERENCE_RETAINED_WATER_MOBILITY_MOL_M_S, added_liquid_mobility_mol_m_s()))
+
+
 def series_conductance_mol_m2_s(distance_m: float) -> float:
-    """``eq:finitecontact``: ``G_l = (d/L_l + 1/K_l)**-1``; ``d = 0`` gives ``K_l``."""
+    """``eq:finitecontact``: ``G = (d/L_s + 1/K_l)**-1``; ``d = 0`` gives ``K_l``.
+
+    WAS ``(d/L_l + 1/0.32)**-1`` (the added liquid path alone), until 2026-10-26.
+    """
 
     if type(distance_m) is not float or not math.isfinite(distance_m) or distance_m < 0.0:
         raise Paper1PortError("the carrier distance must be a finite non-negative binary64")
     return 1.0 / (
-        distance_m / added_liquid_mobility_mol_m_s() + 1.0 / LIQUID_CONTACT_CONDUCTANCE_MOL_M2_S
+        distance_m / series_path_mobility_mol_m_s() + 1.0 / LIQUID_CONTACT_CONDUCTANCE_MOL_M2_S
     )
 
 
@@ -390,8 +507,10 @@ def finite_contact_drain(
 
     def force(mass_kg: float) -> float:
         new_loading = math.fsum((retained_water_kg, mass_kg)) / dry_matter_kg
-        if new_loading >= W_CAP_KG_KG:
-            return 0.0  # the capacity active set: no uptake at or above W_cap
+        if new_loading > W_CAP_KG_KG:
+            # the capacity active set: no uptake above W_cap (at W_cap the open band's force;
+            # WAS ">=", which with psi_s = ln a(W_cap) was the same zero, until 2026-10-26)
+            return 0.0
         return psi_s - retained_potential(new_loading)
 
     force_old = force(0.0)
@@ -567,6 +686,175 @@ def _check_face_parameters(factor, contact_conductance) -> None:
         raise ValueError("liquid contact conductance must be finite and positive")
 
 
+def surface_contact_face(
+    native, left, right, aw_left, aw_right, distance, free_mobility, contact_conductance, retained
+):
+    """The film-covered surface face under the adopted law (the harness's statements).
+
+    Signs are the native ones (a flux is positive outward, cell to surface).
+    ``F = ln(aw_right/aw_left)`` from the actual retained states, ``d = distance`` the outer half
+    cell, ``K = contact_conductance``, ``L_ret = retained`` (the native retained-water mobility),
+    ``L_l = free_mobility = (factor - 1) L_ret``.  The native face supplies the gas-frame water
+    flux ``N_gas = y_w,adv N_t + J_w``, split into its Stefan part ``N_stefan = N_gas - J_w`` and
+    its diffusive part ``J_w``.  ``N_ex = max(0, N_stefan)``,
+    ``R = N_nat,free + N_liq,free + N_gas - N_ex``, ``s = K F/(K F - R)``,
+    ``N_w = N_ex + s R``; where ``N_stefan <= 0`` every path (the whole gas water flux included)
+    is multiplied by ``s``, where ``N_stefan > 0`` the Stefan part crosses unresisted and ``J_w``,
+    the native retained path and the added path are multiplied by ``s``.  The hexane row,
+    ``J_w``'s own unknowns, the conduction and the gas entropy production are unchanged; the
+    total energy is re-composed by the native fsum.  Returns ``(base, addition, enthalpy,
+    dissipation)`` with the added liquid ``s N_liq,free`` for :func:`add_retained_transfer`.
+    Raises :class:`FiniteContactUndefined` outside the law's domain.
+    """
+
+    k = contact_conductance
+    force = math.log(aw_right / aw_left)
+    gradient = math.log(aw_right / aw_left) / distance
+    component = native.component
+    n_gas = component.gas_water_flux_mol_m2_s
+    n_diffusive = component.independent_water_flux_mol_m2_s
+    n_stefan = n_gas - n_diffusive
+    outward = n_stefan > 0.0
+    n_nat_free = -retained * gradient
+    n_liq_free = -free_mobility * gradient
+    if outward:
+        # the outward Stefan water flux exempt: J_w alone of the gas route in the series
+        exempt = n_stefan
+        resisted = math.fsum((n_nat_free, n_liq_free, n_diffusive))
+    else:
+        exempt = 0.0
+        resisted = math.fsum((n_nat_free, n_liq_free, n_gas))
+    denominator = k * force - resisted
+    if not (force != 0.0 and math.isfinite(denominator) and denominator * force > 0.0):
+        raise FiniteContactUndefined(
+            f"finite-contact {SURFACE_LAW}: the series law is undefined at "
+            f"F={force!r} with resisted outward flux {resisted!r} (exempt outward Stefan flux "
+            f"{exempt!r}) and K_l={k!r}"
+        )
+    factor = k * force / denominator
+    native_retained = factor * n_nat_free
+    mobility = factor * free_mobility
+    addition = factor * n_liq_free
+    donor = left if addition >= 0 else right
+    energy = native.energy
+    if outward:
+        new_gas_water = math.fsum((n_stefan, factor * n_diffusive))
+        if n_gas != 0.0:
+            gas_water_energy = energy.gas_water_enthalpy_flux_w_m2 * (new_gas_water / n_gas)
+        else:
+            upwind = left if new_gas_water > 0 else right
+            gas_water_energy = new_gas_water * upwind.water_gas_partial_enthalpy_j_mol
+    else:
+        new_gas_water = factor * n_gas
+        gas_water_energy = factor * energy.gas_water_enthalpy_flux_w_m2
+    retained_energy = native_retained * donor.retained_water_enthalpy_j_mol
+    base = replace(
+        native,
+        component=replace(
+            component,
+            gas_water_flux_mol_m2_s=new_gas_water,
+            retained_water_flux_mol_m2_s=native_retained,
+            conserved_water_flux_mol_m2_s=new_gas_water + native_retained,
+        ),
+        energy=replace(
+            energy,
+            gas_water_enthalpy_flux_w_m2=gas_water_energy,
+            retained_water_enthalpy_flux_w_m2=retained_energy,
+            total_energy_flux_w_m2=math.fsum(
+                (
+                    energy.conductive_heat_flux_w_m2,
+                    gas_water_energy,
+                    energy.gas_hexane_enthalpy_flux_w_m2,
+                    retained_energy,
+                )
+            ),
+        ),
+        retained_water_flux_mol_m2_s=native_retained,
+        retained_water_entropy_production_w_m3_k=bg.R * factor * retained * gradient * gradient,
+    )
+    dissipation = bg.R * mobility * gradient * gradient
+    return base, addition, donor.retained_water_enthalpy_j_mol, dissipation
+
+
+# ---- the path-face rules (B): the bridged cap rule and the common-temperature liquid force ----
+
+
+def bridged_cap_segment_classifier(native_classifier):
+    """The actual-path segment classifier with RETAINED_CAP read as LUIKOV_SMOOTH.
+
+    Under the ruled imbibition bridge the retained water above the Luikov cap follows the gas
+    activity, so a path segment above the cap carries the smooth retained potential difference
+    instead of the former zero force.  The native classifier is always called first (its
+    seam-resolution refusal and probes unchanged).  ``.native`` and ``.cap_rule`` identify it
+    (the harness's classifier carries the same two attributes and the same ``cap_rule``).
+    """
+
+    smooth = cp.RetainedWaterActiveSet.LUIKOV_SMOOTH
+    capped = cp.RetainedWaterActiveSet.RETAINED_CAP
+
+    def classifier(activities, start, end, activity_at_cap):
+        active_set = native_classifier(activities, start, end, activity_at_cap)
+        if active_set is capped:
+            return smooth
+        return active_set
+
+    classifier.native = native_classifier
+    classifier.cap_rule = PATH_FORCES
+    return classifier
+
+
+@contextmanager
+def bridged_cap_rule_scope(force_path_module=None):
+    """Install the bridged classifier on the actual-path module for the scope (in memory only,
+    restored on exit); an enclosing scope's bridged classifier (this port's or the harness's)
+    is kept as it is."""
+
+    module = acfp if force_path_module is None else force_path_module
+    current = module._active_set_on_segment
+    if getattr(current, "cap_rule", None) == PATH_FORCES:
+        yield
+        return
+    module._active_set_on_segment = bridged_cap_segment_classifier(current)
+    try:
+        yield
+    finally:
+        module._active_set_on_segment = current
+
+
+@contextmanager
+def native_cap_classification(force_path_module=None):
+    """Inside a bridged scope: the native segment classification for this evaluation (the
+    film-covered surface face's native evaluation, whose own retained path the surface law
+    replaces by ``s N_nat,free`` on the face force)."""
+
+    module = acfp if force_path_module is None else force_path_module
+    current = module._active_set_on_segment
+    if getattr(current, "cap_rule", None) != PATH_FORCES:
+        yield
+        return
+    module._active_set_on_segment = current.native
+    try:
+        yield
+    finally:
+        module._active_set_on_segment = current
+
+
+def common_temperature_activities(args):
+    """The two cells' retained water activities for the added liquid path's force on a face
+    between two cells: their equilibrium retained loadings at the common face temperature
+    ``(T_L + T_R)/2`` (the native interior path's), each at its own composition."""
+
+    config = args[8]
+    face_temperature = 0.5 * (args[0] + args[2])
+    force_left = cp.evaluate_equilibrium(face_temperature, config.dry.pressure_pa, args[1], args[6])
+    force_right = cp.evaluate_equilibrium(
+        face_temperature, config.dry.pressure_pa, args[3], args[7]
+    )
+    aw_left = sp.water_activity(force_left.retained_water_loading, args[6].luikov)
+    aw_right = sp.water_activity(force_right.retained_water_loading, args[7].luikov)
+    return aw_left, aw_right
+
+
 def liquid_contact_face_flux(
     original,
     args,
@@ -577,44 +865,75 @@ def liquid_contact_face_flux(
     contact_conductance=None,
     exclude_wet_front=False,
     surface_pairs=None,
+    force_path_module=None,
 ):
-    """``eq:finitecontact`` on one radial dry face: the native flux plus the liquid path.
+    """``eq:finitecontact`` on one radial dry face under the adopted law (the harness's flux).
 
-    ``original`` is the native ``cut_transport._dry_flux`` and ``args``/``kwargs`` its call.
-    Interior faces carry ``(factor - 1) L_wr`` on the actual retained activities; the face
-    with the surface trace (``thermodynamic_force_temperature_k`` given) carries the series
-    ``G_l``; the wet-front trace is excluded on request.  ``surface_pairs``, when given,
-    records the surface face for :func:`supply_limited_surface_transfer`.
+    ``original`` is the native ``cut_transport._dry_flux`` and ``args``/``kwargs`` its call;
+    ``force_path_module`` the actual-path module whose segment classifier the bridged cap rule
+    replaces for the evaluation (default: the src ``actual_composition_force_path``).  Every
+    native evaluation runs under the bridged cap rule except the film-covered surface face's.
+    Interior faces (and the wet-front trace unless excluded) carry ``(factor - 1) L_wr`` on the
+    common-temperature retained activities; the face with the surface trace
+    (``thermodynamic_force_temperature_k`` given) carries, with a contact conductance, the
+    film-covered surface law (:func:`surface_contact_face`) on the actual retained activities,
+    and without one the added path unresisted.  ``surface_pairs``, when given, records the
+    surface face for :func:`supply_limited_surface_transfer`.
     """
 
-    is_wet_front = "temperature_gradient_k_m" in kwargs or "composition_gradient_m_inv" in kwargs
-    if factor == 1 or not exterior_liquid_present or (exclude_wet_front and is_wet_front):
-        return original(*args, **kwargs)
-    config = args[8]
-    native = original(*args, **kwargs)
-    left = cp.evaluate_equilibrium(args[0], config.dry.pressure_pa, args[1], args[6])
-    right = cp.evaluate_equilibrium(args[2], config.dry.pressure_pa, args[3], args[7])
-    aw_left = sp.water_activity(left.retained_water_loading, args[6].luikov)
-    aw_right = sp.water_activity(right.retained_water_loading, args[7].luikov)
-    gradient = math.log(aw_right / aw_left) / args[4]
-    mobility = (factor - 1) * config.dry.retained_water_mobility.value_mol_m_s
-    if contact_conductance is not None and "thermodynamic_force_temperature_k" in kwargs:
-        mobility = args[4] / (args[4] / mobility + 1.0 / contact_conductance)
-    addition = -mobility * gradient
-    donor = left if addition >= 0 else right
-    dissipation = bg.R * mobility * gradient * gradient
-    augmented = add_retained_transfer(
-        native, addition, donor.retained_water_enthalpy_j_mol, dissipation
-    )
-    if surface_pairs is not None and "thermodynamic_force_temperature_k" in kwargs:
-        surface_pairs[id(augmented)] = (
-            augmented,
-            native,
-            addition,
-            donor.retained_water_enthalpy_j_mol,
-            dissipation,
+    with bridged_cap_rule_scope(force_path_module):
+        is_wet_front = (
+            "temperature_gradient_k_m" in kwargs or "composition_gradient_m_inv" in kwargs
         )
-    return augmented
+        if factor == 1 or not exterior_liquid_present or (exclude_wet_front and is_wet_front):
+            return original(*args, **kwargs)
+        config = args[8]
+        tagged = "thermodynamic_force_temperature_k" in kwargs
+        if contact_conductance is not None and tagged:
+            with native_cap_classification(force_path_module):
+                native = original(*args, **kwargs)
+        else:
+            native = original(*args, **kwargs)
+        left = cp.evaluate_equilibrium(args[0], config.dry.pressure_pa, args[1], args[6])
+        right = cp.evaluate_equilibrium(args[2], config.dry.pressure_pa, args[3], args[7])
+        if not tagged:
+            aw_left, aw_right = common_temperature_activities(args)
+        else:
+            aw_left = sp.water_activity(left.retained_water_loading, args[6].luikov)
+            aw_right = sp.water_activity(right.retained_water_loading, args[7].luikov)
+        gradient = math.log(aw_right / aw_left) / args[4]
+        mobility = (factor - 1) * config.dry.retained_water_mobility.value_mol_m_s
+        if contact_conductance is not None and tagged:
+            base, addition, enthalpy, dissipation = surface_contact_face(
+                native,
+                left,
+                right,
+                aw_left,
+                aw_right,
+                args[4],
+                mobility,
+                contact_conductance,
+                config.dry.retained_water_mobility.value_mol_m_s,
+            )
+            augmented = add_retained_transfer(base, addition, enthalpy, dissipation)
+            if surface_pairs is not None:
+                surface_pairs[id(augmented)] = (augmented, base, addition, enthalpy, dissipation)
+            return augmented
+        addition = -mobility * gradient
+        donor = left if addition >= 0 else right
+        dissipation = bg.R * mobility * gradient * gradient
+        augmented = add_retained_transfer(
+            native, addition, donor.retained_water_enthalpy_j_mol, dissipation
+        )
+        if surface_pairs is not None and tagged:
+            surface_pairs[id(augmented)] = (
+                augmented,
+                native,
+                addition,
+                donor.retained_water_enthalpy_j_mol,
+                dissipation,
+            )
+        return augmented
 
 
 def inventory_bounded_transfer_fraction(available_flux, demand_flux, dt_s):
@@ -685,12 +1004,16 @@ def liquid_connected_path(
     """The paper particle's liquid path on an EXPLICITLY passed cut-transport module.
 
     For the paper's own radial particle (its harness and the replay tests); no tower path
-    calls it.  Rebinds ``cut_module._dry_flux`` for the duration and restores it; yields the
-    surface limiter with a ``last_audit`` attribute, as the harness's context manager does.
+    calls it.  Rebinds ``cut_module._dry_flux`` for the duration and installs the bridged cap
+    rule on ``cut_module.acfp`` (both restored on exit); yields the surface limiter with a
+    ``last_audit`` attribute, as the harness's context manager does.  The harness's scopes pass
+    ``contact_conductance = particle_kernel_envelope.K_L_MOL_M2_S``; this port's mirror is
+    :data:`LIQUID_CONTACT_CONDUCTANCE_MOL_M2_S`.
     """
 
     _check_face_parameters(factor, contact_conductance)
     original = cut_module._dry_flux
+    force_path_module = cut_module.acfp
     surface_pairs: dict = {}
 
     def flux(*args, **kwargs):
@@ -703,6 +1026,7 @@ def liquid_connected_path(
             contact_conductance=contact_conductance,
             exclude_wet_front=exclude_wet_front,
             surface_pairs=surface_pairs,
+            force_path_module=force_path_module,
         )
 
     def limiter(
@@ -728,16 +1052,19 @@ def liquid_connected_path(
         return result
 
     limiter.last_audit = None
-    cut_module._dry_flux = flux
-    try:
-        yield limiter
-    finally:
-        cut_module._dry_flux = original
+    with bridged_cap_rule_scope(force_path_module):
+        cut_module._dry_flux = flux
+        try:
+            yield limiter
+        finally:
+            cut_module._dry_flux = original
 
 
 __all__ = [
     "CARRIER_DISTANCE_FRACTION_OF_RADIUS",
     "CONVERSION",
+    "FILM_COVERED_SURFACE_POTENTIAL",
+    "FiniteContactUndefined",
     "LIQUID_CONTACT_CONDUCTANCE_MOL_M2_S",
     "LIQUID_MOBILITY_TOTAL_FACTOR",
     "PAPER1_PARTICLE_PORT_DECLARED_ASSUMPTIONS",
@@ -745,26 +1072,35 @@ __all__ = [
     "PAPER1_PARTICLE_PORT_ENVIRONMENT_VARIABLE",
     "PAPER1_PARTICLE_PORT_LAW_ID",
     "PAPER_EQUATION_LABELS",
+    "PATH_FORCES",
     "Paper1Drain",
     "Paper1PortArmingRefusal",
     "Paper1PortError",
     "Paper1PortFloorRefusal",
     "REFERENCE_RETAINED_WATER_MOBILITY_MOL_M_S",
+    "SURFACE_LAW",
+    "SURFACE_LAW_FINAL_RECORD",
     "TALLY",
     "W_CAP_KG_KG",
     "add_retained_transfer",
+    "bridged_cap_rule_scope",
+    "bridged_cap_segment_classifier",
     "carrier_distance_m",
     "closure_activity_at_site",
+    "common_temperature_activities",
     "drain_split_at_site",
     "finite_contact_drain",
     "inventory_bounded_transfer_fraction",
     "knob_armed",
     "liquid_connected_path",
     "liquid_contact_face_flux",
+    "native_cap_classification",
     "require_paper_convention_arm",
     "retained_potential",
     "retained_surface_activity",
     "series_conductance_mol_m2_s",
+    "series_path_mobility_mol_m_s",
     "supply_limited_surface_transfer",
+    "surface_contact_face",
     "surface_potential",
 ]

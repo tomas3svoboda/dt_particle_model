@@ -1,0 +1,40 @@
+--- a/paper/analysis/harness/run_particle_qualification_case.py
++++ b/paper/analysis/harness/run_particle_qualification_case.py
+@@ -247,7 +247,7 @@
+                     "--water",
+                     0.025,
+                     "--radius",
+-                    0.000885,
++                    0.0015,  # WAS 0.000885 (r15 variant, owner's common radius)
+                     "--cells",
+                     args.cells,
+                     "--feed-dt",
+@@ -525,7 +525,7 @@
+     face_set = getattr(args, "surface_graded_face_set", None)
+     if face_set is not None:
+         record["surface_graded_mesh"] = face_set.describe(
+-            0.0015 if args.study == "DT" else 0.000885
++            0.0015 if args.study == "DT" else 0.0015  # WAS 0.000885 (r15 variant)
+         )
+         write_json(result_path, record)
+     try:
+@@ -1187,7 +1187,7 @@
+         try:
+             args.surface_graded_face_set = graded_mesh.parse(*graded_values)
+             graded_mesh.native_grid(
+-                args.surface_graded_face_set, 0.0015 if args.study == "DT" else 0.000885
++                args.surface_graded_face_set, 0.0015 if args.study == "DT" else 0.0015  # WAS 0.000885 (r15 variant)
+             )
+         except graded_mesh.SurfaceGradedMeshRefused as error:
+             parser.error(str(error))
+--- a/paper/analysis/harness/bulk_endpoint.py
++++ b/paper/analysis/harness/bulk_endpoint.py
+@@ -14,7 +14,7 @@
+ import finite_film_core2_study as study
+ 
+ core = study.core
+-INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.14578543636088787
++INHERITED_FANER_COMMON_EXPOSURE_MULTIPLIER = 0.365
+ 
+ 
+ @contextmanager
