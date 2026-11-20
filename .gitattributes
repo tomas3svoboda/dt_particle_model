@@ -1,1 +1,3 @@
 * -text
+# Preserve exact producer/source/data bytes, including historical line endings.
+/revised_pd/** -text

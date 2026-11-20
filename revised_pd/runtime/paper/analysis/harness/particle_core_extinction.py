@@ -1,0 +1,524 @@
+"""Existing conservative core endpoint with explicit conditional time control.
+
+The measured positive-target sequence supplies a numerical truncation estimate,
+not a rigorous time enclosure. This module neither changes a native gate nor
+substitutes a zero-width state for an unresolved positive-core root.
+"""
+
+from contextlib import contextmanager
+from dataclasses import dataclass, asdict, replace
+import math
+
+import numpy as np
+
+import experiment_core2_dt_projection as projection
+from face_volume_coalescence import restore_fully_dry_face
+import particle_kernel_envelope as envelope
+
+#: The existing terminal volume ceiling of the positive core (the predeclared endpoint rule).
+TERMINAL_VOLUME_CEILING = 1e-12
+#: TOWER_CORE_EXTINCTION_FLOOR_M's declared form: inside the floor's band the remaining-time bound
+#: is stamped, not enforced. A measurement script may set True in its own process for a labelled
+#: constructed variant (the floor with the ruled tolerance still enforced); never a model option.
+TOWER_FLOOR_ENFORCES_TIME_TOLERANCE = False
+
+
+def terminal_volume_ceiling(radius_m, environ=None):
+    """The positive core's terminal wet volume fraction: the ruled 1e-12, or with the tower lane's
+    TOWER_CORE_EXTINCTION_FLOOR_M armed (r_f / R)^3 where that lies above it."""
+    floor = envelope.tower_core_extinction_floor_m(environ)
+    if floor is None:
+        return TERMINAL_VOLUME_CEILING
+    return max(TERMINAL_VOLUME_CEILING, (floor / radius_m) ** 3)
+
+
+@contextmanager
+def conservative_water_surface_at_dry_endpoint(before, carry, surface, dt, boundary):
+    """Positive-film endpoint surface with algebraic component elimination.
+
+    Declared option of the core-extinction projection (default off). For each
+    projection trial the native exterior pore fluxes at a trial surface
+    temperature fix the film hexane flux (unchanged native Stefan film inverted
+    at the water-saturated surface composition over its beta band), and the
+    node water balance fixes the liquid inventory explicitly. The surface
+    temperature then solves the node energy row. The node water and hexane
+    rows hold by construction; all three original node rows are still checked
+    at the former 1e-11 surface tolerance, and the projection's native and
+    combined ledgers are checked unchanged afterwards.
+    """
+    from particle_conservative_surface import total_flux_for_hexane_target
+
+    core, driver, study = projection.core, projection.driver, projection.study
+    extinction = projection.extinction
+    config = before.transport.config
+    grid = before.transport.geometry.master_grid
+    old_liquid = carry["external_water_loading_kg_m2"]
+    old_temperature = carry["external_water_temperature_k"]
+    if not old_liquid > 0:
+        raise ValueError("conservative endpoint surface requires a positive incoming film")
+    pressure = config.dry.pressure_pa
+    holder = {"x": np.array([surface.temperature_k, 0.0, old_liquid])}
+    mass_scale = max(old_liquid / dt, 0.05)
+    heat_scale = max(abs(carry["external_water_energy_j"]) / (grid.areas[-1] * dt), 5000.0)
+    tl, tu = config.dry.conditioned_temperature_domain.solver_bounds_k
+    original = extinction._fully_dry_face_fluxes
+    work = {
+        "surface_solves": 0,
+        "surface_residual_calls": 0,
+        "maximum_surface_residual": 0.0,
+        "surface_basis": "algebraic native-film component elimination",
+    }
+    guess = np.array([surface.temperature_k])
+    with driver.liquid_internal_energy_node(holder, dt, old_liquid, old_temperature, pressure):
+
+        def faces(old, candidate, cells, actual_boundary, **kwargs):
+            nonlocal guess
+            if not isinstance(actual_boundary, study.FiniteFilmStudyBoundary):
+                return original(old, candidate, cells, actual_boundary, **kwargs)
+            cell = cells[-1]
+            pore = replace(config.dry.pore, w_o=before.transport.oil_fraction_labels[-1])
+            stefan = candidate.positive_area_total_stefan_fluxes_mol_m2_s[-1]
+            distance = grid.R - grid.centers[-1]
+            face = None
+
+            def surface_at(ts):
+                y = core.cp.decode_gas_only_y(ts, pressure, -32.0, pore)
+                holder["x"] = np.array([ts, 0.0, old_liquid])
+                probe = driver.node.evaluate_water_surface(
+                    holder,
+                    dt,
+                    old_liquid,
+                    old_temperature,
+                    cell,
+                    distance,
+                    stefan,
+                    pore,
+                    config,
+                    grid.R,
+                    actual_boundary,
+                    surface_y_hexane=y,
+                )
+                pore_hexane = probe.component.conserved_hexane_flux_mol_m2_s * core.hx.M
+                pore_water = probe.component.conserved_water_flux_mol_m2_s * core.wa.M
+                reference = core.ct.prepare_reduced_film_surface_state(
+                    actual_boundary.film_boundary,
+                    cell_temperature_k=cell.temperature_k,
+                    pressure_pa=pressure,
+                    particle_radius_m=grid.R,
+                    outer_half_cell_distance_m=distance,
+                    particle_thermal_conductivity_w_m_k=config.dry.thermal_conductivity.value_w_m_k,
+                    binary_gas_interaction_k_wh=pore.k_wh,
+                )
+                film = core.ct._reduced_film_coefficients_at_surface_temperature(reference, ts)
+                cp = core.efr.phy053_partial_enthalpy_secant_heat_capacities(
+                    surface_temperature_k=ts,
+                    bulk_temperature_k=actual_boundary.temperature_k,
+                    pressure_pa=pressure,
+                    y_hexane=y,
+                    k_wh=pore.k_wh,
+                )
+                total, components, _, _ = total_flux_for_hexane_target(
+                    film,
+                    pore_hexane,
+                    core._hexane_mass_fraction(y),
+                    core._hexane_mass_fraction(actual_boundary.y_hexane),
+                    cp.water_j_kg_k,
+                    cp.hexane_j_kg_k,
+                    actual_boundary.accepted_beta_limit,
+                )
+                liquid = math.fsum((old_liquid, dt * pore_water, -dt * components.water_kg_m2_s))
+                if not 0 < liquid < max(0.05, 4 * old_liquid):
+                    raise ValueError("endpoint liquid inventory left its original open bounds")
+                holder["x"] = np.array([ts, total, liquid])
+                return driver.node.evaluate_water_surface(
+                    holder,
+                    dt,
+                    old_liquid,
+                    old_temperature,
+                    cell,
+                    distance,
+                    stefan,
+                    pore,
+                    config,
+                    grid.R,
+                    actual_boundary,
+                    surface_y_hexane=y,
+                )
+
+            def residual(values):
+                nonlocal face
+                face = surface_at(float(values[0]))
+                work["surface_residual_calls"] += 1
+                return np.array([face.surface_film_audit.energy_node_residual_w_m2 / heat_scale])
+
+            solution = study.numerics.centered_temperature_solve(
+                study.numerics.domain_aware_newton,
+                residual,
+                guess,
+                temperature_index=0,
+                bounds=([tl], [tu]),
+                max_nfev=160,
+                gtol=1e-11,
+            )
+            residual(solution.x)
+            s = face.surface_film_audit
+            rows = (
+                s.water_node_residual_kg_m2_s / mass_scale,
+                s.hexane_node_residual_kg_m2_s / mass_scale,
+                s.energy_node_residual_w_m2 / heat_scale,
+            )
+            maximum = float(max(abs(r) for r in rows))
+            if not solution.success or maximum > 1e-11:
+                raise RuntimeError("native endpoint water node refused")
+            guess = np.array(solution.x, copy=True)
+            work["surface_solves"] += 1
+            work["maximum_surface_residual"] = max(work["maximum_surface_residual"], maximum)
+            resolved = core.ct.DirichletPoreBoundary(
+                cell.temperature_k, cell.y_hexane, "native internal faces only"
+            )
+            internal = original(old, candidate, cells, resolved, **kwargs)
+            return (*internal[:-1], face)
+
+        extinction._fully_dry_face_fluxes = faces
+        try:
+            yield work
+        finally:
+            extinction._fully_dry_face_fluxes = original
+
+
+class CoreTimeNotResolved(ValueError):
+    """A valid linked trajectory still needs more accepted positive targets."""
+
+
+@dataclass(frozen=True)
+class PositiveCoreTargetEvidence:
+    before: object
+    after: object
+    dt_s: float
+
+    def __post_init__(self):
+        ci = projection.core.ci
+        if not isinstance(self.before, ci.CutIntegratorState) or not isinstance(
+            self.after, ci.CutIntegratorState
+        ):
+            raise TypeError("positive-core evidence requires native cut-integrator states")
+        old, new = self.before.transport, self.after.transport
+        if not math.isfinite(self.dt_s) or self.dt_s <= 0 or new.time_s != old.time_s + self.dt_s:
+            raise ValueError("target evidence must preserve the exact native physical clock")
+        if new.geometry.front.z != 0.5 * old.geometry.front.z:
+            raise ValueError("terminal sequence requires its declared positive half-volume targets")
+        if (
+            old.config is not new.config
+            or self.before.controls is not self.after.controls
+            or old.geometry.master_grid is not new.geometry.master_grid
+            or self.before.reference_inventory is not self.after.reference_inventory
+        ):
+            raise ValueError(
+                "target evidence changed native config/grid/control/reference identities"
+            )
+
+
+@dataclass(frozen=True)
+class ConditionalCoreTime:
+    last_four_durations_s: tuple[float, ...]
+    observed_ratios: tuple[float, ...]
+    assumed_future_ratio_upper: float
+    estimated_remaining_time_s: float
+    conditional_remaining_time_bound_s: float
+    requested_time_tolerance_s: float
+    last_wet_volume_fraction: float
+    rigorous_time_enclosure_claimed: bool = False
+
+
+def estimate_core_time(before, targets, maximum_remaining_time_s=0.002):
+    """Reuse the predeclared four-target, 0.82-contraction, 2-ms ceiling.
+
+    Identity and clock checks prevent stitching unrelated states into a
+    duration sequence. A tighter time ceiling may be used by a refinement
+    ladder. A future-ratio assumption remains explicit in every result.
+    """
+    if not math.isfinite(maximum_remaining_time_s) or not 0 < maximum_remaining_time_s <= 0.002:
+        raise ValueError("terminal time control may preserve or tighten the existing 2-ms ceiling")
+    if len(targets) < 4:
+        raise CoreTimeNotResolved("four consecutive accepted positive targets required")
+    recent = tuple(targets[-4:])
+    if not all(isinstance(t, PositiveCoreTargetEvidence) for t in recent):
+        raise TypeError("native positive-target evidence records required")
+    if recent[-1].after is not before or any(
+        a.after is not b.before for a, b in zip(recent, recent[1:])
+    ):
+        raise ValueError("positive-target sequence does not preserve exact linked state identities")
+    z = before.transport.geometry.front.z
+    if not 0 < z <= terminal_volume_ceiling(before.transport.geometry.master_grid.R):
+        raise CoreTimeNotResolved("positive core exceeds the existing terminal volume ceiling")
+    durations = tuple(t.dt_s for t in recent)
+    ratios = tuple(b / a for a, b in zip(durations, durations[1:]))
+    if not all(0 < q < 0.82 for q in ratios):
+        raise CoreTimeNotResolved("measured durations violate the predeclared 0.82 contraction")
+    bound = durations[-1] * 0.82 / (1.0 - 0.82)
+    # TOWER_CORE_EXTINCTION_FLOOR_M's band (armed only; empty with the knob absent): the bound is
+    # stamped by tower_floor_event_stamp, not enforced
+    floor_band = z > TERMINAL_VOLUME_CEILING and not TOWER_FLOOR_ENFORCES_TIME_TOLERANCE
+    if bound > maximum_remaining_time_s and not floor_band:
+        raise CoreTimeNotResolved(
+            "conditional remaining time exceeds the declared refinement tolerance"
+        )
+    estimate = durations[-1] * max(ratios) / (1.0 - max(ratios))
+    return ConditionalCoreTime(
+        durations, ratios, 0.82, estimate, bound, maximum_remaining_time_s, z
+    )
+
+
+def _independent_inventory(transport, wet_only):
+    """audit_core2_dt_external_ledger's independent inventory (kg, kg, J, K), optionally over the
+    wet volumes only."""
+    import audit_core2_dt_external_ledger as independent
+
+    primitives = asdict(transport)
+    if wet_only:
+        for cell in primitives["geometry"]["cells"]:
+            cell["dry_volume_m3"] = 0.0
+    (water, hexane, energy), temperature = independent.inventory(primitives, transport.config)
+    return water * projection.core.wa.M, hexane * projection.core.hx.M, energy, temperature
+
+
+def wet_core_inventory(before):
+    """The wet core's water and n-hexane (kg), energy (J) and mean temperature (K)."""
+    return _independent_inventory(before.transport, True)
+
+
+def tower_floor_event_stamp(before, time_control, environ=None):
+    """TOWER_CORE_EXTINCTION_FLOOR_M's event row (None with the knob absent).
+
+    ``before`` is the state the endpoint starts from, ``time_control`` its ConditionalCoreTime.
+    """
+    floor = envelope.tower_core_extinction_floor_m(environ)
+    if floor is None:
+        return None
+    transport = before.transport
+    grid = transport.geometry.master_grid
+    z = transport.geometry.front.z
+    water, hexane, energy, temperature = wet_core_inventory(before)
+    particle_water, particle_hexane, _, _ = _independent_inventory(transport, False)
+    dry_mass = transport.config.dry.pore.rho_dm_p * math.fsum(grid.volumes)
+    in_band = z > TERMINAL_VOLUME_CEILING
+    return {
+        "event": "tower_core_extinction_floor",
+        "declared_row": envelope.tower_core_extinction_floor_declared_row(
+            envelope.valued(envelope.TOWER_CORE_EXTINCTION_FLOOR_M, environ)
+        ),
+        "floor_front_radius_m": floor,
+        "floor_volume_fraction": (floor / grid.R) ** 3,
+        "terminal_volume_ceiling": terminal_volume_ceiling(grid.R, environ),
+        "ruled_terminal_volume_ceiling": TERMINAL_VOLUME_CEILING,
+        "applied": in_band,
+        "clock_s": transport.time_s,
+        "front_z": z,
+        "front_radius_m": transport.geometry.front.radius_m,
+        "halvings_to_ruled_ceiling": (
+            math.ceil(math.log2(z / TERMINAL_VOLUME_CEILING)) if in_band else 0
+        ),
+        "wet_core_water_kg": water,
+        "wet_core_hexane_kg": hexane,
+        "wet_core_energy_j": energy,
+        "wet_core_temperature_k": temperature,
+        "particle_dry_mass_kg": dry_mass,
+        "wet_core_water_kg_kg_dry": water / dry_mass,
+        "wet_core_hexane_kg_kg_dry": hexane / dry_mass,
+        "wet_core_water_fraction_of_particle_water": water / particle_water,
+        "wet_core_hexane_fraction_of_particle_hexane": hexane / particle_hexane,
+        "last_four_durations_s": list(time_control.last_four_durations_s),
+        "estimated_remaining_time_s": time_control.estimated_remaining_time_s,
+        "conditional_remaining_time_bound_s": time_control.conditional_remaining_time_bound_s,
+        "remaining_time_tolerance_s": time_control.requested_time_tolerance_s,
+        "remaining_time_tolerance_enforced": not (
+            in_band and not TOWER_FLOOR_ENFORCES_TIME_TOLERANCE
+        ),
+        "booking": "the native fixed-time extinction projection's step (combined ledger at the "
+        "unchanged 1e-10 gate); the tower lane books the endpoint's storage change in the job's "
+        "stream as for the ruled endpoint",
+        "physically_qualifying": False,
+    }
+
+
+@dataclass(frozen=True)
+class CoreEndpointAdvance:
+    after: object
+    surface: object
+    carry: dict
+    native_step: object
+    time_control: ConditionalCoreTime
+    base_face_restoration: dict | None
+    # The residual-contract polish stamp (residual_contract_polish_seed); None when the first
+    # native solve was accepted, i.e. whenever the polish did not act.
+    residual_polish: dict | None = None
+
+
+# Class-A numerics repair, seeding only (record proposed at
+# docs/GT_PS2_PAPER1_EXTINCTION_PROJECTION_POLISH_2026-10-26.md). The native fixed-time projection
+# is a trust-region least-squares on forward-difference Jacobians whose residual assembly contains
+# the endpoint surface sub-solve, warm-started from that sub-solve's previous root. Its residual is
+# therefore a function of the evaluation history at the level of the sub-solve's own tolerance,
+# and on 80 cells (outer half cell 1.2 um, the outer cell's energy scale proportional to its
+# volume) that scatter reached the 1e-10 contract: the C3 80-cell projection stopped on its step
+# tolerance at 1.66e-10 and its re-assembly read 1.725e-10, while the same coordinates read
+# 8.2e-11 in a fresh surface context. After a refusal of exactly the frozen residual contract,
+# and only then, the native solve is re-entered ONCE from the refused solve's last candidate, in
+# a fresh surface context, with the first seed's Stefan scales: the same function, controls,
+# contract, logit guard, condition-proxy, ledger and retained-water gates; the two solves share
+# the native evaluation budget (controls.maximum_function_evaluations), refused typed when their
+# sum exceeds it. Any other refusal, and every accepted first solve, is untouched.
+RESIDUAL_CONTRACT_POLISH_RECORD = "docs/GT_PS2_PAPER1_EXTINCTION_PROJECTION_POLISH_2026-10-26.md"
+RESIDUAL_CONTRACT_REFUSAL = "fixed-time endpoint residual contract failed: "
+
+
+def residual_contract_polish_seed(refused, seed):
+    """The polish seed after a refusal of the frozen residual contract alone, else None.
+
+    Eligible only when the native solve raised ExtinctionProjectionStepError caused by its frozen
+    residual-contract clause (not the environment-conditioned bound, not success, logit guard,
+    condition proxy, ledger or the retained-water guard) and carries its last candidate. The seed
+    is that candidate (its event time is the supplied duration) with the first seed's Stefan
+    scales, so the polish works in the first solve's coordinate chart.
+    """
+    native = projection.projection
+    if not isinstance(refused, native.ExtinctionProjectionStepError):
+        return None
+    cause = refused.__cause__
+    if (
+        refused.last_candidate is None
+        or refused.retained_water_applicability_guard_failed
+        or not isinstance(cause, RuntimeError)
+        or not str(cause).startswith(RESIDUAL_CONTRACT_REFUSAL)
+    ):
+        return None
+    return native.ExtinctionProjectionSeed(
+        refused.last_candidate,
+        seed.stefan_flux_scales_mol_m2_s,
+        seed.label + "; residual-contract polish from the refused solve's last candidate",
+    )
+
+
+def project_core_endpoint(
+    before,
+    carry,
+    surface,
+    targets,
+    missing_face,
+    boundary_factory,
+    *,
+    maximum_remaining_time_s=0.002,
+    conservative_surface=False,
+):
+    """Apply the existing native fixed-time projection under caller work scope.
+
+    conservative_surface (declared option, default off) replaces the endpoint
+    surface sub-solve by conservative_water_surface_at_dry_endpoint when an
+    exterior film is present; gas-only endpoints keep the former sub-solve.
+    """
+    estimate = estimate_core_time(before, targets, maximum_remaining_time_s)
+    dt = estimate.estimated_remaining_time_s
+    boundary = boundary_factory(before.transport.time_s + dt)
+    candidate = projection.extinction.ExtinctionUnknowns(
+        before.transport.dry_temperatures_k,
+        before.transport.dry_y_hexane,
+        before.last_total_stefan_fluxes_mol_m2_s[1:],
+        dt,
+    )
+    seed = projection.projection.ExtinctionProjectionSeed(
+        candidate,
+        tuple(max(abs(v), 0.01) for v in candidate.positive_area_total_stefan_fluxes_mol_m2_s),
+        "consecutive native positive targets; disclosed conditional event-time truncation",
+    )
+    surface_context = (
+        conservative_water_surface_at_dry_endpoint
+        if conservative_surface and carry["external_water_loading_kg_m2"] > 0
+        else projection.water_surface_at_dry_endpoint
+    )
+    polish = None
+    with surface_context(before, carry, surface, dt, boundary):
+        try:
+            step = projection.projection.solve_fixed_time_extinction_projection(
+                before, dt, boundary, seed
+            )
+        except projection.projection.ExtinctionProjectionStepError as refused:
+            polish_seed = residual_contract_polish_seed(refused, seed)
+            if polish_seed is None:
+                raise
+            step, first = None, refused
+    if step is None:
+        step, polish = _polish_projection(
+            before, carry, surface, dt, boundary, surface_context, polish_seed, first
+        )
+    new_surface = step.assembly.dry_face_fluxes[-1].surface_film_audit
+    combined = projection.driver.combined_ledger(
+        before, before.transport.config, carry, step, new_surface
+    )
+    if combined["maximum_normalized_residual"] > before.controls.ledger_tolerance:
+        raise RuntimeError("native combined conservation refused the core endpoint")
+    after = step.after.to_uniform_fully_dry_transport_state()
+    restoration = None
+    if missing_face is not None:
+        after, restoration = restore_fully_dry_face(after, missing_face)
+    next_carry = {
+        **carry,
+        **combined,
+        "external_water_loading_kg_m2": new_surface.liquid_water_kg_m2,
+        "core_endpoint_time_control": asdict(estimate),
+    }
+    if polish is None:
+        return CoreEndpointAdvance(after, new_surface, next_carry, step, estimate, restoration)
+    return CoreEndpointAdvance(
+        after, new_surface, next_carry, step, estimate, restoration, residual_polish=polish
+    )
+
+
+def _polish_projection(before, carry, surface, dt, boundary, surface_context, polish_seed, first):
+    """Re-enter the unchanged native solve once from ``polish_seed`` in a fresh surface context.
+
+    The polish refused, or the two solves' evaluations above the native budget, is a typed
+    ExtinctionProjectionStepError with the exact rollback state, naming both solves.
+    """
+    native = projection.projection
+    budget = before.controls.maximum_function_evaluations
+    try:
+        with surface_context(before, carry, surface, dt, boundary):
+            step = native.solve_fixed_time_extinction_projection(before, dt, boundary, polish_seed)
+    except native.ExtinctionProjectionStepError as second:
+        raise native.ExtinctionProjectionStepError(
+            f"{second} [after the residual-contract polish; the first solve "
+            f"{first.maximum_scaled_residual:.3e} at {first.nonlinear_evaluations} evaluations]",
+            before,
+            nonlinear_evaluations=first.nonlinear_evaluations + second.nonlinear_evaluations,
+            maximum_scaled_residual=second.maximum_scaled_residual,
+            condition_proxy=second.condition_proxy,
+            last_candidate=second.last_candidate,
+            retained_water_applicability_guard_failed=(
+                second.retained_water_applicability_guard_failed
+            ),
+            retained_water_applicability_audit=second.retained_water_applicability_audit,
+        ) from second
+    total = first.nonlinear_evaluations + step.ledger.nonlinear_evaluations
+    if total > budget:
+        raise native.ExtinctionProjectionStepError(
+            "fixed-time extinction projection rejected with exact rollback: the residual-contract "
+            f"polish exceeded the shared native evaluation budget ({total} > {budget})",
+            before,
+            nonlinear_evaluations=total,
+            maximum_scaled_residual=step.ledger.maximum_scaled_residual,
+            condition_proxy=step.ledger.condition_proxy,
+        )
+    return step, {
+        "record": RESIDUAL_CONTRACT_POLISH_RECORD,
+        "rule": "one re-entry of the native solve from the refused solve's last candidate after "
+        "a refusal of the frozen residual contract alone; fresh endpoint surface context; the "
+        "first seed's Stefan scales; contract, controls and gates unchanged",
+        "first_solve_refusal": str(first.__cause__),
+        "first_solve_maximum_scaled_residual": first.maximum_scaled_residual,
+        "first_solve_nonlinear_evaluations": first.nonlinear_evaluations,
+        "polish_maximum_scaled_residual": step.ledger.maximum_scaled_residual,
+        "polish_nonlinear_evaluations": step.ledger.nonlinear_evaluations,
+        "shared_native_evaluation_budget": budget,
+        "residual_contract": before.controls.nonlinear_residual_tolerance,
+        "physically_qualifying": False,
+    }

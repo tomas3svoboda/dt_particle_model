@@ -1,0 +1,40 @@
+{
+  "temperature_k": 337.0513104140832,
+  "y_hexane": 0.8631869045849638,
+  "removed_hexane_kg_kg_dry": 0.08656409760738318,
+  "removed_water_kg_kg_dry": 0.0028682582592619603,
+  "remaining_water_kg_kg_dry": 0.12079586387814262,
+  "water_activity": 0.5969977736433807,
+  "hexane_fugacity_ratio": 0.9999999999999942,
+  "water_fugacity_ratio": 0.5969977736434205,
+  "source_energy_residual_j_kg_dry": -2.1645973902195692e-10,
+  "state_energy_j_kg_dry": 36594.61481273951,
+  "exported_energy_j_kg_dry": 12905.858311948077,
+  "gas_density_kg_m3": 2.887141634246036,
+  "reference": {
+    "duty_w": 2300000.0,
+    "dry_inventory_kg": 12049.0,
+    "residence_s": 490.20224190324825,
+    "pressure_pa": 101226.9335,
+    "tray_count": 3,
+    "tray_diameter_m": 6.0,
+    "bed_depth_m": 0.3,
+    "bed_conductivity_w_m_k": 0.24
+  },
+  "initial_hexane_kg_kg_dry": 0.3877862595419847,
+  "initial_water_kg_kg_dry": 0.12366412213740458,
+  "initial_energy_j_kg_dry": -44072.86544095838,
+  "source_energy_input_j_kg_dry": 93573.33856564619,
+  "dry_flow_basis_kg_s": 24.57965094818584,
+  "nominal_scenario_dry_flow_kg_s": 25.0,
+  "closure_residuals": [
+    -5.7731597280508306e-15,
+    6.683542608243442e-14,
+    -1.0822986951097847e-15
+  ],
+  "physically_qualifying": false,
+  "assumption": "offline equilibrium source over wet meal; indirect literature anchor, not measurement",
+  "hexane_flow_kg_s": 2.1277153038341674,
+  "water_flow_kg_s": 0.0705007868419101,
+  "total_flow_kg_s": 2.1982160906760777
+}

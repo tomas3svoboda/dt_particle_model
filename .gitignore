@@ -3,6 +3,7 @@ __pycache__/
 .venv/
 .pytest_cache/
 reruns/
+/scratchpad/
 docs/evidence/
 paper/analysis/results_*/
 paper/analysis/submission_*/

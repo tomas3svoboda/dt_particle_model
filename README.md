@@ -2,12 +2,22 @@
 
 Particle-level model and numerical records for *A particle model of hexane
 removal and water uptake in soybean meal desolventizing*.
-Release: **v1.4.0-submission**. Software license: MIT.
+Revised PD reference: **v1.5.0-pd-reference** (prerelease; full-history
+refinement open). Earlier stable evidence: **v1.4.0-submission**.
+Software license: MIT.
+
+The revised indirectly heated PD bath, exact producer-source closure and
+complete 64-cell L0 history are isolated in [`revised_pd`](revised_pd/README.md).
+Start with `python scripts/reproduce_revised_pd.py --verify`.
+The commands and numerical evidence below concern the preserved **earlier**
+Faner and DT prescriptions. Their DT refinement and sensitivity findings do
+not qualify the revised PD reference.
 
 The formulation follows external hexane depletion, a receding liquid-hexane
 core and the subsequent drying tail, with coupled water uptake and energy
-conservation. Both reported histories use a 1.5-mm-radius sphere and the
-same surface-graded mesh family. Oil heat capacity and binary pore
+conservation. Both earlier histories use a 1.5-mm-radius sphere and the
+same surface-graded mesh family; the revised PD reference instead starts from
+64 uniform radial cells. Oil heat capacity and binary pore
 diffusivity depend on temperature. The Faner external-transfer factor
 **0.29** is estimated from all 25 solvent-loading observations;
 temperature is assessed separately. Thermophysical and intraparticle

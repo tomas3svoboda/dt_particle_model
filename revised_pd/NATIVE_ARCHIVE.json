@@ -1,0 +1,26 @@
+{
+  "name": "revised_pd_native_records.zip",
+  "sha256": "61ea4ac11b713dc83adbbb88357341e6564bbb0d5121277f261898aabf8450af",
+  "bytes": 9058180,
+  "download_url": "https://github.com/tomas3svoboda/dt_particle_model/releases/download/v1.5.0-pd-reference/revised_pd_native_records.zip",
+  "members": {
+    "bath.json": "f775771899416fb62d6b80af01af6b5c3b73456eaf56ffb3098e03544dc18f8a",
+    "independent_audit.json": "451437b5838803769b9034a2a29daaf3aa9412bc89557954849564a8ed4cd874",
+    "prefix_restart.json": "098c44936e57ffd42dae81de2ca05d80b0d60e3b3ac4d96ec7dd007b3d1b799d",
+    "restart_identity_audit.json": "33319e7bb607897988988e8836100f8de78f53d1a4d12657b8c319dbdd5bae82",
+    "result.json": "deac140f97aba697dea628b6e0b39145ef34e8b59685a2a910242c4b9baa3a5d",
+    "run_control.json": "92853c54b2eb6b6fa2755df2cb2131448de2d595efc812c28bc78145b5f68dc2",
+    "case/accepted.pkl": "438ca13e934e8032262a8e9a19f31a3dba079c8d654fee3533516f658e2a251f",
+    "case/birth.accepted.pkl": "a9e8cdcff876e7a144baa69cc7a00148b5a26b2083cb6fcbc4ae49bb196d9848",
+    "case/birth.json": "a9f23e4df39079f1a447f19231c2d986189fd0eea5283caba8a9d87be8e3c8bc",
+    "case/case.json": "21800d74a459bf94b92d0d7d0e1c654fe3ad879c992523d869d2f791195fe854",
+    "case/dry.history.jsonl": "45e7e3068c37e93c018bff6eb47c20169de30d5794d85e3e16d91fe8326cf80a",
+    "case/endpoint.json": "f9e976e64b2aafa6d7c42c67bf6854330f23ecff4581b8103c3ee688827edfac",
+    "case/feed.json": "947b11adb0260de3885b640e605cef31b26749f0a54b58fc3ca62a6bcdfd86be",
+    "case/front.accepted.pkl": "21f041dd7be84f4a4842a1f2e5a3178c7f2ce57cd785985c4fc2266550031cf8",
+    "case/front.history.jsonl": "90724fc9bab28c8ffa73ac72aae9222d1d659b3315dffa56d9cc6e7eda04b4eb",
+    "case/front.json": "09b901121924cfe62035def526a07049d24a176ebb521caa59e287d712f7ad8c",
+    "case/original_feed_prefix_audit.json": "b78d528c12bb7ea508b0a240681163d993e4503265eae10e37c4681f8068583b"
+  },
+  "note": "Unmodified native producer records; historical absolute path metadata and full-tree pins retained. Pickle checkpoints are provenance; do not load untrusted pickle files."
+}

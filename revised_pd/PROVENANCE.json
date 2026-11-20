@@ -1,0 +1,11 @@
+{
+  "release": "v1.5.0-pd-reference",
+  "producer_source_files_distributed": 199,
+  "selection": "loaded and recursively static local Python import closure",
+  "source_bytes_match_original_producer_pins": true,
+  "old_public_runtime_modified": false,
+  "original_full_tree_hash_manifest": "data/runtime_source_sha256.json",
+  "scope": "complete conservative reference; no new-bath refinement qualification",
+  "fresh_full_history_rerun_in_release_preparation": false,
+  "archived_history_is_checked_prefix_continuation": true
+}
