@@ -23,7 +23,8 @@ take hours. Read the reference's resource limits before starting one.
 
 The recorded DT/toaster outlet is 132.756 ppm wet-basis hexane, 18.3855%
 moisture and 104.8102 C. Full-history refinement and PD film applicability
-remain open. See the [qualification roadmap](ROADMAP.md).
+remain open; this deposit is a numerical reference, with the scientific
+limits specified in its accompanying documentation.
 
 ## Faner experiment
 
