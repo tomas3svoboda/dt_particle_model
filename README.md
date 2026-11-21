@@ -1,84 +1,58 @@
 # DT particle model
 
-Particle-level model and numerical records for *A particle model of hexane
-removal and water uptake in soybean meal desolventizing*.
-Revised PD reference: **v1.5.0-pd-reference** (prerelease; full-history
-refinement open). Earlier stable evidence: **v1.4.0-submission**.
-Software license: MIT.
+Particle model of hexane removal and water uptake in soybean meal. MIT license.
 
-The revised indirectly heated PD bath, exact producer-source closure and
-complete 64-cell L0 history are isolated in [`revised_pd`](revised_pd/README.md).
-Start with `python scripts/reproduce_revised_pd.py --verify`.
-The commands and numerical evidence below concern the preserved **earlier**
-Faner and DT prescriptions. Their DT refinement and sensitivity findings do
-not qualify the revised PD reference.
+## Current prescribed PD/DT experiment
 
-The formulation follows external hexane depletion, a receding liquid-hexane
-core and the subsequent drying tail, with coupled water uptake and energy
-conservation. Both earlier histories use a 1.5-mm-radius sphere and the
-same surface-graded mesh family; the revised PD reference instead starts from
-64 uniform radial cells. Oil heat capacity and binary pore
-diffusivity depend on temperature. The Faner external-transfer factor
-**0.29** is estimated from all 25 solvent-loading observations;
-temperature is assessed separately. Thermophysical and intraparticle
-transport coefficients retain their literature-derived values.
-
-## Reproduce the results
-
-Use Python with `requirements.txt` installed. Run from this repository's root:
+Use [`revised_pd/`](revised_pd/README.md) and
+[v1.5.0-pd-reference](https://github.com/tomas3svoboda/dt_particle_model/releases/tag/v1.5.0-pd-reference).
+Solid heated PD disks receive indirect heat; sparge bypasses PD meal.
+Vapor withdrawal is represented by a prescribed reservoir; main-tray steam
+contact follows PD. The recorded reference uses uniform thermal regime A
+and 64 base radial cells in B/C.
 
 ```sh
 python -m pip install -r requirements.txt
-python scripts/reproduce_final_reference.py --verify-manifest
-python scripts/reproduce_final_reference.py
-python scripts/reproduce_final_reference.py --case Faner_R15_N40_L1
-python scripts/reproduce_final_reference.py --case DT_N80_L1
+python scripts/reproduce_revised_pd.py --verify
+python scripts/reproduce_revised_pd.py --verify-native
 ```
 
-The default reruns the 20-cell Faner reference. Each command downloads the
-needed history archive, verifies its SHA-256 and member manifest, runs the
-declared case with single-threaded BLAS, and compares its physical results
-exactly with the archived producer. Paths, source identities, execution times
-and explicitly declared option stamps are handled separately by the comparison.
-Existing results are preserved; a reused output directory is refused.
+Verification checks identities and every CSV wet-basis value without a solver.
+`--probe` advances 0.1 s; `--run` requests a fresh complete history and may
+take hours. Read the reference's resource limits before starting one.
 
-Case inputs, time caps, parameter alternatives and option settings are in
-`data/final.json`. Exact radius, exposure and diffusivity variants are
-applied to a scratch source copy under `reruns/`. Numerical gates and
-transport equations retain their declared settings. The DT exposure
-sensitivity includes complete 0.3-, 1- and 3-times histories. The Faner
-profile retains every loading observation. No manuscript text or publisher
-figure images are distributed here.
+The recorded DT/toaster outlet is 132.756 ppm wet-basis hexane, 18.3855%
+moisture and 104.8102 C. Full-history refinement and PD film applicability
+remain open. See the [qualification roadmap](ROADMAP.md).
 
-The Git tree contains code, recipes and derived figure data. **Bulk histories
-are [release downloads](https://github.com/tomas3svoboda/dt_particle_model/releases/tag/v1.4.0-submission)**
-and are fetched only when requested. To verify and unpack the full record:
+## Faner experiment
+
+The soybean experiment in superheated hexane retains the 1.5-mm radius and
+all-point external-transfer factor 0.29. Temperature was assessed separately.
+Its original case values, source variants and refinement evidence are retained
+in the now **Faner-only** `data/final.json`.
 
 ```sh
-python scripts/reproduce_final_reference.py --extract-only
+python scripts/reproduce_final_reference.py --verify-manifest
+python scripts/reproduce_final_reference.py --case Faner_R15_N40_L1
 python scripts/regenerate_faner_results.py
 ```
 
-The second command regenerates the 40-cell Faner numbers, pointwise loading
-and temperature scores, history CSV and plots. Add `--case <folder>` to score
-another extracted or freshly rerun Faner case. DT figure data are under
-`paper/analysis/manuscript_numbers/`.
+The second command runs a model. `--extract-only` now obtains only the three
+Faner archive groups. Source and independent conservation checks remain active.
 
-## Numerical evidence and provenance
+## Superseded PD experiment
 
-`data/ladder_report.json`, the case records and the independent audits record
-spatial and temporal refinement, material sensitivities and whole-history
-water, hexane and energy closure. The original producer pinned the authors'
-full source tree; this repository ships the particle import closure. Its
-auditors check fresh reruns against their own source identities. Original
-audits remain in the archives, separately from the public-rerun verification
-in `data/reproduction_verification.json`. Source checks remain active.
+The previous steam-rich PD bath is **withdrawn from active use**. Its DT
+recipes, PD/material sensitivities, old bath file, figure CSV and DT figures
+have been removed from the main checkout. Old DT case names are explicitly
+refused by the public reproduction entry point.
 
-`BUILD_RECORD.json` describes the full reproduction bundle; `BUNDLE_LAYOUT.json`
-records the separation of bulk archives from the lean Git tree. Each download
-is pinned in `data/final.json`. The complete bundle is also prepared for
-versioned preservation. See `data/README.md` for the case inventory.
+Historical tags and archive bytes remain for traceability, with a supersession
+notice on the old release. Their PD results are not current article results or
+qualification evidence for this revised bath. Valid Faner evidence is retained.
 
-These are particle calculations under prescribed gas histories. Industrial
-outlet ranges provide process context; the equipment model is separate.
-Third-party publications and digitized readings retain their own terms.
+Shared particle operators and inert legacy waypoints in the new pinned runtime
+remain where exact reproduction requires them. The new driver always applies
+its declared PD override; these are not an active old-bath recipe. Manuscripts,
+coauthor artwork and publisher source figures are not distributed here.

@@ -1,16 +1,12 @@
 {
-  "release": "v1.4.0-submission",
-  "bulk_archives": [
-    "data/final_adopted_dt.tar.xz",
-    "data/final_adopted_dt_time_pair.tar.xz",
-    "data/final_adopted_faner.tar.xz",
-    "data/final_faner_profile.tar.xz",
-    "data/final_ladder_records.tar.xz",
-    "data/final_pd_exposure.tar.xz",
-    "data/final_reference.tar.xz",
-    "data/supporting_records.tar.xz"
+  "current_PD": "revised_pd",
+  "active_legacy_case_family": "Faner only",
+  "faner_archives": [
+    "reference",
+    "adopted_faner",
+    "faner_profile"
   ],
-  "archive_location": "GitHub release assets; also included in the complete preservation bundle",
-  "software_and_physics_changed_by_layout": false,
-  "full_bundle_source_provenance": "BUILD_RECORD.json"
+  "historical_archive_tag": "v1.4.0-submission",
+  "superseded_PD_active": false,
+  "numerical_physics_changed": false
 }

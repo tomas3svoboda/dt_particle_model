@@ -7,7 +7,7 @@ runner arguments and the declared environment switches it was produced with.
     python scripts/reproduce_final_reference.py --verify-manifest   # check every file against MANIFEST.sha256
     python scripts/reproduce_final_reference.py --extract-only      # verify and unpack all archives, no run
     python scripts/reproduce_final_reference.py                     # rerun the reference case and compare
-    python scripts/reproduce_final_reference.py --case DT_N20_L1    # rerun any archived case and compare
+    python scripts/reproduce_final_reference.py --case Faner_R15_N40_L1  # rerun a retained Faner case
 
 Archives are extracted to their producer-relative, Git-ignored paths (paper/analysis/results_*/);
 a modified extracted file is refused, never overwritten.  Fresh outputs go to
@@ -168,6 +168,8 @@ def main():
     cases = {c["name"]: c for c in final["cases"]}
     names = args.case or [final["reference_case"]]
     for name in names:
+        if name.startswith("DT_"):
+            raise SystemExit("Superseded PD experiment withdrawn; use scripts/reproduce_revised_pd.py for the current DT reference.")
         if name not in cases:
             raise SystemExit(f"unknown case {name}; archived cases: {sorted(cases)}")
         if not cases[name].get("argv"):
