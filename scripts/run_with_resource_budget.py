@@ -1,4 +1,4 @@
-"""Run one DTDC command with the owner's workstation reserve (2026-11-18).
+"""Run one DTDC command with the single-worker reproduction resource reserve.
 
 Windows CPU affinity is inherited by descendants, including rg, Git and kernel
 workers: https://learn.microsoft.com/en-us/windows/win32/procthread/inheritance
@@ -22,8 +22,8 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCK_PATH = ROOT / "scratchpad/resource_budget/heavy_command.lock"
-FREE_MEMORY_PERCENT = 35.0
-MINIMUM_FREE_BYTES = 25 * 1024**3  # Retain the owner's earlier 25 GiB reserve too.
+FREE_MEMORY_PERCENT = 30.0
+MINIMUM_FREE_BYTES = 2 * 1024**3  # Minimum operating-system headroom.
 BUSY_OR_RESOURCE_REFUSAL = 75
 AFFINITY_ENV = "DTDC_RESOURCE_AFFINITY_MASK"
 

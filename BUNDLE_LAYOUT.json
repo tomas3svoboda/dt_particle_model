@@ -1,12 +1,14 @@
 {
-  "current_PD": "revised_pd",
-  "active_legacy_case_family": "Faner only",
-  "faner_archives": [
-    "reference",
-    "adopted_faner",
-    "faner_profile"
-  ],
-  "historical_archive_tag": "v1.4.0-submission",
-  "superseded_PD_active": false,
-  "numerical_physics_changed": false
+  "version": "v1.6.0-submission",
+  "experiments": {
+    "Faner": {
+      "entry_point": "scripts/reproduce_final_reference.py",
+      "case_catalog": "data/final.json"
+    },
+    "DT": {
+      "entry_point": "scripts/reproduce_matched_pd.py",
+      "case_catalog": "matched_pd/data/cases.json"
+    }
+  },
+  "numerical_source_manifest": "matched_pd/SOURCE_MANIFEST.json"
 }

@@ -1,7 +1,0 @@
-{
-  "scope": "Active Faner reproduction plus revised PD reference; superseded PD experiments withdrawn from main",
-  "cleanup_date": "2026-11-21",
-  "source_commit": "f1cd537a4baf381017581611ab85621c962fe4dd",
-  "historical_bundle_record": "https://github.com/tomas3svoboda/dt_particle_model/blob/v1.4.0-submission/BUILD_RECORD.json",
-  "current_PD": "revised_pd/PROVENANCE.json"
-}

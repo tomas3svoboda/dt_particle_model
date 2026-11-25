@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "Please cite the accompanying manuscript and identify the exact numerical-reference release used."
 type: software
 title: "Particle model of hexane removal and water uptake in soybean meal desolventizing"
-version: "v1.5.0-pd-reference"
-date-released: 2026-11-20
+version: "v1.6.0-submission"
+date-released: 2026-11-25
 repository-code: "https://github.com/tomas3svoboda/dt_particle_model"
 license: MIT
 authors:
@@ -19,6 +19,9 @@ authors:
     affiliation: "University of Chemistry and Technology Prague"
   - family-names: Hoang
     given-names: Phuong
+    affiliation: "University of Chemistry and Technology Prague"
+  - family-names: Kyselka
+    given-names: Jan
     affiliation: "University of Chemistry and Technology Prague"
 keywords:
   - "desolventizing"

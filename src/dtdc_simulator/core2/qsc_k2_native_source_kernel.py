@@ -53,7 +53,20 @@ from . import k_cell_tray_host as tray_host
 # telescoped-pressure-row resolution-bound construction lives beside the
 # module that owns `_binary64_resolution` / `_residual_beyond_resolution`.
 from . import sp1_k2_law2_tray_integration as legacy
-from . import through_bed_k2_single_wall_tray_integration as single_wall
+# Particle calculations do not instantiate a tray integration model.
+# Load the original module, with all its checks, only on actual tray use.
+class _DeferredTowerImport:
+    def __getattr__(self, name):
+        from importlib import import_module
+
+        module = import_module(
+            ".through_bed_k2_single_wall_tray_integration", __package__
+        )
+        globals()["single_wall"] = module
+        return getattr(module, name)
+
+
+single_wall = _DeferredTowerImport()
 from . import through_bed_k_single_wall_thermohydraulic as arbitrary_k
 from .particle import surface_active_set
 from .particle.surface_active_set import HexaneAccessOracle

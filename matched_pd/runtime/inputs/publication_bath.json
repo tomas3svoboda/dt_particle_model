@@ -1,0 +1,371 @@
+{
+  "name": "paper1_contact_heated_PD_and_prescribed_main_trays",
+  "recipe_codec": "paper1-separated-PD-source-and-main-trace-v1",
+  "scope": "One representative particle in a prescribed DT environment",
+  "pd_reference": {
+    "duty_w": 2300000.0,
+    "dry_inventory_kg": 12049.0,
+    "residence_s": 490.20224190324825,
+    "pressure_pa": 101226.9335,
+    "tray_count": 3,
+    "tray_diameter_m": 6.0,
+    "bed_depth_m": 0.3,
+    "bed_conductivity_w_m_k": 0.24
+  },
+  "pd_gas_rule": "native offline equilibrium/integral source over retained-moisture meal",
+  "sparge_topology": "main-tray contact; bypasses solid indirectly heated PD decks",
+  "waypoints_scope": "main trays only, t >= pd_reference.residence_s; first knot is the exact left interpolation anchor",
+  "radii_m": [
+    0.0015
+  ],
+  "particle": {
+    "radius_m": 0.0015,
+    "feed_temperature_K": 322.15,
+    "feed_hexane_kg_kg_dry": 0.3877862595419847,
+    "feed_water_kg_kg_dry": 0.12366412213740458,
+    "feed_oil_kg_kg_dry": 0.013740458015267173,
+    "feed_initializes_in_sphere": true
+  },
+  "time_convention": {
+    "total_dt_s": 1766.5355008060146,
+    "meaning": "prescribed DT/toaster particle endpoint"
+  },
+  "sources": [
+    "Coletto et al. 2022, DOI 10.1016/j.jfoodeng.2021.110870: PD design/depth scale",
+    "Kemper equipment descriptions: solid heated PD decks and steam bypass",
+    "Paraiso et al. 2008 Table 1: nominal inlet basis; exact selected inputs are in particle",
+    "Main-tray gas trace and PD duty/inventory are selected engineering scenario inputs"
+  ],
+  "coupled_equipment_dynamics": false,
+  "authenticated_plant_measurements": false,
+  "waypoints": [
+    {
+      "t_s": 486.1172232207212,
+      "T_bath_K": 360.6741571207697,
+      "y_hexane": 0.3718348241467925,
+      "pressure_pa": 101226.9335,
+      "stage": "main interpolation left anchor",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.2363770847598,
+      "T_bath_K": 371.78910792919504,
+      "y_hexane": 0.36851268343856175,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.3037708996878,
+      "T_bath_K": 372.35939132876643,
+      "y_hexane": 0.35502347502067194,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.3694486299545,
+      "T_bath_K": 372.93414712766673,
+      "y_hexane": 0.3412172938474712,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.43348201674723,
+      "T_bath_K": 373.5134179713107,
+      "y_hexane": 0.3270844321165127,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.49593842235436,
+      "T_bath_K": 374.09724629117125,
+      "y_hexane": 0.3126149408670993,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.5568811815642,
+      "T_bath_K": 374.6856742413038,
+      "y_hexane": 0.297798620953017,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.6163699186277,
+      "T_bath_K": 375.2787436305622,
+      "y_hexane": 0.2826250143075745,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.67446083376,
+      "T_bath_K": 375.876495850306,
+      "y_hexane": 0.26708339549386045,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.7312069626342,
+      "T_bath_K": 376.47897179739783,
+      "y_hexane": 0.25116276353976813,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.7866584118689,
+      "T_bath_K": 377.0862117922857,
+      "y_hexane": 0.23485183406351648,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.8423503816957,
+      "T_bath_K": 377.69825549196946,
+      "y_hexane": 0.21813903170120855,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.9003165785448,
+      "T_bath_K": 378.3151414415084,
+      "y_hexane": 0.2010068104350692,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 490.96135457639235,
+      "T_bath_K": 378.9369076758863,
+      "y_hexane": 0.18344269135857091,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 491.0260877859904,
+      "T_bath_K": 379.5635913687988,
+      "y_hexane": 0.16543542461500024,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 491.0953180512414,
+      "T_bath_K": 380.1952286417013,
+      "y_hexane": 0.14697371580593147,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 491.1701039658283,
+      "T_bath_K": 380.8318544533462,
+      "y_hexane": 0.12804631098099414,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 491.2518872627505,
+      "T_bath_K": 381.4735024855795,
+      "y_hexane": 0.10864212465077237,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 491.3427078765872,
+      "T_bath_K": 382.12020502700204,
+      "y_hexane": 0.08875043975784266,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 491.4455950931598,
+      "T_bath_K": 382.77199285781114,
+      "y_hexane": 0.0683612357083238,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 491.5978715661833,
+      "T_bath_K": 383.42889514306614,
+      "y_hexane": 0.04746576270838059,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 495.6590016415431,
+      "T_bath_K": 373.15,
+      "y_hexane": 0.05,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 511.41648155009347,
+      "T_bath_K": 373.21199453652224,
+      "y_hexane": 0.04950404370782181,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 542.543439915768,
+      "T_bath_K": 373.33445709832955,
+      "y_hexane": 0.04852434321336342,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 588.2734277191516,
+      "T_bath_K": 373.5143722507202,
+      "y_hexane": 0.047085021994237926,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 647.4804208913971,
+      "T_bath_K": 373.7473098855383,
+      "y_hexane": 0.04522152091569345,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 718.7065467638588,
+      "T_bath_K": 374.02753430513883,
+      "y_hexane": 0.042979725558889265,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 800.1979817315976,
+      "T_bath_K": 374.3481454542997,
+      "y_hexane": 0.04041483636560213,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 889.948136211141,
+      "T_bath_K": 374.70124882248126,
+      "y_hexane": 0.03759000942014994,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 985.747063535517,
+      "T_bath_K": 375.07814983287585,
+      "y_hexane": 0.0345748013369929,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1089.7890670856973,
+      "T_bath_K": 375.4874815170268,
+      "y_hexane": 0.031300147863785016,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1199.6244021100447,
+      "T_bath_K": 375.91960586229783,
+      "y_hexane": 0.027843153101617085,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1308.1074818989537,
+      "T_bath_K": 376.3464100398093,
+      "y_hexane": 0.02442871968152535,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1404.5262981715016,
+      "T_bath_K": 376.72574987470256,
+      "y_hexane": 0.02139400100237949,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1486.928725757872,
+      "T_bath_K": 377.04994513537713,
+      "y_hexane": 0.018800438916982676,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1561.7485643172479,
+      "T_bath_K": 377.34430827219086,
+      "y_hexane": 0.016445533822472998,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1627.14350111149,
+      "T_bath_K": 377.6015910877801,
+      "y_hexane": 0.014387271297759206,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1681.503295763372,
+      "T_bath_K": 377.8154584253523,
+      "y_hexane": 0.012676332597181435,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1723.4894297187495,
+      "T_bath_K": 377.98064416127147,
+      "y_hexane": 0.011354846709827927,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1752.0680650156512,
+      "T_bath_K": 378.09308087449926,
+      "y_hexane": 0.010455353004005512,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    },
+    {
+      "t_s": 1766.5355008060146,
+      "T_bath_K": 378.15,
+      "y_hexane": 0.010000000000000002,
+      "pressure_pa": 101226.9335,
+      "stage": "main-tray prescribed gas",
+      "origin": "inherited engineering main-tray scenario; active only after PD"
+    }
+  ]
+}

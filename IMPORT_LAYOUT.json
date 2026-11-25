@@ -1,0 +1,16 @@
+{
+  "faner": {
+    "path": "src/dtdc_simulator/core2/qsc_k2_native_source_kernel.py",
+    "producer_sha256": "6b7569b56a55b667316c89a661ce643cad11d2a31ec085e2edf1b9dffb1149c4",
+    "distributed_sha256": "75b3ed4b427fa8cabceb37d8d68d6dc55db00cf87d82223ed7165df8123483c2",
+    "all_existing_function_and_class_definitions_identical": true,
+    "change": "Defer tower integration import until its first use."
+  },
+  "dt": {
+    "path": "src/dtdc_simulator/core2/qsc_k2_native_source_kernel.py",
+    "producer_sha256": "6b7569b56a55b667316c89a661ce643cad11d2a31ec085e2edf1b9dffb1149c4",
+    "distributed_sha256": "75b3ed4b427fa8cabceb37d8d68d6dc55db00cf87d82223ed7165df8123483c2",
+    "all_existing_function_and_class_definitions_identical": true,
+    "change": "Defer tower integration import until its first use."
+  }
+}

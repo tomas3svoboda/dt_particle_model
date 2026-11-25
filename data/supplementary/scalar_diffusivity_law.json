@@ -1,0 +1,1 @@
+{"activation_energy_kj_per_mol":0.3058629946934234,"expression":"ln D* = ln A - (Ea/Rg)(1/T) + beta*ln(X/0.01)","form":"log_loading","loading_term":0.9592058934994389,"meal_set_used_by_the_march":"soybean","measured_loading_maximum_kg_kg":0.015616094592894784,"measured_loading_minimum_kg_kg":0.0007676965718689591,"n":17,"residual_sigma_ln_d":0.410374372529405,"x_ref_kg_kg":0.01}

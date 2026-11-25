@@ -1,0 +1,186 @@
+{
+  "outlet": {
+    "hexane_ppm_wet_basis": 132.35832835348805,
+    "moisture_pct_wet_basis": 18.400826291924126,
+    "temperature_c": 104.80849558418487
+  },
+  "outlet_loadings": {
+    "time_s": 1766.5355008060146,
+    "temperature_k": 377.95849558418485,
+    "particle_water_kg_kg_dry": 0.22553918936449907,
+    "hexane_kg_kg_dry": 0.0001622317911646583,
+    "external_water_kg_kg_dry": 0.0
+  },
+  "extinction": {
+    "time_s": 501.65002872174233,
+    "temperature_k": 365.2981778602504,
+    "particle_water_kg_kg_dry": 0.1206033221515532,
+    "external_water_kg_kg_dry": 0.07945183779024997
+  },
+  "A_activation": {
+    "t_s": 491.70479081794105,
+    "temperature_k": 334.88743960836774,
+    "hexane_kg_kg_dry": 0.20067109962753865,
+    "attached_hexane_kg_kg_dry": 0.0,
+    "retained_water_kg_kg_dry": 0.12366412213740458,
+    "external_water_kg_kg_dry": 0.010373790542568997,
+    "total_particle_plus_film_energy_j": 1.1522701995199094,
+    "beta": 1.2662463574063372,
+    "cumulative_component_energy_residuals": [
+      -3.3881317890172014e-21,
+      0.0,
+      -7.743805596760467e-14
+    ],
+    "normalized_cumulative_ledger": [
+      6.159785529244696e-16,
+      0.0,
+      2.3617565435301123e-14
+    ],
+    "bath_temperature_k": 383.1582779116061,
+    "bath_y_hexane": 0.047532482746884284,
+    "shell_temperatures_k": [
+      341.7748104841641,
+      341.7590633796852,
+      341.7246645626173,
+      341.6654409051654,
+      341.57178387095695,
+      341.4304767281143,
+      341.2249438606197,
+      340.9362602148747,
+      340.54521786777144,
+      340.035551148264,
+      339.3980622960767,
+      338.6349288748512,
+      337.7630679645682,
+      336.815294974816,
+      335.83832476824546,
+      334.88743960836774
+    ],
+    "mass_mean_temperature_k": 337.7860767514961,
+    "attached_hexane_kg": 0.0,
+    "interface_temperature_k": 334.45336558031323,
+    "interface_y_hexane": 0.7948851660705173,
+    "external_water_temperature_k": 334.45336558031323,
+    "external_water_energy_temperature": "surface",
+    "surface_topology": "two_liquid",
+    "separate_stock_elimination": {
+      "residual_calls": 372,
+      "nfev": 11
+    }
+  },
+  "first_C_flux": {
+    "time_s": 504.15002872174233,
+    "total_stefan_mol_m2_s": 0.0017281425854921567,
+    "net_hexane_mol_m2_s": 0.001071630903996573,
+    "motion_mol_m2_s": 0.0008278157673199431,
+    "diffusion_mol_m2_s": 0.00024381513667662985,
+    "motion_percent": 77.24821710839635,
+    "diffusion_percent": 22.75178289160365
+  },
+  "last_C_flux": {
+    "time_s": 1766.5355008060146,
+    "total_stefan_mol_m2_s": 0.0001983901516736052,
+    "net_hexane_mol_m2_s": 1.592756557930481e-06,
+    "motion_mol_m2_s": 1.924712449452868e-06,
+    "diffusion_mol_m2_s": -3.3195589152238696e-07,
+    "motion_percent": 120.8415962797044,
+    "diffusion_percent": -20.841596279704397
+  },
+  "first_inward_gas": {
+    "time_s": 521.6500287217423,
+    "total_stefan_mol_m2_s": -6.77120782136692e-06,
+    "net_hexane_mol_m2_s": 4.611508434968685e-05,
+    "motion_mol_m2_s": -3.3274835688624414e-07,
+    "diffusion_mol_m2_s": 4.644783270657309e-05,
+    "motion_percent": -0.7215607681925529,
+    "diffusion_percent": 100.72156076819256
+  },
+  "last_inward_gas": {
+    "time_s": 1456.716370841545,
+    "total_stefan_mol_m2_s": -1.0449173349120643e-06,
+    "net_hexane_mol_m2_s": 1.7769542313246709e-06,
+    "motion_mol_m2_s": -2.06411324477558e-08,
+    "diffusion_mol_m2_s": 1.7975953637724267e-06,
+    "motion_percent": -1.1616018062754716,
+    "diffusion_percent": 101.16160180627547
+  },
+  "particle_water_peak": {
+    "time_s": 1564.216370841545,
+    "particle_water_kg_kg_dry": 0.2262267120904272
+  },
+  "audit": {
+    "passed": true,
+    "clock_s": 1766.5355008060146,
+    "counts": {
+      "PD": 9807,
+      "main_A": 151,
+      "birth": 1,
+      "B": 533,
+      "endpoint": 1,
+      "C": 507
+    },
+    "maximum_normalized_W_H_U": [
+      9.062220121951455e-12,
+      1.866524876463073e-12,
+      9.164339115992773e-13
+    ],
+    "last_signed_defects_W_H_U": [
+      1.8370516526545685e-17,
+      1.1866299816656705e-17,
+      -4.4368162725201945e-12
+    ],
+    "auditor_sha256": "39000fe775ff4e69a113b860bc446d0061d1fd317f71fdf1f9d9424068601018",
+    "complete_history": true,
+    "PD_signed_exchange": {
+      "gross_inward_gas_hexane_g_kg_dry": 10.771863240903816,
+      "gross_outward_gas_hexane_g_kg_dry": 4.464588831526714,
+      "external_liquid_boiling_hexane_g_kg_dry": 58.58359896931551,
+      "definition": "positive/negative parts of native signed film integrals, plus the separately booked boiling export; no state or flux is clamped"
+    },
+    "scope": "independent primitive storage and cold-feed exterior/source integrals; no mesh/time qualification inferred"
+  },
+  "source": {
+    "temperature_k": 337.0513104140832,
+    "y_hexane": 0.8631869045849638,
+    "removed_hexane_kg_kg_dry": 0.08656409760738318,
+    "removed_water_kg_kg_dry": 0.0028682582592619603,
+    "remaining_water_kg_kg_dry": 0.12079586387814262,
+    "water_activity": 0.5969977736433807,
+    "hexane_fugacity_ratio": 0.9999999999999942,
+    "water_fugacity_ratio": 0.5969977736434205,
+    "source_energy_residual_j_kg_dry": -2.1645973902195692e-10,
+    "state_energy_j_kg_dry": 36594.61481273951,
+    "exported_energy_j_kg_dry": 12905.858311948077,
+    "gas_density_kg_m3": 2.887141634246036,
+    "reference": {
+      "duty_w": 2300000.0,
+      "dry_inventory_kg": 12049.0,
+      "residence_s": 490.20224190324825,
+      "pressure_pa": 101226.9335,
+      "tray_count": 3,
+      "tray_diameter_m": 6.0,
+      "bed_depth_m": 0.3,
+      "bed_conductivity_w_m_k": 0.24
+    },
+    "initial_hexane_kg_kg_dry": 0.3877862595419847,
+    "initial_water_kg_kg_dry": 0.12366412213740458,
+    "initial_energy_j_kg_dry": -44072.86544095838,
+    "source_energy_input_j_kg_dry": 93573.33856564619,
+    "dry_flow_basis_kg_s": 24.57965094818584,
+    "nominal_scenario_dry_flow_kg_s": 25.0,
+    "closure_residuals": [
+      -5.7731597280508306e-15,
+      6.683542608243442e-14,
+      -1.0822986951097847e-15
+    ],
+    "physically_qualifying": false,
+    "assumption": "offline equilibrium source over wet meal; indirect literature anchor, not measurement",
+    "hexane_flow_kg_s": 2.1277153038341674,
+    "water_flow_kg_s": 0.0705007868419101,
+    "total_flow_kg_s": 2.1982160906760777
+  },
+  "film_depletion_s": 621.716370841545,
+  "reference_time_level": 1,
+  "base_radial_cells": 64,
+  "main_A_thermal_shells": 16
+}

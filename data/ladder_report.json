@@ -1,6 +1,6 @@
 {
   "release": "v1.4.0-submission",
-  "kind": "Faner-only projection of the preserved original release report; superseded PD evidence removed from the active catalog",
+  "kind": "Faner refinement comparisons",
   "outlets": {
     "Faner_R15_N10_L1": {
       "last_clock_s": 240.0,

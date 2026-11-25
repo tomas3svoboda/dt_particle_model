@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "clock_s": 1766.5355008060146,
+  "counts": {
+    "PD": 9807,
+    "main_A": 151,
+    "birth": 1,
+    "B": 533,
+    "endpoint": 1,
+    "C": 507
+  },
+  "maximum_normalized_W_H_U": [
+    9.062220121951455e-12,
+    1.866524876463073e-12,
+    9.164339115992773e-13
+  ],
+  "last_signed_defects_W_H_U": [
+    1.8370516526545685e-17,
+    1.1866299816656705e-17,
+    -4.4368162725201945e-12
+  ],
+  "auditor_sha256": "39000fe775ff4e69a113b860bc446d0061d1fd317f71fdf1f9d9424068601018",
+  "complete_history": true,
+  "PD_signed_exchange": {
+    "gross_inward_gas_hexane_g_kg_dry": 10.771863240903816,
+    "gross_outward_gas_hexane_g_kg_dry": 4.464588831526714,
+    "external_liquid_boiling_hexane_g_kg_dry": 58.58359896931551,
+    "definition": "positive/negative parts of native signed film integrals, plus the separately booked boiling export; no state or flux is clamped"
+  },
+  "scope": "independent primitive storage and cold-feed exterior/source integrals; no mesh/time qualification inferred"
+}

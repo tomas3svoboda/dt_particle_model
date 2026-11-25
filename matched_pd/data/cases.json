@@ -1,0 +1,47 @@
+{
+  "reference_case": "fresh_n64_a16_l1",
+  "cases": [
+    {
+      "name": "fresh_n16_a4_l1",
+      "cells": 16,
+      "main_shells": 4,
+      "time_level": 1,
+      "geometry": "unconfined_sphere"
+    },
+    {
+      "name": "fresh_n32_a8_l1",
+      "cells": 32,
+      "main_shells": 8,
+      "time_level": 1,
+      "geometry": "unconfined_sphere"
+    },
+    {
+      "name": "fresh_n64_a16_l1",
+      "cells": 64,
+      "main_shells": 16,
+      "time_level": 1,
+      "geometry": "unconfined_sphere"
+    },
+    {
+      "name": "fresh_n64_a16_l0",
+      "cells": 64,
+      "main_shells": 16,
+      "time_level": 0,
+      "geometry": "unconfined_sphere"
+    },
+    {
+      "name": "fresh_n64_a16_l2",
+      "cells": 64,
+      "main_shells": 16,
+      "time_level": 2,
+      "geometry": "unconfined_sphere"
+    },
+    {
+      "name": "fresh_cell_n64_a16_l1",
+      "cells": 64,
+      "main_shells": 16,
+      "time_level": 1,
+      "geometry": "equal_volume_cell"
+    }
+  ]
+}

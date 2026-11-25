@@ -2,23 +2,11 @@ __pycache__/
 *.py[cod]
 .venv/
 .pytest_cache/
-reruns/
+/reruns/
 /scratchpad/
-docs/evidence/
-paper/analysis/results_*/
-paper/analysis/submission_*/
-paper/analysis/temperature_property_runs/
-paper/01_particle_jfpe/*.aux
-paper/01_particle_jfpe/*.bbl
-paper/01_particle_jfpe/*.blg
-paper/01_particle_jfpe/*.log
-paper/01_particle_jfpe/*.out
-paper/01_particle_jfpe/*.toc
-paper/01_particle_jfpe/*.pdf
-paper/01_particle_jfpe/figures/*.png
-paper/01_particle_jfpe/collaterals/*.png
-paper/01_particle_jfpe/collaterals/*.tif
-paper/01_particle_jfpe/collaterals/*_text.txt
-
-# Bulk histories are versioned release downloads.
+/matched_pd/runtime/scratchpad/
 /data/*.tar.xz
+/paper/analysis/results_*/
+
+# Generated locally by the numerical source-stamping helper.
+BUILD_RECORD.json

@@ -1,5 +1,0 @@
-{
-  "source_commit": "7d70931b with exact producer-pinned working-tree sources",
-  "source_branch": "isolated PD particle import closure",
-  "scope": "unchanged producer bytes; separate from legacy v1.4.0 runtime"
-}

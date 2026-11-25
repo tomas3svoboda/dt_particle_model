@@ -1,0 +1,32 @@
+{
+  "release": "v1.6.0-submission",
+  "producer_source_files_distributed": 183,
+  "selection": "loaded and recursively static local Python import closure",
+  "source_bytes_match_original_producer_pins": false,
+  "reference_fresh_original_feed": true,
+  "reference_single_runtime_source_generation": true,
+  "reference_whole_history_audited": true,
+  "comparison_cases": 6,
+  "reported_precision": {
+    "hexane_ppm": 1,
+    "moisture_percentage_points": 0.1,
+    "temperature_k": 0.1
+  },
+  "original_full_tree_hash_manifest": "native archive: case/case.json",
+  "operative_bath": "runtime/inputs/publication_bath.json",
+  "operative_bath_sha256": "fa83f43d723e9cf0f18b0c56b1de5109b99f826bbcfe71148dd9dcf076459a35",
+  "unchanged_mathematical_definitions": true,
+  "import_layout_variant": {
+    "path": "src/dtdc_simulator/core2/qsc_k2_native_source_kernel.py",
+    "producer_sha256": "6b7569b56a55b667316c89a661ce643cad11d2a31ec085e2edf1b9dffb1149c4",
+    "distributed_sha256": "75b3ed4b427fa8cabceb37d8d68d6dc55db00cf87d82223ed7165df8123483c2",
+    "all_existing_function_and_class_definitions_identical": true,
+    "change": "Defer tower integration import until its first use."
+  },
+  "package_initializer_variant": {
+    "path": "src/dtdc_simulator/core/__init__.py",
+    "producer_sha256": "9b419f2a5ca8c85cd0f0fb62bab72b52bd826b2d812f09e462e26bfbeb821795",
+    "distributed_sha256": "4296e8de82de8f04811a58a7911e42571e2fed1ffb6490c5152f4579e6a4b068",
+    "change": "Reuse existing public package initializer: expose the pure critical-volume module without initializing the retired tower."
+  }
+}
